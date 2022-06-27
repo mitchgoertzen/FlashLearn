@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.learn.flashLearnTagalog">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <application
+        android:name="com.learn.flashLearnTagalog.BaseApplication"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/tagalog_logo_square"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/tagalog_logo_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Tagalog">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7133464705699933~1975727734"/>
+
+        <activity
+            android:name="com.learn.flashLearnTagalog.ui.LearningActivity"
+            android:exported="false"
+            android:label="LearningActivity"
+            android:theme="@style/Theme.Tagalog.NoActionBar" />
+        <activity
+            android:name="com.learn.flashLearnTagalog.ui.HomeActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
