@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.ToDo
 import com.learn.flashLearnTagalog.ToDoAdapter
+import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
@@ -30,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment(masterList : MutableList<Word>) : Fragment(R.layout.fragment_test) {
+class TestFragment(masterList : MutableList<Word>, private var currentLesson: String) : Fragment(R.layout.fragment_test) {
 
     private lateinit var toDoAdapter: ToDoAdapter
     private lateinit var answeredAdapter: ToDoAdapter
@@ -107,7 +108,7 @@ class TestFragment(masterList : MutableList<Word>) : Fragment(R.layout.fragment_
         btnEnter.isEnabled = false
 
 
-        //MAKE NEXT WORD FUNCTION
+        //TODO:MAKE NEXT WORD FUNCTION
         btnEnter.setOnClickListener {
 
             if(skipped){
@@ -263,6 +264,8 @@ class TestFragment(masterList : MutableList<Word>) : Fragment(R.layout.fragment_
     }
 
     private fun goToResults() {
+
+        viewModel.completeTest(currentLesson)
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, false)
             .apply()

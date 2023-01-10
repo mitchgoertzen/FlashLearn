@@ -54,10 +54,12 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
 
         var currentTitle = currentLesson.title
 
+        //popup window
         val window : ConstraintLayout = view.findViewById(R.id.clMain)
+        //when popup is touched, but no buttons are, popup will close
         window.setOnTouchListener { v, event ->
             when (event?.action) {
-                MotionEvent.ACTION_DOWN -> dialog?.dismiss()//Do Something
+                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
             }
             v?.onTouchEvent(event) ?: true
         }
@@ -71,12 +73,13 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         val engFirst : SwitchCompat = view.findViewById(R.id.scEngFirst)
 
         testButton.setOnClickListener{
-            val fragment = TestFragment(wordList.asSequence().shuffled().toMutableList())
+            val fragment = TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.title)
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")?.commit()
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
+        println(currentTitle)
         practiceCompleted = viewModel.getPracticeCompleted(currentTitle)
 
         if(!practiceCompleted){
@@ -85,13 +88,14 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         }
 
         practiceButton.setOnClickListener{
-            val fragment = PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
+            val fragment = PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.title)
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")?.commit()
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 
+        //selection will be saved for future use
         var showEngFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
         engFirst.isChecked = showEngFirst
         engFirst.setOnClickListener {

@@ -11,6 +11,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+//directly interacts with activities and fragments, which indirectly gives access to the database via MainRepo
 @HiltViewModel
 class MainViewModel @Inject constructor(
     val mainRepo: MainRepo
@@ -109,6 +110,10 @@ class MainViewModel @Inject constructor(
     fun completePractice(title : String) = mainRepo.completePractice(title)
 
     fun getPracticeCompleted(title : String) = mainRepo.getPracticeCompleted(title)
+
+    fun completeTest(title : String) = mainRepo.completeTest(title)
+
+    fun getTestCompleted(title : String) = mainRepo.getTestCompleted(title)
 
     fun nukeLessons() = viewModelScope.launch {
         mainRepo.nukeLessons()

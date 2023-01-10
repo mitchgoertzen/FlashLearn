@@ -51,16 +51,19 @@ class LessonSelectFragment : Fragment() {
         val decorator = ItemDecoration(50)
         rvLessonList.addItemDecoration(decorator)
 
+        //create new coroutine
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
+                //get lessons from database
                 viewModel.getAllLessons().observe(viewLifecycleOwner) {
                     dbLessons = it.toMutableList()
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
+                    //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
                         lessonAdapter.addToDo(lesson)
                     }
-                }, 250) }.invoke()
+                }, 500) }.invoke()
         }
 
         return view

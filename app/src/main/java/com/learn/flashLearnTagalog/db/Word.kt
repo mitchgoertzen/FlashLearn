@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//table in database to hold words
 @Entity(tableName = "word_table")
 data class Word(
         val type:String,

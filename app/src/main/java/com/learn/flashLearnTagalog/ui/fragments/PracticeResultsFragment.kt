@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PracticeResultsFragment(private var wordList: MutableList<Word>) : Fragment(R.layout.fragment_practice_results) {
+class PracticeResultsFragment(private var wordList: MutableList<Word>, private var currentLesson: String) : Fragment(R.layout.fragment_practice_results) {
 
     @Inject
     lateinit var sharedPref : SharedPreferences
@@ -33,7 +33,7 @@ class PracticeResultsFragment(private var wordList: MutableList<Word>) : Fragmen
 
         testButton.setOnClickListener{
             leaveResults()
-            val fragment = TestFragment(wordList)
+            val fragment = TestFragment(wordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")?.commit()
             (activity as LearningActivity?)?.transitionFragment()

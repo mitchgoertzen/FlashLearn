@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//table in database to hold lessons
 @Entity(tableName = "lesson_table")
 data class Lesson(
     val title: String,
@@ -19,4 +20,7 @@ data class Lesson(
 
     @ColumnInfo(name = "practice_completed", defaultValue = "false")
     var practiceCompleted : Boolean = false
+
+    @ColumnInfo(name = "test_completed", defaultValue = "false")
+    var testCompleted : Boolean = false
 }

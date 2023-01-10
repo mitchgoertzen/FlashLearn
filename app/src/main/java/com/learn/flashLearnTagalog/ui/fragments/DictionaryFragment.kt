@@ -2,8 +2,10 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Debug
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.DictionaryAdapter
@@ -19,10 +22,7 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,7 +46,10 @@ class DictionaryFragment : Fragment() {
 
         dictionaryAdapter = DictionaryAdapter(mutableListOf())
 
+        //initialize view, give reference to proper fragment
         val view = inflater.inflate(R.layout.fragment_dictionary, container, false)
+
+        //connect local variables to elements in fragment
         val rvDictionary : RecyclerView = view.findViewById(R.id.rvDictionary)
 
         val currPage : TextView = view.findViewById(R.id.tvCurrPage)
@@ -67,6 +70,7 @@ class DictionaryFragment : Fragment() {
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
 
+        //when firstPage button is pressed, (de)/activate this and corresponding buttons
         firstPage.setOnClickListener{
             deactivateSwitch(firstPage)
             deactivateSwitch(prevPage)
@@ -74,9 +78,13 @@ class DictionaryFragment : Fragment() {
             activateSwitch(lastPage)
             currentPage = 1
             currPage.text = "1"
+
             gatherWords()
+
+
         }
 
+        //when lastPage button is pressed, (de)/activate this and corresponding buttons
         lastPage.setOnClickListener{
             deactivateSwitch(nextPage)
             deactivateSwitch(lastPage)
@@ -84,9 +92,12 @@ class DictionaryFragment : Fragment() {
             activateSwitch(prevPage)
             currentPage = numPages
             currPage.text = "$numPages"
+
             gatherWords()
+
         }
 
+        //on nextPage button press
         nextPage.setOnClickListener{
             if(!prevPage.isEnabled){
                 activateSwitch(prevPage)
@@ -98,9 +109,12 @@ class DictionaryFragment : Fragment() {
                 deactivateSwitch(lastPage)
             }
             currPage.text = currentPage.toString()
+
             gatherWords()
+
         }
 
+        //on prevPage button press
         prevPage.setOnClickListener{
             if(!nextPage.isEnabled){
                 activateSwitch(nextPage)
@@ -112,10 +126,14 @@ class DictionaryFragment : Fragment() {
                 deactivateSwitch(firstPage)
             }
             currPage.text = currentPage.toString()
+
             gatherWords()
+
         }
 
+        //set adapter to be used for displaying dictionary words
         rvDictionary.adapter = dictionaryAdapter
+        //set layout manager used for displaying dictionary (Linear)
         rvDictionary.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         gatherWords()
@@ -123,20 +141,23 @@ class DictionaryFragment : Fragment() {
         return view
     }
 
+    //
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
+        //clear currently displayed words from the screen
         dictionaryAdapter.deleteToDos()
 
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
+                //gather next set of words, confined by current page and number of words per page
                 viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage),wordsPerPage).observe(viewLifecycleOwner) {
                     wordList = it.toMutableList()
-                    for(i in 1..wordList.size){
-                        dictionaryAdapter.addToDo(wordList[i-1])
-                    }
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
-                }, 200)
+                    for(word in wordList){
+                        dictionaryAdapter.addToDo(word)
+                    }
+                }, 1000)
             }.invoke()
         }
     }

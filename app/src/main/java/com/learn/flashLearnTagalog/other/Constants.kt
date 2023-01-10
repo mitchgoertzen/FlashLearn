@@ -1,5 +1,6 @@
 package com.learn.flashLearnTagalog.other
 
+//contains used for shared preferences, which acts as storage for users' chosen app preferences
 object Constants {
     const val WORD_DATABASE_NAME = "word_db"
     const val SHARED_PREFERENCES_NAME = "sharedPref"

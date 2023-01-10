@@ -3,6 +3,8 @@ package com.learn.flashLearnTagalog.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 
+//Data Access Object
+//Used for creating an object which will directly access/alter database
 @Dao
 interface WordDAO {
 
@@ -106,6 +108,13 @@ interface WordDAO {
 
     @Query("SELECT practice_completed FROM lesson_table WHERE title == :title")
     fun getPracticeCompleted(title : String): Boolean
+
+
+    @Query("UPDATE lesson_table SET test_completed = 1 WHERE title == :title")
+    fun completeTest(title : String)
+
+    @Query("SELECT test_completed FROM lesson_table WHERE title == :title")
+    fun getTestCompleted(title : String): Boolean
 
     @Query("DELETE FROM lesson_table")
     fun nukeLessons()

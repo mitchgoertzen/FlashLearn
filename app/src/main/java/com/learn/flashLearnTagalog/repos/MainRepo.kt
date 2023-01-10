@@ -5,6 +5,8 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.db.WordDAO
 import javax.inject.Inject
 
+//connector class
+//provides functions to be used by MainViewModel, which then call the equivalent function in WordDAO
 class MainRepo @Inject constructor(
     private val wordDao : WordDAO
 ) {
@@ -76,6 +78,10 @@ class MainRepo @Inject constructor(
     fun completePractice(title : String) = wordDao.completePractice(title)
 
     fun getPracticeCompleted(title : String) = wordDao.getPracticeCompleted(title)
+
+    fun completeTest(title : String) = wordDao.completeTest(title)
+
+    fun getTestCompleted(title : String) = wordDao.getTestCompleted(title)
 
     fun nukeLessons() = wordDao.nukeLessons()
 }

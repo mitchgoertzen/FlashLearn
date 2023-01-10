@@ -36,10 +36,11 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             }else{
                level = "(Level ${currentLesson.level})"
             }
-
+            println("${currentLesson.title} $level: practice completed ${currentLesson.practiceCompleted}")
             holder.binding.tvTitle.text = currentLesson.title
             holder.binding.tvLevel.text = level
             holder.binding.ivPreview.setImageResource(currentLesson.imageID)
+
             holder.binding.ibLesson.setOnClickListener{
                 if(mContext is LearningActivity){
                     val settingsFragment = SettingsFragment(currentLesson)
