@@ -73,14 +73,14 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         val engFirst : SwitchCompat = view.findViewById(R.id.scEngFirst)
 
         testButton.setOnClickListener{
-            val fragment = TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.title)
+            val fragment = TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.id!!)
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")?.commit()
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
         println(currentTitle)
-        practiceCompleted = viewModel.getPracticeCompleted(currentTitle)
+        practiceCompleted = viewModel.getPracticeCompleted(currentLesson.id!!)
 
         if(!practiceCompleted){
             testButton.isEnabled = false
@@ -88,7 +88,7 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         }
 
         practiceButton.setOnClickListener{
-            val fragment = PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.title)
+            val fragment = PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson.id!!)
             val transaction = fragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")?.commit()
             (activity as LearningActivity?)?.transitionFragment()

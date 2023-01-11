@@ -20,6 +20,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
 
     class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
 
+
     override fun onCreateViewHolder(parent:ViewGroup, viewType:Int): LessonViewHolder {
         val binding = LessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LessonViewHolder(binding)
@@ -37,9 +38,27 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
                level = "(Level ${currentLesson.level})"
             }
             println("${currentLesson.title} $level: practice completed ${currentLesson.practiceCompleted}")
+            println("${currentLesson.title} $level: test completed ${currentLesson.testCompleted}")
             holder.binding.tvTitle.text = currentLesson.title
             holder.binding.tvLevel.text = level
             holder.binding.ivPreview.setImageResource(currentLesson.imageID)
+
+            println("id: " + currentLesson.id)
+            if(currentLesson.id!! > 1 &&
+                currentLesson.level > 1 &&
+                !currentLesson.testCompleted){
+                holder.binding.ibLesson.isEnabled = false
+                holder.binding.ibLesson.alpha = .7f
+            }else{
+                holder.binding.ibLesson.isEnabled = true
+                holder.binding.ibLesson.alpha = 1f
+            }
+
+//            if(getTestCompleted(currentLesson.id)){
+//                holder.binding.ibLesson.isEnabled = false
+//                holder.binding.ibLesson.alpha = .8f
+//            }
+
 
             holder.binding.ibLesson.setOnClickListener{
                 if(mContext is LearningActivity){

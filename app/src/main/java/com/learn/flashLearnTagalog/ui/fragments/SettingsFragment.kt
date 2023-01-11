@@ -270,15 +270,14 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                             .toMutableList()
                     }
                 }
-                val fragment = PracticeFragment(chosenWordList, currentLesson.title)
+                val fragment = PracticeFragment(chosenWordList, currentLesson.id!!)
                 transitionFragment(fragment)
 
             }
             //test
             else {
-                val fragment = TestFragment(
-                    testWordList.asSequence().shuffled().take(totalWords).toMutableList(), currentLesson.title
-                )
+                val fragment = TestFragment(testWordList.asSequence().shuffled().take(totalWords).toMutableList(),
+                    currentLesson.id!!)
                 transitionFragment(fragment)
             }
         }
@@ -474,7 +473,7 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         clipPath.addRoundRect(rect, 5f, 5f, Path.Direction.CW)
         canvas.clipPath(clipPath)
 
-        canvas.drawBitmap(bitmap, 0f, 0f, paint);
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
 
         thumbView!!.layout(0, 0, thumbView!!.measuredWidth, thumbView!!.measuredHeight)
         thumbView!!.draw(canvas)

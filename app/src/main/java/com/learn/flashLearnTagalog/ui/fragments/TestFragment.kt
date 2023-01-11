@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment(masterList : MutableList<Word>, private var currentLesson: String) : Fragment(R.layout.fragment_test) {
+class TestFragment(masterList : MutableList<Word>, private var currentLessonID: Int) : Fragment(R.layout.fragment_test) {
 
     private lateinit var toDoAdapter: ToDoAdapter
     private lateinit var answeredAdapter: ToDoAdapter
@@ -265,7 +265,7 @@ class TestFragment(masterList : MutableList<Word>, private var currentLesson: St
 
     private fun goToResults() {
 
-        viewModel.completeTest(currentLesson)
+        viewModel.completeTest(currentLessonID)
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, false)
             .apply()

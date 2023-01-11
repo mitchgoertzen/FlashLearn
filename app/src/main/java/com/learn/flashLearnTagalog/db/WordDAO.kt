@@ -103,18 +103,18 @@ interface WordDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertLesson(lesson: Lesson)
 
-    @Query("UPDATE lesson_table SET practice_completed = 1 WHERE title == :title")
-    fun completePractice(title : String)
+    @Query("UPDATE lesson_table SET practice_completed = 1 WHERE id == :id")
+    fun completePractice(id : Int)
 
-    @Query("SELECT practice_completed FROM lesson_table WHERE title == :title")
-    fun getPracticeCompleted(title : String): Boolean
+    @Query("SELECT practice_completed FROM lesson_table WHERE id == :id")
+    fun getPracticeCompleted(id : Int): Boolean
 
 
-    @Query("UPDATE lesson_table SET test_completed = 1 WHERE title == :title")
-    fun completeTest(title : String)
+    @Query("UPDATE lesson_table SET test_completed = 1 WHERE id == :id")
+    fun completeTest(id : Int)
 
-    @Query("SELECT test_completed FROM lesson_table WHERE title == :title")
-    fun getTestCompleted(title : String): Boolean
+    @Query("SELECT test_completed FROM lesson_table WHERE id == :id")
+    fun getTestCompleted(id : Int): Boolean
 
     @Query("DELETE FROM lesson_table")
     fun nukeLessons()

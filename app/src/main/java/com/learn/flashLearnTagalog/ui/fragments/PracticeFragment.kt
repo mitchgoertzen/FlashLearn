@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PracticeFragment(masterList : MutableList<Word>, private var currentLesson: String) : Fragment(R.layout.fragment_practice) {
+class PracticeFragment(masterList : MutableList<Word>, private var currentLessonID: Int) : Fragment(R.layout.fragment_practice) {
 
     private var masterWordList = masterList
     private lateinit var currentWord : Word
@@ -58,9 +58,9 @@ class PracticeFragment(masterList : MutableList<Word>, private var currentLesson
             finishButton.visibility = View.GONE
 
         finishButton.setOnClickListener{
-            println(currentLesson)
-            viewModel.completePractice(currentLesson)
-            val fragment = PracticeResultsFragment(masterWordList, currentLesson)
+            println(currentLessonID)
+            viewModel.completePractice(currentLessonID)
+            val fragment = PracticeResultsFragment(masterWordList, currentLessonID)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice results")?.commit()
             (activity as LearningActivity?)?.transitionFragment()

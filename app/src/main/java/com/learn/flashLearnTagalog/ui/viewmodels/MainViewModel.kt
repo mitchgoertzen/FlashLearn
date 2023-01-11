@@ -107,13 +107,13 @@ class MainViewModel @Inject constructor(
 
     }
 
-    fun completePractice(title : String) = mainRepo.completePractice(title)
+    fun completePractice(title : Int) = mainRepo.completePractice(title)
 
-    fun getPracticeCompleted(title : String) = mainRepo.getPracticeCompleted(title)
+    fun getPracticeCompleted(title : Int) = mainRepo.getPracticeCompleted(title)
 
-    fun completeTest(title : String) = mainRepo.completeTest(title)
+    fun completeTest(title : Int) = mainRepo.completeTest(title)
 
-    fun getTestCompleted(title : String) = mainRepo.getTestCompleted(title)
+    fun getTestCompleted(title : Int) = mainRepo.getTestCompleted(title)
 
     fun nukeLessons() = viewModelScope.launch {
         mainRepo.nukeLessons()

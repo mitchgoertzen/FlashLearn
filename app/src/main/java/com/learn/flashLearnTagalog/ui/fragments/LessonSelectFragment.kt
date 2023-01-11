@@ -61,6 +61,7 @@ class LessonSelectFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
+
                         lessonAdapter.addToDo(lesson)
                     }
                 }, 500) }.invoke()

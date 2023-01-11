@@ -75,13 +75,13 @@ class MainRepo @Inject constructor(
 
     suspend fun insertLesson(lesson: Lesson) = wordDao.insertLesson(lesson)
 
-    fun completePractice(title : String) = wordDao.completePractice(title)
+    fun completePractice(title : Int) = wordDao.completePractice(title)
 
-    fun getPracticeCompleted(title : String) = wordDao.getPracticeCompleted(title)
+    fun getPracticeCompleted(title : Int) = wordDao.getPracticeCompleted(title)
 
-    fun completeTest(title : String) = wordDao.completeTest(title)
+    fun completeTest(title : Int) = wordDao.completeTest(title)
 
-    fun getTestCompleted(title : String) = wordDao.getTestCompleted(title)
+    fun getTestCompleted(title : Int) = wordDao.getTestCompleted(title)
 
     fun nukeLessons() = wordDao.nukeLessons()
 }
