@@ -45,7 +45,7 @@ class HomeActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        sharedPref.edit().clear().apply()
+        //sharedPref.edit().clear().apply()
 
         size = viewModel.getSize()
 
