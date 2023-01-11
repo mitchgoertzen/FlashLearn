@@ -32,32 +32,23 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         holder.itemView.apply {
             val mContext = FragmentComponentManager.findActivity(context) as Activity
             var level = ""
+
             if(currentLesson.level == 0){
                 holder.binding.tvTitle.maxLines = 2
             }else{
                level = "(Level ${currentLesson.level})"
             }
-            println("${currentLesson.title} $level: practice completed ${currentLesson.practiceCompleted}")
-            println("${currentLesson.title} $level: test completed ${currentLesson.testCompleted}")
             holder.binding.tvTitle.text = currentLesson.title
             holder.binding.tvLevel.text = level
             holder.binding.ivPreview.setImageResource(currentLesson.imageID)
 
-            println("id: " + currentLesson.id)
-            if(currentLesson.id!! > 1 &&
-                currentLesson.level > 1 &&
-                !currentLesson.testCompleted){
+            if(currentLesson.locked){
                 holder.binding.ibLesson.isEnabled = false
                 holder.binding.ibLesson.alpha = .7f
             }else{
                 holder.binding.ibLesson.isEnabled = true
                 holder.binding.ibLesson.alpha = 1f
             }
-
-//            if(getTestCompleted(currentLesson.id)){
-//                holder.binding.ibLesson.isEnabled = false
-//                holder.binding.ibLesson.alpha = .8f
-//            }
 
 
             holder.binding.ibLesson.setOnClickListener{

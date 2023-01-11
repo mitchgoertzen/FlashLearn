@@ -270,14 +270,14 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                             .toMutableList()
                     }
                 }
-                val fragment = PracticeFragment(chosenWordList, currentLesson.id!!)
+                val fragment = PracticeFragment(chosenWordList, currentLesson)
                 transitionFragment(fragment)
 
             }
             //test
             else {
                 val fragment = TestFragment(testWordList.asSequence().shuffled().take(totalWords).toMutableList(),
-                    currentLesson.id!!)
+                    currentLesson)
                 transitionFragment(fragment)
             }
         }

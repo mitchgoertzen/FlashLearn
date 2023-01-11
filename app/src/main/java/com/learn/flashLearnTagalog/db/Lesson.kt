@@ -21,6 +21,6 @@ data class Lesson(
     @ColumnInfo(name = "practice_completed", defaultValue = "false")
     var practiceCompleted : Boolean = false
 
-    @ColumnInfo(name = "test_completed", defaultValue = "false")
-    var testCompleted : Boolean = false
+    @ColumnInfo(name = "locked", defaultValue = "false")
+    var locked : Boolean = true
 }

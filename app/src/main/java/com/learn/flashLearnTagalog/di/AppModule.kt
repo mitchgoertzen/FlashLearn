@@ -38,9 +38,7 @@ object AppModule {
         app,
         WordDatabase::class.java,
         WORD_DATABASE_NAME
-        ).allowMainThreadQueries()
-        .fallbackToDestructiveMigration()
-        .build()
+        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
     @Singleton
     @Provides

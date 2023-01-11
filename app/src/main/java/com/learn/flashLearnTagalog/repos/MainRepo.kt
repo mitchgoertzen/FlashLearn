@@ -75,13 +75,9 @@ class MainRepo @Inject constructor(
 
     suspend fun insertLesson(lesson: Lesson) = wordDao.insertLesson(lesson)
 
-    fun completePractice(title : Int) = wordDao.completePractice(title)
+    fun unlockNextLesson(category : String, level : Int) = wordDao.unlockNextLesson(category, level)
 
-    fun getPracticeCompleted(title : Int) = wordDao.getPracticeCompleted(title)
-
-    fun completeTest(title : Int) = wordDao.completeTest(title)
-
-    fun getTestCompleted(title : Int) = wordDao.getTestCompleted(title)
+    fun completePractice(id : Int) = wordDao.completePractice(id)
 
     fun nukeLessons() = wordDao.nukeLessons()
 }

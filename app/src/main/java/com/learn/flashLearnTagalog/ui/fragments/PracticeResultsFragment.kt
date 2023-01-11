@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PracticeResultsFragment(private var wordList: MutableList<Word>, private var currentLessonID: Int) : Fragment(R.layout.fragment_practice_results) {
+class PracticeResultsFragment(private var wordList: MutableList<Word>, private var currentLesson: Lesson) : Fragment(R.layout.fragment_practice_results) {
 
     @Inject
     lateinit var sharedPref : SharedPreferences
@@ -33,7 +34,7 @@ class PracticeResultsFragment(private var wordList: MutableList<Word>, private v
 
         testButton.setOnClickListener{
             leaveResults()
-            val fragment = TestFragment(wordList, currentLessonID)
+            val fragment = TestFragment(wordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")?.commit()
             (activity as LearningActivity?)?.transitionFragment()

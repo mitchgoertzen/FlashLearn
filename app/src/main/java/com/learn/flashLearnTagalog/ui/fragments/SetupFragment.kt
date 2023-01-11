@@ -112,6 +112,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         viewModel.insertAll(words)
 
         val lesson1 = Lesson("Custom\nLesson", R.drawable.custom,0,-1,-1)
+        lesson1.locked = false
         myLessons.add(lesson1)
 
 
@@ -196,6 +197,8 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         var minLength = overrideMin
         var maxLength = overrideMax
 
+
+
         if(overrideMin == -1) {
             when(level){
                 1-> {
@@ -213,6 +216,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
             }
         }
 
-        return Lesson(title,imageID,level,minLength, maxLength)
+        val newLesson = Lesson(title,imageID,level,minLength, maxLength)
+
+        if(level < 2)
+            newLesson.locked = false
+
+        return newLesson
     }
 }
