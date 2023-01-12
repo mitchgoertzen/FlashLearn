@@ -6,11 +6,11 @@ import androidx.room.RoomDatabase
 
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [Word::class, Lesson::class],
     exportSchema = true,
     autoMigrations = [
-        AutoMigration (from = 2, to = 3)
+        AutoMigration (from = 3, to = 4)
     ]
 )
 

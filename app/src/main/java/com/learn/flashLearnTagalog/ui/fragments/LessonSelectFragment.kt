@@ -7,6 +7,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -43,6 +45,20 @@ class LessonSelectFragment : Fragment() {
         var dbLessons : MutableList<Lesson> = mutableListOf()
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
+
+
+        val languages = resources.getStringArray(R.array.Sorting)
+
+        val spinner: Spinner = view.findViewById(R.id.spSortDropdown)
+
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item, languages
+        )
+
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner.adapter = spinnerAdapter
+
         val rvLessonList : RecyclerView = view.findViewById(R.id.rvLessons)
 
         rvLessonList.adapter = lessonAdapter
