@@ -49,6 +49,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:spinnerMode="dialog"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toStartOf="@+id/glVertical3"
         app:layout_constraintStart_toStartOf="@+id/glVertical1"

@@ -95,45 +95,35 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
     }
 
 
-    fun sortList(type : Int, order : Int) {
-        println("sorting")
-        val customLesson: Lesson = lessons.removeAt(0)
+    fun sortList(type : Int) {
+        if(lessons.size > 0){
+            println("sorting")
+            val customLesson: Lesson = lessons.removeAt(0)
 
-        when(type){
-            //Category
-            0 -> {
-                if(order > 0)
+            when(type){
+                //Category
+                0 -> {
                     lessons.sortWith(compareBy<Lesson> { it.title }.thenBy { it.level })
-                else
-                    lessons.sortWith(compareByDescending<Lesson> { it.title }.thenBy { it.level })
-            }
-            //Subcategory
-            1 -> {
-                if(order > 0)
-                    lessons.sortWith(compareByDescending<Lesson> { it.title }.thenBy { it.level })
-                else
+                }
+                //Subcategory
+                1 -> {
                     lessons.sortWith(compareBy<Lesson> { it.title }.thenBy { it.level })
-            }
-            //Difficulty
-            2 -> {
-                if(order > 0)
+                }
+                //Difficulty low to high
+                2 -> {
                     lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.title })
-                else
+                }
+                //Difficulty high to low
+                3 -> {
                     lessons.sortWith(compareByDescending<Lesson> { it.level }.thenBy { it.title })
-            }
-            //Locked
-            3 -> {
-                if(order > 0)
+                }
+                //Locked
+                4 -> {
                     lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.level }.thenBy { it.title })
-                else
-                    lessons.sortWith(compareByDescending<Lesson> { it.locked }.thenBy { it.level }.thenBy { it.title })
+                }
             }
+            lessons.add(0, customLesson)
+            notifyDataSetChanged()
         }
-
-
-        lessons.add(0, customLesson)
-
-
-        notifyDataSetChanged()
     }
 }

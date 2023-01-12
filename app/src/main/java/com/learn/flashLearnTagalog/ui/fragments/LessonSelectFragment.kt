@@ -7,7 +7,10 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ImageButton
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,6 +22,7 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -35,6 +39,7 @@ class LessonSelectFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels()
 
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,13 +63,26 @@ class LessonSelectFragment : Fragment() {
             R.layout.spinner_item, languages
         )
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
+        spinner.prompt = "Sort by: "
         spinner.visibility = View.INVISIBLE
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+                //val item = parent.getItemAtPosition(pos)
+                println("$pos selected")
+                lessonAdapter.sortList(pos)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("nothing")
+                lessonAdapter.sortList(2)}
+        }
 
         btnFilter.setOnClickListener{
             spinner.performClick()
-            //showFilterPopup(view)
+
         }
 
 
@@ -87,6 +105,7 @@ class LessonSelectFragment : Fragment() {
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
                         lessonAdapter.addToDo(lesson)
+                        lessonAdapter.sortList(2)
                     }
                 }, 500) }.invoke()
         }
