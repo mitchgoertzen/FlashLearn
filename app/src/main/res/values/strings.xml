@@ -6,7 +6,8 @@
     <string-array name="Sorting">
         <item>Category</item>
         <item>Subcategory</item>
-        <item>Difficulty</item>
+        <item>Difficulty: Low to High</item>
+        <item>Difficulty: High to Low</item>
         <item>Unlocked</item>
     </string-array>
 

@@ -34,15 +34,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@android:drawable/ic_search_category_default"
-        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
-        app:layout_constraintEnd_toStartOf="@+id/glVertical2"
-        app:layout_constraintStart_toStartOf="@+id/glVertical1"
-        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:src="@android:drawable/ic_search_category_default"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/glVertical4"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/spSortDropdown"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />-->
 
     <Spinner
         android:id="@+id/spSortDropdown"
@@ -51,18 +51,21 @@
         android:background="@null"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toStartOf="@+id/glVertical3"
-        app:layout_constraintStart_toStartOf="@+id/glVertical2"
+        app:layout_constraintStart_toStartOf="@+id/glVertical1"
         app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ibFilter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@android:drawable/ic_menu_upload"
+        android:background="#00FFFF00"
+        android:src="@android:drawable/ic_search_category_default"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toStartOf="@+id/glVertical4"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/glVertical3"
-        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />
+        app:layout_constraintTop_toTopOf="@+id/glHorizontal1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glHorizontal2"
@@ -78,12 +81,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05"  />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glVertical2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15"  />
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/glVertical2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.15"  />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical3"

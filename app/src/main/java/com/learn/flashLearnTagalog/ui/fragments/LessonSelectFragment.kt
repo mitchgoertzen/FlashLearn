@@ -7,23 +7,23 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.ItemDecoration
-import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class LessonSelectFragment : Fragment() {
@@ -46,6 +46,8 @@ class LessonSelectFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 
+        val btnFilter : ImageButton = view.findViewById(R.id.ibFilter)
+
 
         val languages = resources.getStringArray(R.array.Sorting)
 
@@ -58,6 +60,13 @@ class LessonSelectFragment : Fragment() {
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner.adapter = spinnerAdapter
+        spinner.visibility = View.INVISIBLE
+
+        btnFilter.setOnClickListener{
+            spinner.performClick()
+            //showFilterPopup(view)
+        }
+
 
         val rvLessonList : RecyclerView = view.findViewById(R.id.rvLessons)
 
