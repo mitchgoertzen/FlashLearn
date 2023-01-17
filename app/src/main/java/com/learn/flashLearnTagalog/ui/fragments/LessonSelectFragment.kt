@@ -11,6 +11,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,6 +66,7 @@ class LessonSelectFragment : Fragment() {
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
+        spinner.setSelection(2);
         spinner.prompt = "Sort by: "
         spinner.visibility = View.INVISIBLE
 
@@ -81,8 +83,11 @@ class LessonSelectFragment : Fragment() {
         }
 
         btnFilter.setOnClickListener{
-            spinner.performClick()
+            //spinner.performClick()
+            val dialog : DialogFragment = FilterLessonFragment()
 
+            dialog.isCancelable = true
+            dialog.show(requireActivity().supportFragmentManager, "test")
         }
 
 
