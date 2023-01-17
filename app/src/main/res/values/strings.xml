@@ -4,11 +4,12 @@
     <string name="sort_by">Sort by:</string>
 
     <string-array name="Sorting">
-        <item>Category</item>
-        <item>Subcategory</item>
-        <item>Difficulty: Low to High</item>
-        <item>Difficulty: High to Low</item>
-        <item>Unlocked</item>
+        <item>All</item>
+        <item>Animals</item>
+        <item>Body</item>
+        <item>Food</item>
+        <item>Geography</item>
+        <item>People</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

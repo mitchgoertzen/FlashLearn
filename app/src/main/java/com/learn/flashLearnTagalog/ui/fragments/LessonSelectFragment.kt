@@ -55,32 +55,7 @@ class LessonSelectFragment : Fragment() {
         val btnFilter : ImageButton = view.findViewById(R.id.ibFilter)
 
 
-        val languages = resources.getStringArray(R.array.Sorting)
 
-        val spinner: Spinner = view.findViewById(R.id.spSortDropdown)
-
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item, languages
-        )
-
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        spinner.adapter = spinnerAdapter
-        spinner.setSelection(2);
-        spinner.prompt = "Sort by: "
-        spinner.visibility = View.INVISIBLE
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-                //val item = parent.getItemAtPosition(pos)
-                println("$pos selected")
-                lessonAdapter.sortList(pos)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("nothing")
-                lessonAdapter.sortList(2)}
-        }
 
         btnFilter.setOnClickListener{
             //spinner.performClick()

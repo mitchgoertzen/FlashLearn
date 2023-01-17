@@ -4,5 +4,5 @@
     android:layout_height="wrap_content"
     android:textAlignment="textStart"
     android:spinnerMode="dropdown"
-    android:textColor="@color/white"
-    android:textSize="20sp"/>
+    android:textColor="@color/blue"
+    android:textSize="14sp"/>

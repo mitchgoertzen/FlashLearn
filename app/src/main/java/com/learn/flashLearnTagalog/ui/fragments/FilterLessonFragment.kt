@@ -6,8 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.FrameLayout
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import com.learn.flashLearnTagalog.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,14 +56,30 @@ class FilterLessonFragment() : DialogFragment() {
             true
         }
 
-        onInterceptTouchEvent()
-
         popup.setBackgroundResource(R.drawable.filter_lesson_popup)
+
+        val languages = resources.getStringArray(R.array.Sorting)
+
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item, languages
+        )
+
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinner.adapter = spinnerAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                println("nothing")
+            }
+        }
 
         return view
     }
 }
 
-private fun onInterceptTouchEvent(): Boolean{
-    return true
-}

@@ -20,9 +20,10 @@
     <LinearLayout
         android:id="@+id/llFilterPopup"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:orientation="vertical"
 
         app:layout_constraintBottom_toTopOf="@+id/guideline41"
@@ -34,11 +35,9 @@
             android:id="@+id/tvHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="15dp"
             android:paddingStart="15dp"
             android:paddingBottom="5dp"
-            android:gravity="center"
-            android:text="Sort By:"
+            android:text="Sort By"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -52,7 +51,8 @@
             android:paddingStart="25dp"
             android:text="Category"
             android:textColor="@color/blue"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            />
 
         <TextView
             android:id="@+id/textView5"
@@ -70,7 +70,8 @@
             android:paddingStart="25dp"
             android:text="Difficulty: Low to High"
             android:textColor="@color/blue"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:background="@drawable/selected_text_background"/>
 
         <TextView
             android:id="@+id/textView12"
@@ -89,6 +90,149 @@
             android:text="Unlocked"
             android:textColor="@color/blue"
             android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvHint2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingStart="15dp"
+            android:paddingBottom="5dp"
+            android:text="Category"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorHighlight="#407BF1"
+            android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="176dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/faded_blue"
+            />
+
+
+        <TextView
+            android:id="@+id/tvHint4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingStart="15dp"
+            android:paddingBottom="5dp"
+            android:text="Difficulty"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorHighlight="#407BF1"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBox5"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:buttonTint="@color/faded_blue"
+                    android:text="Level 1"
+                    android:textColor="@color/blue" />
+
+                <CheckBox
+                    android:id="@+id/checkBox4"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:buttonTint="@color/faded_blue"
+                    android:text="Level 3"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="88dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/checkBox3"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:buttonTint="@color/faded_blue"
+                    android:text="Level 2"
+                    android:textColor="@color/blue" />
+
+                <CheckBox
+                    android:id="@+id/checkBox2"
+                    android:layout_width="match_parent"
+                    android:layout_height="22dp"
+                    android:buttonTint="@color/faded_blue"
+                    android:text="Level 4"
+                    android:textColor="@color/blue" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHint3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="Misc"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorHighlight="#407BF1"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/checkBoxprac"
+                android:layout_width="176dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:buttonTint="@color/faded_blue"
+                android:text="Practice Completed"
+                android:textColor="@color/blue" />
+
+            <CheckBox
+                android:layout_width="176dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:buttonTint="@color/faded_blue"
+                android:text="Test Attempted"
+                android:textColor="@color/blue" />
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="176dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:buttonTint="@color/faded_blue"
+                android:text="Unlocked"
+                android:textColor="@color/blue" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:text="Apply"
+            android:layout_gravity="right"
+            app:strokeColor="#FCD116"
+            app:strokeWidth="1dp"/>
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
