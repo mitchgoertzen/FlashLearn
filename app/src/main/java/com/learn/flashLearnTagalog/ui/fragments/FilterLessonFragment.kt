@@ -10,11 +10,11 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.SortOptionAdapter
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,8 +27,8 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     lateinit var sharedPref : SharedPreferences
 
     private lateinit var sortOptionAdapter: SortOptionAdapter
-
-    private var difficulties : MutableSet<String> = mutableSetOf()
+    private var difficulties: MutableSet<String> = mutableSetOf()
+    //private var difficulties : MutableSet<String> = mutableSetOf()
 
     override fun onStart() {
         super.onStart()
@@ -39,7 +39,15 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
+
+       // val newSet: Set<String> = HashSet<String>(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, HashSet<String>()))
+        //val fetch: Set<String> = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)!!
+        //sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
+
+
+
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -47,6 +55,11 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+
+        println("pref: ${sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())}")
+        sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
+            difficulties.add(it)
+        }
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -92,7 +105,12 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             R.layout.spinner_item, languages
         )
 
+        println("difficulties: $difficulties")
+        //TODO: change to function,  dont repeat 4 times
         val level1 : CheckBox = view.findViewById(R.id.cbLevel1)
+        if(difficulties.contains("1")){
+            level1.isChecked = true
+        }
         level1.setOnClickListener{
             if (level1.isChecked){
                 difficulties.add("1")
@@ -102,6 +120,8 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         }
 
         val level2 : CheckBox = view.findViewById(R.id.cbLevel2)
+        if(difficulties.contains("2"))
+            level2.isChecked = true
         level2.setOnClickListener{
             if (level2.isChecked){
                 difficulties.add("2")
@@ -111,6 +131,8 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         }
 
         val level3 : CheckBox = view.findViewById(R.id.cbLevel3)
+        if(difficulties.contains("3"))
+            level3.isChecked = true
         level3.setOnClickListener{
             if (level3.isChecked){
                 difficulties.add("3")
@@ -119,6 +141,8 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             }
         }
         val level4 : CheckBox = view.findViewById(R.id.cbLevel4)
+        if(difficulties.contains("4"))
+            level4.isChecked = true
         level4.setOnClickListener{
             if (level4.isChecked){
                 difficulties.add("4")
@@ -133,18 +157,23 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         val apply : Button = view.findViewById(R.id.btnApplyFilters)
 
+
         apply.setOnClickListener{
             lessonAdapter.sortList(sortOptionAdapter.getSelected())
+
             sharedPref.edit()
                 .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
                 .apply()
-            for(s in difficulties){
-                sharedPref.edit()
-                    .putStringSet(s, mutableSetOf())
-                    .apply()
-            }
-            lessonAdapter.updateFilters(difficulties)
+
+            sharedPref.edit()
+                .putStringSet(KEY_LESSON_DIFFICULTY, difficulties)
+                .apply()
+
+            lessonAdapter.deleteToDos()
+
             dialog?.dismiss()
+
+            (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
         }
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
@@ -161,5 +190,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         return view
     }
+
+
 }
 

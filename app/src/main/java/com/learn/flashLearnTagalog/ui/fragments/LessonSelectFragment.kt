@@ -7,10 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageButton
-import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,6 +19,7 @@ import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +48,6 @@ class LessonSelectFragment : Fragment() {
     ): View? {
 
         lessonAdapter = LessonAdapter(mutableListOf())
-        var dbLessons : MutableList<Lesson> = mutableListOf()
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 
@@ -64,7 +61,7 @@ class LessonSelectFragment : Fragment() {
             val dialog : DialogFragment = FilterLessonFragment(lessonAdapter)
 
             dialog.isCancelable = true
-            dialog.show(requireActivity().supportFragmentManager, "test")
+            dialog.show(childFragmentManager, "test")
         }
 
 
@@ -77,6 +74,15 @@ class LessonSelectFragment : Fragment() {
         rvLessonList.addItemDecoration(decorator)
 
         //create new coroutine
+        createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)!!)
+
+        return view
+    }
+
+    fun createLessonList(difficulties: MutableSet<String>){
+        println("create lesson $difficulties")
+        difficulties!!.add("0")
+        var dbLessons : MutableList<Lesson> = mutableListOf()
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
                 //get lessons from database
@@ -85,17 +91,16 @@ class LessonSelectFragment : Fragment() {
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
 
-                    println(sharedPref.getStringSet(KEY_DIFFICULTY, mutableSetOf()))
 
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
-                        lessonAdapter.addToDo(lesson)
+                        if(difficulties!!.contains((lesson.level).toString()))
+                            lessonAdapter.addToDo(lesson)
                     }
                     //TODO: used saved variable, not hardcoded
                     lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 2))
                 }, 500) }.invoke()
         }
-
-        return view
     }
+
 }

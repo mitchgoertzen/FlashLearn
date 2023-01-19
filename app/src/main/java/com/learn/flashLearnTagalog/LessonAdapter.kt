@@ -95,13 +95,12 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
     }
 
     fun updateFilters(difficulties : MutableSet<String>){
-
-       //TODO: clone list first, clear lessons, then repopulate list with selected difficulties
-         lessons.clear()
-        notifyDataSetChanged()
-
-        println(difficulties)
-
+//
+//        val new lessons
+//       //TODO: clone list first, clear lessons, then repopulate list with selected difficulties
+//        lessons.clear()
+//
+//
     }
 
 

@@ -113,7 +113,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun lessonFilterDifficulty(sharedPref : SharedPreferences): MutableSet<String>? = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())
+    fun lessonFilterDifficulty(sharedPref : SharedPreferences): MutableSet<String>? = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
 
     @Singleton
     @Provides
