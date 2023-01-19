@@ -59,7 +59,7 @@ class LessonSelectFragment : Fragment() {
 
         btnFilter.setOnClickListener{
             //spinner.performClick()
-            val dialog : DialogFragment = FilterLessonFragment()
+            val dialog : DialogFragment = FilterLessonFragment(lessonAdapter)
 
             dialog.isCancelable = true
             dialog.show(requireActivity().supportFragmentManager, "test")
@@ -85,8 +85,10 @@ class LessonSelectFragment : Fragment() {
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
                         lessonAdapter.addToDo(lesson)
-                        lessonAdapter.sortList(2)
                     }
+                    println("load")
+                    //TODO: used saved variable, not hardcoded
+                    lessonAdapter.sortList(2)
                 }, 500) }.invoke()
         }
 

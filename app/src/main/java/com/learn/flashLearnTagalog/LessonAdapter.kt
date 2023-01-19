@@ -97,7 +97,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
 
     fun sortList(type : Int) {
         if(lessons.size > 0){
-            println("sorting")
+            println("sorting by type: $type")
             val customLesson: Lesson = lessons.removeAt(0)
 
             when(type){

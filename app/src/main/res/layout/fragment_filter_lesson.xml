@@ -44,52 +44,57 @@
             android:textColorHighlight="#407BF1"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:text="Category"
-            android:textColor="@color/blue"
-            android:textSize="14sp"
-            />
+        <!--        <TextView-->
+<!--            android:id="@+id/textView4"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="25dp"-->
+<!--            android:text="Category"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="14sp"-->
+<!--            />-->
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:text="Subcategory"
-            android:textColor="@color/blue"
-            android:textSize="14sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView5"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="25dp"-->
+<!--            android:text="Subcategory"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:text="Difficulty: Low to High"
-            android:textColor="@color/blue"
-            android:textSize="14sp"
-            android:background="@drawable/selected_text_background"/>
+<!--        <TextView-->
+<!--            android:id="@+id/textView11"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="25dp"-->
+<!--            android:text="Difficulty: Low to High"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="14sp"-->
+<!--            android:background="@drawable/selected_text_background"/>-->
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:text="Difficulty: High to Low"
-            android:textColor="@color/blue"
-            android:textSize="14sp"/>
+<!--        <TextView-->
+<!--            android:id="@+id/textView12"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="25dp"-->
+<!--            android:text="Difficulty: High to Low"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="14sp"/>-->
 
-        <TextView
-            android:id="@+id/textView13"
+<!--        <TextView-->
+<!--            android:id="@+id/textView13"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:paddingStart="25dp"-->
+<!--            android:text="Unlocked"-->
+<!--            android:textColor="@color/blue"-->
+<!--            android:textSize="14sp"/>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSortingOptions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:text="Unlocked"
-            android:textColor="@color/blue"
-            android:textSize="14sp"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/tvHint2"
@@ -224,7 +229,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnApplyFilters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"

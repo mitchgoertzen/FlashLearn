@@ -8,16 +8,24 @@ import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.DictionaryAdapter
+import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.SortOptionAdapter
+import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FilterLessonFragment() : DialogFragment() {
+class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFragment() {
 
     @Inject
     lateinit var sharedPref : SharedPreferences
+
+    private lateinit var sortOptionAdapter: SortOptionAdapter
 
     override fun onStart() {
         super.onStart()
@@ -42,6 +50,20 @@ class FilterLessonFragment() : DialogFragment() {
 
         val window : FrameLayout = view.findViewById(R.id.clHintBackground)
 
+        sortOptionAdapter = SortOptionAdapter(mutableListOf())
+
+
+        //connect local variables to elements in fragment
+        val rvSortOptions : RecyclerView = view.findViewById(R.id.rvSortingOptions)
+
+        rvSortOptions.adapter = sortOptionAdapter
+        rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+
+        sortOptionAdapter.addToDo("Category")
+        sortOptionAdapter.addToDo("Subcategory")
+        sortOptionAdapter.addToDo("Difficulty: Low to High")
+        sortOptionAdapter.addToDo("Difficulty: High to Low")
+        sortOptionAdapter.addToDo("Unlocked")
 
         window.setOnTouchListener { v, event ->
             when (event?.action) {
@@ -66,6 +88,13 @@ class FilterLessonFragment() : DialogFragment() {
             requireContext(),
             R.layout.spinner_item, languages
         )
+
+        val apply : Button = view.findViewById(R.id.btnApplyFilters)
+
+        apply.setOnClickListener{
+            lessonAdapter.sortList(sortOptionAdapter.getSelected())
+            dialog?.dismiss()
+        }
 
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
