@@ -94,10 +94,19 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         return lessons
     }
 
+    fun updateFilters(difficulties : MutableSet<String>){
+
+       //TODO: clone list first, clear lessons, then repopulate list with selected difficulties
+         lessons.clear()
+        notifyDataSetChanged()
+
+        println(difficulties)
+
+    }
+
 
     fun sortList(type : Int) {
         if(lessons.size > 0){
-            println("sorting by type: $type")
             val customLesson: Lesson = lessons.removeAt(0)
 
             when(type){

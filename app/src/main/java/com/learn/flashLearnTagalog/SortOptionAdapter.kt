@@ -9,11 +9,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SortOptionAdapter @Inject constructor(private var options: MutableList<String>) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
+class SortOptionAdapter @Inject constructor(private var options: MutableList<String>, savedSortPosition : Int) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
 
     lateinit var optionsList : ArrayList<String>
     //TODO: used saved variable, not hardcoded
-    var currentSelection : Int = 2
+    var currentSelection : Int = savedSortPosition
     lateinit var  currentSelect : TextView
 
     class SortOptionViewHolder(val binding: SortOptionBinding) : RecyclerView.ViewHolder(binding.root)
@@ -32,7 +32,6 @@ class SortOptionAdapter @Inject constructor(private var options: MutableList<Str
             val option = holder.binding.textView5
             option.text = currentOption
             option.setOnClickListener{
-                println(position)
                 currentSelection = position
                 currentSelect.setBackgroundResource(R.color.white)
                 select(option)

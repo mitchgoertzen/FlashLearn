@@ -10,7 +10,8 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.DictionaryAdapter
+
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.SortOptionAdapter
@@ -26,6 +27,8 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     lateinit var sharedPref : SharedPreferences
 
     private lateinit var sortOptionAdapter: SortOptionAdapter
+
+    private var difficulties : MutableSet<String> = mutableSetOf()
 
     override fun onStart() {
         super.onStart()
@@ -50,7 +53,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         val window : FrameLayout = view.findViewById(R.id.clHintBackground)
 
-        sortOptionAdapter = SortOptionAdapter(mutableListOf())
+        sortOptionAdapter = SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
 
 
         //connect local variables to elements in fragment
@@ -89,10 +92,58 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             R.layout.spinner_item, languages
         )
 
+        val level1 : CheckBox = view.findViewById(R.id.cbLevel1)
+        level1.setOnClickListener{
+            if (level1.isChecked){
+                difficulties.add("1")
+            }else{
+                difficulties.remove("1")
+            }
+        }
+
+        val level2 : CheckBox = view.findViewById(R.id.cbLevel2)
+        level2.setOnClickListener{
+            if (level2.isChecked){
+                difficulties.add("2")
+            }else{
+                difficulties.remove("2")
+            }
+        }
+
+        val level3 : CheckBox = view.findViewById(R.id.cbLevel3)
+        level3.setOnClickListener{
+            if (level3.isChecked){
+                difficulties.add("3")
+            }else{
+                difficulties.remove("3")
+            }
+        }
+        val level4 : CheckBox = view.findViewById(R.id.cbLevel4)
+        level4.setOnClickListener{
+            if (level4.isChecked){
+                difficulties.add("4")
+            }else{
+                difficulties.remove("4")
+            }
+        }
+
+        val practiceCompleted : CheckBox = view.findViewById(R.id.cbPrac)
+        val testAttempted : CheckBox = view.findViewById(R.id.cbTest)
+        val unlocked : CheckBox = view.findViewById(R.id.cbUnlock)
+
         val apply : Button = view.findViewById(R.id.btnApplyFilters)
 
         apply.setOnClickListener{
             lessonAdapter.sortList(sortOptionAdapter.getSelected())
+            sharedPref.edit()
+                .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
+                .apply()
+            for(s in difficulties){
+                sharedPref.edit()
+                    .putStringSet(s, mutableSetOf())
+                    .apply()
+            }
+            lessonAdapter.updateFilters(difficulties)
             dialog?.dismiss()
         }
 

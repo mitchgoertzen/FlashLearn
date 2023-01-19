@@ -21,6 +21,8 @@ import com.learn.flashLearnTagalog.ItemDecoration
 import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -82,13 +84,15 @@ class LessonSelectFragment : Fragment() {
                     dbLessons = it.toMutableList()
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
+
+                    println(sharedPref.getStringSet(KEY_DIFFICULTY, mutableSetOf()))
+
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
                         lessonAdapter.addToDo(lesson)
                     }
-                    println("load")
                     //TODO: used saved variable, not hardcoded
-                    lessonAdapter.sortList(2)
+                    lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 2))
                 }, 500) }.invoke()
         }
 

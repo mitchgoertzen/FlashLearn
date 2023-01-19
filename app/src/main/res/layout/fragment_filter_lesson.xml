@@ -143,7 +143,7 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/cbLevel1"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
@@ -151,7 +151,7 @@
                     android:textColor="@color/blue" />
 
                 <CheckBox
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/cbLevel3"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
@@ -165,7 +165,7 @@
                 android:orientation="vertical">
 
                 <CheckBox
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/cbLevel2"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
@@ -173,7 +173,7 @@
                     android:textColor="@color/blue" />
 
                 <CheckBox
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/cbLevel4"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
@@ -202,7 +202,7 @@
             android:orientation="vertical">
 
             <CheckBox
-                android:id="@+id/checkBoxprac"
+                android:id="@+id/cbPrac"
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"
@@ -211,6 +211,7 @@
                 android:textColor="@color/blue" />
 
             <CheckBox
+                android:id="@+id/cbTest"
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"
@@ -219,7 +220,7 @@
                 android:textColor="@color/blue" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/cbUnlock"
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"

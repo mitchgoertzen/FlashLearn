@@ -10,6 +10,12 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENABLE_PRONUNCIATION
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
 import com.learn.flashLearnTagalog.other.Constants.KEY_FIRST_TIME_TOGGLE
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_ATTEMPTED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.other.Constants.KEY_MODE
 import com.learn.flashLearnTagalog.other.Constants.KEY_NUM_WORDS
 import com.learn.flashLearnTagalog.other.Constants.KEY_PRACTICE_NEW_WORDS
@@ -95,4 +101,29 @@ object AppModule {
     @Singleton
     @Provides
     fun providesFirstTimeToggle(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
+
+
+    @Singleton
+    @Provides
+    fun lessonFilterSort(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_SORTING,2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterCategory(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_CATEGORY,2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterDifficulty(sharedPref : SharedPreferences): MutableSet<String>? = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())
+
+    @Singleton
+    @Provides
+    fun lessonFilterPracticeCompleted(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_PRACTICE_COMPLETED,2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterTestAttempted(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_TEST_ATTEMPTED,2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterUnlocked(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_UNLOCKED,2)
 }
