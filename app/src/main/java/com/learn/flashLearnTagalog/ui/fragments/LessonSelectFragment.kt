@@ -59,8 +59,6 @@ class LessonSelectFragment : Fragment() {
         val practiceCompleteIcon : TextView = view.findViewById(R.id.tvPracCompleted)
         val testPassedIcon : TextView = view.findViewById(R.id.tvtestPassed)
 
-        println(practiceCompleteIcon.textSize)
-        println(testPassedIcon.textSize)
 
         btnFilter.setOnClickListener{
             //spinner.performClick()
@@ -83,6 +81,9 @@ class LessonSelectFragment : Fragment() {
         println(sharedPref)
         val newDifficulties = mutableSetOf("1", "2", "3", "4")
         createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+
+        println(practiceCompleteIcon.textSize)
+        println(testPassedIcon.textSize)
 
         return view
     }
