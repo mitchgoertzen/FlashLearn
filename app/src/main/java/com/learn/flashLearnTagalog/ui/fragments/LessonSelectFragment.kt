@@ -70,11 +70,13 @@ class LessonSelectFragment : Fragment() {
         rvLessonList.adapter = lessonAdapter
         rvLessonList.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
-        val decorator = ItemDecoration(50)
+        val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
 
         //create new coroutine
-        createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)!!)
+        println(sharedPref)
+        val newDifficulties = mutableSetOf("1", "2", "3", "4")
+        createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
 
         return view
     }

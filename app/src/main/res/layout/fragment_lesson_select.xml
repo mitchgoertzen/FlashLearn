@@ -116,5 +116,54 @@
         app:layout_constraintTop_toTopOf="@+id/glHorizontal2"
         app:spanCount="2" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
+        app:layout_constraintEnd_toEndOf="@+id/spSortDropdown"
+        app:layout_constraintStart_toStartOf="@+id/glVertical1"
+        app:layout_constraintTop_toTopOf="@+id/glHorizontal1">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/selected_text_background" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Practice Completed      "
+            android:textColor="#C0C0C0"
+            android:textSize="7.5sp" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:src="@drawable/selected_text_background" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:src="@drawable/selected_text_background" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Test Completed       "
+            android:textColor="#C0C0C0"
+            android:textSize="7.5sp" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

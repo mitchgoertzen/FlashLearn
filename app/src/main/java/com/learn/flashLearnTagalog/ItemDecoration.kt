@@ -12,10 +12,10 @@ class ItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.top = spacing / 3
+        outRect.top = spacing / 2
         outRect.left = spacing / 3
         outRect.right = spacing / 3
-        outRect.bottom = spacing / 3
+        outRect.bottom = spacing / 2
     }
 
 }
