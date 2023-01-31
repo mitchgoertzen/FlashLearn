@@ -128,7 +128,8 @@ class LessonSelectFragment : Fragment() {
                                 if(sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
                                     if(lesson.locked)
                                         add = false
-                            }
+                            }else
+                                add = false
                         }
                         if(add)
                             lessonAdapter.addToDo(lesson)
