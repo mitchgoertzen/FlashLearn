@@ -33,25 +33,40 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             val mContext = FragmentComponentManager.findActivity(context) as Activity
             var level = ""
 
+            val holderBinding = holder.binding
+
+            holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
+
             if(currentLesson.level == 0){
-                holder.binding.tvTitle.maxLines = 2
+                holderBinding.tvTitle.maxLines = 2
             }else{
                level = "(Level ${currentLesson.level})"
+
+                println(currentLesson)
+                println(currentLesson.testPassed)
+                println(currentLesson.practiceCompleted)
+
+                if(currentLesson.testPassed)
+                    holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_tested)
+                else if(currentLesson.practiceCompleted)
+                    holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_practiced)
             }
-            holder.binding.tvTitle.text = currentLesson.title
-            holder.binding.tvLevel.text = level
-            holder.binding.ivPreview.setImageResource(currentLesson.imageID)
+            holderBinding.tvTitle.text = currentLesson.title
+            holderBinding.tvLevel.text = level
+            holderBinding.ivPreview.setImageResource(currentLesson.imageID)
+
+
 
             if(currentLesson.locked){
-                holder.binding.ibLesson.isEnabled = false
-                holder.binding.ibLesson.alpha = .7f
+                holderBinding.ibLesson.isEnabled = false
+                holderBinding.ibLesson.alpha = .7f
             }else{
-                holder.binding.ibLesson.isEnabled = true
-                holder.binding.ibLesson.alpha = 1f
+                holderBinding.ibLesson.isEnabled = true
+                holderBinding.ibLesson.alpha = 1f
             }
 
 
-            holder.binding.ibLesson.setOnClickListener{
+            holderBinding.ibLesson.setOnClickListener{
                 if(mContext is LearningActivity){
                     val settingsFragment = SettingsFragment(currentLesson)
                     val transaction = mContext.supportFragmentManager.beginTransaction()

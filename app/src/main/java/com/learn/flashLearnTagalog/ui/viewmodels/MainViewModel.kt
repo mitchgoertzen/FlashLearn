@@ -111,6 +111,8 @@ class MainViewModel @Inject constructor(
 
     fun completePractice(id : Int) = mainRepo.completePractice(id)
 
+    fun passTest(id : Int) = mainRepo.passTest(id)
+
     fun nukeLessons() = viewModelScope.launch {
         mainRepo.nukeLessons()
         Log.d("NUKE", "lessons nuked")

@@ -109,6 +109,9 @@ interface WordDAO {
     @Query("UPDATE lesson_table SET practice_completed = 1 WHERE id == :id")
     fun completePractice(id : Int)
 
+    @Query("UPDATE lesson_table SET test_passed = 1 WHERE id == :id")
+    fun passTest(id : Int)
+
     @Query("DELETE FROM lesson_table")
     fun nukeLessons()
 }

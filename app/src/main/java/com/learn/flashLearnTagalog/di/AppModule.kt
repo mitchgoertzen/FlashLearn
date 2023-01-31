@@ -14,7 +14,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_ATTEMPTED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.other.Constants.KEY_MODE
 import com.learn.flashLearnTagalog.other.Constants.KEY_NUM_WORDS
@@ -121,7 +121,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun lessonFilterTestAttempted(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_TEST_ATTEMPTED,2)
+    fun lessonFilterTestPassed(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_TEST_PASSED,2)
 
     @Singleton
     @Provides

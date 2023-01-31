@@ -152,7 +152,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         }
 
         val practiceCompleted : CheckBox = view.findViewById(R.id.cbPrac)
-        val testAttempted : CheckBox = view.findViewById(R.id.cbTest)
+        val testPassed : CheckBox = view.findViewById(R.id.cbTest)
         val unlocked : CheckBox = view.findViewById(R.id.cbUnlock)
 
         val apply : Button = view.findViewById(R.id.btnApplyFilters)

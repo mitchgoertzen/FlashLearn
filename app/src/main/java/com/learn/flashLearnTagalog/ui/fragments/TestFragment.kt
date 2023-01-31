@@ -265,6 +265,11 @@ class TestFragment(masterList : MutableList<Word>, private var currentLesson: Le
 
     private fun goToResults() {
 
+        println(wordsCorrect.toFloat() / answeredAdapter.getToDoSize().toFloat())
+
+        if(wordsCorrect.toFloat() / answeredAdapter.getToDoSize().toFloat() >= 0.5f)
+            viewModel.passTest(currentLesson.id!!)
+
         viewModel.unlockNextLesson(currentLesson.title, currentLesson.level)
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, false)

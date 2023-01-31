@@ -216,7 +216,7 @@
                 android:layout_height="22dp"
                 android:layout_gravity="center"
                 android:buttonTint="@color/faded_blue"
-                android:text="Test Attempted"
+                android:text="Test Passed"
                 android:textColor="@color/blue" />
 
             <CheckBox

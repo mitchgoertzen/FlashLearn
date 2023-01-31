@@ -79,5 +79,7 @@ class MainRepo @Inject constructor(
 
     fun completePractice(id : Int) = wordDao.completePractice(id)
 
+    fun passTest(id : Int) = wordDao.passTest(id)
+
     fun nukeLessons() = wordDao.nukeLessons()
 }

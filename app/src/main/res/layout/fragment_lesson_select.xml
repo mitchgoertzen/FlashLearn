@@ -119,8 +119,9 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginRight="15dp"
         android:orientation="horizontal"
-        android:gravity="center"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toEndOf="@+id/spSortDropdown"
         app:layout_constraintStart_toStartOf="@+id/glVertical1"
@@ -128,41 +129,42 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:src="@drawable/selected_text_background" />
+            android:paddingEnd="5dp"
+            android:src="@drawable/practice_completed_icon" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/tvPracCompleted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  Practice Completed      "
+            android:paddingEnd="10dp"
+            android:text="Practice Completed"
+            android:maxLines="1"
             android:textColor="#C0C0C0"
-            android:textSize="7.5sp" />
+            app:autoSizeMaxTextSize="32sp"
+            app:autoSizeMinTextSize="5sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"/>
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:src="@drawable/selected_text_background" />
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-
-            android:src="@drawable/selected_text_background" />
+            android:paddingEnd="5dp"
+            android:src="@drawable/test_passed_icon" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tvtestPassed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="  Test Completed       "
+            android:maxLines="1"
+            android:text="Test Passed"
             android:textColor="#C0C0C0"
-            android:textSize="7.5sp" />
+            app:autoSizeMaxTextSize="32sp"
+            app:autoSizeMinTextSize="5sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"/>
     </LinearLayout>
 
 
