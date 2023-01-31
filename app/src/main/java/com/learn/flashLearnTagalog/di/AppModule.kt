@@ -109,7 +109,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun lessonFilterCategory(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_CATEGORY,2)
+    fun lessonFilterCategory(sharedPref : SharedPreferences)  = sharedPref.getString(KEY_LESSON_CATEGORY,"All")
 
     @Singleton
     @Provides

@@ -13,8 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.SortOptionAdapter
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,7 +31,13 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     lateinit var sharedPref : SharedPreferences
 
     private lateinit var sortOptionAdapter: SortOptionAdapter
+
     private var difficulties: MutableSet<String> = mutableSetOf()
+    private var selectCategory : String = "All"
+    private var selectPracticeCompleted : Boolean = false
+    private var selectTestPassed : Boolean = false
+    private var selectUnlocked : Boolean = false
+
     //private var difficulties : MutableSet<String> = mutableSetOf()
 
     override fun onStart() {
@@ -56,10 +66,13 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     ): View? {
         val view = inflater.inflate(R.layout.fragment_filter_lesson, container, false)
 
-        println("pref: ${sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())}")
         sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
         }
+        selectCategory = sharedPref.getString(KEY_LESSON_CATEGORY, "All")!!
+        selectPracticeCompleted  = sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false)
+        selectTestPassed  = sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false)
+        selectUnlocked  = sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false)
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -67,7 +80,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         val window : FrameLayout = view.findViewById(R.id.clHintBackground)
 
         sortOptionAdapter = SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
-
 
         //connect local variables to elements in fragment
         val rvSortOptions : RecyclerView = view.findViewById(R.id.rvSortingOptions)
@@ -99,14 +111,21 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         val languages = resources.getStringArray(R.array.Sorting)
 
         val spinner: Spinner = view.findViewById(R.id.spinner)
-
         val spinnerAdapter = ArrayAdapter(
             requireContext(),
             R.layout.spinner_item, languages
         )
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinner.adapter = spinnerAdapter
+        spinner.setSelection(spinnerAdapter.getPosition(selectCategory))
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+                selectCategory = parent.getItemAtPosition(pos).toString()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
-        println("difficulties: $difficulties")
-        //TODO: change to function,  dont repeat 4 times
+        //TODO: change to function,  don't repeat 4 times
         val level1 : CheckBox = view.findViewById(R.id.cbLevel1)
         if(difficulties.contains("1")){
             level1.isChecked = true
@@ -152,8 +171,22 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         }
 
         val practiceCompleted : CheckBox = view.findViewById(R.id.cbPrac)
+        practiceCompleted.isChecked = selectPracticeCompleted
+        practiceCompleted.setOnClickListener{
+            selectPracticeCompleted = practiceCompleted.isChecked
+        }
+
         val testPassed : CheckBox = view.findViewById(R.id.cbTest)
+        testPassed.isChecked = selectTestPassed
+        testPassed.setOnClickListener{
+            selectTestPassed = testPassed.isChecked
+        }
+
         val unlocked : CheckBox = view.findViewById(R.id.cbUnlock)
+        unlocked.isChecked = selectUnlocked
+        unlocked.setOnClickListener{
+            selectUnlocked = unlocked.isChecked
+        }
 
         val apply : Button = view.findViewById(R.id.btnApplyFilters)
 
@@ -169,6 +202,22 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
                 .putStringSet(KEY_LESSON_DIFFICULTY, difficulties)
                 .apply()
 
+            sharedPref.edit()
+                .putString(KEY_LESSON_CATEGORY, selectCategory)
+                .apply()
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
+                .apply()
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_TEST_PASSED, selectTestPassed)
+                .apply()
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_UNLOCKED, selectUnlocked)
+                .apply()
+
             lessonAdapter.deleteToDos()
 
             dialog?.dismiss()
@@ -176,17 +225,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
         }
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        spinner.adapter = spinnerAdapter
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("nothing")
-            }
-        }
 
         return view
     }

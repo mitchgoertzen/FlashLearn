@@ -115,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/faded_blue"
+            android:popupBackground="@color/white"
             />
 
 

@@ -21,8 +21,12 @@ import com.learn.flashLearnTagalog.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -90,7 +94,6 @@ class LessonSelectFragment : Fragment() {
 
     fun createLessonList(difficulties: MutableSet<String>){
         println("create lesson $difficulties")
-        difficulties!!.add("0")
         var dbLessons : MutableList<Lesson> = mutableListOf()
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
@@ -100,10 +103,34 @@ class LessonSelectFragment : Fragment() {
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
 
-
+                    var add : Boolean
                     //after database access is complete, add lessons to adapter
                     for(lesson in dbLessons){
-                        if(difficulties!!.contains((lesson.level).toString()))
+                        add = true
+                        if(lesson.level > 0){
+                            if(difficulties!!.contains((lesson.level).toString())){
+
+                                val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
+
+                                if(!category.equals("All")){
+                                    if(lesson.title != category)
+                                        add = false
+                                }
+
+                                if(sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
+                                    if(!lesson.practiceCompleted)
+                                        add = false
+
+                                if(sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
+                                    if(!lesson.testPassed)
+                                        add = false
+
+                                if(sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
+                                    if(lesson.locked)
+                                        add = false
+                            }
+                        }
+                        if(add)
                             lessonAdapter.addToDo(lesson)
                     }
                     //TODO: used saved variable, not hardcoded
