@@ -84,10 +84,10 @@ class LessonSelectFragment : Fragment() {
         //create new coroutine
         println(sharedPref)
         val newDifficulties = mutableSetOf("1", "2", "3", "4")
+        sharedPref.edit()
+            .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
+            .apply()
         createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
-
-        println(practiceCompleteIcon.textSize)
-        println(testPassedIcon.textSize)
 
         return view
     }
