@@ -23,7 +23,7 @@ import java.io.InputStreamReader
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SetupFragment : Fragment(R.layout.fragment_setup) {
+class SetupFragment(var mode : Int) : Fragment(R.layout.fragment_setup) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -46,6 +46,15 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        if(mode == 1)
+            initWords()
+        else
+            initLessons()
+
+        return inflater.inflate(R.layout.fragment_setup, container, false)
+    }
+
+    fun initWords(){
         val input:InputStream = resources.openRawResource(R.raw.tag_dollar)
         val reader = BufferedReader(InputStreamReader(input))
 
@@ -91,7 +100,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                         }
                     }
                     2 -> {
-                        if (string!![i] == '$') {
+                        if (string!![i] == '#') {
                             state = 3
                         } else {
                             eng += string!![i]
@@ -110,12 +119,14 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
 
         input.close()
         viewModel.insertAll(words)
+        initLessons()
+    }
+
+    fun initLessons(){
 
         val lesson1 = Lesson("Custom\nLesson", R.drawable.custom,0,-1,-1)
         lesson1.locked = false
         myLessons.add(lesson1)
-
-
 
         val bodyEasy = createLesson(1,"Body", R.drawable.body,0,5)
         val bodyMedium = createLesson(2,"Body", R.drawable.body,5,9)
@@ -141,6 +152,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val geographyEasy = createLesson(1,"Geography", R.drawable.mountain,-1,-1)
         val geographyMedium = createLesson(2,"Geography", R.drawable.mountain,-1,-1)
         val geographyHard = createLesson(3,"Geography", R.drawable.mountain,-1,-1)
+
         myLessons.add(geographyEasy)
         myLessons.add(geographyMedium)
         myLessons.add(geographyHard)
@@ -148,6 +160,7 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
         val foodEasy = createLesson(1,"Food", R.drawable.food,-1,-1)
         val foodMedium = createLesson(2,"Food", R.drawable.food,-1,-1)
         val foodHard = createLesson(3,"Food", R.drawable.food,-1,-1)
+
         myLessons.add(foodEasy)
         myLessons.add(foodMedium)
         myLessons.add(foodHard)
@@ -189,15 +202,11 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 .putBoolean(Constants.KEY_LESSON_INIT, true)
                 .apply()
         }
-
-        return inflater.inflate(R.layout.fragment_setup, container, false)
     }
 
     private fun createLesson(level : Int, title : String, imageID : Int, overrideMin: Int, overrideMax: Int) : Lesson{
         var minLength = overrideMin
         var maxLength = overrideMax
-
-
 
         if(overrideMin == -1) {
             when(level){
@@ -215,7 +224,6 @@ class SetupFragment : Fragment(R.layout.fragment_setup) {
                 }
             }
         }
-
         val newLesson = Lesson(title,imageID,level,minLength, maxLength)
 
         if(level < 2)
