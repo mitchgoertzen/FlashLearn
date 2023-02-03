@@ -95,12 +95,17 @@
             app:srcCompat="@drawable/profile"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <!--
+                needs to replace ad id for new store update
+                ads:adUnitId="ca-app-pub-7133464705699933/5992646757"
+        -->
+
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-7133464705699933/5992646757"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline27"
             app:layout_constraintStart_toStartOf="@+id/guideline26"

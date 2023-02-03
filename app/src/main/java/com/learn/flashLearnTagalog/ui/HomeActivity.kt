@@ -10,7 +10,10 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
@@ -51,9 +54,25 @@ class HomeActivity : AppCompatActivity() {
         //sharedPref.edit().clear().apply()
 
         if(launch){
-            MobileAds.initialize(
-                this
-            ) { }
+            // Log the Mobile Ads SDK version.
+           println("Google Mobile Ads SDK Version: " + MobileAds.getVersion())
+
+            // Initialize the Mobile Ads SDK with an AdMob App ID.
+            MobileAds.initialize(this) {}
+
+            // Set your test devices. Check your logcat output for the hashed device ID to
+            // get test ads on a physical device. e.g.
+            // "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345"))
+            // to get test ads on this device."
+            MobileAds.setRequestConfiguration(
+                RequestConfiguration.Builder().setTestDeviceIds(listOf("ABCDEF012345")).build()
+            )
+
+            // Create an ad request.
+            val adRequest = AdRequest.Builder().build()
+
+            // Start loading the ad in the background.
+            binding.adView.loadAd(adRequest)
             launch = false
         }
 
@@ -104,21 +123,33 @@ class HomeActivity : AppCompatActivity() {
 
         val isFirstOpen = sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)
 
-        if(isFirstOpen) {
+        println("size: $size")
+
+        var lessonNum = viewModel.getLessonCount()
+
+        println("lesson #: $lessonNum")
+
+        if(size == 0 || isFirstOpen) {
             writeSettingsToSharedPref()
             println("first open")
             initText.visibility = View.VISIBLE
-            init(initText)
+            init(initText, 1)
+        }else if(lessonNum == 0){
+            initText.visibility = View.VISIBLE
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_LESSON_INIT, false)
+                .apply()
+            init(initText, 2)
         }
 
     }
 
     @DelicateCoroutinesApi
-    fun init(initText:TextView){
+    fun init(initText:TextView, mode : Int){
 
         GlobalScope.launch {
             suspend {
-                val fragment = SetupFragment()
+                val fragment = SetupFragment(mode)
 
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.flInit, fragment).addToBackStack("setup").commit()
@@ -133,8 +164,6 @@ class HomeActivity : AppCompatActivity() {
                     }
 
                     refreshButtons()
-
-                    println("SIZE: " + viewModel.getSize())
                 }, 500)
             }.invoke()
         }
