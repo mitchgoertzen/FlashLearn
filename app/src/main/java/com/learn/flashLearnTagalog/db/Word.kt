@@ -1,5 +1,6 @@
 package com.learn.flashLearnTagalog.db
 
+import android.media.Image
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,11 +13,12 @@ data class Word(
         val english:String,
         val category:String
 
-//    val image:Image,
-
     ){
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null
+
+    @ColumnInfo(name = "image", defaultValue = "0")
+    var image: Int? = null
 
     @ColumnInfo(name = "word_practiced", defaultValue = "false")
     var practiced:Boolean = false
@@ -35,4 +37,6 @@ data class Word(
 
     @ColumnInfo(defaultValue = "0")
     var timesFlipped:Int = 0
+
+
 }
