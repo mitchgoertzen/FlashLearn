@@ -79,7 +79,6 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
-        println(currentTitle)
 
         if(!currentLesson.practiceCompleted){
             testButton.isEnabled = false
