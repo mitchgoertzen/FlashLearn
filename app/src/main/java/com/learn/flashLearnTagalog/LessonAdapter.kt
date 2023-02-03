@@ -36,16 +36,11 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             val holderBinding = holder.binding
 
             holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
-
             if(currentLesson.level == 0){
                 holderBinding.tvTitle.maxLines = 2
+                level = "(Any Level)"
             }else{
                level = "(Level ${currentLesson.level})"
-
-                println(currentLesson)
-                println(currentLesson.testPassed)
-                println(currentLesson.practiceCompleted)
-
                 if(currentLesson.testPassed)
                     holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_tested)
                 else if(currentLesson.practiceCompleted)
@@ -53,6 +48,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             }
             holderBinding.tvTitle.text = currentLesson.title
             holderBinding.tvLevel.text = level
+
             holderBinding.ivPreview.setImageResource(currentLesson.imageID)
 
 

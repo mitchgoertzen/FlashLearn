@@ -71,6 +71,8 @@ class MainRepo @Inject constructor(
 
     fun getAllLessons() = wordDao.getAllLessons()
 
+    fun getLessonCount() = wordDao.getLessonCount()
+
     fun insertAllLessons(lessons : List<Lesson>) = wordDao.insertAllLessons(lessons)
 
     suspend fun insertLesson(lesson: Lesson) = wordDao.insertLesson(lesson)

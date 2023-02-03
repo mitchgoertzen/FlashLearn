@@ -97,6 +97,9 @@ interface WordDAO {
     @Query("SELECT * FROM lesson_table ORDER BY level ASC")
     fun getAllLessons():LiveData<List<Lesson>>
 
+    @Query("SELECT COUNT(*) FROM lesson_table")
+    fun getLessonCount():Int
+
     @Insert
     fun insertAllLessons(lessons: List<Lesson>)
 

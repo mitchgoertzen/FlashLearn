@@ -95,6 +95,8 @@ class MainViewModel @Inject constructor(
 
     fun getAllLessons() = mainRepo.getAllLessons()
 
+    fun getLessonCount() = mainRepo.getLessonCount()
+
     fun insertAllLessons(lessons : List<Lesson>) = viewModelScope.launch {
         Log.d("INSERT", "$lessons have been inserted")
         mainRepo.insertAllLessons(lessons)
