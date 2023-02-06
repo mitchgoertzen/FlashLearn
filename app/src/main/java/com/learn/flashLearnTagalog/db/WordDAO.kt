@@ -89,6 +89,13 @@ interface WordDAO {
     @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesFlipped DESC LIMIT 5")
     fun getMostFlipped():LiveData<List<Word>>
 
+    @Query("UPDATE word_table SET type = :newType AND tagalog = :newTagalog AND english = :newEnglish " +
+            "AND category = :newCategory WHERE id == :id")
+    fun updateWordInfo(id : Int, newType : String, newTagalog : Int, newEnglish : Int, newCategory : Int)
+
+//    @Query("DELETE FROM word_table WHERE used = 0")
+//    fun deleteUnusedWords()
+
     @Query("DELETE FROM word_table")
     fun nukeTable()
 
@@ -105,6 +112,11 @@ interface WordDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertLesson(lesson: Lesson)
+
+
+    @Query("UPDATE lesson_table SET title = :newTitle AND imageID = :newImageID AND level = :newLevel " +
+            "AND minLength = :newMin AND maxLength = :newMax WHERE id == :id")
+    fun updateLessonInfo(id : Int, newTitle : String, newImageID : Int, newLevel : Int, newMin : Int, newMax : Int)
 
     @Query("UPDATE lesson_table SET locked = 0 WHERE title = :category AND level == (:level + 1)")
     fun unlockNextLesson(category : String, level : Int)

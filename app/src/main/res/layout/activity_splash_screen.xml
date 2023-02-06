@@ -11,15 +11,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:outlineAmbientShadowColor="@color/black"
-        android:text="       Performing  Initialization..."
         android:textAlignment="center"
+        android:text=""
         android:textColor="@color/blue"
         android:textSize="12sp"
         android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/flInit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <FrameLayout
         android:id="@+id/flInit"
