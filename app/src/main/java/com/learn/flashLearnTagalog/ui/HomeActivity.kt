@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
@@ -27,7 +27,6 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -46,12 +45,19 @@ class HomeActivity : AppCompatActivity() {
     var size = 0
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
+
+
+
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
-        setContentView(view)
 
-        //sharedPref.edit().clear().apply()
+
+
+        setContentView(view)
+        //
 
         if(launch){
             // Log the Mobile Ads SDK version.
@@ -75,8 +81,6 @@ class HomeActivity : AppCompatActivity() {
             binding.adView.loadAd(adRequest)
             launch = false
         }
-
-        size = viewModel.getSize()
 
         val learning =  LearningActivity()
 
@@ -116,58 +120,10 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-        val initText : TextView =  view.findViewById(R.id.tvInit)
-
-        initText.visibility = View.GONE
         refreshButtons()
 
-        val isFirstOpen = sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)
-
-        println("size: $size")
-
-        var lessonNum = viewModel.getLessonCount()
-
-        println("lesson #: $lessonNum")
-
-        if(size == 0 || isFirstOpen) {
-            writeSettingsToSharedPref()
-            println("first open")
-            initText.visibility = View.VISIBLE
-            init(initText, 1)
-        }else if(lessonNum == 0){
-            initText.visibility = View.VISIBLE
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_INIT, false)
-                .apply()
-            init(initText, 2)
-        }
-
     }
 
-    @DelicateCoroutinesApi
-    fun init(initText:TextView, mode : Int){
-
-        GlobalScope.launch {
-            suspend {
-                val fragment = SetupFragment(mode)
-
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.flInit, fragment).addToBackStack("setup").commit()
-
-                Handler(Looper.getMainLooper()).postDelayed({
-                    initText.visibility = View.GONE
-
-                    try {
-                        supportFragmentManager.popBackStack()
-                    } catch (ignored: IllegalStateException) {
-                        // There's no way to avoid getting this if saveInstanceState has already been called.
-                    }
-
-                    refreshButtons()
-                }, 500)
-            }.invoke()
-        }
-    }
 
     private fun refreshButtons(){
         //need to change
@@ -180,12 +136,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun writeSettingsToSharedPref() : Boolean{
-        sharedPref.edit()
-            .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, false)
-            .apply()
-        return true
-    }
 
     override fun onBackPressed() {
         this.finishAffinity()

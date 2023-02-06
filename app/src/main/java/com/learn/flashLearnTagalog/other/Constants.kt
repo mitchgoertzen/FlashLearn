@@ -8,6 +8,7 @@ object Constants {
     const val KEY_LESSON_INIT = "KEY_LESSON_INIT"
     const val KEY_IN_TEST = "KEY_IN_TEST"
     const val KEY_IN_RESULTS = "KEY_IN_RESULTS"
+    const val KEY_VERSION = "KEY_VERSION"
 
     const val KEY_SHOW_WORD = "KEY_SHOW_WORD"
     const val KEY_SHOW_IMAGE = "KEY_SHOW_IMAGE"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,9 +30,9 @@
         android:text="Lessons"
         android:textAlignment="center"
         android:textSize="13sp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="@+id/guideline34"
-        ads:layout_constraintTop_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline33"
         app:layout_constraintBottom_toBottomOf="parent"
         app:strokeColor="#FCD116"
         app:strokeWidth="3dp" />
@@ -46,8 +46,8 @@
         android:textColor="@color/red"
         android:maxLines="1"
         android:textSize="13sp"
-        ads:layout_constraintEnd_toStartOf="@+id/guideline34"
-        ads:layout_constraintTop_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toStartOf="@+id/guideline34"
+        app:layout_constraintTop_toTopOf="@+id/guideline33"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="#FCD116"
@@ -104,8 +104,8 @@
             android:id="@+id/adView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-3940256099942544/6300978111"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline27"
             app:layout_constraintStart_toStartOf="@+id/guideline26"
@@ -133,33 +133,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.9" />
 
-    <FrameLayout
-        android:id="@+id/flInit"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        ads:layout_constraintHorizontal_bias="0.0"
-        ads:layout_constraintVertical_bias="1.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/tvInit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:outlineAmbientShadowColor="@color/black"
-        android:text="       Performing  Initialization..."
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/tvLearnOutline"
         android:layout_width="wrap_content"
@@ -174,9 +147,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/white"
         android:textSize="@dimen/_43sdp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="@+id/tvLearn" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvLearn" />
 
     <TextView
         android:id="@+id/tvLearn"
@@ -188,10 +161,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="@dimen/_42sdp"
-        ads:layout_constraintBottom_toTopOf="@+id/guideline33"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="@+id/guideline32" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline32" />
 
 
     <TextView
@@ -209,9 +182,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_32sdp"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toTopOf="@+id/tvTagalog" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvTagalog" />
 
     <TextView
         android:id="@+id/tvTagalog"
@@ -223,10 +196,10 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="@dimen/_31sdp"
-        ads:layout_constraintBottom_toTopOf="@+id/guideline33"
-        ads:layout_constraintEnd_toEndOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintTop_toBottomOf="@+id/tvLearn" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLearn" />
 
     <TextView
         android:id="@+id/textView2"
@@ -235,7 +208,7 @@
         android:text="v.0.10"
         android:textColor="@color/black"
         android:textSize="12dp"
-        ads:layout_constraintTop_toBottomOf="@+id/tvTagalogOutline"
+        app:layout_constraintTop_toBottomOf="@+id/tvTagalogOutline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -244,20 +217,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        ads:layout_constraintGuide_percent="0.0" />
+        app:layout_constraintGuide_percent="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        ads:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline34"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        ads:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

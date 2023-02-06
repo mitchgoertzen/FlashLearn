@@ -105,4 +105,8 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
     implementation "androidx.core:core-ktx:1.7.0"
 
+    //Splash Screen
+    def splashScreenVersion = "1.0.0"
+    implementation("androidx.core:core-splashscreen:$splashScreenVersion")
+
 }

@@ -73,18 +73,15 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesPracticeNewWords(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_PRACTICE_NEW_WORDS,false)
+    fun providesPracticeNewWords(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS,false)
 
     @Singleton
     @Provides
-    fun providesEnablePronunciation(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_ENABLE_PRONUNCIATION,false)
+    fun providesEnablePronunciation(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_ENABLE_PRONUNCIATION,false)
 
     @Singleton
     @Provides
-    fun providesCreateCustomLesson(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_CUSTOM_LESSON,true)
+    fun providesCreateCustomLesson(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_CUSTOM_LESSON,true)
 
     @Singleton
     @Provides
