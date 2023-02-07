@@ -93,8 +93,11 @@ interface WordDAO {
             "AND category = :newCategory WHERE id == :id")
     fun updateWordInfo(id : Int, newType : String, newTagalog : Int, newEnglish : Int, newCategory : Int)
 
-//    @Query("DELETE FROM word_table WHERE used = 0")
-//    fun deleteUnusedWords()
+    @Query("UPDATE word_table SET used = 1 WHERE id == :id")
+    fun setUsed(id : Int)
+
+    @Query("DELETE FROM word_table WHERE used = 0")
+    fun deleteUnusedWords()
 
     @Query("DELETE FROM word_table")
     fun nukeTable()

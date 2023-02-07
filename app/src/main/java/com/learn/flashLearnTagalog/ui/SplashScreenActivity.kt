@@ -23,7 +23,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 private const val CURRENT_VERSION = 2
 
 
@@ -149,7 +148,6 @@ class SplashScreenActivity : AppCompatActivity() {
             .apply()
         return true
     }
-
 
     private fun initLessons(initText : TextView){
         initText.text = "Initializing Lesson Database..."

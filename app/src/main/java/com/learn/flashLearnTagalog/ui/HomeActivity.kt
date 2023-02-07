@@ -32,7 +32,6 @@ class HomeActivity : AppCompatActivity() {
 
     private var launch = true
 
-    private val viewModel: MainViewModel by viewModels()
     var size = 0
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

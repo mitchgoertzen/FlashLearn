@@ -20,6 +20,12 @@ data class Word(
     @ColumnInfo(name = "image", defaultValue = "0")
     var image: Int? = null
 
+    @ColumnInfo(name = "used", defaultValue = "false")
+    var used:Boolean = false
+
+    @ColumnInfo(name = "uncommon", defaultValue = "false")
+    var uncommon:Boolean = false
+
     @ColumnInfo(name = "word_practiced", defaultValue = "false")
     var practiced:Boolean = false
 
