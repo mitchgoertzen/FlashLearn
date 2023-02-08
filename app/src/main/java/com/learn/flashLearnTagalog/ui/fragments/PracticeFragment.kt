@@ -58,7 +58,7 @@ class PracticeFragment(masterList : MutableList<Word>, private var currentLesson
             finishButton.visibility = View.GONE
 
         finishButton.setOnClickListener{
-            viewModel.completePractice(currentLesson.id!!)
+            viewModel.completePractice(currentLesson.id)
             val fragment = PracticeResultsFragment(masterWordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice results")?.commit()
@@ -104,8 +104,8 @@ class PracticeFragment(masterList : MutableList<Word>, private var currentLesson
     fun changeCard(index : TextView){
         index.text = (i+1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
-        if(currentWord.id?.let { viewModel.getPractice(it) } == false){
-            currentWord.id?.let { viewModel.updatePractice(it,true) }
+        if(!viewModel.getPractice(currentWord.id)){
+            viewModel.updatePractice(currentWord.id,true)
         }
         val fragment = Card(currentWord)
         val transaction = activity?.supportFragmentManager?.beginTransaction()

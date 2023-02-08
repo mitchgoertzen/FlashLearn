@@ -28,6 +28,8 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref : SharedPreferences
 
+    private val viewModel: MainViewModel by viewModels()
+
     private lateinit var binding: ActivityHomeBinding
 
     private var launch = true
@@ -47,7 +49,25 @@ class HomeActivity : AppCompatActivity() {
 
 
         setContentView(view)
-        //
+
+        viewModel.getWordsByDifficultyForLesson("geography", 0, 5).observe(this) {
+            println("Geography 1: ${it.size}")
+        }
+        viewModel.getWordsByDifficultyForLesson("geography", 5, 7).observe(this) {
+            println("Geography 2: ${it.size}")
+        }
+        viewModel.getWordsByDifficultyForLesson("geography", 7, 100).observe(this) {
+            println("Geography 3: ${it.size}")
+        }
+//        viewModel.getWordsByDifficultyForLesson("geography", 9, 100).observe(this) {
+//            println("Geography 4: ${it.size}")
+//        }
+//        viewModel.getWordsByDifficultyForLesson("body", 7, 10).observe(this) {
+//            println("body 5: ${it.size}")
+//        }
+//        viewModel.getWordsByDifficultyForLesson("Body", 10, 100).observe(this) {
+//            println("body 6: ${it.size}")
+//        }
 
         if(launch){
             // Log the Mobile Ads SDK version.

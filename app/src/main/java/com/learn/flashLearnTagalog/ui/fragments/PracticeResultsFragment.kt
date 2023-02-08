@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.DictionaryAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.ToDoAdapter
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
@@ -28,9 +32,15 @@ class PracticeResultsFragment(private var wordList: MutableList<Word>, private v
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_practice_results, container, false)
 
+        val rvTranslationList : RecyclerView = view.findViewById(R.id.rvWordTranslations)
         val testButton: Button = view.findViewById(R.id.btnLessonTest)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
         val statsButton: Button = view.findViewById(R.id.btnStats)
+
+        val adapter = DictionaryAdapter(wordList)
+
+        rvTranslationList.adapter = adapter
+        rvTranslationList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         testButton.setOnClickListener{
             leaveResults()

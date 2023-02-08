@@ -8,20 +8,21 @@ import androidx.room.PrimaryKey
 //table in database to hold words
 @Entity(tableName = "word_table")
 data class Word(
+        @PrimaryKey(autoGenerate = false)
+        val id: Int,
         val type:String,
         val tagalog:String,
         val english:String,
         val category:String
 
     ){
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+
 
     @ColumnInfo(name = "image", defaultValue = "0")
     var image: Int? = null
 
-    @ColumnInfo(name = "used", defaultValue = "false")
-    var used:Boolean = false
+    @ColumnInfo(name = "correctTranslation", defaultValue = "false")
+    var correctTranslation:Boolean = false
 
     @ColumnInfo(name = "uncommon", defaultValue = "false")
     var uncommon:Boolean = false

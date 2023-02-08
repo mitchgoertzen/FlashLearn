@@ -82,8 +82,7 @@ class LessonSelectFragment : Fragment() {
         rvLessonList.addItemDecoration(decorator)
 
         //create new coroutine
-        println(sharedPref)
-        val newDifficulties = mutableSetOf("1", "2", "3", "4")
+        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()

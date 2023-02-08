@@ -32,6 +32,8 @@ class MainViewModel @Inject constructor(
 
     fun getSize() = mainRepo.getSize()
 
+    fun getWord(id : Int) = mainRepo.getWord(id)
+
     fun updatePractice(wordID : Int, value : Boolean) = viewModelScope.launch {
         mainRepo.updatePractice(wordID,value)
     }
@@ -50,6 +52,17 @@ class MainViewModel @Inject constructor(
 
     fun flipWord(wordID : Int) = viewModelScope.launch {
         mainRepo.flipWord(wordID)
+    }
+
+    fun updateWordInfo(id : Int, newType : String, newTagalog : String, newEnglish : String, newCategory : String, uncommon : Boolean, correctTranslation : Boolean) = viewModelScope.launch {
+        mainRepo.updateWordInfo(id, newType, newTagalog, newEnglish, newCategory, uncommon, correctTranslation)
+    }
+
+    fun getIncorrectWords() = mainRepo.getIncorrectWords()
+
+    fun deleteIncorrectWords() = viewModelScope.launch{
+        println("deleting unused words...")
+        mainRepo.deleteIncorrectWords()
     }
 
     fun nukeTable() = viewModelScope.launch {
@@ -93,9 +106,20 @@ class MainViewModel @Inject constructor(
 
     fun getMostFlipped() = mainRepo.getMostFlipped()
 
+
+
+
     fun getAllLessons() = mainRepo.getAllLessons()
 
     fun getLessonCount() = mainRepo.getLessonCount()
+
+    fun lessonExists(id : Int) = mainRepo.lessonExists(id)
+
+    fun lessonCategoryLevelExists(category: String, level: Int) = mainRepo.lessonCategoryLevelExists(category, level)
+
+    fun updateLessonID(category: String, level: Int, newID : Int) = mainRepo.updateLessonID(category, level, newID)
+
+    fun previousTestPassed(category: String, level: Int) = mainRepo.previousTestPassed(category, level)
 
     fun insertAllLessons(lessons : List<Lesson>) = viewModelScope.launch {
         Log.d("INSERT", "$lessons have been inserted")
@@ -106,14 +130,26 @@ class MainViewModel @Inject constructor(
         Log.d("INSERT", "$lesson has been inserted")
         val insert = async { mainRepo.insertLesson(lesson) }
         insert.await()
-
     }
 
-    fun unlockNextLesson(category : String, level : Int) = mainRepo.unlockNextLesson(category, level)
+    fun unlockNextLesson(category : String, level : Int) = viewModelScope.launch{
+        mainRepo.unlockNextLesson(category, level)
+    }
 
-    fun completePractice(id : Int) = mainRepo.completePractice(id)
+    fun completePractice(id : Int) = viewModelScope.launch{
+        mainRepo.completePractice(id)
+    }
 
-    fun passTest(id : Int) = mainRepo.passTest(id)
+    fun passTest(id : Int) = viewModelScope.launch{
+        mainRepo.passTest(id)
+    }
+
+    fun updateLessonInfo(id : Int, newTitle : String, newImageID : Int, newLevel : Int,
+                         newMin : Int, newMax : Int, practiceCompleted : Boolean, testPassed : Boolean, locked : Boolean) = viewModelScope.launch{
+        mainRepo.updateLessonInfo(id, newTitle, newImageID, newLevel, newMin, newMax, practiceCompleted, testPassed, locked)
+    }
+
+    suspend fun deleteLesson(category : String, level : Int) = mainRepo.deleteLesson(category, level)
 
     fun nukeLessons() = viewModelScope.launch {
         mainRepo.nukeLessons()

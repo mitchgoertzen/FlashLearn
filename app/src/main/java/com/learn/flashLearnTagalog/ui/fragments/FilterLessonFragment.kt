@@ -170,6 +170,27 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             }
         }
 
+        val level5 : CheckBox = view.findViewById(R.id.cbLevel5)
+        if(difficulties.contains("5"))
+            level5.isChecked = true
+        level5.setOnClickListener{
+            if (level5.isChecked){
+                difficulties.add("5")
+            }else{
+                difficulties.remove("5")
+            }
+        }
+
+        val level6 : CheckBox = view.findViewById(R.id.cbLevel6)
+        if(difficulties.contains("6"))
+            level6.isChecked = true
+        level6.setOnClickListener{
+            if (level6.isChecked){
+                difficulties.add("6")
+            }else{
+                difficulties.remove("6")
+            }
+        }
         val practiceCompleted : CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
         practiceCompleted.setOnClickListener{

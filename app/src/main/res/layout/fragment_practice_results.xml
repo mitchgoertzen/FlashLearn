@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
-        android:text="RESULTS"
+        android:text="RECAP"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:autoSizeMaxTextSize="86sp"
@@ -26,13 +26,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvWordTranslations"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:showDividers="middle"
+        android:background="#1A000000"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline7" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:divider="@drawable/empty_short_divider"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:showDividers="middle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         tools:layout_editor_absoluteX="0dp">
@@ -43,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="start test"
             app:strokeColor="#FCD116"
-            app:strokeWidth="3dp"/>
+            app:strokeWidth="3dp" />
 
         <Button
             android:id="@+id/btnLessonSelect"
@@ -51,7 +63,7 @@
             android:layout_height="wrap_content"
             android:text="lesson select"
             app:strokeColor="#FCD116"
-            app:strokeWidth="3dp"/>
+            app:strokeWidth="3dp" />
 
         <Button
             android:id="@+id/btnStats"
@@ -59,7 +71,7 @@
             android:layout_height="wrap_content"
             android:text="View Stats"
             app:strokeColor="#FCD116"
-            app:strokeWidth="3dp"/>
+            app:strokeWidth="3dp" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

@@ -18,6 +18,8 @@ class MainRepo @Inject constructor(
 
     fun getSize() = wordDao.getSize()
 
+    fun getWord(id : Int) = wordDao.getWord(id)
+
     fun updatePractice(wordID : Int, value : Boolean) = wordDao.updatePractice(wordID,value)
 
     fun getPractice(wordID : Int) = wordDao.getPractice(wordID)
@@ -27,6 +29,9 @@ class MainRepo @Inject constructor(
     fun skipWord(wordID : Int) = wordDao.skipWord(wordID)
 
     fun flipWord(wordID : Int) = wordDao.flipWord(wordID)
+
+    fun updateWordInfo(id : Int, newType : String, newTagalog : String, newEnglish : String, newCategory : String, uncommon : Boolean, correctTranslation : Boolean) =
+        wordDao.updateWordInfo(id, newType, newTagalog, newEnglish, newCategory, uncommon, correctTranslation)
 
     fun getDictionaryWords(offset : Int, limit : Int) = wordDao.getDictionaryWords(offset, limit)
 
@@ -64,8 +69,12 @@ class MainRepo @Inject constructor(
 
     fun getMostFlipped() = wordDao.getMostFlipped()
 
+    fun deleteIncorrectWords() = wordDao.deleteIncorrectWords()
+
+    fun getIncorrectWords() = wordDao.getIncorrectWords()
 
     fun nukeTable() = wordDao.nukeTable()
+
 
 
 
@@ -73,15 +82,29 @@ class MainRepo @Inject constructor(
 
     fun getLessonCount() = wordDao.getLessonCount()
 
+    fun lessonExists(id : Int) = wordDao.lessonExists(id)
+
+    fun lessonCategoryLevelExists(category: String, level: Int) = wordDao.lessonCategoryLevelExists(category, level)
+
+    fun updateLessonID(category: String, level: Int, newID : Int) = wordDao.updateLessonID(category, level, newID)
+
+    fun previousTestPassed(category: String, level: Int) = wordDao.previousTestPassed(category, level)
+
     fun insertAllLessons(lessons : List<Lesson>) = wordDao.insertAllLessons(lessons)
 
     suspend fun insertLesson(lesson: Lesson) = wordDao.insertLesson(lesson)
 
     fun unlockNextLesson(category : String, level : Int) = wordDao.unlockNextLesson(category, level)
 
+    fun updateLessonInfo(id : Int, newTitle : String, newImageID : Int, newLevel : Int,
+                         newMin : Int, newMax : Int, practiceCompleted : Boolean, testPassed : Boolean, locked : Boolean) =
+        wordDao.updateLessonInfo(id, newTitle, newImageID, newLevel, newMin, newMax, practiceCompleted, testPassed, locked)
+
     fun completePractice(id : Int) = wordDao.completePractice(id)
 
     fun passTest(id : Int) = wordDao.passTest(id)
+
+    suspend fun deleteLesson(category : String, level : Int) = wordDao.deleteLesson(category, level)
 
     fun nukeLessons() = wordDao.nukeLessons()
 }

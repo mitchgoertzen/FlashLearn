@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 //table in database to hold lessons
 @Entity(tableName = "lesson_table")
 data class Lesson(
+    @PrimaryKey(autoGenerate = false)
+    val id: Int,
     val title: String,
     val imageID : Int,
     val level : Int,
@@ -15,8 +17,6 @@ data class Lesson(
     @ColumnInfo(defaultValue = "-1")
     val maxLength : Int
 ){
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
 
     @ColumnInfo(name = "practice_completed", defaultValue = "false")
     var practiceCompleted : Boolean = false

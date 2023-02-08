@@ -1660,7 +1660,7 @@ n$awtoridad$authority
 adj$awtorisado$authorized
 n$awtorisasyon$authorization
 gram$ay$ligature (equal to "is")
-intrj$Ay!,"Oh!" (expressing disappointment)#speech
+intrj$Ay!$"Oh!" (expressing disappointment)#speech
 n$aya$invitation
 n$aya$nurse or maid for small children
 v$ayain$invite (someone)
@@ -7674,7 +7674,7 @@ n$giya$guide
 adj$giyagis$afflicted by
 v$giyahan$guide
 n$giyera$war
-n$giyograpi#geography
+n$giyograpi$geography
 n$giyologi$geology
 n$giyometri$geometry
 n$giyon$hyphen
@@ -8674,7 +8674,7 @@ n$henyo$genius
 n$heoda$geode (geology)
 adj$heograpikal$geographical
 adj$heograpiko$geographic
-n$heograpiya#geography
+n$heograpiya$geography
 n$heokimika$geochemistry
 n$heologo$geologist
 comp$heolohikong guhit-tagpuan$geologic horizon
@@ -24974,7 +24974,7 @@ n$mansanas$apple#food
 n$mansanilya$species of herb with medical properties
 n$mansera$plow-handle
 adj$manso$tame
-v$mansuhin#animals)
+v$mansuhin$tame (e.g. animals)
 n$manta$woollen (US: woolen) blanket
 intrj$Mantak$just think of that!
 n$mantekado$French vanilla ice cream#food

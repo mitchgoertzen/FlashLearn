@@ -46,6 +46,7 @@ object AppModule {
         WORD_DATABASE_NAME
         ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
+
     @Singleton
     @Provides
     fun provideWordDao(db : WordDatabase) = db.getWordDao()
@@ -54,6 +55,19 @@ object AppModule {
     @Provides
     fun provideSharedPreferences(@ApplicationContext app : Context): SharedPreferences =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+
+    @Singleton
+    @Provides
+    fun providesFirstTimeToggle(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
+
+//    @Singleton
+//    @Provides
+//    fun providesWordUpdate(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_WORD_UPDATE,true)
+//
+//    @Singleton
+//    @Provides
+//    fun providesLessonUpdate(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_LESSON_UPDATE,true)
+
 
     @Singleton
     @Provides
@@ -95,9 +109,6 @@ object AppModule {
     @Provides
     fun providesDifficulty(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_DIFFICULTY,1)
 
-    @Singleton
-    @Provides
-    fun providesFirstTimeToggle(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
 
 
     @Singleton

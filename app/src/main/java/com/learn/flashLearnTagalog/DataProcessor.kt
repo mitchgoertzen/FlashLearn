@@ -16,22 +16,23 @@ class DataProcessor(val resources : Resources) {
         val input: InputStream = resources.openRawResource(R.raw.tag_dollar)
        val reader = BufferedReader(InputStreamReader(input))
 
-       var string: String? = ""
+        var string: String? = ""
+        var id = 0
 
-       while (true) {
-           var type = ""
-           var tag = ""
-           var eng = ""
-           var cat = ""
-           var state = 0
+        while (true) {
+            var type = ""
+            var tag = ""
+            var eng = ""
+            var cat = ""
+            var state = 0
 
-           try {
-               if (reader.readLine().also { string = it } == null) break
-           } catch (e: IOException) {
-               e.printStackTrace()
-           }
+            try {
+                if (reader.readLine().also { string = it } == null) break
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
 
-           for (i in string?.indices!!) {
+            for (i in string?.indices!!) {
                when (state) {
                    0 -> {
                        if (string!![i] == '$') {
@@ -58,15 +59,15 @@ class DataProcessor(val resources : Resources) {
                        cat += string!![i]
                    }
                }
+            }
+            tag = tag.lowercase()
+            eng = eng.lowercase()
+            val word = Word(id++, type, tag, eng, cat)
+            words.add(word)
            }
-           tag = tag.lowercase()
-           eng = eng.lowercase()
-           val word = Word(type, tag, eng, cat)
-           words.add(word)
-       }
 
-       input.close()
-    }
+           input.close()
+        }
 
     fun getWords() : MutableList<Word>{
         return words
