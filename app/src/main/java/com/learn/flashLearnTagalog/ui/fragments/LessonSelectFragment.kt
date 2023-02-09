@@ -57,19 +57,15 @@ class LessonSelectFragment : Fragment() {
 
         val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
 
-
-        val practiceCompleteIcon: TextView = view.findViewById(R.id.tvPracCompleted)
-        val testPassedIcon: TextView = view.findViewById(R.id.tvtestPassed)
-
+//        val practiceCompleteIcon: TextView = view.findViewById(R.id.tvPracCompleted)
+//        val testPassedIcon: TextView = view.findViewById(R.id.tvtestPassed)
 
         btnFilter.setOnClickListener {
-            //spinner.performClick()
             val dialog: DialogFragment = FilterLessonFragment(lessonAdapter)
 
             dialog.isCancelable = true
             dialog.show(childFragmentManager, "test")
         }
-
 
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
 
@@ -80,7 +76,6 @@ class LessonSelectFragment : Fragment() {
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
 
-        //create new coroutine
         val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
@@ -90,8 +85,8 @@ class LessonSelectFragment : Fragment() {
         return view
     }
 
+    @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
-        println("create lesson $difficulties")
         var dbLessons: MutableList<Lesson> = mutableListOf()
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
@@ -105,8 +100,9 @@ class LessonSelectFragment : Fragment() {
                     //after database access is complete, add lessons to adapter
                     for (lesson in dbLessons) {
                         add = true
+                        //only add lessons that fit within the selected filter requirements
                         if (lesson.level > 0) {
-                            if (difficulties!!.contains((lesson.level).toString())) {
+                            if (difficulties.contains((lesson.level).toString())) {
 
                                 val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 

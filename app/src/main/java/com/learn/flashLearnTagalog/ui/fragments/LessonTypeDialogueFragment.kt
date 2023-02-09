@@ -41,7 +41,6 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         }
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

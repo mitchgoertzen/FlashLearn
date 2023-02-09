@@ -38,8 +38,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     private var selectTestPassed: Boolean = false
     private var selectUnlocked: Boolean = false
 
-    //private var difficulties : MutableSet<String> = mutableSetOf()
-
     override fun onStart() {
         super.onStart()
         val dialog = dialog
@@ -49,12 +47,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
-
-        // val newSet: Set<String> = HashSet<String>(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, HashSet<String>()))
-        //val fetch: Set<String> = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)!!
-        //sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
-
-
     }
 
 
@@ -65,6 +57,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
     ): View? {
         val view = inflater.inflate(R.layout.fragment_filter_lesson, container, false)
 
+        //populate difficulties from user's saved selection of lesson difficulties to include
         sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
         }
@@ -81,7 +74,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         sortOptionAdapter =
             SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
 
-        //connect local variables to elements in fragment
         val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
 
         rvSortOptions.adapter = sortOptionAdapter
@@ -93,6 +85,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         sortOptionAdapter.addOption("Difficulty: High to Low")
         sortOptionAdapter.addOption("Unlocked")
 
+        //close dialog when touch is detected outside of its window
         window.setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> dialog?.dismiss()
@@ -102,6 +95,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         val popup: LinearLayout = view.findViewById(R.id.llFilterPopup)
 
+        //block closing of dialog when its own window is touched
         popup.setOnTouchListener { _, _ ->
             true
         }
@@ -118,6 +112,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
         spinner.setSelection(spinnerAdapter.getPosition(selectCategory))
+        //when an item is selected from the category spinner, that category will be used upon applying filter settings
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 selectCategory = parent.getItemAtPosition(pos).toString()
@@ -126,72 +121,24 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        //TODO: change to function,  don't repeat 4 times
         val level1: CheckBox = view.findViewById(R.id.cbLevel1)
-        if (difficulties.contains("1")) {
-            level1.isChecked = true
-        }
-        level1.setOnClickListener {
-            if (level1.isChecked) {
-                difficulties.add("1")
-            } else {
-                difficulties.remove("1")
-            }
-        }
+        setDifficultyCheckBox("1", level1)
 
         val level2: CheckBox = view.findViewById(R.id.cbLevel2)
-        if (difficulties.contains("2"))
-            level2.isChecked = true
-        level2.setOnClickListener {
-            if (level2.isChecked) {
-                difficulties.add("2")
-            } else {
-                difficulties.remove("2")
-            }
-        }
+        setDifficultyCheckBox("2", level2)
 
         val level3: CheckBox = view.findViewById(R.id.cbLevel3)
-        if (difficulties.contains("3"))
-            level3.isChecked = true
-        level3.setOnClickListener {
-            if (level3.isChecked) {
-                difficulties.add("3")
-            } else {
-                difficulties.remove("3")
-            }
-        }
+        setDifficultyCheckBox("3", level3)
+
         val level4: CheckBox = view.findViewById(R.id.cbLevel4)
-        if (difficulties.contains("4"))
-            level4.isChecked = true
-        level4.setOnClickListener {
-            if (level4.isChecked) {
-                difficulties.add("4")
-            } else {
-                difficulties.remove("4")
-            }
-        }
+        setDifficultyCheckBox("4", level4)
 
         val level5: CheckBox = view.findViewById(R.id.cbLevel5)
-        if (difficulties.contains("5"))
-            level5.isChecked = true
-        level5.setOnClickListener {
-            if (level5.isChecked) {
-                difficulties.add("5")
-            } else {
-                difficulties.remove("5")
-            }
-        }
+        setDifficultyCheckBox("5", level5)
 
         val level6: CheckBox = view.findViewById(R.id.cbLevel6)
-        if (difficulties.contains("6"))
-            level6.isChecked = true
-        level6.setOnClickListener {
-            if (level6.isChecked) {
-                difficulties.add("6")
-            } else {
-                difficulties.remove("6")
-            }
-        }
+        setDifficultyCheckBox("6", level6)
+
         val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
         practiceCompleted.setOnClickListener {
@@ -212,7 +159,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         val apply: Button = view.findViewById(R.id.btnApplyFilters)
 
-
+        //apply settings for lesson sort and filtering
         apply.setOnClickListener {
             lessonAdapter.sortList(sortOptionAdapter.getSelected())
 
@@ -246,12 +193,23 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
             (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
         }
-
-
-
         return view
     }
 
-
+    private fun setDifficultyCheckBox(level : String, checkBox : CheckBox){
+        //if this checkBoxes level is included in difficulties
+        //set box to checked
+        if (difficulties.contains(level))
+            checkBox.isChecked = true
+        checkBox.setOnClickListener {
+            //when this box is checked/unchecked,
+            //add or remove its corresponding difficulty to difficulties
+            if (checkBox.isChecked) {
+                difficulties.add(level)
+            } else {
+                difficulties.remove(level)
+            }
+        }
+    }
 }
 

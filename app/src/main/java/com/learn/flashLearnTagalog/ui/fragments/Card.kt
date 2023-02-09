@@ -54,6 +54,7 @@ class Card(word: Word) : Fragment() {
         card.setImageResource(R.drawable.card_front_new)
         tvCurrWord = view.findViewById(R.id.tvCurrWord)
 
+        //display current word's type
         wordType.text = when (currentWord.type) {
             "n" -> {
                 "Noun"
@@ -84,9 +85,12 @@ class Card(word: Word) : Fragment() {
             }
         }
 
-
+        //if english first is set, the front of the card will show english
+        //and the reverse will show tagalog
         if (engFirst) {
             shownWord = currentWord.english
+            //if the english translation has multiple words,
+            //allow for a second line to display the text
             if (numberOfEnglishWords > 1)
                 tvCurrWord.maxLines = 2
             else
@@ -99,9 +103,13 @@ class Card(word: Word) : Fragment() {
         tvCurrWord.text = shownWord
 
         val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
+        //flip card to reverse side on button press
         imFlipCard.setOnClickListener {
-            currentWord.id?.let { it1 -> viewModel.flipWord(it1) }
-            if (shownWord == currentWord.english) {
+            viewModel.flipWord(currentWord.id)
+            //display translation of word that is currently shown
+            //adjust max lines of text as done previously
+            if (shownWord == currentWord.english)
+            {
                 shownWord = currentWord.tagalog
                 tvCurrWord.maxLines = 1
             } else {
