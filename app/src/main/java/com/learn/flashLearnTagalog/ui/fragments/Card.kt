@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.ui.misc
 
 import android.graphics.Rect
 import android.view.View

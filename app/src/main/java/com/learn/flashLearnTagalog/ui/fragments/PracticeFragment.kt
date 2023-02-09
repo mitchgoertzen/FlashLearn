@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.learn.flashLearnTagalog.Card
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word

@@ -7,16 +7,15 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class DataProcessor(val resources : Resources) {
+class DataProcessor(val resources: Resources) {
 
+    private var words: MutableList<Word> = mutableListOf()
 
-    private var words : MutableList<Word> = mutableListOf()
-
-    init{
+    init {
         val input: InputStream = resources.openRawResource(R.raw.tag_dollar)
-       val reader = BufferedReader(InputStreamReader(input))
+        val reader = BufferedReader(InputStreamReader(input))
 
-        var string: String? = ""
+        var currentString = ""
         var id = 0
 
         while (true) {
@@ -27,49 +26,57 @@ class DataProcessor(val resources : Resources) {
             var state = 0
 
             try {
-                if (reader.readLine().also { string = it } == null) break
+                //if the currentString is empty, exit while()
+                if (reader.readLine().also { currentString = it } == null) break
             } catch (e: IOException) {
                 e.printStackTrace()
             }
 
-            for (i in string?.indices!!) {
-               when (state) {
-                   0 -> {
-                       if (string!![i] == '$') {
-                           state = 1
-                       } else {
-                           type += string!![i]
-                       }
-                   }
-                   1 -> {
-                       if (string!![i] == '$') {
-                           state = 2
-                       } else {
-                           tag += string!![i]
-                       }
-                   }
-                   2 -> {
-                       if (string!![i] == '#') {
-                           state = 3
-                       } else {
-                           eng += string!![i]
-                       }
-                   }
-                   3 -> {
-                       cat += string!![i]
-                   }
-               }
+            //for each char in currentString
+            for (i in currentString.indices) {
+                //state represents the data of each word that is currently being parsed
+                //once sentinel value is reached($ or #), save currentString to current variable and increment state
+                when (state) {
+                    //0 = type
+                    0 -> {
+                        if (currentString[i] == '$') {
+                            state = 1
+                        } else {
+                            type += currentString[i]
+                        }
+                    }
+                    //1 = tagalog
+                    1 -> {
+                        if (currentString[i] == '$') {
+                            state = 2
+                        } else {
+                            tag += currentString[i]
+                        }
+                    }
+                    //2 = english
+                    2 -> {
+                        if (currentString[i] == '#') {
+                            state = 3
+                        } else {
+                            eng += currentString[i]
+                        }
+                    }
+                    //3 = category
+                    3 -> {
+                        cat += currentString[i]
+                    }
+                }
             }
             tag = tag.lowercase()
             eng = eng.lowercase()
             val word = Word(id++, type, tag, eng, cat)
             words.add(word)
-           }
-
-           input.close()
         }
 
-    fun getWords() : MutableList<Word>{
+        input.close()
+    }
+
+    fun getWords(): MutableList<Word> {
         return words
     }
 }

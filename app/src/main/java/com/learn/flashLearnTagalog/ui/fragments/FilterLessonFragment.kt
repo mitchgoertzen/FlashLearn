@@ -10,9 +10,9 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.LessonAdapter
+import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.SortOptionAdapter
+import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED

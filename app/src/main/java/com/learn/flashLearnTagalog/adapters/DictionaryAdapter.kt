@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
 
     }
 
-    override fun onBindViewHolder(holder:DictionaryViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: DictionaryViewHolder, position:Int) {
         val currWord = words[position]
         holder.itemView.apply {
             holder.binding.tvEng.text = currWord.english

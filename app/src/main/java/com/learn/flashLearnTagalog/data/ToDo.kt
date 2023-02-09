@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.data
 
 data class ToDo(
     val title: String,

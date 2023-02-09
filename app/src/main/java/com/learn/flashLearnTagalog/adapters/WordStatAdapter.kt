@@ -1,8 +1,9 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.data.WordStat
 import com.learn.flashLearnTagalog.databinding.WordStatisticBinding
 
 class WordStatAdapter(
@@ -30,7 +31,7 @@ class WordStatAdapter(
             holder.binding.tvNumber.text = currentWord.Number.toString()
     }
 
-    fun addToDo(word:WordStat, percentage: Boolean){
+    fun addToDo(word: WordStat, percentage: Boolean){
         isPercentage = percentage
         words.add(word)
         notifyItemInserted(words.size - 1)

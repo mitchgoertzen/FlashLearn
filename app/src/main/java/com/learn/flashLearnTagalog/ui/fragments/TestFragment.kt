@@ -20,8 +20,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.ToDo
-import com.learn.flashLearnTagalog.ToDoAdapter
+import com.learn.flashLearnTagalog.data.ToDo
+import com.learn.flashLearnTagalog.adapters.ToDoAdapter
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants

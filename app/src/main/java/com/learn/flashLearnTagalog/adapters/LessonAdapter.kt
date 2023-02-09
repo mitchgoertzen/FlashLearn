@@ -1,9 +1,10 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.LessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.db.Lesson
@@ -27,7 +28,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
 
     }
 
-    override fun onBindViewHolder(holder:LessonViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: LessonViewHolder, position:Int) {
         val currentLesson = lessons[position]
         holder.itemView.apply {
             val mContext = FragmentComponentManager.findActivity(context) as Activity

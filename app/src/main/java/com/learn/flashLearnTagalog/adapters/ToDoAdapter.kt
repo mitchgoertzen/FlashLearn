@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.adapters
 
 import android.graphics.Color
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.data.ToDo
 import com.learn.flashLearnTagalog.databinding.ItemTodoBinding
 import com.learn.flashLearnTagalog.db.Word
 
@@ -26,7 +27,7 @@ class ToDoAdapter(
         return ToDoViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder:ToDoViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: ToDoViewHolder, position:Int) {
         val curTodo = toDos[position]
         holder.itemView.apply {
             holder.binding.tvTodoTitle.text = curTodo.title
@@ -38,7 +39,7 @@ class ToDoAdapter(
         }
     }
 
-    fun addToDo(toDo:ToDo, engFirst : Boolean, ans : Boolean){
+    fun addToDo(toDo: ToDo, engFirst : Boolean, ans : Boolean){
         showEngFirst = engFirst
         isAnswer = ans
         toDos.add(toDo)

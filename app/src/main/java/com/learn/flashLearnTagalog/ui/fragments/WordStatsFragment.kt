@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.WordStat
-import com.learn.flashLearnTagalog.WordStatAdapter
+import com.learn.flashLearnTagalog.data.WordStat
+import com.learn.flashLearnTagalog.adapters.WordStatAdapter
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,9 +1,10 @@
-package com.learn.flashLearnTagalog
+package com.learn.flashLearnTagalog.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.SortOptionBinding
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -24,7 +25,7 @@ class SortOptionAdapter @Inject constructor(private var options: MutableList<Str
 
     }
 
-    override fun onBindViewHolder(holder:SortOptionViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: SortOptionViewHolder, position:Int) {
         val currentOption = options[position]
         if(position == currentSelection)
             select(holder.binding.textView5)

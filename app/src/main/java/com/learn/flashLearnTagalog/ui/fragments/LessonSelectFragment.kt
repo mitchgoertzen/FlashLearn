@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -16,11 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.ItemDecoration
-import com.learn.flashLearnTagalog.LessonAdapter
+import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
+import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
