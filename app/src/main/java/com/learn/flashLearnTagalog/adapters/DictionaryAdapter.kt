@@ -9,19 +9,22 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>) : RecyclerView.Adapter<DictionaryAdapter.DictionaryViewHolder>() {
+class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>) :
+    RecyclerView.Adapter<DictionaryAdapter.DictionaryViewHolder>() {
 
-    lateinit var currentList : List<Word>
+    lateinit var currentList: List<Word>
 
-    class DictionaryViewHolder(val binding: DictionaryWordBinding) : RecyclerView.ViewHolder(binding.root)
+    class DictionaryViewHolder(val binding: DictionaryWordBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent:ViewGroup, viewType:Int): DictionaryViewHolder {
-        val binding = DictionaryWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DictionaryViewHolder {
+        val binding =
+            DictionaryWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DictionaryViewHolder(binding)
 
     }
 
-    override fun onBindViewHolder(holder: DictionaryViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: DictionaryViewHolder, position: Int) {
         val currWord = words[position]
         holder.itemView.apply {
             holder.binding.tvEng.text = currWord.english
@@ -29,28 +32,30 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         }
     }
 
-    fun addToDo(word: Word){
+    fun addToDo(word: Word) {
         words.add(word)
         notifyItemInserted(words.size - 1)
     }
 
-    fun deleteToDos(){
+    fun deleteToDos() {
         words.clear()
         notifyDataSetChanged()
     }
-    fun intiList(list:List<Word>){
+
+    fun intiList(list: List<Word>) {
+
         currentList = list
     }
 
-    fun showListSize(){
-        println( currentList.size)
+    fun showListSize() {
+        println(currentList.size)
     }
 
     override fun getItemCount(): Int {
         return words.size
     }
 
-    fun getLessons() : MutableList<Word>{
+    fun getLessons(): MutableList<Word> {
         return words
     }
 }

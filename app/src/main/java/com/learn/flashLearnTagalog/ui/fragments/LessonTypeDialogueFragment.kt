@@ -25,10 +25,10 @@ import javax.inject.Inject
 class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFragment() {
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
     private val viewModel: MainViewModel by viewModels()
-    private var wordList : MutableList<Word> = mutableListOf()
-    private var practiceCompleted : Boolean = false
+    private var wordList: MutableList<Word> = mutableListOf()
+    private var practiceCompleted: Boolean = false
 
     override fun onStart() {
         super.onStart()
@@ -55,7 +55,7 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         var currentTitle = currentLesson.title
 
         //popup window
-        val window : ConstraintLayout = view.findViewById(R.id.clMain)
+        val window: ConstraintLayout = view.findViewById(R.id.clMain)
         //when popup is touched, but no buttons are, popup will close
         window.setOnTouchListener { v, event ->
             when (event?.action) {
@@ -64,31 +64,39 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
             v?.onTouchEvent(event) ?: true
         }
 
-        viewModel.getWordsByDifficultyForLesson(currentTitle.lowercase(), currentLesson.minLength, currentLesson.maxLength).observe(viewLifecycleOwner) {
+        viewModel.getWordsByDifficultyForLesson(
+            currentTitle.lowercase(),
+            currentLesson.minLength,
+            currentLesson.maxLength
+        ).observe(viewLifecycleOwner) {
             wordList = it.toMutableList()
         }
 
-        val testButton : Button = view.findViewById(R.id.btnTest)
-        val practiceButton : Button = view.findViewById(R.id.btnPractice)
-        val engFirst : SwitchCompat = view.findViewById(R.id.scEngFirst)
+        val testButton: Button = view.findViewById(R.id.btnTest)
+        val practiceButton: Button = view.findViewById(R.id.btnPractice)
+        val engFirst: SwitchCompat = view.findViewById(R.id.scEngFirst)
 
-        testButton.setOnClickListener{
-            val fragment = TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
+        testButton.setOnClickListener {
+            val fragment =
+                TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
             val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")?.commit()
+            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")
+                ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 
-        if(!currentLesson.practiceCompleted){
+        if (!currentLesson.practiceCompleted) {
             testButton.isEnabled = false
             testButton.alpha = .5f
         }
 
-        practiceButton.setOnClickListener{
-            val fragment = PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
+        practiceButton.setOnClickListener {
+            val fragment =
+                PracticeFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
             val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")?.commit()
+            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")
+                ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }

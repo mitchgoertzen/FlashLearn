@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.data.WordStat
 import com.learn.flashLearnTagalog.adapters.WordStatAdapter
+import com.learn.flashLearnTagalog.data.WordStat
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,21 +37,23 @@ class WordStatsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_word_stats, container, false)
 
         correctAdapter = WordStatAdapter(mutableListOf())
-        incorrectAdapter= WordStatAdapter(mutableListOf())
+        incorrectAdapter = WordStatAdapter(mutableListOf())
         bestAdapter = WordStatAdapter(mutableListOf())
-        worstAdapter= WordStatAdapter(mutableListOf())
-        encounteredAdapter= WordStatAdapter(mutableListOf())
-        skippedAdapter= WordStatAdapter(mutableListOf())
-        flippedAdapter= WordStatAdapter(mutableListOf())
-        timeAdapter= WordStatAdapter(mutableListOf())
+        worstAdapter = WordStatAdapter(mutableListOf())
+        encounteredAdapter = WordStatAdapter(mutableListOf())
+        skippedAdapter = WordStatAdapter(mutableListOf())
+        flippedAdapter = WordStatAdapter(mutableListOf())
+        timeAdapter = WordStatAdapter(mutableListOf())
 
-        val rvCorrect : RecyclerView = view.findViewById(R.id.rvCorrect)
+        val rvCorrect: RecyclerView = view.findViewById(R.id.rvCorrect)
         rvCorrect.adapter = correctAdapter
-        rvCorrect.layoutManager = GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
+        rvCorrect.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
 
-        val rvIncorrect : RecyclerView = view.findViewById(R.id.rvIncorrect)
+        val rvIncorrect: RecyclerView = view.findViewById(R.id.rvIncorrect)
         rvIncorrect.adapter = incorrectAdapter
-        rvIncorrect.layoutManager = GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
+        rvIncorrect.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
 
 //        val rvBest : RecyclerView = view.findViewById(R.id.rvBest)
 //        rvBest.adapter = bestAdapter
@@ -61,17 +63,20 @@ class WordStatsFragment : Fragment() {
 //        rvWorst.adapter = worstAdapter
 //        rvWorst.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
-        val rvEncountered : RecyclerView = view.findViewById(R.id.rvEncountered)
+        val rvEncountered: RecyclerView = view.findViewById(R.id.rvEncountered)
         rvEncountered.adapter = encounteredAdapter
-        rvEncountered.layoutManager = GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
+        rvEncountered.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
 
-        val rvSkipped : RecyclerView = view.findViewById(R.id.rvSkipped)
+        val rvSkipped: RecyclerView = view.findViewById(R.id.rvSkipped)
         rvSkipped.adapter = skippedAdapter
-        rvSkipped.layoutManager = GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
+        rvSkipped.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
 
-        val rvFlipped : RecyclerView = view.findViewById(R.id.rvFlipped)
+        val rvFlipped: RecyclerView = view.findViewById(R.id.rvFlipped)
         rvFlipped.adapter = flippedAdapter
-        rvFlipped.layoutManager = GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
+        rvFlipped.layoutManager =
+            GridLayoutManager(requireContext(), 1, LinearLayoutManager.VERTICAL, false)
 
 //        val rvTime : RecyclerView = view.findViewById(R.id.rvTime)
 //        rvTime.adapter = timeAdapter
@@ -86,15 +91,21 @@ class WordStatsFragment : Fragment() {
 
         viewModel.getMostCorrect().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
-            for(word in list){
-                correctAdapter.addToDo(WordStat(word.tagalog, word.timesCorrect,0.0), false)
+            for (word in list) {
+                correctAdapter.addToDo(WordStat(word.tagalog, word.timesCorrect, 0.0), false)
             }
         }
 
         viewModel.getLeastCorrect().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
-            for(word in list){
-                incorrectAdapter.addToDo(WordStat(word.tagalog, word.timesAnswered - word.timesCorrect,0.0), false)
+            for (word in list) {
+                incorrectAdapter.addToDo(
+                    WordStat(
+                        word.tagalog,
+                        word.timesAnswered - word.timesCorrect,
+                        0.0
+                    ), false
+                )
             }
         }
 
@@ -122,22 +133,22 @@ class WordStatsFragment : Fragment() {
 
         viewModel.getMostEncountered().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
-            for(word in list){
-                encounteredAdapter.addToDo(WordStat(word.tagalog, word.timesAnswered,0.0), false)
+            for (word in list) {
+                encounteredAdapter.addToDo(WordStat(word.tagalog, word.timesAnswered, 0.0), false)
             }
         }
 
         viewModel.getMostSkipped().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
-            for(word in list){
-                skippedAdapter.addToDo(WordStat(word.tagalog, word.timesSkipped,0.0), false)
+            for (word in list) {
+                skippedAdapter.addToDo(WordStat(word.tagalog, word.timesSkipped, 0.0), false)
             }
         }
 
         viewModel.getMostFlipped().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
-            for(word in list){
-                flippedAdapter.addToDo(WordStat(word.tagalog, word.timesFlipped,0.0), false)
+            for (word in list) {
+                flippedAdapter.addToDo(WordStat(word.tagalog, word.timesFlipped, 0.0), false)
             }
         }
 

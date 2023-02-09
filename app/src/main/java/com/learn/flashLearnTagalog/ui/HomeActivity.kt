@@ -3,18 +3,15 @@ package com.learn.flashLearnTagalog.ui
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import javax.inject.Inject
@@ -23,16 +20,17 @@ import javax.inject.Inject
 class HomeActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var wordDAO : WordDAO
+    lateinit var wordDAO: WordDAO
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     private lateinit var binding: ActivityHomeBinding
 
     private var launch = true
 
     var size = 0
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -64,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
 //            println("body 6: ${it.size}")
 //        }
 
-        if(launch){
+        if (launch) {
 
             // Initialize the Mobile Ads SDK with an AdMob App ID.
             MobileAds.initialize(this) {}
@@ -85,41 +83,42 @@ class HomeActivity : AppCompatActivity() {
             launch = false
         }
 
-        val learning =  LearningActivity()
+        val learning = LearningActivity()
 
         //on lesson button press, start learning activity
-        binding.btnLesson.setOnClickListener{
+        binding.btnLesson.setOnClickListener {
             learning.setType(2)
             val intent = Intent(this, learning::class.java)
             startActivity(intent)
         }
 
         //on dictionary button press, start learning activity
-        binding.btnDictionary.setOnClickListener{
+        binding.btnDictionary.setOnClickListener {
             learning.setType(1)
             val intent = Intent(this, learning::class.java)
             startActivity(intent)
         }
 
         //display app info in popup dialog
-        binding.ibInfo.setOnClickListener{
-            val infoText = "This app is intended for English speakers who are interested in learning words from the " +
-                    "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
-                    "I created this project as a way to practice mobile development in Android Studio, so expect many " +
-                    "unpolished features and UI elements\n" +
-                    "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
-                    "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
-                    "2022, mitch goertzen"
+        binding.ibInfo.setOnClickListener {
+            val infoText =
+                "This app is intended for English speakers who are interested in learning words from the " +
+                        "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
+                        "I created this project as a way to practice mobile development in Android Studio, so expect many " +
+                        "unpolished features and UI elements\n" +
+                        "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
+                        "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
+                        "2022, mitch goertzen"
 
-            val dialog : DialogFragment = HintFragment(infoText)
+            val dialog: DialogFragment = HintFragment(infoText)
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "info popup")
         }
 
         //go to user profile
-        binding.ibProfile.setOnClickListener{
-            val dialog : DialogFragment = ProfilePopupFragment(this)
+        binding.ibProfile.setOnClickListener {
+            val dialog: DialogFragment = ProfilePopupFragment(this)
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "profile popup")
@@ -129,9 +128,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    private fun refreshButtons(){
+    private fun refreshButtons() {
         //TODO: change?
-        if(!sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)) {
+        if (!sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)) {
             binding.btnLesson.isEnabled = true
             binding.btnDictionary.isEnabled = true
         } else {

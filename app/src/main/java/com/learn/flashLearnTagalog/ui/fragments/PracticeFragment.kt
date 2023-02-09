@@ -17,11 +17,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PracticeFragment(masterList : MutableList<Word>, private var currentLesson: Lesson) : Fragment(R.layout.fragment_practice) {
+class PracticeFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
+    Fragment(R.layout.fragment_practice) {
 
     private var masterWordList = masterList
-    private lateinit var currentWord : Word
-    private var currentWordList : MutableList<Word> = mutableListOf()
+    private lateinit var currentWord: Word
+    private var currentWordList: MutableList<Word> = mutableListOf()
     private var i = 0
 
     private val viewModel: MainViewModel by viewModels()
@@ -35,60 +36,60 @@ class PracticeFragment(masterList : MutableList<Word>, private var currentLesson
 
         currentWordList = masterWordList.toMutableList()
 
-        val index : TextView = view.findViewById(R.id.tvIndex)
+        val index: TextView = view.findViewById(R.id.tvIndex)
 
         changeCard(index)
 
-        val prevButton : Button = view.findViewById(R.id.btPreviousWord)
+        val prevButton: Button = view.findViewById(R.id.btPreviousWord)
         val prevWidth = prevButton.layoutParams.width
-        val nextButton : Button = view.findViewById(R.id.btNextWord)
+        val nextButton: Button = view.findViewById(R.id.btNextWord)
         val params: ViewGroup.LayoutParams = nextButton.layoutParams
         params.width = prevWidth
         nextButton.layoutParams = params
 
-        val finishButton : Button = view.findViewById(R.id.btFinish)
+        val finishButton: Button = view.findViewById(R.id.btFinish)
 
-        if(currentWordList.size == 1){
+        if (currentWordList.size == 1) {
             nextButton.isEnabled = false
             prevButton.isEnabled = false
             finishButton.visibility = View.VISIBLE
-        }
-        else
+        } else
             finishButton.visibility = View.GONE
 
-        finishButton.setOnClickListener{
+        finishButton.setOnClickListener {
             viewModel.completePractice(currentLesson.id)
             val fragment = PracticeResultsFragment(masterWordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice results")?.commit()
+            transaction?.replace(R.id.main_nav_container, fragment)
+                ?.addToBackStack("practice results")?.commit()
             (activity as LearningActivity?)?.transitionFragment()
         }
 
-        prevButton.setOnClickListener{
+        prevButton.setOnClickListener {
 
-            if(i == 0){
-                if(finishButton.visibility == View.VISIBLE){
+            if (i == 0) {
+                if (finishButton.visibility == View.VISIBLE) {
                     i = currentWordList.size - 1
                 }
-            }else{
+            } else {
                 --i
-                if(i == 0 && finishButton.visibility == View.GONE){
+                if (i == 0 && finishButton.visibility == View.GONE) {
                     prevButton.isEnabled = false
                 }
             }
             changeCard(index)
         }
 
-        nextButton.setOnClickListener{
-            if(!prevButton.isEnabled){
+        nextButton.setOnClickListener {
+            if (!prevButton.isEnabled) {
                 prevButton.isEnabled = true
             }
-            if(i == currentWordList.size - 1){
+            if (i == currentWordList.size - 1) {
                 i = 0
 
-            }else{
+            } else {
                 ++i
-                if(i == currentWordList.size - 1) {
+                if (i == currentWordList.size - 1) {
                     if (finishButton.visibility == View.GONE) {
                         finishButton.visibility = View.VISIBLE
                     }
@@ -100,11 +101,11 @@ class PracticeFragment(masterList : MutableList<Word>, private var currentLesson
         return view
     }
 
-    fun changeCard(index : TextView){
-        index.text = (i+1).toString() + "/" + currentWordList.size.toString()
+    fun changeCard(index: TextView) {
+        index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
-        if(!viewModel.getPractice(currentWord.id)){
-            viewModel.updatePractice(currentWord.id,true)
+        if (!viewModel.getPractice(currentWord.id)) {
+            viewModel.updatePractice(currentWord.id, true)
         }
         val fragment = Card(currentWord)
         val transaction = activity?.supportFragmentManager?.beginTransaction()

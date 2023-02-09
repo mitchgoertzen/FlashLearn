@@ -22,7 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment() {
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     override fun onStart() {
         super.onStart()
@@ -45,7 +45,7 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val window : ConstraintLayout = view.findViewById(R.id.clProfileBackground)
+        val window: ConstraintLayout = view.findViewById(R.id.clProfileBackground)
         window.setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> dialog?.dismiss()
@@ -53,23 +53,23 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
             v?.onTouchEvent(event) ?: true
         }
 
-        val stats : Button = view.findViewById(R.id.btnStats)
+        val stats: Button = view.findViewById(R.id.btnStats)
 
 
         stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
 
 
-        stats.setOnClickListener{
+        stats.setOnClickListener {
             dialog?.dismiss()
-            if(newActivity is HomeActivity){
-                val learning =  LearningActivity()
+            if (newActivity is HomeActivity) {
+                val learning = LearningActivity()
                 learning.setType(3)
-                startActivity(Intent(newActivity,learning::class.java))
-            }
-            else{
+                startActivity(Intent(newActivity, learning::class.java))
+            } else {
                 val fragment = StatsFragment()
                 val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")?.commit()
+                transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
+                    ?.commit()
                 (activity as LearningActivity?)?.transitionFragment()
             }
 

@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 
 @Module
-@InstallIn(SingletonComponent ::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
@@ -44,21 +44,22 @@ object AppModule {
         app,
         WordDatabase::class.java,
         WORD_DATABASE_NAME
-        ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
+    ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
 
 
     @Singleton
     @Provides
-    fun provideWordDao(db : WordDatabase) = db.getWordDao()
+    fun provideWordDao(db: WordDatabase) = db.getWordDao()
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(@ApplicationContext app : Context): SharedPreferences =
+    fun provideSharedPreferences(@ApplicationContext app: Context): SharedPreferences =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
 
     @Singleton
     @Provides
-    fun providesFirstTimeToggle(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
+    fun providesFirstTimeToggle(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
 
 //    @Singleton
 //    @Provides
@@ -71,67 +72,77 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun providesShowWord(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_WORD,true)
+    fun providesShowWord(sharedPref: SharedPreferences) = sharedPref.getBoolean(KEY_SHOW_WORD, true)
 
     @Singleton
     @Provides
-    fun providesShowImage(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_IMAGE,false)
+    fun providesShowImage(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_SHOW_IMAGE, false)
 
     @Singleton
     @Provides
-    fun providesShowEngFirst(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_ENG_FIRST,false)
+    fun providesShowEngFirst(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_ENG_FIRST, false)
 
     @Singleton
     @Provides
-    fun providesShowHints(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_HINTS,false)
+    fun providesShowHints(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_SHOW_HINTS, false)
 
     @Singleton
     @Provides
-    fun providesPracticeNewWords(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS,false)
+    fun providesPracticeNewWords(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS, false)
 
     @Singleton
     @Provides
-    fun providesEnablePronunciation(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_ENABLE_PRONUNCIATION,false)
+    fun providesEnablePronunciation(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_ENABLE_PRONUNCIATION, false)
 
     @Singleton
     @Provides
-    fun providesCreateCustomLesson(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_CUSTOM_LESSON,true)
+    fun providesCreateCustomLesson(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_CUSTOM_LESSON, true)
 
     @Singleton
     @Provides
-    fun providesMode(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_MODE,false)
+    fun providesMode(sharedPref: SharedPreferences) = sharedPref.getBoolean(KEY_MODE, false)
 
     @Singleton
     @Provides
-    fun providesNumWords(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_NUM_WORDS,10)
+    fun providesNumWords(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_NUM_WORDS, 10)
 
     @Singleton
     @Provides
-    fun providesDifficulty(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_DIFFICULTY,1)
-
+    fun providesDifficulty(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_DIFFICULTY, 1)
 
 
     @Singleton
     @Provides
-    fun lessonFilterSort(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_SORTING,2)
+    fun lessonFilterSort(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_LESSON_SORTING, 2)
 
     @Singleton
     @Provides
-    fun lessonFilterCategory(sharedPref : SharedPreferences)  = sharedPref.getString(KEY_LESSON_CATEGORY,"All")
+    fun lessonFilterCategory(sharedPref: SharedPreferences) =
+        sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
     @Singleton
     @Provides
-    fun lessonFilterDifficulty(sharedPref : SharedPreferences): MutableSet<String>? = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
+    fun lessonFilterDifficulty(sharedPref: SharedPreferences): MutableSet<String>? =
+        sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
 
     @Singleton
     @Provides
-    fun lessonFilterPracticeCompleted(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_PRACTICE_COMPLETED,2)
+    fun lessonFilterPracticeCompleted(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_PRACTICE_COMPLETED, 2)
 
     @Singleton
     @Provides
-    fun lessonFilterTestPassed(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_TEST_PASSED,2)
+    fun lessonFilterTestPassed(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_TEST_PASSED, 2)
 
     @Singleton
     @Provides
-    fun lessonFilterUnlocked(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_LESSON_UNLOCKED,2)
+    fun lessonFilterUnlocked(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_UNLOCKED, 2)
 }

@@ -15,9 +15,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
-import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
@@ -25,6 +24,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
+import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -55,26 +55,27 @@ class LessonSelectFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 
-        val btnFilter : ImageButton = view.findViewById(R.id.ibFilter)
+        val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
 
 
-        val practiceCompleteIcon : TextView = view.findViewById(R.id.tvPracCompleted)
-        val testPassedIcon : TextView = view.findViewById(R.id.tvtestPassed)
+        val practiceCompleteIcon: TextView = view.findViewById(R.id.tvPracCompleted)
+        val testPassedIcon: TextView = view.findViewById(R.id.tvtestPassed)
 
 
-        btnFilter.setOnClickListener{
+        btnFilter.setOnClickListener {
             //spinner.performClick()
-            val dialog : DialogFragment = FilterLessonFragment(lessonAdapter)
+            val dialog: DialogFragment = FilterLessonFragment(lessonAdapter)
 
             dialog.isCancelable = true
             dialog.show(childFragmentManager, "test")
         }
 
 
-        val rvLessonList : RecyclerView = view.findViewById(R.id.rvLessons)
+        val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
 
         rvLessonList.adapter = lessonAdapter
-        rvLessonList.layoutManager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        rvLessonList.layoutManager =
+            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
@@ -89,9 +90,9 @@ class LessonSelectFragment : Fragment() {
         return view
     }
 
-    fun createLessonList(difficulties: MutableSet<String>){
+    fun createLessonList(difficulties: MutableSet<String>) {
         println("create lesson $difficulties")
-        var dbLessons : MutableList<Lesson> = mutableListOf()
+        var dbLessons: MutableList<Lesson> = mutableListOf()
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
                 //get lessons from database
@@ -100,40 +101,41 @@ class LessonSelectFragment : Fragment() {
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
 
-                    var add : Boolean
+                    var add: Boolean
                     //after database access is complete, add lessons to adapter
-                    for(lesson in dbLessons){
+                    for (lesson in dbLessons) {
                         add = true
-                        if(lesson.level > 0){
-                            if(difficulties!!.contains((lesson.level).toString())){
+                        if (lesson.level > 0) {
+                            if (difficulties!!.contains((lesson.level).toString())) {
 
                                 val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
-                                if(!category.equals("All")){
-                                    if(lesson.title != category)
+                                if (!category.equals("All")) {
+                                    if (lesson.title != category)
                                         add = false
                                 }
 
-                                if(sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
-                                    if(!lesson.practiceCompleted)
+                                if (sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
+                                    if (!lesson.practiceCompleted)
                                         add = false
 
-                                if(sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
-                                    if(!lesson.testPassed)
+                                if (sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
+                                    if (!lesson.testPassed)
                                         add = false
 
-                                if(sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
-                                    if(lesson.locked)
+                                if (sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
+                                    if (lesson.locked)
                                         add = false
-                            }else
+                            } else
                                 add = false
                         }
-                        if(add)
+                        if (add)
                             lessonAdapter.addToDo(lesson)
                     }
                     //TODO: used saved variable, not hardcoded
                     lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 2))
-                }, 500) }.invoke()
+                }, 500)
+            }.invoke()
         }
     }
 

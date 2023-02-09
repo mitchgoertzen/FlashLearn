@@ -10,8 +10,8 @@ import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
@@ -28,15 +28,15 @@ import javax.inject.Inject
 class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFragment() {
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     private lateinit var sortOptionAdapter: SortOptionAdapter
 
     private var difficulties: MutableSet<String> = mutableSetOf()
-    private var selectCategory : String = "All"
-    private var selectPracticeCompleted : Boolean = false
-    private var selectTestPassed : Boolean = false
-    private var selectUnlocked : Boolean = false
+    private var selectCategory: String = "All"
+    private var selectPracticeCompleted: Boolean = false
+    private var selectTestPassed: Boolean = false
+    private var selectUnlocked: Boolean = false
 
     //private var difficulties : MutableSet<String> = mutableSetOf()
 
@@ -50,10 +50,9 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             )
         }
 
-       // val newSet: Set<String> = HashSet<String>(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, HashSet<String>()))
+        // val newSet: Set<String> = HashSet<String>(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, HashSet<String>()))
         //val fetch: Set<String> = sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)!!
         //sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
-
 
 
     }
@@ -70,19 +69,20 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             difficulties.add(it)
         }
         selectCategory = sharedPref.getString(KEY_LESSON_CATEGORY, "All")!!
-        selectPracticeCompleted  = sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false)
-        selectTestPassed  = sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false)
-        selectUnlocked  = sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false)
+        selectPracticeCompleted = sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false)
+        selectTestPassed = sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false)
+        selectUnlocked = sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false)
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val window : FrameLayout = view.findViewById(R.id.clHintBackground)
+        val window: FrameLayout = view.findViewById(R.id.clHintBackground)
 
-        sortOptionAdapter = SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
+        sortOptionAdapter =
+            SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
 
         //connect local variables to elements in fragment
-        val rvSortOptions : RecyclerView = view.findViewById(R.id.rvSortingOptions)
+        val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
 
         rvSortOptions.adapter = sortOptionAdapter
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
@@ -100,7 +100,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             v?.onTouchEvent(event) ?: true
         }
 
-        val popup :LinearLayout = view.findViewById(R.id.llFilterPopup)
+        val popup: LinearLayout = view.findViewById(R.id.llFilterPopup)
 
         popup.setOnTouchListener { _, _ ->
             true
@@ -122,97 +122,98 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
                 selectCategory = parent.getItemAtPosition(pos).toString()
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         //TODO: change to function,  don't repeat 4 times
-        val level1 : CheckBox = view.findViewById(R.id.cbLevel1)
-        if(difficulties.contains("1")){
+        val level1: CheckBox = view.findViewById(R.id.cbLevel1)
+        if (difficulties.contains("1")) {
             level1.isChecked = true
         }
-        level1.setOnClickListener{
-            if (level1.isChecked){
+        level1.setOnClickListener {
+            if (level1.isChecked) {
                 difficulties.add("1")
-            }else{
+            } else {
                 difficulties.remove("1")
             }
         }
 
-        val level2 : CheckBox = view.findViewById(R.id.cbLevel2)
-        if(difficulties.contains("2"))
+        val level2: CheckBox = view.findViewById(R.id.cbLevel2)
+        if (difficulties.contains("2"))
             level2.isChecked = true
-        level2.setOnClickListener{
-            if (level2.isChecked){
+        level2.setOnClickListener {
+            if (level2.isChecked) {
                 difficulties.add("2")
-            }else{
+            } else {
                 difficulties.remove("2")
             }
         }
 
-        val level3 : CheckBox = view.findViewById(R.id.cbLevel3)
-        if(difficulties.contains("3"))
+        val level3: CheckBox = view.findViewById(R.id.cbLevel3)
+        if (difficulties.contains("3"))
             level3.isChecked = true
-        level3.setOnClickListener{
-            if (level3.isChecked){
+        level3.setOnClickListener {
+            if (level3.isChecked) {
                 difficulties.add("3")
-            }else{
+            } else {
                 difficulties.remove("3")
             }
         }
-        val level4 : CheckBox = view.findViewById(R.id.cbLevel4)
-        if(difficulties.contains("4"))
+        val level4: CheckBox = view.findViewById(R.id.cbLevel4)
+        if (difficulties.contains("4"))
             level4.isChecked = true
-        level4.setOnClickListener{
-            if (level4.isChecked){
+        level4.setOnClickListener {
+            if (level4.isChecked) {
                 difficulties.add("4")
-            }else{
+            } else {
                 difficulties.remove("4")
             }
         }
 
-        val level5 : CheckBox = view.findViewById(R.id.cbLevel5)
-        if(difficulties.contains("5"))
+        val level5: CheckBox = view.findViewById(R.id.cbLevel5)
+        if (difficulties.contains("5"))
             level5.isChecked = true
-        level5.setOnClickListener{
-            if (level5.isChecked){
+        level5.setOnClickListener {
+            if (level5.isChecked) {
                 difficulties.add("5")
-            }else{
+            } else {
                 difficulties.remove("5")
             }
         }
 
-        val level6 : CheckBox = view.findViewById(R.id.cbLevel6)
-        if(difficulties.contains("6"))
+        val level6: CheckBox = view.findViewById(R.id.cbLevel6)
+        if (difficulties.contains("6"))
             level6.isChecked = true
-        level6.setOnClickListener{
-            if (level6.isChecked){
+        level6.setOnClickListener {
+            if (level6.isChecked) {
                 difficulties.add("6")
-            }else{
+            } else {
                 difficulties.remove("6")
             }
         }
-        val practiceCompleted : CheckBox = view.findViewById(R.id.cbPrac)
+        val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
-        practiceCompleted.setOnClickListener{
+        practiceCompleted.setOnClickListener {
             selectPracticeCompleted = practiceCompleted.isChecked
         }
 
-        val testPassed : CheckBox = view.findViewById(R.id.cbTest)
+        val testPassed: CheckBox = view.findViewById(R.id.cbTest)
         testPassed.isChecked = selectTestPassed
-        testPassed.setOnClickListener{
+        testPassed.setOnClickListener {
             selectTestPassed = testPassed.isChecked
         }
 
-        val unlocked : CheckBox = view.findViewById(R.id.cbUnlock)
+        val unlocked: CheckBox = view.findViewById(R.id.cbUnlock)
         unlocked.isChecked = selectUnlocked
-        unlocked.setOnClickListener{
+        unlocked.setOnClickListener {
             selectUnlocked = unlocked.isChecked
         }
 
-        val apply : Button = view.findViewById(R.id.btnApplyFilters)
+        val apply: Button = view.findViewById(R.id.btnApplyFilters)
 
 
-        apply.setOnClickListener{
+        apply.setOnClickListener {
             lessonAdapter.sortList(sortOptionAdapter.getSelected())
 
             sharedPref.edit()

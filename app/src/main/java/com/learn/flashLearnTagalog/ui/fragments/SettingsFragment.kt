@@ -10,8 +10,11 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ScrollView
+import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -32,7 +35,10 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_SHOW_WORD
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -62,7 +68,7 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
     private var wordsBarValue = 0
     private var difficultyBarValue = 0
 
-    private var searchInProgress : Boolean = false
+    private var searchInProgress: Boolean = false
 
     private var thumbView: View? = null
 
@@ -146,11 +152,11 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         }
         deactivateSwitch(imageSwitch)
 
-        practiceNewWords = sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS,true)
+        practiceNewWords = sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS, true)
         newWordSwitch.isChecked = practiceNewWords
         newWordSwitch.setOnClickListener {
             practiceNewWords = !practiceNewWords
-                sharedPref.edit()
+            sharedPref.edit()
                 .putBoolean(KEY_PRACTICE_NEW_WORDS, practiceNewWords)
                 .apply()
             refreshWordList(confirmButton, mode, newWordSwitch, availableWords)
@@ -168,8 +174,8 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
 
         wordsBarValue = sharedPref.getInt(KEY_NUM_WORDS, 0)
         numWords.progress = wordsBarValue
-        totalWords = (wordsBarValue+1)*10
-        setNumWordBarText(numWords,wordsBarValue)
+        totalWords = (wordsBarValue + 1) * 10
+        setNumWordBarText(numWords, wordsBarValue)
         numWords.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
 
             override fun onProgressChanged(
@@ -177,9 +183,9 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                 fromUser: Boolean
             ) {
 
-                setNumWordBarText(numWords,progress)
+                setNumWordBarText(numWords, progress)
                 wordsBarValue = progress
-                totalWords = (progress+1)*10
+                totalWords = (progress + 1) * 10
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -237,15 +243,16 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         }
         deactivateSwitch(pronunciationSwitch)
 
-        availableWords.setOnClickListener{
+        availableWords.setOnClickListener {
 
-            val practiceHint = "To practice more words, consider enabling \"Practice New Words\",\n" +
-                    "or change the difficulty"
+            val practiceHint =
+                "To practice more words, consider enabling \"Practice New Words\",\n" +
+                        "or change the difficulty"
             val testHint = "To be tested on more words, you need practice them first"
 
-            val dialog : DialogFragment = if(lessonMode){
+            val dialog: DialogFragment = if (lessonMode) {
                 HintFragment(practiceHint)
-            } else{
+            } else {
                 HintFragment(testHint)
             }
 
@@ -276,8 +283,10 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
             }
             //test
             else {
-                val fragment = TestFragment(testWordList.asSequence().shuffled().take(totalWords).toMutableList(),
-                    currentLesson)
+                val fragment = TestFragment(
+                    testWordList.asSequence().shuffled().take(totalWords).toMutableList(),
+                    currentLesson
+                )
                 transitionFragment(fragment)
             }
         }
@@ -285,42 +294,42 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         return view
     }
 
-    private fun setNumWordBarText(numWords : SeekBar, progress: Int) {
+    private fun setNumWordBarText(numWords: SeekBar, progress: Int) {
 
         numWords.thumb = getThumb(((progress + 1) * 10).toString())
-        when(progress){
-            0->{
+        when (progress) {
+            0 -> {
                 numWords.thumbOffset = 0
-                numWords.setPadding(0,0,0,0)
+                numWords.setPadding(0, 0, 0, 0)
             }
-            1->{
+            1 -> {
                 numWords.thumbOffset = 0
-                numWords.setPadding(0,0,0,0)
+                numWords.setPadding(0, 0, 0, 0)
             }
-            2->{
+            2 -> {
                 numWords.thumbOffset = 0
-                numWords.setPadding(0,0,12,0)
+                numWords.setPadding(0, 0, 12, 0)
             }
         }
 
     }
 
-    private fun setDifficultyBarText(difficulty : SeekBar, progress: Int) {
-        when(progress){
-            0->{
+    private fun setDifficultyBarText(difficulty: SeekBar, progress: Int) {
+        when (progress) {
+            0 -> {
                 difficulty.thumb = getThumb("easy")
                 difficulty.thumbOffset = 12
-                difficulty.setPadding(12,0,0,0)
+                difficulty.setPadding(12, 0, 0, 0)
             }
-            1->{
+            1 -> {
                 difficulty.thumb = getThumb("medium")
                 difficulty.thumbOffset = 0
-                difficulty.setPadding(0,0,0,0)
+                difficulty.setPadding(0, 0, 0, 0)
             }
-            2->{
+            2 -> {
                 difficulty.thumb = getThumb("hard")
                 difficulty.thumbOffset = 0
-                difficulty.setPadding(0,0,12,0)
+                difficulty.setPadding(0, 0, 12, 0)
             }
         }
     }
@@ -347,7 +356,12 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    private fun refreshWordList(confirmButton: Button, mode : SwitchCompat, newWordSwitch : SwitchCompat, availableWords : TextView) {
+    private fun refreshWordList(
+        confirmButton: Button,
+        mode: SwitchCompat,
+        newWordSwitch: SwitchCompat,
+        availableWords: TextView
+    ) {
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
                 gatherTestWords()
@@ -358,12 +372,12 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                     var wordsText = "word"
                     var words = 0
                     words = if (lessonMode) {
-                        if(practiceNewWords){
+                        if (practiceNewWords) {
                             practiceWordList.size
-                        }else{
-                            if(practicedWordListLargeEnough) {
+                        } else {
+                            if (practicedWordListLargeEnough) {
                                 testWordList.size
-                            }else{
+                            } else {
                                 practiceWordList.size
                             }
                         }
@@ -371,7 +385,7 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                         testWordList.size
                     }
 
-                    if(words != 1){
+                    if (words != 1) {
                         isAreText = "are"
                         wordsText += "s"
                     }
@@ -379,13 +393,14 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                     availableWords.text = "There $isAreText currently $words $wordsText available"
 
                     confirmButton.isEnabled = true
-                    checkForTestingWords(mode,newWordSwitch)
-                }, 1000) }.invoke()
+                    checkForTestingWords(mode, newWordSwitch)
+                }, 1000)
+            }.invoke()
         }
     }
 
     private fun checkForTestingWords(mode: SwitchCompat, newWord: SwitchCompat) {
-        if(testWordList.size > 0){
+        if (testWordList.size > 0) {
             mode.scaleX = 1f
             mode.scaleY = 1f
             mode.alpha = 1f
@@ -394,7 +409,7 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
             newWord.isEnabled = lessonMode
             newWord.isChecked = practiceNewWords
 
-        }else{
+        } else {
             mode.scaleX = .8f
             mode.scaleY = .8f
             mode.alpha = .8f
@@ -411,8 +426,8 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
             .apply()
     }
 
-    private fun gatherPracticeWords(){
-        when(difficultyBarValue) {
+    private fun gatherPracticeWords() {
+        when (difficultyBarValue) {
             0 -> {
                 viewModel.getEasyWords().observe(viewLifecycleOwner) {
                     practiceWordList = it.toMutableList()
@@ -431,19 +446,19 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         }
     }
 
-    private fun gatherTestWords(){
-        when(difficultyBarValue){
-            0->{
+    private fun gatherTestWords() {
+        when (difficultyBarValue) {
+            0 -> {
                 viewModel.getPracticedEasyWords().observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }
             }
-            1->{
+            1 -> {
                 viewModel.getPracticedIntermediateWords().observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }
             }
-            2->{
+            2 -> {
                 viewModel.getPracticedHardWords().observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }

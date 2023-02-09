@@ -15,10 +15,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HintFragment(private var text : String) : DialogFragment() {
+class HintFragment(private var text: String) : DialogFragment() {
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     override fun onStart() {
         super.onStart()
@@ -41,7 +41,7 @@ class HintFragment(private var text : String) : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val window : ConstraintLayout = view.findViewById(R.id.clHintBackground)
+        val window: ConstraintLayout = view.findViewById(R.id.clHintBackground)
         window.setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> dialog?.dismiss()
@@ -49,7 +49,7 @@ class HintFragment(private var text : String) : DialogFragment() {
             v?.onTouchEvent(event) ?: true
         }
 
-        val hint :TextView = view.findViewById(R.id.tvHint)
+        val hint: TextView = view.findViewById(R.id.tvHint)
         hint.text = text
 
         return view

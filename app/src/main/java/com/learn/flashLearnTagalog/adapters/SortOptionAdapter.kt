@@ -10,29 +10,34 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SortOptionAdapter @Inject constructor(private var options: MutableList<String>, savedSortPosition : Int) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
+class SortOptionAdapter @Inject constructor(
+    private var options: MutableList<String>,
+    savedSortPosition: Int
+) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
 
-    lateinit var optionsList : ArrayList<String>
+    lateinit var optionsList: ArrayList<String>
+
     //TODO: used saved variable, not hardcoded
-    var currentSelection : Int = savedSortPosition
-    lateinit var  currentSelect : TextView
+    var currentSelection: Int = savedSortPosition
+    lateinit var currentSelect: TextView
 
-    class SortOptionViewHolder(val binding: SortOptionBinding) : RecyclerView.ViewHolder(binding.root)
+    class SortOptionViewHolder(val binding: SortOptionBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent:ViewGroup, viewType:Int): SortOptionViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SortOptionViewHolder {
         val binding = SortOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SortOptionViewHolder(binding)
 
     }
 
-    override fun onBindViewHolder(holder: SortOptionViewHolder, position:Int) {
+    override fun onBindViewHolder(holder: SortOptionViewHolder, position: Int) {
         val currentOption = options[position]
-        if(position == currentSelection)
+        if (position == currentSelection)
             select(holder.binding.textView5)
         holder.itemView.apply {
             val option = holder.binding.textView5
             option.text = currentOption
-            option.setOnClickListener{
+            option.setOnClickListener {
                 currentSelection = position
                 currentSelect.setBackgroundResource(R.color.white)
                 select(option)
@@ -40,31 +45,31 @@ class SortOptionAdapter @Inject constructor(private var options: MutableList<Str
         }
     }
 
-    fun addToDo(option: String){
+    fun addToDo(option: String) {
         options.add(option)
         notifyItemInserted(options.size - 1)
     }
 
-    fun getSelected() : Int{
+    fun getSelected(): Int {
         return currentSelection
     }
 
-    fun deleteToDos(){
+    fun deleteToDos() {
         options.clear()
         notifyDataSetChanged()
     }
 
-    fun select(option:TextView){
+    fun select(option: TextView) {
         currentSelect = option
         option.setBackgroundResource(R.drawable.selected_text_background)
     }
 
-    fun intiList(list:List<String>){
+    fun intiList(list: List<String>) {
         options = list as MutableList<String>
     }
 
-    fun showListSize(){
-        println( optionsList.size)
+    fun showListSize() {
+        println(optionsList.size)
     }
 
     override fun getItemCount(): Int {

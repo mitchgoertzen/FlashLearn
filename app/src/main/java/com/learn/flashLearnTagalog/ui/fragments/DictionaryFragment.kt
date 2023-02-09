@@ -4,22 +4,25 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -28,13 +31,13 @@ class DictionaryFragment : Fragment() {
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
     private val viewModel: MainViewModel by viewModels()
-    private var wordList : MutableList<Word> = mutableListOf()
+    private var wordList: MutableList<Word> = mutableListOf()
     private var wordsPerPage = 200
     private var numPages = 1
     private var currentPage = 1
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,19 +50,19 @@ class DictionaryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_dictionary, container, false)
 
         //connect local variables to elements in fragment
-        val rvDictionary : RecyclerView = view.findViewById(R.id.rvDictionary)
+        val rvDictionary: RecyclerView = view.findViewById(R.id.rvDictionary)
 
-        val currPage : TextView = view.findViewById(R.id.tvCurrPage)
-        val totalPages : TextView = view.findViewById(R.id.tvTotalPages)
+        val currPage: TextView = view.findViewById(R.id.tvCurrPage)
+        val totalPages: TextView = view.findViewById(R.id.tvTotalPages)
 
-        val firstPage : ImageButton = view.findViewById(R.id.ibFirstPage)
-        val lastPage : ImageButton = view.findViewById(R.id.ibLastPage)
-        val nextPage : ImageButton = view.findViewById(R.id.ibNextPage)
-        val prevPage : ImageButton = view.findViewById(R.id.ibPrevPage)
+        val firstPage: ImageButton = view.findViewById(R.id.ibFirstPage)
+        val lastPage: ImageButton = view.findViewById(R.id.ibLastPage)
+        val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
+        val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
 
-        numPages = viewModel.getSize()/wordsPerPage
+        numPages = viewModel.getSize() / wordsPerPage
 
-        if(viewModel.getSize()%wordsPerPage > 0)
+        if (viewModel.getSize() % wordsPerPage > 0)
             numPages++
 
         totalPages.text = numPages.toString()
@@ -68,7 +71,7 @@ class DictionaryFragment : Fragment() {
         deactivateSwitch(prevPage)
 
         //when firstPage button is pressed, (de)/activate this and corresponding buttons
-        firstPage.setOnClickListener{
+        firstPage.setOnClickListener {
             deactivateSwitch(firstPage)
             deactivateSwitch(prevPage)
             activateSwitch(nextPage)
@@ -82,7 +85,7 @@ class DictionaryFragment : Fragment() {
         }
 
         //when lastPage button is pressed, (de)/activate this and corresponding buttons
-        lastPage.setOnClickListener{
+        lastPage.setOnClickListener {
             deactivateSwitch(nextPage)
             deactivateSwitch(lastPage)
             activateSwitch(firstPage)
@@ -95,13 +98,13 @@ class DictionaryFragment : Fragment() {
         }
 
         //on nextPage button press
-        nextPage.setOnClickListener{
-            if(!prevPage.isEnabled){
+        nextPage.setOnClickListener {
+            if (!prevPage.isEnabled) {
                 activateSwitch(prevPage)
                 activateSwitch(firstPage)
             }
             currentPage++
-            if(currentPage == numPages){
+            if (currentPage == numPages) {
                 deactivateSwitch(nextPage)
                 deactivateSwitch(lastPage)
             }
@@ -112,13 +115,13 @@ class DictionaryFragment : Fragment() {
         }
 
         //on prevPage button press
-        prevPage.setOnClickListener{
-            if(!nextPage.isEnabled){
+        prevPage.setOnClickListener {
+            if (!nextPage.isEnabled) {
                 activateSwitch(nextPage)
                 activateSwitch(lastPage)
             }
             currentPage--
-            if(currentPage == 1){
+            if (currentPage == 1) {
                 deactivateSwitch(prevPage)
                 deactivateSwitch(firstPage)
             }
@@ -147,11 +150,12 @@ class DictionaryFragment : Fragment() {
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
                 //gather next set of words, confined by current page and number of words per page
-                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage),wordsPerPage).observe(viewLifecycleOwner) {
-                    wordList = it.toMutableList()
-                }
+                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
+                    .observe(viewLifecycleOwner) {
+                        wordList = it.toMutableList()
+                    }
                 Handler(Looper.getMainLooper()).postDelayed({
-                    for(word in wordList){
+                    for (word in wordList) {
                         dictionaryAdapter.addToDo(word)
                     }
                 }, 1000)

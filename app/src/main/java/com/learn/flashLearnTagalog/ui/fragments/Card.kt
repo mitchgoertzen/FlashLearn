@@ -18,19 +18,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class Card(word:Word) : Fragment() {
+class Card(word: Word) : Fragment() {
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
     private val viewModel: MainViewModel by viewModels()
 
     val currentWord = word
-    var shownWord : String = ""
-    private lateinit var tvCurrWord : TextView
-    private lateinit var card : ImageView
+    var shownWord: String = ""
+    private lateinit var tvCurrWord: TextView
+    private lateinit var card: ImageView
     var front = true
-    private var engFirst : Boolean = true
+    private var engFirst: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +41,9 @@ class Card(word:Word) : Fragment() {
 
         engFirst = sharedPref.getBoolean(KEY_ENG_FIRST, false)
 
-        val wordType : TextView = view.findViewById(R.id.tvType)
+        val wordType: TextView = view.findViewById(R.id.tvType)
 
-        val words = if(engFirst)
+        val words = if (engFirst)
             currentWord.english
         else
             currentWord.tagalog
@@ -54,7 +54,7 @@ class Card(word:Word) : Fragment() {
         card.setImageResource(R.drawable.card_front_new)
         tvCurrWord = view.findViewById(R.id.tvCurrWord)
 
-        wordType.text = when(currentWord.type){
+        wordType.text = when (currentWord.type) {
             "n" -> {
                 "Noun"
             }
@@ -73,10 +73,10 @@ class Card(word:Word) : Fragment() {
             "inf" -> {
                 "infinitive"
             }
-            "intrj"->{
+            "intrj" -> {
                 "interjection"
             }
-            "prep"->{
+            "prep" -> {
                 "preposition"
             }
             else -> {
@@ -85,38 +85,37 @@ class Card(word:Word) : Fragment() {
         }
 
 
-        if(engFirst){
+        if (engFirst) {
             shownWord = currentWord.english
-            if(numberOfEnglishWords > 1)
+            if (numberOfEnglishWords > 1)
                 tvCurrWord.maxLines = 2
             else
                 tvCurrWord.maxLines = 1
-        }else{
+        } else {
             shownWord = currentWord.tagalog
             tvCurrWord.maxLines = 1
         }
 
         tvCurrWord.text = shownWord
 
-        val imFlipCard : ImageButton = view.findViewById(R.id.imFlipCard)
-        imFlipCard.setOnClickListener{
+        val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
+        imFlipCard.setOnClickListener {
             currentWord.id?.let { it1 -> viewModel.flipWord(it1) }
-            if(shownWord == currentWord.english){
+            if (shownWord == currentWord.english) {
                 shownWord = currentWord.tagalog
                 tvCurrWord.maxLines = 1
-            }
-            else{
+            } else {
                 shownWord = currentWord.english
-                if(numberOfEnglishWords > 1)
+                if (numberOfEnglishWords > 1)
                     tvCurrWord.maxLines = 2
                 else
                     tvCurrWord.maxLines = 1
             }
             tvCurrWord.text = shownWord
-            front = if(front){
+            front = if (front) {
                 card.setImageResource(R.drawable.card_back)
                 false
-            }else{
+            } else {
                 card.setImageResource(R.drawable.card_front_new)
                 true
             }

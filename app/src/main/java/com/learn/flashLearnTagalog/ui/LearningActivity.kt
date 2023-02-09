@@ -8,11 +8,14 @@ import androidx.fragment.app.DialogFragment
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.ui.fragments.*
+import com.learn.flashLearnTagalog.ui.fragments.DictionaryFragment
+import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
+import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
+import com.learn.flashLearnTagalog.ui.fragments.StatsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-private var type : Int = -1
+private var type: Int = -1
 
 @AndroidEntryPoint
 class LearningActivity : AppCompatActivity(R.layout.activity_main) {
@@ -21,7 +24,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     private lateinit var binding: ActivityMainBinding
 
     @Inject
-    lateinit var sharedPref : SharedPreferences
+    lateinit var sharedPref: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +35,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         //when learning activity is started, choose background colour based on type
         //1 = dictionary, 2 = lessons, 3 = stats
-        val bkgColor : Int = if(type > 1)
+        val bkgColor: Int = if (type > 1)
             resources.getColor(R.color.blue)
         else
             resources.getColor(R.color.red)
@@ -42,7 +45,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         //start home activity on home button press
         binding.ibHome.setOnClickListener {
 
-            if(sharedPref.getBoolean(Constants.KEY_IN_TEST, true)){
+            if (sharedPref.getBoolean(Constants.KEY_IN_TEST, true)) {
                 sharedPref.edit()
                     .putBoolean(Constants.KEY_IN_TEST, false)
                     .apply()
@@ -50,7 +53,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             //clear fragment stack
             val count: Int = supportFragmentManager.backStackEntryCount
-            for (i in 0 until count){
+            for (i in 0 until count) {
                 supportFragmentManager.popBackStack()
             }
 
@@ -59,37 +62,40 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         //show profile popup dialog
-        binding.ibProfile.setOnClickListener{
-            val dialog : DialogFragment = ProfilePopupFragment(this)
+        binding.ibProfile.setOnClickListener {
+            val dialog: DialogFragment = ProfilePopupFragment(this)
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "profile popup")
         }
 
         //show appropriate fragment, based on type set
-        when(type){
-            1->{
+        when (type) {
+            1 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_nav_container, DictionaryFragment()).addToBackStack("dictionary").commit()
+                    .replace(R.id.main_nav_container, DictionaryFragment())
+                    .addToBackStack("dictionary").commit()
             }
-            2->{
+            2 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_nav_container, LessonSelectFragment()).addToBackStack("lesson select").commit()
+                    .replace(R.id.main_nav_container, LessonSelectFragment())
+                    .addToBackStack("lesson select").commit()
             }
-            3->{
+            3 -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_nav_container, StatsFragment()).addToBackStack("stats").commit()
+                    .replace(R.id.main_nav_container, StatsFragment()).addToBackStack("stats")
+                    .commit()
             }
         }
     }
 
-    fun transitionFragment(){
+    fun transitionFragment() {
         inSettings = !inSettings
     }
 
     override fun onBackPressed() {
         //if the app is in a test, set in test to false
-        if(sharedPref.getBoolean(Constants.KEY_IN_TEST, true)){
+        if (sharedPref.getBoolean(Constants.KEY_IN_TEST, true)) {
             //TODO: add warning for loss of progress, as well as confirmation to exit test and go back
             sharedPref.edit()
                 .putBoolean(Constants.KEY_IN_TEST, false)
@@ -97,16 +103,16 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         }
         val stack = supportFragmentManager.backStackEntryCount
         //if stack is 1 or less, clear stack and start home activity
-        if(stack < 2){
-            for (i in 0..stack){
+        if (stack < 2) {
+            for (i in 0..stack) {
                 supportFragmentManager.popBackStack()
             }
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-        }else{
+        } else {
             //if app is current in a results page, the back button will skip the just-completed lesson, and
             //and transition to the page visited prior
-            if(sharedPref.getBoolean(Constants.KEY_IN_RESULTS, false)){
+            if (sharedPref.getBoolean(Constants.KEY_IN_RESULTS, false)) {
                 supportFragmentManager.popBackStack()
                 sharedPref.edit()
                     .putBoolean(Constants.KEY_IN_RESULTS, false)
@@ -117,7 +123,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    fun setType(t : Int){
+    fun setType(t: Int) {
         type = t
     }
 
