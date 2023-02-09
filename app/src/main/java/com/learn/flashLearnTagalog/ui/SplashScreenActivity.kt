@@ -9,6 +9,7 @@ import android.os.Looper
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
@@ -22,7 +23,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val CURRENT_VERSION = 3
+//get current version from build version
+private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
+private const val DEBUG = true
 
 private const val wordUpdateAvailable = false
 private const val lessonUpdateAvailable = true
@@ -45,8 +48,11 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //manually reset user preferences
         //sharedPref.edit().clear().apply()
 
+        println(CURRENT_VERSION)
+        //get current version of app
         val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
         println("version: $version")
 
@@ -56,11 +62,13 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(view)
         val initText : TextView =  view.findViewById(R.id.tvInit)
 
+        //if version is lower, it will be set to update's version
         if(version < CURRENT_VERSION || viewModel.getSize() == 0){
+            //begin update check
             update(initText)
         }else{
-            startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
-            finish()
+            //continue to home activity
+            goToHomeActivity()
         }
     }
 
@@ -71,10 +79,13 @@ class SplashScreenActivity : AppCompatActivity() {
         val lessonNum = viewModel.getLessonCount()
         val wordNum = viewModel.getSize()
 
-        println("first open: $isFirstOpen")
-        println("size: $wordNum")
-        println("lesson count: $lessonNum")
+        if(DEBUG){
+            println("first open: $isFirstOpen")
+            println("size: $wordNum")
+            println("lesson count: $lessonNum")
+        }
 
+        //set user's version to current build version
         sharedPref.edit()
             .putInt(Constants.KEY_VERSION, CURRENT_VERSION)
             .apply()
@@ -87,21 +98,26 @@ class SplashScreenActivity : AppCompatActivity() {
         //create Lessons
         lessonCreator = LessonCreator()
 
+        //if the word list is empty, or
+        //it is the first time the user has opened the app
+        //start initialization process
         if(wordNum == 0 || isFirstOpen) {
+            //set first time opening to false
             sharedPref.edit()
                 .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, false)
                 .apply()
+            //start full update function(words and lesson), with init set to true
             updateWords(true, dataProcessor.getWords(), initText)
         }else if(lessonNum == 0){
             initLessons(initText)
         }else{
             if(wordUpdateAvailable){
+                //start full update function(words and lesson), with init set to false
                 updateWords(false, dataProcessor.getWords(), initText)
             }
             else if(lessonUpdateAvailable){
+                //start lesson update function
                 updateLessons(initText)
-                startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
-                finish()
             }
         }
     }
@@ -113,37 +129,40 @@ class SplashScreenActivity : AppCompatActivity() {
             suspend {
                 if(init){
                     initText.text = "Initializing Word Database..."
+                    println("initializing words...")
+                    //clear any data in db
                     viewModel.nukeTable()
+                    //add all words from previously created word list to db
                     viewModel.insertAll(words)
+                    //continue to lesson initialization
                     initLessons(initText)
                 }else{
                     initText.text = "Updating Word Database..."
                     println("updating words...")
-
-                    //println("word size: ${words.size}")
                     for(w in words){
                         viewModel.updateWordInfo(w.id, w.type, w.tagalog, w.english, w.category, w.uncommon, true)
                     }
-
-                    viewModel.getIncorrectWords()
-
-                    if(lessonUpdateAvailable)
-                        updateLessons(initText)
+                    viewModel.deleteIncorrectWords()
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
-                    startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
-                    finish()
-
+                    //if not initializing, and there is a lesson update available
+                    //continue to lesson update
+                    if(!init && lessonUpdateAvailable)
+                        updateLessons(initText)
+                    else
+                        goToHomeActivity()
                 }, 500)
             }.invoke()
         }
     }
 
     private fun initLessons(initText : TextView){
-
         initText.text = "Initializing Lesson Database..."
+        println("initializing lessons...")
+        //clear any data in db
         viewModel.nukeLessons()
-        //add delay on thread
+        //TODO: add delay on thread?
+        //add all previously created lessons to db
         viewModel.insertAllLessons(lessonCreator.getLessons())
     }
 
@@ -156,38 +175,57 @@ class SplashScreenActivity : AppCompatActivity() {
         var locked : Boolean
         GlobalScope.launch {
             suspend {
-
+                //for each lesson in lesson list
                 for(l in lessonCreator.getLessons()) {
+                    //check if the lesson with exact id already exists in db
                     if(viewModel.lessonExists(l.id)){
-                        println("lesson exists. update it")
+                        if(DEBUG)
+                            println("lesson exists. update it")
+                        //if the lesson level is 2 or greater and the lesson of the same category,
+                        //but prior level has not had its test passed, lock the lesson
+                        //otherwise, unlock the lesson
                         locked = !(l.level < 2 || viewModel.previousTestPassed(l.title, l.level))
+                        //if the lesson is locked, practiceCompleted and testPassed variables must be reset
                         if(locked){
                             practiceCompleted = false
                             testPassed = false
                         }else{
+                            //if the lesson is not locked, its progress will be kept
                             practiceCompleted = l.practiceCompleted
                             testPassed = l.testPassed
                         }
+                        //update all info on existing lesson
                         viewModel.updateLessonInfo(l.id, l.title, l.imageID, l.level, l.minLength, l.maxLength, practiceCompleted, testPassed, locked)
                     }else{
-                        println("lesson DOES NOT exist. add it")
-                            if(viewModel.lessonCategoryLevelExists(l.title, l.level)){
-                                //save lesson data before deletion
+                        if(DEBUG)
+                            println("lesson DOES NOT exist. add it")
+                        //if the lesson id was not found, check for combination of lesson category and level
+                        //(this is a legacy check for app version 1, since lesson id has changed from version 2 onward)
+                        if(viewModel.lessonCategoryLevelExists(l.title, l.level)){
+                            //save user progress of old lesson
+                            //TODO: save lesson data before deletion
+                            if(DEBUG)
                                 println("combo exists. delete old version")
-                                viewModel.deleteLesson(l.title, l.level)
-                            }
-
+                            //delete old lesson, which will be replaced by new lesson with updated id
+                            viewModel.deleteLesson(l.title, l.level)
+                        }
+                        if(DEBUG)
                             println("add new lesson")
-                            viewModel.insertLesson(l)
+                        //new lesson will be added to db
+                        viewModel.insertLesson(l)
 
                     }
                 }
-
                 Handler(Looper.getMainLooper()).postDelayed({
-
-
+                    goToHomeActivity()
                 }, 500)
             }.invoke()
         }
+    }
+
+    //end splash screen and continue to home activity
+    private fun goToHomeActivity(){
+        startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
+        finish()
     }
 }
