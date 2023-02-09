@@ -128,6 +128,9 @@ interface WordDAO {
     @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE id = :id)")
     fun lessonExists(id: Int): Boolean
 
+    @Query("SELECT * FROM lesson_table WHERE title = :category AND level = :level")
+    fun getLesson(category: String, level: Int): Lesson
+
     @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE title = :category AND level = :level)")
     fun lessonCategoryLevelExists(category: String, level: Int): Boolean
 

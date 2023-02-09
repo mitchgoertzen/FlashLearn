@@ -127,6 +127,9 @@ class MainViewModel @Inject constructor(
 
     fun getLessonCount() = mainRepo.getLessonCount()
 
+    fun getLesson(category: String, level: Int) =
+        mainRepo.getLesson(category, level)
+
     fun lessonExists(id: Int) = mainRepo.lessonExists(id)
 
     fun lessonCategoryLevelExists(category: String, level: Int) =

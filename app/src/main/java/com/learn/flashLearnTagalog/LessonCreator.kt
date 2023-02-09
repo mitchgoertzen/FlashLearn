@@ -17,6 +17,8 @@ class LessonCreator {
     private val hardMinLength = 9
     private val hardMaxLength = 100
 
+    //private var oldID = 1
+
     //lessons created here
     init {
         val lesson1 =

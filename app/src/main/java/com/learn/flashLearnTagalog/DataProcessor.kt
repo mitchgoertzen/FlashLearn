@@ -15,7 +15,7 @@ class DataProcessor(val resources: Resources) {
         val input: InputStream = resources.openRawResource(R.raw.tag_dollar)
         val reader = BufferedReader(InputStreamReader(input))
 
-        var currentString = ""
+        var currentString: String? = ""
         var id = 0
 
         while (true) {
@@ -33,37 +33,37 @@ class DataProcessor(val resources: Resources) {
             }
 
             //for each char in currentString
-            for (i in currentString.indices) {
+            for (i in currentString!!.indices) {
                 //state represents the data of each word that is currently being parsed
                 //once sentinel value is reached($ or #), save currentString to current variable and increment state
                 when (state) {
                     //0 = type
                     0 -> {
-                        if (currentString[i] == '$') {
+                        if (currentString!![i] == '$') {
                             state = 1
                         } else {
-                            type += currentString[i]
+                            type += currentString!![i]
                         }
                     }
                     //1 = tagalog
                     1 -> {
-                        if (currentString[i] == '$') {
+                        if (currentString!![i] == '$') {
                             state = 2
                         } else {
-                            tag += currentString[i]
+                            tag += currentString!![i]
                         }
                     }
                     //2 = english
                     2 -> {
-                        if (currentString[i] == '#') {
+                        if (currentString!![i] == '#') {
                             state = 3
                         } else {
-                            eng += currentString[i]
+                            eng += currentString!![i]
                         }
                     }
                     //3 = category
                     3 -> {
-                        cat += currentString[i]
+                        cat += currentString!![i]
                     }
                 }
             }

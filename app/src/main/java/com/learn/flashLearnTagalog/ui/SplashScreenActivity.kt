@@ -14,6 +14,7 @@ import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
+import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -34,6 +35,7 @@ private const val lessonUpdateAvailable = true
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
+    private val lifecycleOwner = this
     @Inject
     lateinit var sharedPref: SharedPreferences
 
@@ -53,7 +55,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         println(CURRENT_VERSION)
         //get current version of app
-        val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+       // val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        val version = 0
         println("version: $version")
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -219,8 +222,12 @@ class SplashScreenActivity : AppCompatActivity() {
                         //if the lesson id was not found, check for combination of lesson category and level
                         //(this is a legacy check for app version 1, since lesson id has changed from version 2 onward)
                         if (viewModel.lessonCategoryLevelExists(l.title, l.level)) {
-                            //save user progress of old lesson
-                            //TODO: save lesson data before deletion
+
+                            val oldLesson = viewModel.getLesson(l.title, l.level)
+                            l.practiceCompleted = oldLesson.practiceCompleted
+                            l.testPassed = oldLesson.testPassed
+                            l.locked = oldLesson.locked
+
                             if (DEBUG)
                                 println("combo exists. delete old version")
                             //delete old lesson, which will be replaced by new lesson with updated id
