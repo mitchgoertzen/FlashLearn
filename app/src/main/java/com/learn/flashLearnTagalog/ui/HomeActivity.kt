@@ -28,8 +28,6 @@ class HomeActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref : SharedPreferences
 
-    private val viewModel: MainViewModel by viewModels()
-
     private lateinit var binding: ActivityHomeBinding
 
     private var launch = true
@@ -38,27 +36,24 @@ class HomeActivity : AppCompatActivity() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
-
         super.onCreate(savedInstanceState)
-
-
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
 
-
-
         setContentView(view)
 
-        viewModel.getWordsByDifficultyForLesson("geography", 0, 5).observe(this) {
-            println("Geography 1: ${it.size}")
-        }
-        viewModel.getWordsByDifficultyForLesson("geography", 5, 7).observe(this) {
-            println("Geography 2: ${it.size}")
-        }
-        viewModel.getWordsByDifficultyForLesson("geography", 7, 100).observe(this) {
-            println("Geography 3: ${it.size}")
-        }
+//        val viewModel: MainViewModel by viewModels()
+
+//        viewModel.getWordsByDifficultyForLesson("geography", 0, 5).observe(this) {
+//            println("Geography 1: ${it.size}")
+//        }
+//        viewModel.getWordsByDifficultyForLesson("geography", 5, 7).observe(this) {
+//            println("Geography 2: ${it.size}")
+//        }
+//        viewModel.getWordsByDifficultyForLesson("geography", 7, 100).observe(this) {
+//            println("Geography 3: ${it.size}")
+//        }
 //        viewModel.getWordsByDifficultyForLesson("geography", 9, 100).observe(this) {
 //            println("Geography 4: ${it.size}")
 //        }
@@ -70,19 +65,17 @@ class HomeActivity : AppCompatActivity() {
 //        }
 
         if(launch){
-            // Log the Mobile Ads SDK version.
-           println("Google Mobile Ads SDK Version: " + MobileAds.getVersion())
 
             // Initialize the Mobile Ads SDK with an AdMob App ID.
             MobileAds.initialize(this) {}
 
-            // Set your test devices. Check your logcat output for the hashed device ID to
-            // get test ads on a physical device. e.g.
-            // "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345"))
-            // to get test ads on this device."
-            MobileAds.setRequestConfiguration(
-                RequestConfiguration.Builder().setTestDeviceIds(listOf("ABCDEF012345")).build()
-            )
+//            // Set your test devices. Check your logcat output for the hashed device ID to
+//            // get test ads on a physical device. e.g.
+//            // "Use RequestConfiguration.Builder().setTestDeviceIds(Arrays.asList("ABCDEF012345"))
+//            // to get test ads on this device."
+//            MobileAds.setRequestConfiguration(
+//                RequestConfiguration.Builder().setTestDeviceIds(listOf("ABCDEF012345")).build()
+//            )
 
             // Create an ad request.
             val adRequest = AdRequest.Builder().build()
@@ -94,19 +87,21 @@ class HomeActivity : AppCompatActivity() {
 
         val learning =  LearningActivity()
 
+        //on lesson button press, start learning activity
         binding.btnLesson.setOnClickListener{
             learning.setType(2)
             val intent = Intent(this, learning::class.java)
             startActivity(intent)
         }
 
+        //on dictionary button press, start learning activity
         binding.btnDictionary.setOnClickListener{
-
             learning.setType(1)
             val intent = Intent(this, learning::class.java)
             startActivity(intent)
         }
 
+        //display app info in popup dialog
         binding.ibInfo.setOnClickListener{
             val infoText = "This app is intended for English speakers who are interested in learning words from the " +
                     "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
@@ -122,6 +117,7 @@ class HomeActivity : AppCompatActivity() {
             dialog.show(this.supportFragmentManager, "info popup")
         }
 
+        //go to user profile
         binding.ibProfile.setOnClickListener{
             val dialog : DialogFragment = ProfilePopupFragment(this)
 
@@ -129,14 +125,12 @@ class HomeActivity : AppCompatActivity() {
             dialog.show(this.supportFragmentManager, "profile popup")
         }
 
-
         refreshButtons()
-
     }
 
 
     private fun refreshButtons(){
-        //need to change
+        //TODO: change?
         if(!sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)) {
             binding.btnLesson.isEnabled = true
             binding.btnDictionary.isEnabled = true
@@ -145,7 +139,6 @@ class HomeActivity : AppCompatActivity() {
             binding.btnDictionary.isEnabled = false
         }
     }
-
 
     override fun onBackPressed() {
         this.finishAffinity()

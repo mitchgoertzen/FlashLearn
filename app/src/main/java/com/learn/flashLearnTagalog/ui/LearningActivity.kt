@@ -30,15 +30,16 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         val view = binding.root
         setContentView(view)
 
-        println(type)
-
-        var bkgColor : Int = if(type > 1)
+        //when learning activity is started, choose background colour based on type
+        //1 = dictionary, 2 = lessons, 3 = stats
+        val bkgColor : Int = if(type > 1)
             resources.getColor(R.color.blue)
         else
             resources.getColor(R.color.red)
 
         binding.ivBackground.setBackgroundColor(bkgColor)
 
+        //start home activity on home button press
         binding.ibHome.setOnClickListener {
 
             if(sharedPref.getBoolean(Constants.KEY_IN_TEST, true)){
@@ -47,6 +48,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     .apply()
             }
 
+            //clear fragment stack
             val count: Int = supportFragmentManager.backStackEntryCount
             for (i in 0 until count){
                 supportFragmentManager.popBackStack()
@@ -56,8 +58,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             startActivity(intent)
         }
 
-
-
+        //show profile popup dialog
         binding.ibProfile.setOnClickListener{
             val dialog : DialogFragment = ProfilePopupFragment(this)
 
@@ -65,6 +66,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             dialog.show(this.supportFragmentManager, "profile popup")
         }
 
+        //show appropriate fragment, based on type set
         when(type){
             1->{
                 supportFragmentManager.beginTransaction()
@@ -85,14 +87,16 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         inSettings = !inSettings
     }
 
-
     override fun onBackPressed() {
+        //if the app is in a test, set in test to false
         if(sharedPref.getBoolean(Constants.KEY_IN_TEST, true)){
+            //TODO: add warning for loss of progress, as well as confirmation to exit test and go back
             sharedPref.edit()
                 .putBoolean(Constants.KEY_IN_TEST, false)
                 .apply()
         }
         val stack = supportFragmentManager.backStackEntryCount
+        //if stack is 1 or less, clear stack and start home activity
         if(stack < 2){
             for (i in 0..stack){
                 supportFragmentManager.popBackStack()
@@ -100,15 +104,17 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }else{
+            //if app is current in a results page, the back button will skip the just-completed lesson, and
+            //and transition to the page visited prior
             if(sharedPref.getBoolean(Constants.KEY_IN_RESULTS, false)){
                 supportFragmentManager.popBackStack()
                 sharedPref.edit()
                     .putBoolean(Constants.KEY_IN_RESULTS, false)
                     .apply()
             }
+            //remove current fragment from stack, which in turn transitions to previous fragment
             supportFragmentManager.popBackStack()
         }
-
     }
 
     fun setType(t : Int){
