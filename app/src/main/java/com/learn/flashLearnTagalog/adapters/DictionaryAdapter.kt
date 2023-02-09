@@ -32,18 +32,18 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         }
     }
 
-    fun addToDo(word: Word) {
+    fun addDictionaryWord(word: Word) {
         words.add(word)
         notifyItemInserted(words.size - 1)
     }
 
-    fun deleteToDos() {
+    fun deleteDictionaryWords() {
+        val size = words.size
         words.clear()
-        notifyDataSetChanged()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun intiList(list: List<Word>) {
-
         currentList = list
     }
 

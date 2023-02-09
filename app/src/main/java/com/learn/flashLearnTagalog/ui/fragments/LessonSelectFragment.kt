@@ -130,7 +130,7 @@ class LessonSelectFragment : Fragment() {
                                 add = false
                         }
                         if (add)
-                            lessonAdapter.addToDo(lesson)
+                            lessonAdapter.addLesson(lesson)
                     }
                     //TODO: used saved variable, not hardcoded
                     lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 2))

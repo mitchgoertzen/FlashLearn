@@ -145,7 +145,7 @@ class DictionaryFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
         //clear currently displayed words from the screen
-        dictionaryAdapter.deleteToDos()
+        dictionaryAdapter.deleteDictionaryWords()
 
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
@@ -156,7 +156,7 @@ class DictionaryFragment : Fragment() {
                     }
                 Handler(Looper.getMainLooper()).postDelayed({
                     for (word in wordList) {
-                        dictionaryAdapter.addToDo(word)
+                        dictionaryAdapter.addDictionaryWord(word)
                     }
                 }, 1000)
             }.invoke()

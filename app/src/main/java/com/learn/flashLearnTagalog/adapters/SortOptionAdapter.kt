@@ -17,7 +17,6 @@ class SortOptionAdapter @Inject constructor(
 
     lateinit var optionsList: ArrayList<String>
 
-    //TODO: used saved variable, not hardcoded
     var currentSelection: Int = savedSortPosition
     lateinit var currentSelect: TextView
 
@@ -45,7 +44,7 @@ class SortOptionAdapter @Inject constructor(
         }
     }
 
-    fun addToDo(option: String) {
+    fun addOption(option: String) {
         options.add(option)
         notifyItemInserted(options.size - 1)
     }
@@ -54,9 +53,10 @@ class SortOptionAdapter @Inject constructor(
         return currentSelection
     }
 
-    fun deleteToDos() {
+    fun deleteOptions() {
+        val size = options.size
         options.clear()
-        notifyDataSetChanged()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun select(option: TextView) {

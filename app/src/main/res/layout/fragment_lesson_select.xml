@@ -34,15 +34,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView2"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:src="@android:drawable/ic_search_category_default"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/glVertical4"-->
-<!--        app:layout_constraintStart_toEndOf="@+id/spSortDropdown"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />-->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView2"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:src="@android:drawable/ic_search_category_default"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/glVertical4"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/spSortDropdown"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />-->
 
     <Spinner
         android:id="@+id/spSortDropdown"
@@ -59,9 +59,9 @@
         android:id="@+id/ibFilter"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitCenter"
-        android:paddingBottom="5dp"
         android:background="#00FFFF00"
+        android:paddingBottom="5dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/filter"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toStartOf="@+id/glVertical4"
@@ -80,28 +80,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05"  />
+        app:layout_constraintGuide_percent="0.05" />
 
-<!--    <androidx.constraintlayout.widget.Guideline-->
-<!--        android:id="@+id/glVertical2"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="vertical"-->
-<!--        app:layout_constraintGuide_percent="0.15"  />-->
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/glVertical2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintGuide_percent="0.15"  />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85"  />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95"  />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLessons"
@@ -120,8 +120,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginRight="15dp"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"
         app:layout_constraintEnd_toEndOf="@+id/spSortDropdown"
         app:layout_constraintStart_toStartOf="@+id/glVertical1"
@@ -138,14 +138,14 @@
             android:id="@+id/tvPracCompleted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Practice Completed"
-            android:maxLines="1"
             android:layout_weight="1"
+            android:maxLines="1"
+            android:text="Practice Completed"
             android:textColor="#C0C0C0"
             app:autoSizeMaxTextSize="32sp"
             app:autoSizeMinTextSize="5sp"
             app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"/>
+            app:autoSizeTextType="uniform" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -158,14 +158,14 @@
             android:id="@+id/tvtestPassed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
             android:layout_weight="1"
+            android:maxLines="1"
             android:text="Test Passed"
             android:textColor="#C0C0C0"
             app:autoSizeMaxTextSize="32sp"
             app:autoSizeMinTextSize="5sp"
             app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"/>
+            app:autoSizeTextType="uniform" />
     </LinearLayout>
 
 

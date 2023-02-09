@@ -8,7 +8,7 @@ import com.learn.flashLearnTagalog.databinding.WordStatisticBinding
 
 class WordStatAdapter(
 
-    private val words: MutableList<WordStat>
+    private val wordStats: MutableList<WordStat>
 
 ) : RecyclerView.Adapter<WordStatAdapter.WordStatViewHolder>() {
 
@@ -25,23 +25,26 @@ class WordStatAdapter(
     }
 
     override fun onBindViewHolder(holder: WordStatViewHolder, position: Int) {
-        val currentWord = words[position]
+        val currentWord = wordStats[position]
         holder.binding.tvWord.text = currentWord.word
-        if (isPercentage)
-            holder.binding.tvNumber.text = currentWord.Percentage.toString() + "%"
+        if (isPercentage){
+            val percentageText = currentWord.Percentage.toString() + "%"
+            holder.binding.tvNumber.text = percentageText
+        }
         else
             holder.binding.tvNumber.text = currentWord.Number.toString()
     }
 
-    fun addToDo(word: WordStat, percentage: Boolean) {
+    fun addWordStat(wordStat: WordStat, percentage: Boolean) {
         isPercentage = percentage
-        words.add(word)
-        notifyItemInserted(words.size - 1)
+        wordStats.add(wordStat)
+        notifyItemInserted(wordStats.size - 1)
     }
 
-    fun deleteToDos() {
-        words.clear()
-        notifyDataSetChanged()
+    fun deleteWordStats() {
+        val size = wordStats.size
+        wordStats.clear()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun intiList(list: List<WordStat>) {
@@ -53,6 +56,6 @@ class WordStatAdapter(
     }
 
     override fun getItemCount(): Int {
-        return words.size
+        return wordStats.size
     }
 }

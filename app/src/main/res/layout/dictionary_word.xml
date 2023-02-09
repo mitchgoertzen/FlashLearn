@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="8dp"
-    android:paddingEnd="8dp"
     android:paddingTop="10dp"
+    android:paddingEnd="8dp"
     android:paddingBottom="10dp">
 
     <TextView
@@ -60,7 +60,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlCompat" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

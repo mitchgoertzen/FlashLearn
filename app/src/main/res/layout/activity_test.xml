@@ -31,12 +31,12 @@
         android:layout_height="31dp"
         android:layout_marginStart="5dp"
         android:layout_marginBottom="10dp"
+        android:background="#00FFFF00"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="?attr/actionModeCloseDrawable"
-        android:background="#00FFFF00"
-        android:scaleType="centerCrop"
-        app:tint="#FFFFFF"/>
+        app:tint="#FFFFFF" />
 
     <ImageButton
         android:id="@+id/imageButton2"
@@ -44,10 +44,10 @@
         android:layout_height="45dp"
         android:background="#00FFFF00"
         android:scaleType="centerCrop"
-        app:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_menu_myplaces"
+        app:tint="#FFFFFF"
         tools:ignore="SpeakableTextPresentCheck" />
 
 

@@ -87,11 +87,11 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         rvSortOptions.adapter = sortOptionAdapter
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
-        sortOptionAdapter.addToDo("Category")
-        sortOptionAdapter.addToDo("Subcategory")
-        sortOptionAdapter.addToDo("Difficulty: Low to High")
-        sortOptionAdapter.addToDo("Difficulty: High to Low")
-        sortOptionAdapter.addToDo("Unlocked")
+        sortOptionAdapter.addOption("Category")
+        sortOptionAdapter.addOption("Subcategory")
+        sortOptionAdapter.addOption("Difficulty: Low to High")
+        sortOptionAdapter.addOption("Difficulty: High to Low")
+        sortOptionAdapter.addOption("Unlocked")
 
         window.setOnTouchListener { v, event ->
             when (event?.action) {
@@ -240,7 +240,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
                 .putBoolean(KEY_LESSON_UNLOCKED, selectUnlocked)
                 .apply()
 
-            lessonAdapter.deleteToDos()
+            lessonAdapter.deleteLessons()
 
             dialog?.dismiss()
 

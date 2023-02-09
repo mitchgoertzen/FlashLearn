@@ -84,14 +84,15 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         }
     }
 
-    fun addToDo(lesson: Lesson) {
+    fun addLesson(lesson: Lesson) {
         lessons.add(lesson)
         notifyItemInserted(lessons.size - 1)
     }
 
-    fun deleteToDos() {
+    fun deleteLessons() {
+        val size = lessons.size
         lessons.clear()
-        notifyDataSetChanged()
+        notifyItemRangeRemoved(0, size)
     }
 
     fun intiList(list: List<Lesson>) {
@@ -109,16 +110,6 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
     fun getLessons(): MutableList<Lesson> {
         return lessons
     }
-
-    fun updateFilters(difficulties: MutableSet<String>) {
-//
-//        val new lessons
-//       //TODO: clone list first, clear lessons, then repopulate list with selected difficulties
-//        lessons.clear()
-//
-//
-    }
-
 
     fun sortList(type: Int) {
         if (lessons.size > 0) {
@@ -148,7 +139,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
                 }
             }
             lessons.add(0, customLesson)
-            notifyDataSetChanged()
+            notifyItemRangeChanged(0, lessons.size)
         }
     }
 }

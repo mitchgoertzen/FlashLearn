@@ -20,8 +20,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.adapters.ToDoAdapter
-import com.learn.flashLearnTagalog.data.ToDo
+import com.learn.flashLearnTagalog.adapters.TestWordAdapter
+import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
@@ -34,8 +34,8 @@ import javax.inject.Inject
 class TestFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
     Fragment(R.layout.fragment_test) {
 
-    private lateinit var toDoAdapter: ToDoAdapter
-    private lateinit var answeredAdapter: ToDoAdapter
+    private lateinit var testWordAdapter: TestWordAdapter
+    private lateinit var answeredAdapter: TestWordAdapter
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -67,9 +67,9 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
             .putBoolean(Constants.KEY_IN_TEST, true)
             .apply()
 
-        toDoAdapter = ToDoAdapter(mutableListOf())
+        testWordAdapter = TestWordAdapter(mutableListOf())
 
-        answeredAdapter = ToDoAdapter(mutableListOf())
+        answeredAdapter = TestWordAdapter(mutableListOf())
 
         val view = inflater.inflate(R.layout.fragment_test, container, false)
         val rvTodoList: RecyclerView = view.findViewById(R.id.rvTodoList)
@@ -78,7 +78,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
         val btnEnter: Button = view.findViewById(R.id.btnEnter)
         val btnSkip: Button = view.findViewById(R.id.btnSkip)
         i = 1
-        rvTodoList.adapter = toDoAdapter
+        rvTodoList.adapter = testWordAdapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         currentWordList = masterWordList.toMutableList()
@@ -122,7 +122,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
                 //go to next word
                 {
                     index.text = (i++).toString() + "/" + masterWordList.size.toString()
-                    toDoAdapter.deleteToDos()
+                    testWordAdapter.deleteTestWords()
                     btnEnter.text = "Enter"
                     btnEnter.isEnabled = false
                     btnSkip.isEnabled = true
@@ -137,14 +137,14 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
             } else {
                 val toDoTitle = etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
                 if (toDoTitle.isNotBlank()) {
-                    val toDo = ToDo(toDoTitle)
+                    val toDo = TestWord(toDoTitle)
                     val answer = getCurrentWord(!engFirst).uppercase().replace(" ".toRegex(), "")
                     correctAnswer = (toDoTitle == answer)
                     toDo.isCorrect = correctAnswer
-                    toDoAdapter.addToDo(toDo, engFirst, false)
+                    testWordAdapter.addTestWord(toDo, engFirst, false)
                     etTodoTitle.text.clear()
                     btnEnter.isActivated = false
-                    rvTodoList.scrollToPosition(toDoAdapter.getToDoSize() - 1)
+                    rvTodoList.scrollToPosition(testWordAdapter.getTestWordsSize() - 1)
                 }
 
                 if (correctAnswer) {
@@ -153,7 +153,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
                             goToResults()
                         } else {
                             answered = false
-                            toDoAdapter.deleteToDos()
+                            testWordAdapter.deleteTestWords()
                             btnEnter.text = "Enter"
                             btnEnter.isEnabled = false
                             btnSkip.isEnabled = true
@@ -195,9 +195,9 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
                 skipped = true
                 btnSkip.alpha = .2f
                 currentWordList.remove(currentWord)
-                val toDo = ToDo("Answer: ${getCurrentWord(!engFirst)}")
+                val toDo = TestWord("Answer: ${getCurrentWord(!engFirst)}")
                 toDo.noAnswer = true
-                toDoAdapter.addToDo(toDo, engFirst, false)
+                testWordAdapter.addTestWord(toDo, engFirst, false)
                 etTodoTitle.isEnabled = false
                 etTodoTitle.hint = incorrectMessage
 
@@ -266,7 +266,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
 
     private fun goToResults() {
 
-        if (wordsCorrect.toFloat() / answeredAdapter.getToDoSize().toFloat() >= 0.5f) {
+        if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
             viewModel.unlockNextLesson(currentLesson.title, currentLesson.level)
             viewModel.passTest(currentLesson.id)
         }
@@ -290,9 +290,9 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
         currentWord.id?.let {
             viewModel.answerWord(it, result)
             textLine = getCurrentWord(engFirst) + " : " + getCurrentWord(!engFirst)
-            val toDo = ToDo(textLine, result)
+            val toDo = TestWord(textLine, result)
             toDo.isCorrect = result
-            answeredAdapter.addToDo(toDo, engFirst, true)
+            answeredAdapter.addTestWord(toDo, engFirst, true)
         }
     }
 }

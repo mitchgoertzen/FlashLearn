@@ -42,11 +42,10 @@
             android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="60dp"
-            android:paddingEnd="60dp"
             android:paddingTop="20dp"
+            android:paddingEnd="60dp"
             android:paddingBottom="20dp"
-            android:showDividers="middle">
-        </LinearLayout>
+            android:showDividers="middle"></LinearLayout>
 
     </ScrollView>
 

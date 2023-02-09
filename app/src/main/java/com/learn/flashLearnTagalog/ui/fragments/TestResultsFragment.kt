@@ -12,21 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.adapters.ToDoAdapter
+import com.learn.flashLearnTagalog.adapters.TestWordAdapter
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestResultsFragment(wordsCorrect: Int, var adapter: ToDoAdapter) :
+class TestResultsFragment(wordsCorrect: Int, var adapter: TestWordAdapter) :
     Fragment(R.layout.fragment_test_results) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
 
     private val score: Int = wordsCorrect
-    private val listSize: Int = adapter.getToDoSize()
+    private val listSize: Int = adapter.getTestWordsSize()
     private lateinit var textLine: String
 
     @SuppressLint("SetTextI18n")

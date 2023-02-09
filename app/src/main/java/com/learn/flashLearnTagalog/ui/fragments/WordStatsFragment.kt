@@ -92,14 +92,14 @@ class WordStatsFragment : Fragment() {
         viewModel.getMostCorrect().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
             for (word in list) {
-                correctAdapter.addToDo(WordStat(word.tagalog, word.timesCorrect, 0.0), false)
+                correctAdapter.addWordStat(WordStat(word.tagalog, word.timesCorrect, 0.0), false)
             }
         }
 
         viewModel.getLeastCorrect().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
             for (word in list) {
-                incorrectAdapter.addToDo(
+                incorrectAdapter.addWordStat(
                     WordStat(
                         word.tagalog,
                         word.timesAnswered - word.timesCorrect,
@@ -134,21 +134,21 @@ class WordStatsFragment : Fragment() {
         viewModel.getMostEncountered().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
             for (word in list) {
-                encounteredAdapter.addToDo(WordStat(word.tagalog, word.timesAnswered, 0.0), false)
+                encounteredAdapter.addWordStat(WordStat(word.tagalog, word.timesAnswered, 0.0), false)
             }
         }
 
         viewModel.getMostSkipped().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
             for (word in list) {
-                skippedAdapter.addToDo(WordStat(word.tagalog, word.timesSkipped, 0.0), false)
+                skippedAdapter.addWordStat(WordStat(word.tagalog, word.timesSkipped, 0.0), false)
             }
         }
 
         viewModel.getMostFlipped().observe(viewLifecycleOwner) {
             val list = it.toMutableList()
             for (word in list) {
-                flippedAdapter.addToDo(WordStat(word.tagalog, word.timesFlipped, 0.0), false)
+                flippedAdapter.addWordStat(WordStat(word.tagalog, word.timesFlipped, 0.0), false)
             }
         }
 
