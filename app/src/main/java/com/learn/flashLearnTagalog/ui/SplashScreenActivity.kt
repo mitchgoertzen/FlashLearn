@@ -28,14 +28,13 @@ import javax.inject.Inject
 private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
 private const val DEBUG = true
 
-private const val wordUpdateAvailable = false
+private const val wordUpdateAvailable = true
 private const val lessonUpdateAvailable = true
 
 @AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val lifecycleOwner = this
     @Inject
     lateinit var sharedPref: SharedPreferences
 
@@ -53,10 +52,9 @@ class SplashScreenActivity : AppCompatActivity() {
         //manually reset user preferences
         //sharedPref.edit().clear().apply()
 
-        println(CURRENT_VERSION)
         //get current version of app
-       // val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
-        val version = 0
+        val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        //val version = 0
         println("version: $version")
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -201,8 +199,9 @@ class SplashScreenActivity : AppCompatActivity() {
                             testPassed = false
                         } else {
                             //if the lesson is not locked, its progress will be kept
-                            practiceCompleted = l.practiceCompleted
-                            testPassed = l.testPassed
+                            val oldLesson = viewModel.getLessonByID(l.id)
+                            practiceCompleted = oldLesson.practiceCompleted
+                            testPassed = oldLesson.testPassed
                         }
                         //update all info on existing lesson
                         viewModel.updateLessonInfo(
@@ -223,7 +222,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         //(this is a legacy check for app version 1, since lesson id has changed from version 2 onward)
                         if (viewModel.lessonCategoryLevelExists(l.title, l.level)) {
 
-                            val oldLesson = viewModel.getLesson(l.title, l.level)
+                            val oldLesson = viewModel.getLessonByData(l.title, l.level)
                             l.practiceCompleted = oldLesson.practiceCompleted
                             l.testPassed = oldLesson.testPassed
                             l.locked = oldLesson.locked

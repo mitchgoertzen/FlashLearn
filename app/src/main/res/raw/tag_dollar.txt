@@ -43969,7 +43969,6 @@ v$ubanin$become gray or white (hair)
 adj$ubanin$gray-haired
 n$ubas$grape
 n$ubas$remains of "gugo" tree used for cleaning
-n$ubas$woman's first bath after menstruation
 n$ubasan$vineyard
 n$ubi$species of yam with violet colour
 adj$ubligado$obligatory

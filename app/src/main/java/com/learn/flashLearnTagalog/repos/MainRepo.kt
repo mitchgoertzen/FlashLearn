@@ -97,7 +97,9 @@ class MainRepo @Inject constructor(
 
     fun getLessonCount() = wordDao.getLessonCount()
 
-    fun getLesson(category: String, level: Int) = wordDao.getLesson(category, level)
+    fun getLessonByID(id : Int) = wordDao.getLessonByID(id)
+
+    fun getLessonByData(category: String, level: Int) = wordDao.getLessonByData(category, level)
 
     fun lessonExists(id: Int) = wordDao.lessonExists(id)
 
