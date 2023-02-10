@@ -45,9 +45,15 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var dataProcessor: DataProcessor
     private lateinit var lessonCreator: LessonCreator
 
+    private var lessonNum = 0
+    private var wordNum = 0
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lessonNum = viewModel.getLessonCount()
+        wordNum = viewModel.getSize()
 
         //manually reset user preferences
         //sharedPref.edit().clear().apply()
@@ -76,12 +82,7 @@ class SplashScreenActivity : AppCompatActivity() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun update(initText: TextView) {
 
-        val isFirstOpen = sharedPref.getBoolean(Constants.KEY_FIRST_TIME_TOGGLE, true)
-        val lessonNum = viewModel.getLessonCount()
-        val wordNum = viewModel.getSize()
-
         if (DEBUG) {
-            println("first open: $isFirstOpen")
             println("size: $wordNum")
             println("lesson count: $lessonNum")
         }
@@ -99,14 +100,13 @@ class SplashScreenActivity : AppCompatActivity() {
         //create Lessons
         lessonCreator = LessonCreator()
 
-        //if the word list is empty, or
-        //it is the first time the user has opened the app
+        //if the word list is empty
         //start initialization process
-        if (wordNum == 0 || isFirstOpen) {
+        if (wordNum == 0) {
             //set first time opening to false
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, false)
-                .apply()
+//            sharedPref.edit()
+//                .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, false)
+//                .apply()
             //start full update function(words and lesson), with init set to true
             updateWords(true, dataProcessor.getWords(), initText)
         } else if (lessonNum == 0) {
@@ -135,7 +135,8 @@ class SplashScreenActivity : AppCompatActivity() {
                     //add all words from previously created word list to db
                     viewModel.insertAll(words)
                     //continue to lesson initialization
-                    initLessons(initText)
+                    if(lessonNum == 0)
+                        initLessons(initText)
                 } else {
                     initText.text = "Updating Word Database..."
                     println("updating words...")
