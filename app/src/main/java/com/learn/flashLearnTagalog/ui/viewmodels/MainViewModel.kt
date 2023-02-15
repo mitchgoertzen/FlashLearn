@@ -87,6 +87,9 @@ class MainViewModel @Inject constructor(
 
     fun getAllWordsForLesson(category: String) = mainRepo.getAllWordsForLesson(category)
 
+    fun getLessonWordList(category: String, min: Int, max: Int) =
+        mainRepo.getLessonWordList(category, min, max)
+
     fun getWordsByDifficultyForLesson(category: String, min: Int, max: Int) =
         mainRepo.getWordsByDifficultyForLesson(category, min, max)
 
@@ -169,7 +172,7 @@ class MainViewModel @Inject constructor(
 
     fun updateLessonInfo(
         id: Int, newTitle: String, newImageID: Int, newLevel: Int,
-        newMin: Int, newMax: Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
+        newMin: Int, newMax: Int, newLines : Int, newDifficulty : Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
     ) = viewModelScope.launch {
         mainRepo.updateLessonInfo(
             id,
@@ -178,6 +181,8 @@ class MainViewModel @Inject constructor(
             newLevel,
             newMin,
             newMax,
+            newLines,
+            newDifficulty,
             practiceCompleted,
             testPassed,
             locked

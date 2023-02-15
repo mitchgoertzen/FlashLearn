@@ -51,7 +51,7 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        var currentTitle = currentLesson.title
+        var currentTitle = currentLesson.category
 
         //popup window
         val window: ConstraintLayout = view.findViewById(R.id.clMain)

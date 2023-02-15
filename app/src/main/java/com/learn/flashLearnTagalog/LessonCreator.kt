@@ -22,59 +22,87 @@ class LessonCreator {
     //lessons created here
     init {
         val lesson1 =
-            Lesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1)
+            Lesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1, 2)
         lesson1.locked = false
         myLessons.add(lesson1)
-
-        myLessons.add(createLessonObject(1, "Body", R.drawable.body, 0, 4))
-        myLessons.add(createLessonObject(2, "Body", R.drawable.body, 4, 5))
-        myLessons.add(createLessonObject(3, "Body", R.drawable.body, 5, 7))
-        myLessons.add(createLessonObject(4, "Body", R.drawable.body, 7, 100))
 
         myLessons.add(createLessonObject(1, "Animals", R.drawable.dog, 0, 4))
         myLessons.add(createLessonObject(2, "Animals", R.drawable.dog, 4, 5))
         myLessons.add(createLessonObject(3, "Animals", R.drawable.dog, 5, 6))
         myLessons.add(createLessonObject(4, "Animals", R.drawable.dog, 6, 7))
         myLessons.add(createLessonObject(5, "Animals", R.drawable.dog, 7, 10))
-        myLessons.add(createLessonObject(6, "Animals", R.drawable.dog, 10, 100))
-
-//        myLessons.add(createLesson(1,"Speech", R.drawable.hand_wave, 0,4))
-//        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
+        myLessons.add(createLessonObject(6, "Animals", R.drawable.dog, 10, 30))
 
         myLessons.add(createLessonObject(1, "Geography", R.drawable.mountain, 0, 5))
         myLessons.add(createLessonObject(2, "Geography", R.drawable.mountain, 5, 7))
-        myLessons.add(createLessonObject(3, "Geography", R.drawable.mountain, 7, 100))
+        myLessons.add(createLessonObject(3, "Geography", R.drawable.mountain, 7, 30))
 
-        myLessons.add(createLessonObject(1, "Food", R.drawable.food, -1, -1))
-        myLessons.add(createLessonObject(2, "Food", R.drawable.food, -1, -1))
-        myLessons.add(createLessonObject(3, "Food", R.drawable.food, -1, -1))
+        myLessons.add(createLessonObject(1, "Nature", R.drawable.nature, 0, 5))
+        myLessons.add(createLessonObject(2, "Nature", R.drawable.nature, 5, 30))
 
-        myLessons.add(createLessonObject(1, "People", R.drawable.face_icon, -1, -1))
-        myLessons.add(createLessonObject(2, "People", R.drawable.face_icon, -1, -1))
-        myLessons.add(createLessonObject(3, "People", R.drawable.face_icon, -1, -1))
+        myLessons.add(createLessonObject(1, "Around Town", R.drawable.city, 0, 5))
+        myLessons.add(createLessonObject(2, "Around Town",R.drawable.city, 5, 7))
+        myLessons.add(createLessonObject(3, "Around Town", R.drawable.city, 7, 8))
+        myLessons.add(createLessonObject(4, "Around Town", R.drawable.city, 8, 30))
 
-        //myLessons.add(createLessonObject(4,"test", R.drawable.dog,0,100))
-//        myLessons.add(createLessonObject(2,"Animals\nII", R.drawable.dog,-1,-1))
-//        myLessons.add(createLessonObject(3,"Animals\nIII", R.drawable.dog,-1,-1))
-//
-//        myLessons.add(createLessonObject(1,"Animals\nI", R.drawable.dog,-1,-1))
-//        myLessons.add(createLessonObject(2,"Animals\nII", R.drawable.dog,-1,-1))
-//        myLessons.add(createLessonObject(3,"Animals\nIII", R.drawable.dog,-1,-1))
-//
-//        myLessons.add(createLessonObject(1,"Animals\nI", R.drawable.dog,-1,-1))
-//        myLessons.add(createLessonObject(2,"Animals\nII", R.drawable.dog,-1,-1))
-//        myLessons.add(createLessonObject(3,"Animals\nIII", R.drawable.dog,-1,-1))
+        myLessons.add(createLessonObject(1, "Countries", R.drawable.world, 0, 30))
+
+        myLessons.add(createLessonObject(1, "Food & Drinks", R.drawable.food_drink, 0, 4))
+        myLessons.add(createLessonObject(2, "Food & Drinks", R.drawable.food_drink, 4, 5))
+        myLessons.add(createLessonObject(3, "Food & Drinks", R.drawable.food_drink, 5, 6))
+        myLessons.add(createLessonObject(4, "Food & Drinks", R.drawable.food_drink, 6, 8))
+        myLessons.add(createLessonObject(5, "Food & Drinks", R.drawable.food_drink, 8, 30))
+
+        myLessons.add(createLessonObject(1, "Kitchen", R.drawable.kitchen, 0, 6))
+        myLessons.add(createLessonObject(2, "Kitchen", R.drawable.kitchen, 6, 30))
+
+        myLessons.add(createLessonObject(1, "Bathroom", R.drawable.bathroom, 0, 30))
+
+        myLessons.add(createLessonObject(1, "Bedroom", R.drawable.bedroom, 0, 30))
+
+        myLessons.add(createLessonObject(1, "Living Room", R.drawable.living_room, 0, 30))
+
+        myLessons.add(createLessonObject(1, "In The Yard", R.drawable.yard, 0, 30))
+
+        myLessons.add(createLessonObject(1, "Body", R.drawable.body, 0, 4))
+        myLessons.add(createLessonObject(2, "Body", R.drawable.body, 4, 5))
+        myLessons.add(createLessonObject(3, "Body", R.drawable.body, 5, 7))
+        myLessons.add(createLessonObject(4, "Body", R.drawable.body, 7, 30))
+
+        myLessons.add(createLessonObject(1, "People", R.drawable.people, 0, 7))
+        myLessons.add(createLessonObject(2, "People", R.drawable.people, 7, 30))
+
+        myLessons.add(createLessonObject(1, "Occupations", R.drawable.occupations, 0, 5))
+        myLessons.add(createLessonObject(2, "Occupations", R.drawable.occupations, 5, 6))
+        myLessons.add(createLessonObject(3, "Occupations", R.drawable.occupations, 6, 7))
+        myLessons.add(createLessonObject(4, "Occupations", R.drawable.occupations, 7, 9))
+        myLessons.add(createLessonObject(5, "Occupations", R.drawable.occupations, 9, 10))
+        myLessons.add(createLessonObject(6, "Occupations", R.drawable.occupations, 10, 30))
+
+        myLessons.add(createLessonObject(1, "Date & Time", R.drawable.date_time, 0, 5))
+        myLessons.add(createLessonObject(2, "Date & Time", R.drawable.date_time, 5, 30))
+
+        myLessons.add(createLessonObject(1, "Colours", R.drawable.colours, 0, 30))
+
+        myLessons.add(createLessonObject(1, "Numbers", R.drawable.numbers, 0, 7))
+        myLessons.add(createLessonObject(2, "Numbers", R.drawable.numbers, 7, 30))
+
+//        myLessons.add(createLesson(1,"Speech", R.drawable.hand_wave, 0,4))
+//        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
     }
 
     private fun createLessonObject(
         level: Int,
-        title: String,
+        category: String,
         imageID: Int,
         overrideMin: Int,
         overrideMax: Int
     ): Lesson {
         var minLength = overrideMin
         var maxLength = overrideMax
+
+        val numOfWords = category.split("\\s+".toRegex()).size
+
 
         //the the min and max word length have not been set,
         //assign default values
@@ -95,8 +123,8 @@ class LessonCreator {
             }
         }
         //id of each lesson is the hashcode of the string containing category+level
-        val id = title.plus(level).hashCode()
-        val newLesson = Lesson(id, title, imageID, level, minLength, maxLength)
+        val id = category.plus(level).hashCode()
+        val newLesson = Lesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
         //if the lesson is level 2 or higher, it will initially be locked
         if (level < 2)

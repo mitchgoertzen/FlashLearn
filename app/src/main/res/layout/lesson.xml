@@ -72,32 +72,44 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.93" />
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvLevel"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="I"-->
+    <!--        android:textColor="@color/blue"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/guideline38"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline37"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/guideline44" />-->
+
     <TextView
-        android:id="@+id/tvLevel"
+        android:id="@+id/tvDifficulty"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="(Level y)"
+        android:paddingBottom="7.5dp"
+        android:text="Difficulty: 1"
         android:textColor="@color/blue"
-        app:autoSizeMaxTextSize="14sp"
+        app:autoSizeMaxTextSize="12sp"
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
-        app:layout_constraintStart_toStartOf="@+id/guideline37"
-        app:layout_constraintTop_toTopOf="@+id/guideline44" />
+        app:layout_constraintStart_toStartOf="@+id/guideline37" />
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvCategory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxLines="1"
         android:text="Geography"
         android:textColor="@color/blue"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline38"
         app:layout_constraintStart_toStartOf="@+id/guideline37"
         app:layout_constraintTop_toTopOf="parent" />

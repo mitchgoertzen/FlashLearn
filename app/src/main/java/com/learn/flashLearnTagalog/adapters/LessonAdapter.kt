@@ -34,23 +34,43 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         holder.itemView.apply {
             val mContext = FragmentComponentManager.findActivity(context) as Activity
             var level = ""
-
+            var difficulty = ""
             val holderBinding = holder.binding
+            holderBinding.tvCategory.maxLines = currentLesson.maxLines
 
             holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
             if (currentLesson.level == 0) {
-                holderBinding.tvTitle.maxLines = 2
-                level = "(Any Level)"
+                level = ""
             } else {
-                level = "(Level ${currentLesson.level})"
+                difficulty = "Difficulty: ${currentLesson.difficulty}"
+                when(currentLesson.level){
+                    1 -> {
+                        level = "(I)"
+                    }
+                    2 -> {
+                        level = "(II)"
+                    }
+                    3 -> {
+                        level = "(III)"
+                    }
+                    4 -> {
+                        level = "(IV)"
+                    }
+                    5 -> {
+                        level = "(V)"
+                    }
+                    6 -> {
+                        level = "(VI)"
+                    }
+                }
+
                 if (currentLesson.testPassed)
                     holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_tested)
                 else if (currentLesson.practiceCompleted)
                     holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_practiced)
             }
-            holderBinding.tvTitle.text = currentLesson.title
-            holderBinding.tvLevel.text = level
-
+            holderBinding.tvCategory.text = currentLesson.category + " $level"
+            holderBinding.tvDifficulty.text = difficulty
             holderBinding.ivPreview.setImageResource(currentLesson.imageID)
 
 
@@ -68,7 +88,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
                 if (mContext is LearningActivity) {
                     val settingsFragment = SettingsFragment(currentLesson)
                     val transaction = mContext.supportFragmentManager.beginTransaction()
-                    if (currentLesson.title == "Custom\nLesson") {
+                    if (currentLesson.category == "Custom\nLesson") {
                         transaction.replace(R.id.main_nav_container, settingsFragment)
                             .addToBackStack("settings").commit()
                     } else {
@@ -118,24 +138,24 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             when (type) {
                 //Category
                 0 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.title }.thenBy { it.level })
+                    lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
                 }
                 //Subcategory
                 1 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.title }.thenBy { it.level })
+                    lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
                 }
                 //Difficulty low to high
                 2 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.title })
+                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.category })
                 }
                 //Difficulty high to low
                 3 -> {
-                    lessons.sortWith(compareByDescending<Lesson> { it.level }.thenBy { it.title })
+                    lessons.sortWith(compareByDescending<Lesson> { it.level }.thenBy { it.category })
                 }
                 //Locked
                 4 -> {
                     lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.level }
-                        .thenBy { it.title })
+                        .thenBy { it.category })
                 }
             }
             lessons.add(0, customLesson)

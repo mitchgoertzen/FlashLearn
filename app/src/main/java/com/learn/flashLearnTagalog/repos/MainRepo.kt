@@ -56,6 +56,9 @@ class MainRepo @Inject constructor(
     fun getWordsByDifficultyForLesson(category: String, min: Int, max: Int) =
         wordDao.getWordsByDifficultyForLesson(category, min, max)
 
+    fun getLessonWordList(category: String, min: Int, max: Int) =
+        wordDao.getLessonWordList(category, min, max)
+
     fun getAllWords() = wordDao.getAllWords()
 
     fun getEasyWords() = wordDao.getEasyWords()
@@ -120,7 +123,7 @@ class MainRepo @Inject constructor(
 
     fun updateLessonInfo(
         id: Int, newTitle: String, newImageID: Int, newLevel: Int,
-        newMin: Int, newMax: Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
+        newMin: Int, newMax: Int, newLines : Int, newDifficulty : Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
     ) =
         wordDao.updateLessonInfo(
             id,
@@ -129,6 +132,8 @@ class MainRepo @Inject constructor(
             newLevel,
             newMin,
             newMax,
+            newLines,
+            newDifficulty,
             practiceCompleted,
             testPassed,
             locked

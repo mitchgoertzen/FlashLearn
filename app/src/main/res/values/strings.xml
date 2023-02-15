@@ -6,9 +6,21 @@
     <string-array name="Sorting">
         <item>All</item>
         <item>Animals</item>
+        <item>Around Town</item>
+        <item>Bathroom</item>
+        <item>Bedroom</item>
         <item>Body</item>
-        <item>Food</item>
+        <item>Colours</item>
+        <item>Countries</item>
+        <item>Date &amp; Time</item>
+        <item>Food &amp; Drinks</item>
         <item>Geography</item>
+        <item>In The Yard</item>
+        <item>Kitchen</item>
+        <item>Living Room</item>
+        <item>Nature</item>
+        <item>Numbers</item>
+        <item>Occupations</item>
         <item>People</item>
     </string-array>
 

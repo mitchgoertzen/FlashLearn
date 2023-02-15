@@ -267,7 +267,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     private fun goToResults() {
 
         if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
-            viewModel.unlockNextLesson(currentLesson.title, currentLesson.level)
+            viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
             viewModel.passTest(currentLesson.id)
         }
 

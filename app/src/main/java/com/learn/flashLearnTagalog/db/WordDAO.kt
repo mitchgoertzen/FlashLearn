@@ -32,6 +32,9 @@ interface WordDAO {
     @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
     fun getWordsByDifficultyForLesson(category: String, min: Int, max: Int): LiveData<List<Word>>
 
+    @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
+    fun getLessonWordList(category: String, min: Int, max: Int): List<Word>
+
     @Query("SELECT * FROM word_table ORDER BY english DESC")
     fun getAllWords(): LiveData<List<Word>>
 
@@ -128,16 +131,16 @@ interface WordDAO {
     @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE id = :id)")
     fun lessonExists(id: Int): Boolean
 
-    @Query("SELECT * FROM lesson_table WHERE title = :category AND level = :level")
+    @Query("SELECT * FROM lesson_table WHERE category = :category AND level = :level")
     fun getLessonByData(category: String, level: Int): Lesson
 
     @Query("SELECT * FROM lesson_table WHERE id = :id")
     fun getLessonByID(id : Int): Lesson
 
-    @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE title = :category AND level = :level)")
+    @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE category = :category AND level = :level)")
     fun lessonCategoryLevelExists(category: String, level: Int): Boolean
 
-    @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE title = :category AND level = (:level - 1) AND test_passed = 1)")
+    @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE category = :category AND level = (:level - 1) AND test_passed = 1)")
     fun previousTestPassed(category: String, level: Int): Boolean
 
     @Insert
@@ -146,19 +149,19 @@ interface WordDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertLesson(lesson: Lesson)
 
-    @Query("UPDATE lesson_table SET id = :newID WHERE title = :category AND level == :level")
+    @Query("UPDATE lesson_table SET id = :newID WHERE category = :category AND level == :level")
     fun updateLessonID(category: String, level: Int, newID: Int)
 
     @Query(
-        "UPDATE lesson_table SET title = :newTitle, imageID = :newImageID, level = :newLevel " +
-                ", minLength = :newMin, maxLength = :newMax, practice_completed = :practiceCompleted, test_passed = :testPassed, locked = :locked WHERE id == :id"
+        "UPDATE lesson_table SET category = :newTitle, imageID = :newImageID, level = :newLevel " +
+                ", minLength = :newMin, maxLength = :newMax, maxLines = :newLines, difficulty = :newDifficulty, practice_completed = :practiceCompleted, test_passed = :testPassed, locked = :locked WHERE id == :id"
     )
     fun updateLessonInfo(
         id: Int, newTitle: String, newImageID: Int, newLevel: Int,
-        newMin: Int, newMax: Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
+        newMin: Int, newMax: Int, newLines : Int, newDifficulty : Int, practiceCompleted: Boolean, testPassed: Boolean, locked: Boolean
     )
 
-    @Query("UPDATE lesson_table SET locked = 0 WHERE title = :category AND level == (:level + 1)")
+    @Query("UPDATE lesson_table SET locked = 0 WHERE category = :category AND level == (:level + 1)")
     fun unlockNextLesson(category: String, level: Int)
 
     @Query("UPDATE lesson_table SET practice_completed = 1 WHERE id == :id")
@@ -167,7 +170,7 @@ interface WordDAO {
     @Query("UPDATE lesson_table SET test_passed = 1 WHERE id == :id")
     fun passTest(id: Int)
 
-    @Query("DELETE FROM lesson_table WHERE title = :category AND level = :level")
+    @Query("DELETE FROM lesson_table WHERE category = :category AND level = :level")
     suspend fun deleteLesson(category: String, level: Int)
 
     @Query("DELETE FROM lesson_table")

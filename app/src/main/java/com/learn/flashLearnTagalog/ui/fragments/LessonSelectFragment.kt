@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -107,7 +106,7 @@ class LessonSelectFragment : Fragment() {
                                 val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
                                 if (!category.equals("All")) {
-                                    if (lesson.title != category)
+                                    if (lesson.category != category)
                                         add = false
                                 }
 

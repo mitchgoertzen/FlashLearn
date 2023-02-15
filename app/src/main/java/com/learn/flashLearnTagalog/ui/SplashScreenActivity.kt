@@ -14,7 +14,6 @@ import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
-import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -28,7 +27,7 @@ import javax.inject.Inject
 private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
 private const val DEBUG = true
 
-private const val wordUpdateAvailable = true
+private const val wordUpdateAvailable = false
 private const val lessonUpdateAvailable = true
 
 @AndroidEntryPoint
@@ -45,6 +44,8 @@ class SplashScreenActivity : AppCompatActivity() {
     private lateinit var dataProcessor: DataProcessor
     private lateinit var lessonCreator: LessonCreator
 
+    private var version = 0
+
     private var lessonNum = 0
     private var wordNum = 0
 
@@ -59,8 +60,8 @@ class SplashScreenActivity : AppCompatActivity() {
         //sharedPref.edit().clear().apply()
 
         //get current version of app
-        val version = sharedPref.getInt(Constants.KEY_VERSION, 0)
-        //val version = 0
+        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+
         println("version: $version")
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
@@ -168,11 +169,25 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun initLessons(initText: TextView) {
         initText.text = "Initializing Lesson Database..."
         println("initializing lessons...")
-        //clear any data in db
-        viewModel.nukeLessons()
+
+        GlobalScope.launch {
+            suspend {
+                //clear any data in db
+                viewModel.nukeLessons()
+                val lessons = lessonCreator.getLessons()
+
+                for(l in lessons){
+                    l.difficulty = setLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
+                }
+
+                Handler(Looper.getMainLooper()).postDelayed({
+                    viewModel.insertAllLessons(lessons)
+                }, 500)
+            }.invoke()
+        }
+
         //TODO: add delay on thread?
         //add all previously created lessons to db
-        viewModel.insertAllLessons(lessonCreator.getLessons())
     }
 
     private fun updateLessons(initText: TextView) {
@@ -184,8 +199,17 @@ class SplashScreenActivity : AppCompatActivity() {
         var locked: Boolean
         GlobalScope.launch {
             suspend {
+
+                if(version < 2)
+                for(i in 1..5){
+                    if(viewModel.lessonCategoryLevelExists("Food", i))
+                        viewModel.deleteLesson("Food", i)
+                }
+                println("view model size: ${viewModel.getSize()}")
                 //for each lesson in lesson list
                 for (l in lessonCreator.getLessons()) {
+
+                    l.difficulty = setLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
                     //check if the lesson with exact id already exists in db
                     if (viewModel.lessonExists(l.id)) {
                         if (DEBUG)
@@ -193,7 +217,7 @@ class SplashScreenActivity : AppCompatActivity() {
                         //if the lesson level is 2 or greater and the lesson of the same category,
                         //but prior level has not had its test passed, lock the lesson
                         //otherwise, unlock the lesson
-                        locked = !(l.level < 2 || viewModel.previousTestPassed(l.title, l.level))
+                        locked = !(l.level < 2 || viewModel.previousTestPassed(l.category, l.level))
                         //if the lesson is locked, practiceCompleted and testPassed variables must be reset
                         if (locked) {
                             practiceCompleted = false
@@ -207,11 +231,13 @@ class SplashScreenActivity : AppCompatActivity() {
                         //update all info on existing lesson
                         viewModel.updateLessonInfo(
                             l.id,
-                            l.title,
+                            l.category,
                             l.imageID,
                             l.level,
                             l.minLength,
                             l.maxLength,
+                            l.maxLines,
+                            l.difficulty,
                             practiceCompleted,
                             testPassed,
                             locked
@@ -221,9 +247,9 @@ class SplashScreenActivity : AppCompatActivity() {
                             println("lesson DOES NOT exist. add it")
                         //if the lesson id was not found, check for combination of lesson category and level
                         //(this is a legacy check for app version 1, since lesson id has changed from version 2 onward)
-                        if (viewModel.lessonCategoryLevelExists(l.title, l.level)) {
+                        if (viewModel.lessonCategoryLevelExists(l.category, l.level)) {
 
-                            val oldLesson = viewModel.getLessonByData(l.title, l.level)
+                            val oldLesson = viewModel.getLessonByData(l.category, l.level)
                             l.practiceCompleted = oldLesson.practiceCompleted
                             l.testPassed = oldLesson.testPassed
                             l.locked = oldLesson.locked
@@ -231,7 +257,7 @@ class SplashScreenActivity : AppCompatActivity() {
                             if (DEBUG)
                                 println("combo exists. delete old version")
                             //delete old lesson, which will be replaced by new lesson with updated id
-                            viewModel.deleteLesson(l.title, l.level)
+                            viewModel.deleteLesson(l.category, l.level)
                         }
                         if (DEBUG)
                             println("add new lesson")
@@ -245,6 +271,31 @@ class SplashScreenActivity : AppCompatActivity() {
                 }, 500)
             }.invoke()
         }
+    }
+
+    private fun setLessonDifficulty(category : String, min : Int, max : Int): Int {
+        val lessonList = viewModel.getLessonWordList(category, min, max)
+
+        var difficulty = 5
+        if(lessonList.isNotEmpty()){
+            var sum = 0
+
+            for(word in lessonList){
+                sum += word.tagalog.length
+            }
+
+            when (sum / lessonList.size) {
+                in 0..4 -> difficulty = 1
+                in 5..6 -> difficulty = 2
+                in 7..9 -> difficulty = 3
+                in 9..10 -> difficulty = 4
+            }
+
+        }else{
+            difficulty = -1
+        }
+
+        return difficulty
     }
 
     //end splash screen and continue to home activity

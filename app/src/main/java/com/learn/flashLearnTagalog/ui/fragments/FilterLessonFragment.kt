@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.reflect.Field
 import javax.inject.Inject
 
 
@@ -121,23 +123,20 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        val level1: CheckBox = view.findViewById(R.id.cbLevel1)
-        setDifficultyCheckBox("1", level1)
+        val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
+        setDifficultyCheckBox("1", difficulty1)
 
-        val level2: CheckBox = view.findViewById(R.id.cbLevel2)
-        setDifficultyCheckBox("2", level2)
+        val difficulty2: CheckBox = view.findViewById(R.id.cbLevel2)
+        setDifficultyCheckBox("2", difficulty2)
 
-        val level3: CheckBox = view.findViewById(R.id.cbLevel3)
-        setDifficultyCheckBox("3", level3)
+        val difficulty3: CheckBox = view.findViewById(R.id.cbLevel3)
+        setDifficultyCheckBox("3", difficulty3)
 
-        val level4: CheckBox = view.findViewById(R.id.cbLevel4)
-        setDifficultyCheckBox("4", level4)
+        val difficulty4: CheckBox = view.findViewById(R.id.cbLevel4)
+        setDifficultyCheckBox("4", difficulty4)
 
-        val level5: CheckBox = view.findViewById(R.id.cbLevel5)
-        setDifficultyCheckBox("5", level5)
-
-        val level6: CheckBox = view.findViewById(R.id.cbLevel6)
-        setDifficultyCheckBox("6", level6)
+        val difficulty5: CheckBox = view.findViewById(R.id.cbLevel5)
+        setDifficultyCheckBox("5", difficulty5)
 
         val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
