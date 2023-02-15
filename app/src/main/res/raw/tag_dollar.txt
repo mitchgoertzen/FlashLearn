@@ -63,11 +63,11 @@ n$abitswelas$variety of kidney beans
 n$abla$idle talk
 n$abo$ash
 n$abog$notice
-n$abogado$lawyer
+n$abogado$lawyer#occupations
 n$abogasia$law
 n$abogasya$law
 n$abok$dust
-n$abokado$avocado#food
+n$abokado$avocado#food & drinks & drinks
 adj$abonado$to a person who add money to someone else, because he is short of money
 n$abono$fertilizer
 v$abonohan$fertilize
@@ -91,7 +91,7 @@ adj$abrasete$walking arm-in-arm
 adj$abrasibo$abrasive
 n$abrigo$overcoat
 v$abriguhan$put an overcoat or sweater on someone
-n$Abril$April#months
+n$Abril$April#date & time
 n$abrilata$can-opener
 adj$abrisete$walking arm-in-arm
 n$absen$absence
@@ -114,7 +114,7 @@ n$abugado$lawyer
 n$abuhan$ash tray
 v$abuhin$clean with ashes
 adj$abuhin$ash-colored
-n$abukado$avocado#food
+n$abukado$avocado#food & drinks
 n$abukay$white parrot#animals
 n$abuloy$financial aid
 v$abuluyan$give some help
@@ -165,8 +165,8 @@ n$adlaw$sun
 n$administrador$administrator
 n$administrasyon$administration
 n$adobe$heavy clay for making adobe bricks
-n$adobo$pickled pork or chicken with condiments#food
-comp$adobong palaka$frog cooked in vinegar with condiments#food
+n$adobo$pickled pork or chicken with condiments#food & drinks
+comp$adobong palaka$frog cooked in vinegar with condiments#food & drinks
 n$adolesens$adolescence
 adj$adolesent$adolescent
 n$adopsyon$adoption
@@ -196,7 +196,7 @@ adj$agad$sifted, as grain or powder
 adv$agad$immediately
 adv$agad-agad$instantly
 v$agahan$make happen early
-n$agahan$breakfast#food
+n$agahan$breakfast#food & drinks
 n$agahas, agahas$wheeze
 n$agam-agam$reflection
 v$agam-agamin$feel anxiety
@@ -251,7 +251,7 @@ n$agnostika$agnostic
 n$agnostiko$agnostic
 n$agong$musical instrument
 n$agos$current (of water)
-n$Agosto$August#months
+n$Agosto$August#date & time
 n$agoy$painful movements of the body
 adj$agpang$fitted
 v$agpangan$fit something with what suits it
@@ -285,8 +285,8 @@ n$agwahe$wake of a ship
 n$agwanta$self-control
 v$agwantahin$bear
 n$agwaras$turpentine
-n$agwardiyente$alcohol#food
-n$agwardyente$alcohol#food
+n$agwardiyente$alcohol#food & drinks
+n$agwardyente$alcohol#food & drinks
 n$agwas$large-scaled mullet (Fish)#animals
 n$agwasa$continuous flow of pus
 n$agwat$distance
@@ -308,11 +308,11 @@ n$ahon$getting out of water
 n$ahunan$way going upward
 v$ahunin$revome from stove or fire
 n$aing. aing$moan
-n$aising$icing#food
+n$aising$icing#food & drinks
 adj$akademika$academic
 n$akademiko$academician
 n$akademista$academician
-n$akademya$academy
+n$akademya$academy#around town
 n$akala$idea
 v$akalain$think
 adj$akap$embraced
@@ -343,7 +343,7 @@ n$aklas$strike
 n$aklasan$strike
 n$aklat$book
 n$aklat-talaan$notebook
-n$aklatan$library
+n$aklatan$library#around town
 n$aklatang nagpapahiram$circulating library
 adj$aklimatado$acclimatized
 adj$akma$fitted
@@ -352,7 +352,7 @@ n$akma$threatening gesture
 v$akmain$be ready to do something
 n$akme$pinnacle
 n$akne$acne
-n$ako$I#Pronouns
+n$ako$I#pronouns
 n$ako$promise
 n$ako mismo$I myself
 comp$ako na rin$I myself
@@ -394,9 +394,8 @@ n$akting$performing in a play
 n$Aktinyum$Actinium
 n$aktitud$attitude
 n$akto$act
-n$aktor$actor
-n$aktres$actress
-n$aktris$actress
+n$aktor$actor#occupations
+n$aktres$actress#occupations
 v$aktuhan$be acted on
 adj$aktwal$actual
 v$akuin$do something which another should do, to show kindness
@@ -406,7 +405,7 @@ n$akusasyon$accusation in court
 n$akustika$acoustics
 n$akustiks$acoustics
 n$akustiks$acoustics
-n$akwaryum$aquarium
+n$akwaryum$aquarium#around town
 adj$akwatik$aquatic
 n$akwatika$aquatics
 adj$akwatiko$aquatic
@@ -439,9 +438,9 @@ v$alagatain$think of
 n$alagaw$plant with medicinal properties
 n$alahas$jewel
 n$alahero$jeweller (one who makes, repairs and sell jewels)
-n$alak$wine#food
+n$alak$wine#food & drinks
 n$alak-alakan$the back of the knee
-n$alak-bigas$rice wine#food
+n$alak-bigas$rice wine#food & drinks
 n$alakalakan$back of the knee
 n$alakan$liquor/wine store
 n$alakbat$crossband from the shoulders to the hip
@@ -503,7 +502,7 @@ n$alayan$ceremony in May of offering flowers to the Blessed Virgin
 n$albatita$albite (geology)
 n$albay$support at a house to prevent collaps
 n$alboroto$outcry
-n$albumen$egg white#food
+n$albumen$egg white#food & drinks
 n$aldaba$latch (for fastening door, window or gate)
 v$aldabahan$latch
 n$aldabis$slap with the back of the hand
@@ -517,7 +516,7 @@ n$alegro$allegro (music)
 n$Aleman$German man
 n$Alemana$German woman
 n$Alemania$Germany
-n$Alemanya$Germany
+n$Alemanya$Germany#countries
 n$alerdyi$allergy
 adj$alerdyik$allergic
 n$alero$eaves
@@ -624,7 +623,7 @@ n$aliwaswas$scandalous anomaly
 v$aliwin$console
 n$alkaide$warden
 n$alkalay$lye
-n$alkalde$mayor
+n$alkalde$mayor#occupations
 n$alkaldesa$mayoress
 n$alkali$lye
 n$alkampor$camphor
@@ -648,7 +647,7 @@ n$alma$rising on hind legs like horses
 n$almagre$red ochre
 n$almanake$almanac
 n$almasen$department store#around town
-n$almendras$almond#food
+n$almendras$almond#food & drinks
 n$almete$helmet
 n$almirante$admiral
 n$almires$brass or stone mortar
@@ -661,22 +660,22 @@ n$almuhada$small cushion or pillow
 n$almuhadon$cushion
 n$almuhasa$currycomb
 v$almuhasahin$curry
-n$almusal$breakfast#food
+n$almusal$breakfast#food & drinks
 v$almusalin$take for breakfast
 n$almuwadon$cushion
 n$almuwasa$currycomb
-v$almuwasahin$curry#food
+v$almuwasahin$curry#food & drinks
 n$alo$something that cheers
 n$alog$shake
 n$alok$offer
-n$alon$wave
+n$alon$wave#geography
 n$aloy$lullaby
 n$alpa$harp
 n$alpabeto$alphabet
 adj$alpas$loose
 v$alpasan$loose
 n$alpiler$pin
-n$alpombra$carpet
+n$alpombra$carpet#living room
 v$alpombrahan$cover the floor with a carpet or rug
 n$alporhas$saddlebag
 n$als$wing of a bird
@@ -761,7 +760,7 @@ n$ambisiyon$ambition
 n$ambisyon$ambition
 adj$ambisyosa$ambitious
 adj$ambisyoso$ambitious
-n$ambon$shower
+n$ambon$shower (rain)
 adj$ambos$n both
 n$ambulansiya$ambulance
 n$ambulog$soaring in flight
@@ -770,16 +769,16 @@ n$ambus$ambush
 n$ambuwang$large beetle#animals
 n$ambwang$large beetle#animals
 n$amen$kissing the hand of elders as a sign of respect
-n$Amerika$America
+n$Amerika$America#countries
 n$amerikana$coat for men
-n$Amerikana$American (female)#people
-n$Amerikano$American (male)#people
+n$Amerikana$American (female)
+n$Amerikano$American (male)
 n$Amerisyum$Americium
 n$amihan$cool northeast wind
 adj$amil$mumbling
 n$amil$mumble
 n$amilyaramyento$land tax
-pron$amin$our#Pronouns
+pron$amin$our#pronouns
 imp$amina$give it to us!
 pron$aming sarili$ourselves
 v$aminin$own up
@@ -793,7 +792,7 @@ n$amnesya$amnesia
 n$amnistia$amnesty
 n$amnistya$amnesty
 n$amo$tameness
-n$amo$master
+n$amo$boss#occupations
 n$amol$dirt or filth on skin, face or surface
 n$among$reference to a priest (with respect)
 n$amonya$ammonia
@@ -811,7 +810,7 @@ n$ampalaya$balsam apple
 n$ampang$toddle (such as that of infants)
 adj$ampat$checked
 v$ampatin$stop
-n$ampaw$puffed rice or corn#food
+n$ampaw$puffed rice or corn#food & drinks
 n$ampayer$umpire
 n$ampayr$umpire
 n$ampias$rain entering through open windows, doors or cracked walls
@@ -1023,7 +1022,7 @@ n$antala$delay
 v$antalahin$delay
 n$antanda$sign of the cross
 n$antangan$design
-n$Antartiko$Antarctica#geography
+n$Antartiko$Antarctica#countries
 n$antas$circumference
 adv$antas-antas$little by little
 intrj$Antay$Wait!#speech
@@ -1087,7 +1086,7 @@ n$anyo$form
 n$anyo$year
 v$anyuin$take the form of something
 adj$apa$groping
-n$apa$thin wafer made of rice starch#food
+n$apa$thin wafer made of rice starch#food & drinks
 n$apad$flank of the body of an animal
 n$apad$pain in the side
 n$apahap$species of sea bass#animals
@@ -1098,7 +1097,7 @@ v$apakan$tramp or tread on
 n$apalit$sandalwood tree
 n$apalya$balsam apple
 n$apanas$very tiny red ant#animals
-n$aparador$closet
+n$aparador$closet#bedroom
 comp$aparador ng mga libro$bookcase
 n$aparatista$operator (one who runs in motion a machine)
 n$aparato$apparatus
@@ -1146,7 +1145,7 @@ n$apisyon$inclination
 n$apisyunada$amateur
 n$apisyunado$amateur
 n$apitong$species of tree producing timber
-n$aplaya$beach
+n$aplaya$beach#geography
 v$aplayan$appply for
 n$aplikante$applicant
 n$aplikasyon$application
@@ -1175,7 +1174,7 @@ n$apostrope$apostrophe
 n$apoy$fire
 n$aprendis$apprentice
 n$aprentis$apprentice
-n$Aprika$Africa#geography
+n$Aprika$Africa#countries
 n$Aprikano-o$African
 adj$aprobado$approved
 v$aprobahan$approve
@@ -1197,8 +1196,8 @@ adj$apurahan$rush
 v$apurahin$hurry up a particular task
 v$apuyan$set something on fire
 v$apuyin$burst into flames
-n$apyak$yolk of egg#food
-n$apyo$celery#food
+n$apyak$yolk of egg#food & drinks
+n$apyo$celery#food & drinks
 n$arabal$suburb
 n$Arabe$Arab
 adj$Arabika-ko$Arabian, Arabic
@@ -1219,8 +1218,8 @@ v$araruhin$plow
 n$aras$coins give by the bridegroom to the bride during a wedding ceremony
 v$arastre$creep
 n$arastre$haulage
-n$araw$sun
-n$araw$day#Time
+n$araw$sun#nature
+n$araw$day#date & time
 comp$araw na darating$future
 comp$araw na kasunod$the next day
 comp$araw na pangilin$day of the week used for rest
@@ -1321,8 +1320,7 @@ n$artikulo$magazine article
 n$artilyeria$artillery
 adj$artipisyal$artificial
 n$artipisyo$artifice
-n$artist$actor
-n$artista$actor
+n$artista$artist#occupations
 adj$artistik$artistic
 adj$artistiko$artistic
 adj$artisyano$artesian
@@ -1331,9 +1329,9 @@ n$artsipelago$archipelago#geography
 n$aruga$tender care
 v$arugain$take care of
 n$arupel$tinsel
-n$aruro$arrowroot#food
-n$arusbalensiyana$rice dish with condiments and clams#food
-n$aruskaldo$rice porridge with chicken broth and ginger#food
+n$aruro$arrowroot#food & drinks
+n$arusbalensiyana$rice dish with condiments and clams#food & drinks
+n$aruskaldo$rice porridge with chicken broth and ginger#food & drinks
 intrj$Aruy$Ouch! Wow! (more intense than Aray!)#speech
 n$arya$aria
 intrj$Arya$urge on horses or cattle#speech
@@ -1359,7 +1357,7 @@ n$asambleista$assemblyman (member of legislative assembly)
 v$asamin$long for
 n$asana$species of tree producing timber (narra)
 n$asap$irritation of the eyes caused by smoke
-n$asarol$large hoe
+n$asarol$hoe#in the yard
 v$asarulin$hoe
 n$asasin$assassin
 n$asasinesyon$assassination
@@ -1438,7 +1436,7 @@ adj$aspaltado$asphalted
 n$aspalto$asphalt
 v$aspaltuhan$asphalt or pave with asphalt
 v$aspaltuhin$asphalt
-n$asparago$asparagus#food
+n$asparago$asparagus#food & drinks
 n$aspiksiya$asphyxia
 n$aspiksya$asphyxia
 n$aspile$pin
@@ -1458,20 +1456,20 @@ n$astrolohia$astrology
 n$astrolohiya$astrology
 n$astronomia$astronomy
 n$astronomiya$astronomy
-n$astronomo$astronomer
+n$astronomo$astronomer#occupations
 n$astronomya$astronomy
 n$astropobya$fear of lightning and thunder
 n$asugan$grown barracuda#animals
 v$asuhin$flatter a person with derision
 n$asuhos$whiting (fish)#animals
-n$asukal$sugar#food
-v$asukalan$sugar#food
+n$asukal$sugar#food & drinks
+v$asukalan$sugar#food & drinks
 n$asukalan$sugar mill
 v$asukalin$form into sugar
 n$asukarera$sugar mill
 n$asukarero$dealer in sugar
-n$asul$blue
-n$asul-marino$navy blue
+n$asul$blue#colours
+n$asul-marino$navy blue#colours
 n$asuleho$glazed blue tile
 n$Asunsiyon$Feast of the Aasumption of the Blessed Virgin
 n$asunto$lawsuit
@@ -1479,9 +1477,9 @@ n$asuos$whiting (fish)#animals
 n$Asupre$Sulfur
 n$asuran$anvil
 v$asurin$deliver a succession of blows
-n$asusena$white lily$nature
+n$asusena$white lily#nature
 n$aswela$adze
-n$Asya$Asia#geography
+n$Asya$Asia#countries
 n$Asyan$Asian
 adj$Asyano$Asiatic
 n$asyenda$hacienda
@@ -1536,7 +1534,7 @@ n$atis$custard apple (tree and fruit)
 n$atitud$attitude
 n$Atlantik$Atlantic Ocean#geography
 n$Atlantiko$Atlantic Ocean
-n$atleta$athlete
+n$atleta$athlete#occupations
 n$atletiks$athletics
 n$atmospera$atmosphere
 n$ato$familiar way of addressing a boy
@@ -1545,7 +1543,7 @@ n$atole$paste made from flour
 adj$atomik$atomic
 adj$atomika$atomic
 n$atomo$atom
-n$atorni$attorney
+n$atorni$attorney#occupations
 n$atraksiyon$attraction
 adj$atraktiba$attractive
 adj$atraktibo$attractive
@@ -1559,8 +1557,8 @@ n$atril$music stand
 n$atropiya$atrophy
 n$atropya$atrophy
 n$atrosidad$atrocity
-n$atsara$pickles#food
-v$atsarahin$pickle#food
+n$atsara$pickles#food & drinks
+v$atsarahin$pickle
 n$atsoy$jeer
 n$atsuete$small tree bearing fruits
 n$atsuwete$small tree bearing fruits
@@ -1656,7 +1654,7 @@ adj$awtokratiko$autocratic
 adj$awtomatik$automatic
 adj$awtomatiko$automatic
 n$awtonomia$autonomy
-n$awtor$author
+n$awtor$author#occupations
 n$awtoridad$authority
 adj$awtorisado$authorized
 n$awtorisasyon$authorization
@@ -1666,7 +1664,7 @@ n$aya$invitation
 n$aya$nurse or maid for small children
 v$ayain$invite (someone)
 intrj$Ayan$There! There it is!#speech
-n$ayap$string beans#food
+n$ayap$string beans#food & drinks
 n$ayaw$dislike
 adj$ayaw-ayaw$proportionately distributed
 v$ayawan$be disliked, disapproved, refused
@@ -1873,7 +1871,7 @@ adj$bahay-bahay$house-to-house
 n$bahay-bahayan$playhouse
 n$bahay-bakasyunan$vacation house
 n$bahay-bata$uterus
-n$bahay-gagamba$spider web
+n$bahay-gagamba$spider web#nature
 n$bahay-hukuman$courthouse
 n$bahay-husgado$courthouse
 n$bahay-kalakal$company
@@ -1900,7 +1898,7 @@ n$bahista$bassoon player
 adj$bahiti$short to people
 n$baho$bad smell
 n$bahobahin$bass (music)
-n$bahog$broth mixed with some rice#food
+n$bahog$broth mixed with some rice#food & drinks
 n$bahon$bassoon
 n$bahugan$container for left-over food
 n$bai$royal lady
@@ -1920,7 +1918,7 @@ v$baimbian$attach jingle bells to something
 v$baimbiin$carry or use jingle bells
 n$bainat$relapse
 v$bainatin$cause to have a relapse
-n$baino$Sacred Lotus$nature
+n$baino$Sacred Lotus#nature
 n$bainte$twenty
 n$baisa$granary
 n$baisan$parents of daughter-in-law or son-in-law
@@ -1988,8 +1986,8 @@ adj$bakli$broken at the point of bending
 v$bakliin$break a stick, branch after bending it
 adj$baklis$stripped off
 n$bako$unevenness of surface of roads
-n$bakod$fence
-comp$bakod na halaman$hedge
+n$bakod$fence#in the yard
+comp$bakod na halaman$hedge#in the yard
 n$bakoko$name for a species of fish
 n$bakol$shallow basked carried on the head of vendors selling fish, vegetable
 n$bakong$species of plant resembling the lily
@@ -2142,7 +2140,7 @@ n$balatay$stripe
 n$balatkayo$camouflage
 n$balato$share of money given to another by one who wins in gambling
 n$balatok$gold ore
-n$balatong$green gram bean (mung bean)
+n$balatong$green mung bean
 n$balatong-aso$shrubby plant used for medicinal purposes
 n$balatong-pula$herbacious plant used as blood purifier
 v$balatuhan$give someone a share of one's winning
@@ -2170,7 +2168,7 @@ n$balbula$valve
 n$balda$omission
 adj$baldado$used too much
 n$baldakin$canopy
-n$balde$bucket
+n$balde$bucket#in the yard
 v$baldihan$wash with pail of water
 n$baldosa$tile
 n$baldosin$small square tile
@@ -2493,7 +2491,7 @@ v$bangkatin$tie
 n$bangkay$corpse
 n$bangkero$dealer/banker in gambling
 n$bangkero$boatman
-n$bangketa$sidewalk
+n$bangketa$sidewalk#around town
 n$bangkete$banquet
 v$bangketehin$give a banquet
 v$bangketihin$give a banquet
@@ -2503,7 +2501,7 @@ n$bangkilas$glimmer of rays of sun or moon on the sea
 n$bangkito$footstool
 n$bangkiyaw$mat used as a kind of scarecrow
 n$bangko$bench
-n$bangko$bank
+n$bangko$bank#around town
 comp$bangko ng dugo$blood bank
 comp$bangkong kawayan$bamboo bench
 comp$bangkong pinaggagawan$work bench
@@ -2592,8 +2590,8 @@ n$banyadero$bathing resort
 n$banyaga$foreigner
 n$banyas$large boa constrictor
 n$banyasin$large species of vine
-n$banyera$bath
-n$banyo$bathroom
+n$banyera$bath#bathroom
+n$banyo$bathroom#bathroom
 n$banyomaria$double boiler or sterilizer
 n$banyos$sponge bath
 v$banyusan$give a sponge bath
@@ -2645,10 +2643,10 @@ v$baratin$haggle
 adj$barbariko$barbaric
 n$barbarismo$barbarism
 n$barbaro$barbarian
-n$barbekyu$roasted meat, fish
+n$barbekyu$barbeque#in the yard
 n$barberia$barbershop
 n$barberiya$barbershop
-n$barbero$barber
+n$barbero$barber#occupations
 n$barberya$barbershop
 n$barbikyu$barbecue
 v$barbikyuhin$roast
@@ -2749,14 +2747,14 @@ n$baskag$frame
 n$baskagan$frame or framework
 n$baskagan$matrix
 n$basketbol$basketball
-n$basketbolista$basketball player
+n$basketbolista$basketball player#occupations
 n$basketin$put or throw into a basket
 n$baskula$weighing scale
 n$baslig$fishing gear (type of)
 n$basnig$fishing gear (type of)
 n$baso$assay
 n$baso$target practice
-n$baso$drinking glass
+n$baso$drinking glass#kitchen
 n$baso$spleen
 adv$basta$only
 intrj$basta$enough!#speech
@@ -2784,7 +2782,7 @@ v$basuhin$use as a target
 v$basuin$assay a substance
 n$basuka$bazooka)
 n$basura$rubbish
-n$basurahan$garbage can or container
+n$basurahan$garbage can#kitchen
 n$basurero$garbage collector
 adj$basyo$n empty
 n$bat$bat (stick to hit the ball in cricket, baseball)
@@ -2816,7 +2814,7 @@ n$batas$short cut
 n$batasan$law-making body
 n$batasang-bansa$congress
 n$bataw$buoy
-n$bataw$species of bean with edible pods#food
+n$bataw$species of bean with edible pods#food & drinks
 n$bataw$swarm of bees#animals
 v$batawin$lighten a boat in the water
 adj$batawv$n not fully loaded
@@ -2863,7 +2861,7 @@ n$batirya$storage battery
 n$batis$spring of water
 n$batisan$shallow pool formed by a spring
 adj$bato$stone
-n$bato$stone
+n$bato$stone#nature
 n$bato$the chief piece in a game of native quoits
 comp$bato't bulaklak ng batong nakapaligid$coral reef
 n$batog$shelled and boiled corn with grated coconut and salt
@@ -2926,7 +2924,7 @@ adj$bawal$prohibited
 comp$Bawal ang pumasok$No admission
 comp$bawal na bawal$strictly prohibited
 v$bawalan$forbid
-n$bawang$garlic#food
+n$bawang$garlic#food & drinks
 v$bawangan$mix garlic with some dish
 n$bawangan$garlic garden or plantation
 n$bawas$discount
@@ -2952,7 +2950,7 @@ n$bayag$testicle
 n$bayakan$species of large bat
 n$bayakid$tripping and falling over some obstacle
 n$bayambang$amaranth herb (species of)
-n$bayan$municipality
+n$bayan$town#around town
 n$bayanan$downtown area
 n$bayang-pinanganakan$birthplace
 n$bayang-tinubuan$fatherland
@@ -3017,7 +3015,7 @@ n$belada$entertainment
 n$belbet$velvet
 n$Belen$town of Bethlehem
 adj$Belga$Belgian
-n$Belhika$Belgium
+n$Belhika$Belgium#countries
 adj$Belhika-ko$Belgian
 n$belo$veil
 v$belohan$cover with a veil
@@ -3056,7 +3054,7 @@ n$benta$sales
 n$bentaha$benefit
 n$bentahe$advantage
 n$bente$twenty
-n$bentilador$fan
+n$bentilador$fan#bedroom
 n$bentilasyon$ventilation
 n$bentosa$suction glass used to improve circulation of the blood
 v$bentosahan$apply a cupping glass
@@ -3073,7 +3071,7 @@ n$berbalan$frank and direct conversation
 v$berbalin$speak to someone quite frankly
 adv$berbeytim$verbatim
 n$berbo$verb
-n$berde$green colour
+n$berde$green#colours
 n$berdugo$executioner
 n$berhas$grating or grill on doors or windows
 n$beriberi$oriental disease caused by lack of vitamines
@@ -3099,7 +3097,7 @@ n$bestido$woman's dress
 n$beteran$veteran
 n$beterano$veteran
 n$beterinarya$veterinary science
-n$beterinaryo$veterinarian
+n$beterinaryo$veterinarian#occupations
 n$betis$species of tree
 n$beto$game of dice
 n$beto$veto
@@ -3314,7 +3312,7 @@ gram$bilang pandiwa$verbally
 v$bilangan$count something to be given to someone
 n$bilanggo$prisoner
 n$bilanggong-katiwala$convict who is given special privileges because of good behaviour
-n$bilangguan$prison
+n$bilangguan$prison#around town
 v$bilangin$count
 n$bilao$basket for shaking and cleaning rice
 n$bilaok$something that blocks or sticks in the throat
@@ -3491,7 +3489,7 @@ adj$bisaklat$astride
 n$bisala$fault
 n$Bisaya$language, region and people of the Visayas
 n$bise bersa$vice versa
-pref$bise-$vice-president)
+pref$bise-presidente$vice-president
 n$bisi$drought
 n$bisig$the whole arm or just the forearm
 n$bisikleta$bicycle#around town
@@ -3504,8 +3502,8 @@ n$bisitasyon$visit
 n$biskonde$viscount
 n$biskondesa$viscountess
 n$biskotso$bread which has been toasted to become quite brittle
-n$biskwit$biscuit#food
-n$bislad$dried fish#food
+n$biskwit$biscuit#food & drinks
+n$bislad$dried fish#food & drinks
 n$Bismut$Bismuth#chemistry
 n$biso$hitch
 n$bisperas$the eve
@@ -3560,7 +3558,7 @@ n$bitig$muscular tension
 n$bitik$garter
 n$bitik$species of tree, producing lumber
 n$bitin$something dangling or hanging
-n$bitinan$hanger (nail or hook)
+n$bitinan$hanger#living room
 n$bitiw$letting go of one`s hold
 n$bitiw$resignation from a position
 v$bitiwan$disengage
@@ -3607,7 +3605,7 @@ n$biyenan$parent-in-law
 n$biyenes$property
 comp$biyenes inmuwebles$immovable property
 comp$biyenes muwebles$movable properties
-n$Biyernes$Friday#days
+n$Biyernes$Friday#date & time
 n$Biyernes Santo$Good Friday
 adj$biyograpiko$biographical
 n$biyograpo$biographer
@@ -3617,8 +3615,8 @@ n$biyolensya$violence
 adj$biyolento$violent
 n$biyoleta$violet [bot]
 n$biyolin$violin
-n$biyolinista$violinist
-n$biyologo$biologist
+n$biyolinista$violinist#occupations
+n$biyologo$biologist#occupations
 n$biyolohiya$biology
 n$biyolon$bass viol
 n$biyolonselo$cello
@@ -3694,7 +3692,7 @@ n$bombahan$pump air, gas or water into something
 v$bombahin$bomb
 n$bombang de-koryente$electric pump
 adj$bombastiko$bombastic
-n$bombero$fireman
+n$bombero$fireman#occupations
 n$bombilya$electric bulb
 n$bombista$drummer
 n$bombo$large drum
@@ -3714,7 +3712,7 @@ n$botanika$botany
 adj$botanikal$botanical
 n$botaniko$botanist
 n$botante$voter
-n$botas$boots [footwear)
+n$botas$boots#in the yard
 n$botasyon$voting
 n$bote$bottle
 n$bote$lifeboat
@@ -3744,7 +3742,7 @@ n$brilyante$diamond
 n$brilyo$lustre
 n$brindis$toast
 n$brio$vigor
-n$Britanya$Britain
+n$Britanya$Britain#countries
 n$briyo$vigor
 n$brodkast$broadcast
 adj$brok$broke
@@ -3814,10 +3812,9 @@ adj$bugbog$swollen from beating
 n$bugbog$clubbing or pounding
 n$bugbugan$noisy quarrel accompanied with blows
 v$bugbugin$beat up
-v$bughan$blow smoke or spit liquid upon a sick person by a quack doctor
 n$bughaw$blue
 n$buging$fish called "half-beak": Hemirhamphidae)
-n$bugnit$hip
+n$bugnit$hip#body
 n$bugnitbugnit$joint of the thigh
 adj$bugnos$disentangled
 n$bugnot$exasperation
@@ -3844,7 +3841,7 @@ adj$buhalhal$disorderly
 v$buhalhalin$put into disorder
 adj$buhanghang$disorderly
 v$buhanghangin$disarrange
-n$buhangin$sand
+n$buhangin$sand#nature
 v$buhanginan$put sand on
 n$buhanginan$sandy place
 n$buhanginbato$sandstone (geology)
@@ -3889,7 +3886,7 @@ n$bukadura$mouthpiece
 v$bukahin$open
 adj$bukaka$wide apart to a person's legs when when standing)
 adj$bukal$natural
-n$bukal$spring of fresh water (natural)
+n$bukal$spring of fresh water#geography
 adj$bukalkal$upset
 v$bukalkalin$upset
 n$bukambibig$household word
@@ -3901,7 +3898,7 @@ n$bukang-liwayway$daybreak
 n$bukangbibig$favorite expression
 adj$bukangkang$bukangkang (bukangkang)
 adj$bukas$open
-n$bukas$tomorrow#Time
+n$bukas$tomorrow#date & time
 comp$bukas ang isip$open
 comp$bukas ang isip$open-minded
 comp$bukas ang palad$open-handed
@@ -3923,10 +3920,10 @@ v$bukbukin$grow worm-eaten
 adj$bukbukin$full of grubs or weevils
 n$bukey$bouquet
 v$bukhin$open
-n$bukid$rural areas
+n$bukid$rural areas#geography
 n$bukilya$mouthpiece
 v$bukirin$farm
-n$bukkiper$bookkeeper
+n$bukkiper$bookkeeper#occupations
 n$buklad$expansion &)
 adj$buklat$open
 v$buklatin$open a book
@@ -3976,9 +3973,9 @@ n$bulakan$coarse vine
 n$bulakan$cotton plantation
 n$bulakbol$truancy
 n$bulakbulero$shirker
-n$bulaklak$flower
+n$bulaklak$flower#in the yard
 comp$bulaklak ng dila$often repeated word, name or expression
-n$bulaklakan$flower garden
+n$bulaklakan$flower garden#in the yard
 n$bulalakaw$meteor
 n$bulalas$exclamation
 n$bulalato$meteorite
@@ -4591,7 +4588,7 @@ adj$buwag$demolished
 v$buwagin$demolish (material)
 adj$buwal$fallen flat on the ground
 n$buwal$kind of dress cloth
-n$buwan$month#Time
+n$buwan$month#date & time
 n$buwan$moon
 adj$buwan-buwan$monthly
 adj$buwanan$monthly
@@ -4628,7 +4625,7 @@ n$cine$movie
 n$Cristo$Christ
 adj$Da$appellation for an elder woman
 n$da gibalnian$electromagnetism (science)
-n$daan$road
+n$daan$road#around town
 n$daan$hundred
 adj$daan-daan$hundreds
 v$daanan$drop in at someone to bring him/her along
@@ -4665,8 +4662,8 @@ n$dagas$emergency call for someone needed
 adj$dagasa$impetuous
 adj$dagasinin$gravitational
 n$dagat$sea#geography
-n$dagat-dagatan$lake#geography
-n$dagatan$gulf#geography
+n$dagat-dagatan$lake
+n$dagatan$gulf
 adj$dagdag$additional
 n$dagdag$extension
 comp$dagdag na gamit$accessory
@@ -4738,7 +4735,7 @@ v$dahilanin$adduce
 adj$dahilig$inclined
 n$dahilig$slope of a hill or mountain
 n$dahol$non-poisonous water snake
-n$dahon$leaf of a plant
+n$dahon$leaf of a plant#nature
 n$dahon ng sumbrero$brim of a hat
 n$dahong-pula$ornamental herb
 adj$dahop$in want
@@ -4809,7 +4806,7 @@ n$dalahit$attack of intense coughing
 v$dalain$have an unpleasant experience
 n$dalamhati$affliction
 n$dalampasigan$seashore
-n$dalandan$orange#food
+n$dalandan$orange (fruit)#food & drinks
 n$dalandanan$orange grove
 n$dalang$sparseness
 n$dalang-galit$feeling of anger
@@ -4895,8 +4892,8 @@ n$dalubhalman$botanist
 adj$dalubhasa$expert
 n$dalubhasa$expert
 comp$dalubhasa sa soolohiya$zoologist
-n$dalubhasaan$college
-n$dalubhayop$zoologist
+n$dalubhasaan$college~
+n$dalubhayop$zoologist#occupations
 n$dalubtala$astronomer
 n$dalubtalaan$astronomy
 adj$dalubtalain$astronomical
@@ -4974,9 +4971,9 @@ n$damit-pampaligo$bathing suit
 comp$damit-panloob$lingerie
 n$damit-pansayaw$evening dress
 n$damit-payaso$motley (suit worn by clowns)
-v$damitan$dress or drsss up
+v$damitan$dress or dress up
 n$damo$garbage in the form of peelings, shavings
-n$damo$grass
+n$damo$grass#in the yard
 n$damong-Bermuda$Bermuda grass
 n$damong-dagat$seaweed
 n$damong-gamot$herb
@@ -5092,7 +5089,7 @@ v$datain$reach
 conj$datapuwa$but
 conj$datapwa$but
 adj$datay$bedridden
-adj$dati$before#Time
+adj$dati$before#date & time
 adv$dati$originally
 adv$dati-dati$formerly
 adv$dati-rati$formerly
@@ -5239,7 +5236,7 @@ n$denominasyon$denomination
 n$denominasyon$religious denomination or sect
 n$dentadura$set of teeth (false or natural)
 adj$dental$dental to certain sounds)
-n$dentista$dentist
+n$dentista$dentist#occupations
 n$dentyur$set of teeth (false or natural)
 n$deorodante$deodorant
 n$departamento$department
@@ -5276,7 +5273,7 @@ intrj$deretso$straight ahead!#speech
 n$deretso$right
 n$deretsos$fee
 n$dermatitis$dermatitis (skin desease)
-n$dermatologo$dermatologist (skin specialist)
+n$dermatologo$dermatologist#occupations
 n$dermatolohia$dermatology
 adj$desapinado$out of tune (music)
 n$desapio$challenge
@@ -5351,7 +5348,7 @@ n$desyerto$desert#geography
 adj$detalyado$detailed
 n$detalye$detail
 v$detalyehin$particularize
-n$detektib$detective
+n$detektib$detective#occupations
 v$detenihin$detain
 n$detensiyon$arrest
 n$determinasyon$determination
@@ -5790,7 +5787,7 @@ n$dilantal$apron
 n$dilantera$front
 adj$dilat$open-eyed
 v$dilatan$stare at fiercely and with anger
-n$dilaw$yellow
+n$dilaw$yellow#colours
 n$dilaw$species of root-crop
 comp$dilaw na mura$canary colour
 v$dilawan$make yellow
@@ -5887,7 +5884,7 @@ n$direksiyon$direction
 adj$direkta$direct
 n$direktiba$management
 adj$direkto$direct
-n$direktor$director
+n$direktor$director#occupations
 n$direktoryo$directory
 n$diri$loathing
 v$diringgin$hear (something)
@@ -6027,7 +6024,7 @@ n$distruksiyon$destruction
 adj$distrungkado$broken
 v$distrungkahin$break off
 n$disturnilyador$screwdriver
-n$Disyembre$December#months
+n$Disyembre$December#date & time
 n$dita$mucus-like covering of some fishes
 n$dita$poison applied to arrows
 n$dita$species of pine
@@ -6072,7 +6069,7 @@ n$diyametro$diameter
 adv$diyan$there
 n$diyana$reveille
 n$diyangket$junket
-n$diyanitor$janitor
+n$diyanitor$janitor#occupations
 n$diyarea$diarrhoea (UK)
 n$diyari$daily newspaper
 n$diyariya$diarrhoea (UK)
@@ -6449,7 +6446,7 @@ adj$dutain$terrestrial
 comp$dutaing balani$terestrial magnetism
 n$dutdot$poking with the finger (or something pointed)
 v$dutdutin$thrust
-n$dutsa$sprinkler in a shower bath
+n$dutsa$shower (bathroom)#bathroom
 n$duungan$anchorage
 n$duungan$jetty
 adj$duwag$cowardly
@@ -6469,7 +6466,7 @@ n$duyog$ellipse
 n$duyong$species of seacow
 n$dyabetes$diabetes
 n$dyas$jazz
-n$dyim$gym
+n$dyim$gym#around town
 n$dyimnasyum$gym
 n$dyimnesyum$gym
 n$dyip$jeep (vehicle)
@@ -6637,7 +6634,7 @@ n$elektroniks$electronics
 adj$elementarya$elementary
 n$elemento$element
 n$elepante$elephant#animals
-n$eletrisyan$electrician
+n$eletrisyan$electrician#occupations
 n$eletso$fern
 adj$eliminado$eliminated
 n$eliminasyon$elimination
@@ -6647,7 +6644,7 @@ n$elokwensiya$eloquence
 n$elokwensya$eloquence
 adj$elokwente$eloquent
 n$embahada$embassy
-n$embahador$ambassador
+n$embahador$ambassador#occupations
 n$embahadora$ambassadress
 adj$embalsamado$embalmed
 n$embalsamador$embalmer
@@ -6701,7 +6698,7 @@ n$endorso$endorsement
 n$endoso$endorsement
 n$enerhia$energy
 n$enerhiya$energy
-n$Enero$January#months
+n$Enero$January#date & time
 n$eng-eng$sound of the violin
 n$engganyo$deceit
 n$enggaste$setting of gems
@@ -6785,7 +6782,7 @@ n$episodyo$episode
 n$epistola$epistle)
 n$epok$epoch
 n$epoka$epoch
-n$epron$apron
+n$epron$apron#kitchen
 n$erata$errata
 adj$eratik$erratic
 adj$eratiko$erratic
@@ -6854,7 +6851,7 @@ n$eskribaniya$roll-top desk
 n$eskribano$clerk of the court
 n$eskribyente$clerk
 n$eskrima$the art of fencing
-n$eskritoryo$writing desk
+n$eskritoryo$desk#bedroom
 n$Eskritura$Scripture
 n$eskrutinyo$scrutiny
 n$eskudero$shield bearer or maker
@@ -6878,7 +6875,7 @@ n$esmalte$enamel
 n$esmeralda$emerald
 n$esopago$esophagus (anatomy)
 n$espada$sword
-n$Espanya$Spain
+n$Espanya$Spain#countries
 n$Espanyol$Spaniard
 n$Espanyola$Spanish woman
 n$esparago$asparagus
@@ -6912,7 +6909,7 @@ n$espiritu$spirits (hard liquor)
 n$Espiritu Santo$Holy Spirit
 adj$espirituwal$spiritual
 adj$espiritwal$spiritual
-n$espiya$spy
+n$espiya$spy#occupations
 comp$espiya ng pulisya$stool pigeon
 v$espiyahan$spy
 n$espiyonahe$espionage
@@ -6954,7 +6951,7 @@ n$estampa$religious print
 n$estampita$small holy picture
 n$estandarte$banner
 n$estangkado$stagnant
-n$estante$shelf
+n$estante$shelf#bedroom
 n$estanyador$welder
 n$estanyo$tin or lead used in soldering
 n$estapa$roguery
@@ -7026,7 +7023,7 @@ n$estribor$starboard
 adj$estrikta$strict
 adj$estrikto$strict
 n$estropa$stanza of a poem
-n$estudyante$student
+n$estudyante$student#occupations
 n$estudyo$studio
 n$estudyo$study
 adj$estupado$stewed (meat)
@@ -7048,7 +7045,7 @@ n$eukaliptol$eucalyptus oil
 n$Eukaristia$Eucharist
 adj$Eukaristiko$Eucharistic
 n$eukaristiya$Eucharist
-n$Europa$Europe
+n$Europa$Europe#countries
 n$Europea$European
 n$Europeo$European
 idiom$ewan$used like this: "ewan ko", "I don't know" expression)
@@ -7418,7 +7415,7 @@ comp$gata ng niyog$coconut milk
 v$gataan$extract milk from coconut meat
 v$gatain$make into coconut milk
 n$gatang$chupa
-n$gatas$milk#food
+n$gatas$milk#food & drinks
 v$gatasan$milk
 adj$gatasan$milch
 n$gatasan$dairy
@@ -7599,8 +7596,8 @@ n$ginoo$gentleman
 n$Ginoo$Mister
 adj$ginting$dissimilar
 adj$ginto$golden
-n$ginto$gold metal or coin
-n$Ginto$Gold (Au)
+n$ginto$gold#colours
+n$Ginto$Gold (Au)#chemsitry
 v$gintuan$inlay with gold
 v$gintuin$make golden
 n$gipalpal$thick, hard dirt (on the clothes/skin)
@@ -7696,7 +7693,7 @@ n$glukos$glucose
 n$glukosa$glucose
 n$gneis$gneis (mining)
 adj$gneisiko$gneissic
-n$gobernador$governor
+n$gobernador$governor#occupations
 n$gobyerno$government
 n$gol$goal (in a game)
 n$goldpis$goldfish
@@ -7704,7 +7701,7 @@ n$golp$the game of golf
 n$golpe$stroke
 n$golpe-de-estado$coup d'etat
 n$golpe-de-gulat$surprising of a politician, an opponent
-n$golpo$gulf#geography
+n$golpo$gulf
 adj$goma$made of rubber
 n$goma$rubber
 n$gonggong$grunt fish:Haemulidae )
@@ -7763,9 +7760,9 @@ n$grewak$greywacke (petro)
 adj$Griego$Grecian
 n$gril$grill
 n$gripe$grippe
-n$gripo$faucet
-n$gris$cheap, gray-coloured cloth (US: gray-colored)
-n$gris$gray colour
+n$gripo$faucet#kitchen
+n$gris$cheap, gray-coloured cloth
+n$gris$gray#colours
 adj$Griyego$Grecian
 n$gros$gross
 n$groser$grocer (dealer in foodstuff)
@@ -7778,9 +7775,9 @@ adj$grupu-grupo$in groups
 n$gruta$grotto
 adj$guang$hollow
 n$guang$gap
-n$guantes$gloves (for the hands)
+n$guantes$gloves
 n$guayabano$tree with edible fruit with the same name
-n$gubat$forest
+n$gubat$forest#geography
 adj$gubat na gubat$thickly forested
 n$gubernador$governor
 n$gubyerno$government
@@ -7821,7 +7818,7 @@ v$gulatin$scare
 adj$gulatin$excitable
 adj$gulaw$rough
 n$gulay$vegetable
-n$gulayan$vegetable garden
+n$gulayan$vegetable garden#in the yard
 v$gulayin$cook as a vegetable dish
 n$gulayin$plants, rootstocks that can be cooked as vegetables
 n$gulaylay$rest and quiet
@@ -7887,26 +7884,26 @@ v$gumanti$retaliate
 v$gumanti ng pinsala$take reprisals
 v$gumanting-salakay$counterattack
 v$gumanyak$induce to
-v$gumaod$row
-v$gumapang$crawl
-v$gumapang$grow by clinging (vine)
+v$gumaod$to row
+v$gumapang$to crawl
+v$gumapang$to grow by clinging (vine)
 v$gumapas$mow the the grass, rice stalks or the like
-v$gumapos$bind
-v$gumaralgal$make a harsh, grating noise
-v$gumarantia$guarantee
-v$gumarantiya$guarantee
-v$gumarote$club
-v$gumasgas$scratch
-v$gumaspang$roughen
-v$gumasta$spend money
-v$gumatas$milk
-v$gumawa$produce
-v$gumawa ng mapa$plot (make a map of)
-v$gumawak$tear
+v$gumapos$to bind
+v$gumaralgal$to make a harsh, grating noise
+v$gumarantia$to guarantee
+v$gumarantiya$to guarantee
+v$gumarote$to club
+v$gumasgas$to scratch
+v$gumaspang$to roughen
+v$gumasta$to spend money
+v$gumatas$to milk
+v$gumawa$to produce
+v$gumawa ng mapa$to plot (make a map of)
+v$gumawak$to tear
 v$gumawi$veer in a certain direction
-v$gumaya$copy
-v$gumayak$dress up
-v$gumayat$slice
+v$gumaya$to copy
+v$gumayak$to dress up
+v$gumayat$to slice
 v$gumayuma$allure
 v$gumigiliw$lover
 v$gumiit$insist on
@@ -7975,15 +7972,15 @@ n$gupo$ruin
 n$gura$crested wild pigeon
 n$gurami$species of fresh-water fish
 n$gurlis$light scratch
-n$guro$teacher
+n$guro$teacher#occupations
 n$guryon$small kite
 n$gusad$clearing ground by cutting weeds
-n$gusali$building
+n$gusali$building#around town
 n$gusaling panghukuman$courthouse
 n$gusanilyo$zoo small worm/grub
 n$gusano$small winding spring
 adj$gusgusin$in rags
-n$gusi$large china vase or jar
+n$gusi$vase#living room
 n$gusilaw$eyeshade
 adj$gusot$crumpled
 n$gusot$tangle
@@ -8012,7 +8009,7 @@ adj$gutural$guttural
 adj$guwang$hollow
 n$guwang$gap
 n$guwano$guano
-n$guwantes$glove
+n$guwantes$glove#in the yard
 adj$guwapa$handsome
 adj$guwapo$handsome
 adj$guwardado$guarded
@@ -8183,7 +8180,7 @@ n$hakulatorya$ejaculation
 n$hakutan$means of transporting
 v$hakutin$transport
 intrj$Hala$Go ahead!#speech
-n$halaan$mussel#food
+n$halaan$mussel#food & drinks
 n$halabas$long, thin cutlass for tall grass
 v$halabasin$cut tall grass with a cutlass
 n$halabid$entangling of a rope, wire, vine
@@ -8206,9 +8203,9 @@ n$halakhakan$loud laughter together (plural)
 adj$halal$elective
 n$halal$vote
 n$halalan$election
-n$halaman$plant
+n$halaman$plant#in the yard
 n$halamanan$garden
-n$halamang-singaw$fungus$nature
+n$halamang-singaw$fungus#nature
 v$halamanin$cultivate plants in an orchard/garden
 n$halamanin$plant for cultivation or planting in an orchard
 n$halambat$provisional fence
@@ -8354,7 +8351,7 @@ n$hamig$collecting winnings on the gambling table
 intrj$Hamo!$Don't mind
 n$hamog$dew
 n$hamok$hand-to-hand fight
-n$hamon$ham#food
+n$hamon$ham#food & drinks
 n$hamon$challenge
 n$hampas$thump
 n$hampasan$act of hitting one another with a stick or the like
@@ -8437,7 +8434,7 @@ n$hantong$destination
 v$hantungan$stop
 n$hantungan$stopping place
 n$haot$dried "tinsoy" fish
-n$hapag$table
+n$hapag$table#kitchen
 adj$hapak$chopped
 v$hapakin$chop
 n$hapaw$excess liquid in boiling rice that is removed
@@ -8472,7 +8469,7 @@ n$Hapniyum$Hafnium (Hf) [chemistry]
 adj$hapo$tired out
 n$hapo$asthma
 n$hapo$panting due to extreme fatigue
-n$Hapon$Japan
+n$Hapon$Japan#countries
 n$hapon$afternoon
 n$hapon$perching of birds
 n$Hapones$Japanese
@@ -8501,8 +8498,8 @@ n$harapan$front
 v$harapin$present oneself formally
 n$haraya$imagination
 v$harayain$imagine
-n$hardin$garden
-n$hardinera$gardener
+n$hardin$garden#in the yard
+n$hardinera$gardener#occupations
 n$hardwer$hardware
 n$hari$king
 n$hari-harian$dictator
@@ -8636,7 +8633,7 @@ adj$hayok$weak from hunger
 n$hayon$farthest distance that can be readched
 v$hayon$is there
 intrj$Hayon$There! There it is!
-n$hayop$animal
+n$hayop$animal#nature
 comp$hayop na dalawa ang paa$biped (animal with two feet)
 comp$hayop na maninila$beast of prey
 n$hayop na may supot sa tiyan$marsupial
@@ -8675,7 +8672,7 @@ adj$heograpikal$geographical
 adj$heograpiko$geographic
 n$heograpiya$geography
 n$heokimika$geochemistry
-n$heologo$geologist
+n$heologo$geologist#occupations
 comp$heolohikong guhit-tagpuan$geologic horizon
 n$heolohiya$geology
 n$heolohiyang pampetroleo$petroleum geology
@@ -8806,7 +8803,8 @@ n$hila$pulling
 n$hilab$swell
 n$hilabo$free-for-all
 n$hilaga$north#geography
-comp$hilagang balniing taluktok$magnetic pole
+n$hilaga$north#geography
+n$Hilagang-Amerika$north america#countries
 adj$hilagang-kanluran$northwest#geography
 adj$hilagang-silangan$northeast#geography
 n$hilagpos$getting loose (from something that ties or binds)
@@ -8913,7 +8911,7 @@ n$himod$licking (something) with the tongue
 n$himok$inducement
 adj$himpak$deflated (balloon)
 n$himpapalis$species of swallow
-n$himpapawid$air
+n$himpapawid$air#nature
 n$himpil$stop
 n$himpilan$station
 comp$himpilan ng eruplano$airport
@@ -9031,7 +9029,7 @@ v$hindi tumutol$acquiesce
 adv$hinding-hindi$never
 n$Hindu$native of India
 n$hinebra$gin (alcoholic drink)
-n$hinete$jockey
+n$hinete$jockey#occupations
 n$hinga$respiration
 v$hingahan$breathe into
 n$hingal$gasp
@@ -9271,7 +9269,7 @@ n$huklo$ducking (lowering head to avoid a blow)
 adj$huklob$decrepit
 adj$hukluban$decrepit
 n$hukod$bending of the body
-n$hukom$judge
+n$hukom$judge#occupations
 adj$hukong$humpbacked
 adj$hukot$stooping
 v$hukuman$pass judgement on someone
@@ -9324,7 +9322,7 @@ v$hulugan$let fall
 v$hulugan$the depth) with a plumb line
 v$huluin$deduce
 n$hulwaran$pattern
-n$Hulyo$July#months
+n$Hulyo$July#date & time
 n$huma$talk
 v$humaba$lengthen
 v$humabi$weave
@@ -9519,7 +9517,7 @@ n$huntahan$conversation of a group of people
 v$huntahin$talk (to someone)
 n$hunusdili$careful consideration
 n$hunyango$chameleon
-n$Hunyo$June#months
+n$Hunyo$June#date & time
 n$hupa$diminution
 adj$hupak$caved-in
 n$Hupiter$Jupiter (the planet)
@@ -9533,7 +9531,7 @@ n$hurista$jurist
 n$hurnal$instalment (US: installment)
 v$hurnalan$pay by instalment (US: installment)
 adj$hurnalan$paid by instalment (US: installment)
-n$hurno$oven
+n$hurno$oven#kitchen
 n$hurnuhan$oven
 v$hurnuhin$bake
 n$husay$orderliness
@@ -9567,7 +9565,7 @@ comp$huwag nang sabihin$don't say
 v$huwaran$copy from
 n$huwaran$mould
 v$huwarin$counterfeit
-n$Huwebes$Thursday#days
+n$Huwebes$Thursday#date & time
 n$Huwebes Santo$Holy Thursday
 n$huwego$gambling
 n$huwego$number of things forming a series or set
@@ -10142,7 +10140,7 @@ v$ikatupad$be the reason for fulfilling a promise, duty
 v$ikatuwa$make one happy
 v$ikatwiran$give as the reason
 v$ikaunlad$be the reason of progress, improvement
-pron$ikaw$you#Pronouns
+pron$ikaw$you#pronouns
 v$ikawala$lose
 n$ikawalo$eighth (8th)
 v$ikaway$wave
@@ -10272,7 +10270,7 @@ comp$ilaw ng pansenyas$beacon
 n$ilaw-dagitab$electric light or lamp
 n$ilaw-elektrika$electric light
 v$ilawan$illumine
-n$ilawan$lamp
+n$ilawan$lamp#bedroom
 v$ilawit$cause to hang down
 v$ilawlaw$dangle something
 n$ilay$seasickness
@@ -10379,10 +10377,10 @@ n$imbensiyon$invention
 n$imbentaryo$inventory
 v$imbentaryuhin$take an inventory
 n$imbento$invention
-n$imbentor$inventor
+n$imbentor$inventor#occupations
 v$imbentuhin$invent
 n$imbestidura$investiture
-n$imbestigador$investigator
+n$imbestigador$investigator#occupations
 v$imbestigahan$investigate
 v$imbestigahin$investigate
 n$imbestigasyon$investigation
@@ -10553,7 +10551,7 @@ n$Indiyan$Indian
 n$Indiyum$Indium (In)
 n$Indones$Indonesian
 n$Indonesa$Indonesian
-n$Indonesya$Indonesia
+n$Indonesya$Indonesia#countries
 n$indorso$endorsement
 n$indoso$endorsement
 n$indulhensiya$indulgence (also religious meaning)
@@ -10603,7 +10601,7 @@ adj$ingrata$ungrateful
 adj$ingrato$ungrateful
 n$inhenyeria$engineering
 n$inhenyeriya$engineering
-n$inhenyero$engineer
+n$inhenyero$engineer#occupations
 n$inhenyo$ingenuity
 adj$inhenyoso$ingenious
 n$inhinyero$engineer
@@ -10662,7 +10660,7 @@ n$insalada$salad
 adj$insayado$rehearsed
 n$insayo$rehearsal
 v$insayuhin$rehearse
-n$insekto$insect
+n$insekto$insect#nature
 n$insensaryo$censer
 n$insenso$incense
 n$insentib$incentive
@@ -10734,7 +10732,7 @@ adj$interno$internal
 n$interno$intern (assistant doctor in hospital)
 adj$interogatibo$interrogative
 n$interpretasyon$interpretation
-n$interprete$interpreter
+n$interprete$interpreter#occupations
 n$interseksyon$intersection
 n$intersesor$intercessor
 n$interupsyon$interruption
@@ -11253,7 +11251,7 @@ v$iringin$treat (someone) disdainfully
 n$iris$iris (part of the eyes)
 n$irit$shrill screech or scream
 n$iritasyon$irritation
-n$Irlanda$Ireland
+n$Irlanda$Ireland#countries
 adj$Irlandes$Irish
 n$Irlandesa$Iriswoman
 n$irog$beloved
@@ -11393,7 +11391,7 @@ v$isayad$let something touch the side, top, or bottom of something else
 v$isayaw$dance (with someone)
 v$isaysay$attest
 v$isaysay nang puspusan$relate or tell in detail
-n$isda$fish#food
+n$isda$fish#food & drinks
 n$isdambituin$starfish
 n$isdambuaya$flathead fish
 n$isdang-bituin$starfish
@@ -11536,7 +11534,7 @@ n$isportsman$sportsman
 n$Israel$Israel (the country)
 n$Israelita$Israelite
 n$ista$fish (common name for -)
-n$istadyum$stadium (arena for sports activities)
+n$istadyum$stadium#around town
 n$istaka$stake
 n$istakada$stockade (pen made of upright posts)
 n$istambay$standby
@@ -11668,7 +11666,7 @@ v$itali$tie
 adj$italik$italic
 n$italiks$italic type
 v$italungkas$tuck in
-n$Italya$Italy
+n$Italya$Italy#countries
 n$Italyana$Italian
 n$Italyano$Italian
 v$itama$place something correctly
@@ -11736,7 +11734,7 @@ v$itikom ang bibig$close one's mouth
 v$itikom ang labi$close one's mouth
 v$itikwas$tip up the edge of something
 adj$itim$black
-n$itim$black
+n$itim$black#colours
 comp$itim na buhangin$black sand
 comp$itim na laba$black lava
 v$itiman$blacken or darken (something)
@@ -11767,7 +11765,7 @@ v$itiwalag$depose
 v$itiwarik$invert
 v$itiwasay$calm
 expr$itlo$used instead of "tatlo" in "makaitlo" meaning three times
-n$itlog$egg#food
+n$itlog$egg#food & drinks
 comp$itlog na pula$salted egg (coloured red) (US:colored red)
 comp$itlog ng isda$spawn
 n$itlugan$place where eggs are laid
@@ -12143,7 +12141,7 @@ n$kabilugan$complete roundness
 comp$kabilugan ng buwan$full moon
 n$kabilya$dowel
 n$kabin$cabin
-n$kabinet$cabinet
+n$kabinet$cabinet#kitchen
 n$kabingihan$deafness
 n$kabinian$quality of modesty
 n$kabinsaan$dullness
@@ -12480,7 +12478,7 @@ n$kahawigan$similarity
 n$kahayupan$bestiality
 n$kahel$species of orange tree and its fruit
 n$kahenyuhan$very great mental power and/or natural ability
-n$kahera$cashier
+n$kahera$cashier#occupations
 n$kahero$cashier
 conj$kahi$even if
 n$kahibangan$empty talk
@@ -12862,7 +12860,7 @@ n$kalampagan$din
 v$kalampagin$bang
 n$kalamunding$citrus tree bearing small sour fruits
 n$kalamyas$small tree bearing edible green, acid fruits
-n$kalan$stove
+n$kalan$stove#kitchen
 n$kalanda$bier
 n$kalandasan$slipperiness
 n$kalandayan$shallowness of concavity of plates/dishes
@@ -13217,7 +13215,7 @@ n$kaluwangan$breadth
 n$kaluwatan$long time
 n$kaluwayan$gentleness
 n$kalya$large basket for carrying vegetables or fruit
-n$kalye$street
+n$kalye$street#around town
 n$kalyehera$loiterer
 n$kalyehero$loiterer
 n$kalyehon$lane
@@ -13229,7 +13227,7 @@ v$kalyuhin$suffer from corns or calluses
 n$Kalyum$Potassium (K)
 n$kam-aw$reddish earthen pan or bowl
 adj$kama$well adjusted
-n$kama$bed
+n$kama$bed#bedroom
 n$kama$floor of a vehicle
 n$kama$garden plot
 n$kama$part of the plow that connects the plowshare with the beam
@@ -13290,7 +13288,7 @@ adj$kamata$having the same type of eyes
 v$kamatayan$die in a certain place
 n$kamatayan$death
 comp$kamatayan bilang isang martir$martyrdom
-n$kamatis$tomato#food
+n$kamatis$tomato#food & drinks
 v$kamatisan$add tomatoes to some dish
 n$kamatisan$tomato patch
 n$kamatsile$guamachili tree
@@ -13327,7 +13325,7 @@ n$kamelya$female kamel
 n$kamelyo$male camel
 n$kameo$cameo (precious stone or gem)
 n$kamera$camera
-pron$kami$we#Pronouns
+pron$kami$we#pronouns
 adv$kami-kami$among ourselves only
 n$kamiging$species of yam
 n$kamilya$small bed
@@ -13403,7 +13401,7 @@ adj$kana$fixed
 adj$kana$set (as a trap)
 n$kana$exertion
 n$kana$fight with the fists
-n$Kanada$Canada
+n$Kanada$Canada#countries
 n$Kanadyana$Canadian
 n$Kanadyano$Canadian
 n$kanaghala$phlegm (from throat when having a cold)
@@ -13469,10 +13467,10 @@ n$kanibal$cannibal
 n$kanighala$phlegm (from throat when having a cold)
 n$kaniguan$fortune
 v$kaniigin$engage in intimate conversation
-pron$kanila$their#Pronouns
+pron$kanila$their#pronouns
 n$kanilya$catheter
 v$kanin$eat
-n$kanin$rice#food
+n$kanin$rice#food & drinks
 adv$kanina$a while ago
 n$kaningningan$sparkle
 comp$kaningningang metaliko$metallic lustre
@@ -13538,7 +13536,7 @@ n$kantores$choir
 n$Kantunis$native of Canton
 n$kantyaw$banter
 adj$kanugnog$adjoining
-n$kanugnog$suburb of a city or town
+n$kanugnog$suburb#around town
 n$kanulo$betrayal
 n$kanunu-nunuan$ancestry
 conj$kanya$therefore
@@ -13682,7 +13680,7 @@ n$kapayakan$naivety
 n$kapayapaan$peace
 n$kapayatan$thinness (of body)
 adj$kape$brown
-n$kape$coffee#food
+n$kape$coffee#food & drinks
 n$kapelyan$chaplain
 n$kapetera$coffee pot
 n$kapeteria$coffee bar or shop
@@ -13695,7 +13693,7 @@ n$kapilas$shred
 n$kapilayan$lameness
 n$kapili$companion in making a choice in something
 n$kapiling$person close to oneself
-n$kapilya$chapel
+n$kapilya$chapel#around town
 n$kapilyuhan$devilment
 n$kapingahan$warlikeness
 n$kapingulan$earlobe#body
@@ -13718,7 +13716,7 @@ n$kapit$hold
 adj$kapita-pitagan$deserving respect
 adj$kapita-pitagan$venerable
 n$kapital$capital of a province or country
-n$kapital$capital
+n$kapital$capital#around town
 v$kapitalan$invest capital in something
 v$kapitalin$use (something) as capital
 v$kapitalisahan$provide capital (for some enterprise)
@@ -13728,7 +13726,7 @@ n$kapitalismo$capitalism
 n$kapitalist$capitalist
 n$kapitalista$capitalist
 v$kapitan$stick or glue (onto something)
-n$kapitan$captain (army, navy)
+n$kapitan$captain (army, navy)#occupations
 n$kapitan$holder
 v$kapitan ng sakit$be affected by some sickness
 n$kapitbahay$neighbour (US: neighbor)
@@ -13855,7 +13853,7 @@ n$karangyaan$worthless pleasure
 adj$karaniwan$common
 adv$karaniwan$commonly
 n$karaniwan$custom
-comp$karaniwang araw$weekday#Time
+comp$karaniwang araw$weekday#date & time
 comp$karaniwang palakad$routine
 comp$karaniwang tao$layman
 adj$karapat-dapat$deserving
@@ -13918,7 +13916,7 @@ n$kareta$small cart usually pulled by hand
 v$karetahin$carry (something) on a cart/sled
 n$karete$spool
 n$karetela$rig (two-wheeled, horse-drawn vehicle with two seats)
-n$karetilya$small cart
+n$karetilya$wheelbarrow#in the yard
 adj$karga$carried as load or burden
 n$karga$load
 n$karga$electric charge of batteries
@@ -13980,7 +13978,7 @@ n$karlo$scooping out of water or other liquids
 n$Karmelita$Carmelite (nun)
 n$karmin$carmine colour
 n$karnabal$carnival
-n$karne$meat#food
+n$karne$meat#food & drinks
 comp$karne ng baka$beef
 comp$karne ng bisiro$veal
 comp$karne ng bulo$veal
@@ -14004,12 +14002,12 @@ comp$karo ng patay$hearse
 n$karomata$two-wheeled horse-drawn vehicle
 n$karos$recklessness
 n$karosa$float in a parade
-n$karot$carrot#food
+n$karot$carrot#food & drinks
 n$karpet$small carpet
 n$karpeta$small carpet
 n$karpinteria$carpentry shop
 n$karpinteriya$carpentry
-n$karpintero$carpenter
+n$karpintero$carpenter#occupations
 n$karpintero$black woodpecker (bird)
 n$karpinterya$carpentry shop
 n$karsada$street
@@ -14152,7 +14150,7 @@ n$kasanga$to what has branched out from something else
 n$kasangay$namesake
 n$kasangga$teammate in a game
 n$kasanggulan$infancy
-n$kasangguni$councillor (US: councilor)
+n$kasangguni$councillor
 n$kasanggunian$advisory board
 v$kasangguniin$consult (somebody)
 adj$kasangkap$said of material used in combination with another
@@ -14208,8 +14206,8 @@ n$kaselanan$delicacy
 n$kaselangan$delicacy
 n$kaselosan$jealous state of mind or feeling
 n$kasera$landlady of a rented apartment or boarding house
-n$kasero$landlord
-n$kaserola$casserole
+n$kasero$landlord#occupations
+n$kaserola$casserole#kitchen
 n$kash$cash
 conj$kasi$because
 n$kasi$beloved
@@ -14361,7 +14359,7 @@ n$Katagalugan$Tagalog territory, people or language
 n$katagana$Japanese alphabet
 n$katagpo$person one is supposed to meet by appointment
 n$katahimikan$quietness
-n$kataimtiman$ardour (US: ardor)
+n$kataimtiman$ardour
 adj$kataka-taka$astonishing
 n$kataka-taka$species of herb
 n$kataka-takang-gawa$clever act
@@ -14441,7 +14439,7 @@ n$katapusan$end
 comp$katapusan ng mundo$doomsday
 n$katarantaduhan$foolishness
 n$katarantahan$bewilderment
-n$katarasan$candour (US: candor), boldness or arrogance in speech
+n$katarasan$candour, boldness or arrogance in speech
 n$katarata$cataract (decease of the eye)
 n$katarikan$steepness
 n$kataro$catarrh
@@ -14470,7 +14468,7 @@ n$katay$fish, slices of meat, vegetables strung together or in one bundle
 adj$katay-katay$strung to form bunches
 v$katayin$slaughter (for food)
 n$katayuan$site
-n$katedral$cathedral
+n$katedral$cathedral#around town
 n$kategoria$category
 n$kategoriya$category
 n$kategorya$category
@@ -14604,7 +14602,7 @@ n$katuruan$lesson
 n$katusuhan$shrewdness
 adj$katutubo$native
 comp$katutubong hilig$instinct
-comp$katutubong ugali$instinctive behaviour (US: behavior)
+comp$katutubong ugali$instinctive behaviour
 n$katutulan$particular objection to something
 n$katuturan$significance
 n$katuusan$computation
@@ -14652,7 +14650,7 @@ n$kauntian$smallness
 comp$kaunting dunong$smattering of knowledge
 comp$kaunting kulay$tinge
 n$kaunting-kaunti$very small amount
-n$kaunyon$member of labour (US: labor) union
+n$kaunyon$member of labour union
 n$kauplakan$extreme hunger
 n$kauri$one of the same kind
 n$kaurian$classification
@@ -14744,7 +14742,7 @@ n$kawalang-takip$nakedness
 n$kawalang-taros$recklessness
 n$kawalang-tinag$stability
 n$kawalang-tiyak$uncertainty
-n$kawali$frying pan
+n$kawali$frying pan#kitchen
 n$kawan$herd
 n$kawan ng baka$cattle herd
 adj$kawang$apart
@@ -14856,7 +14854,7 @@ n$kerida$paramour
 n$kerubin$cherubim (winged celestial being)
 n$kerusin$kerosene
 n$kerwe$cricket
-n$keso$cheese#food
+n$keso$cheese#food & drinks
 n$keso-de-bola$cheese in form like a ball
 n$keso-de-plato$flat cheese
 n$kesong puti$cottage cheese
@@ -15203,7 +15201,7 @@ n$kolateral$collateral (in loans)
 adj$kolehiyado$collegiate
 n$kolehiyal$male collegian
 n$kolehiyala$female collegian
-n$kolehiyo$college
+n$kolehiyo$college#around town
 n$koleksiyon$collection of money from debts
 n$koleksiyonista$collector (who collects things as a hobby)
 n$koleksyon$collection of money from debts
@@ -15226,7 +15224,7 @@ n$kolonisasyon$colonization
 n$kolono$colonist
 n$kolonya$colony
 adj$kolonyal$colonial
-n$kolor$colour
+n$kolor$colour#colours
 v$koloran$give colour to (US: color to)
 adj$kolorante$colouring (US: coloring)
 n$kolorete$rouge
@@ -15329,9 +15327,9 @@ adj$komplimentaryo$complimentary
 adj$komporme$agreeable (approving)
 n$kompormidad$agreeableness
 adj$komportable$comfortable
-n$komposer$composer (song writer
+n$komposer$composer (song writer)
 n$komposisyon$composition (music)
-n$kompositor$musical composer
+n$kompositor$musical composer#occupations
 n$komprobante$voucher (of expenses)
 n$komprobasyon$verification
 adj$komprometida$affianced
@@ -15406,7 +15404,7 @@ n$konsilyo$high council (of the Salvation Army)
 n$konsistoryo$consistory
 n$konsiyensiya$conscience
 n$konsiyerto$accord
-n$konsiyerto$concert
+n$konsiyerto$concert#around town
 n$konskripsyon$conscription (military)
 n$konsolasyon$consolation
 n$konsonante$consonant
@@ -15550,7 +15548,7 @@ n$koteho$comparison
 n$koton$cotton
 n$kotse$car#around town
 n$koypyur$coiffure (kind of hairstyle)
-n$kraker$cracker#food
+n$kraker$cracker#food & drinks
 n$kras$crash
 n$krast$crust
 n$krayola$crayon
@@ -15574,9 +15572,9 @@ n$krim$cream (of milk)
 n$krimen$crime
 adj$kriminal$criminal
 n$kriminal$criminal
-n$krimson$crimson
+n$krimson$crimson#colours
 n$kriptokristalino$cryptocrystalline (geology)
-n$Kripton$Krypton (Kr)
+n$Kripton$Krypton (Kr)#chemistry
 n$kris$Malayan creese/kris
 n$krisis$crisis
 adj$kristal$glass
@@ -15642,9 +15640,9 @@ n$kubtangas$subset
 n$kubung-kubong$mosquito net (type of -)
 v$kubungan$cover the head (with something) as protection against sun/rain
 n$kubyerta$deck (ship)
-n$kubyertos$cutlery
+n$kubyertos$cutlery#kitchen
 adj$kudkod$grated
-n$kudkuran$grater
+n$kudkuran$grater#kitchen
 v$kudkurin$grate (culinary)
 n$kudlis$line
 n$kudlit$apostrophe
@@ -15750,7 +15748,7 @@ v$kulilingin$tinkle
 adj$kulimlim$dark
 n$kulindang$belt for a machine
 adj$kuliro$sounding dull as counterfeit coins
-n$kulisap$insect
+n$kulisap$flying insect#nature
 n$kulisaw$school of fish in motion
 n$kuliti$sty (swelling on the edge of eyelids)
 n$kulitis$common weed
@@ -15781,7 +15779,7 @@ v$kultihin$tan
 n$kulto$cult
 n$kultura$culture
 adj$kultural$cultural
-n$kuluban$pressure cooker
+n$kuluban$pressure cooker#kitchen
 n$kulubong$wrap
 n$kulubot$wrinkle
 comp$kulubot ng noo$wrinkles on the forehead
@@ -16073,7 +16071,7 @@ v$kumutsaron$ladle
 v$kumutya$mock
 v$kumuwenta$reckon
 v$kumuyumos$crumple, press, crush, bruise in the hands
-n$kuna$cradle
+n$kuna$cradle#bedroom
 v$kunan$get from
 v$kunan ng dugo$take blood from
 v$kunang muli$a picture, film)
@@ -16200,7 +16198,7 @@ n$kursunado$impulse of the heart
 adj$kurta$curdled
 adj$kurtado$curdled
 n$kurtapluma$knife (usually a folding knife)
-n$kurtina$curtain
+n$kurtina$curtain#bedroom
 v$kurtinahan$drape
 n$kurtinahin$drapery
 n$kuru-kuro$viewpoint
@@ -16222,7 +16220,7 @@ v$kusain$do deliberately
 n$kusang-gawa$voluntary act
 adj$kusang-loob$deliberate
 adv$kusang-loob$willingly
-n$kusina$kitchen
+n$kusina$kitchen#bathroom
 n$kusinera$female cook
 n$kusinero$male cook
 n$kusing$former coin
@@ -16272,20 +16270,20 @@ n$kutob$pulsation
 n$kutog$throb
 n$kuton$fold
 n$kutos$strike or blow on the head with the knuckles of the hand
-n$kutsara$spoon
+n$kutsara$spoon#kitchen
 n$kutsara$trowel
 v$kutsarahin$spoon
 comp$kutsarang puno$spoonful
-n$kutsarita$teaspoon
+n$kutsarita$teaspoon#kitchen
 n$kutsarita$decorative plant
 n$kutsaron$ladle
 v$kutsarunin$ladle out
 n$kutsero$driver of horse-drawn vehicle
 n$kutsetes$hook and eye
 n$kutsi-kutsi$silly excuse
-n$kutsilyo$table or kitchen knife
+n$kutsilyo$table or kitchen knife#kitchen
 comp$kutsilyong panghiwa$carving knife
-n$kutson$mattress
+n$kutson$mattress#bedroom
 n$kutsukutso$idle talk
 v$kutuban$have a premonition or presentiment
 v$kutuhin$be lousy
@@ -16336,7 +16334,7 @@ n$kuwarto$room
 n$kuwartong-paupahan$lodgings
 n$kuwartong-tulugan$bedroom
 n$kuwatro$four#numbers
-n$kuweba$cave
+n$kuweba$cave#geography
 n$kuwekong$pimp
 n$kuwelyo$collar (on clothing)
 n$kuwengka$basin#geography
@@ -16386,13 +16384,13 @@ n$laang-salapi$fund
 n$laba$increase
 n$laba$washing of clothes
 n$laba$lava from a volcano
-n$lababo$washbasin
+n$lababo$washbasin#bathroom
 n$labada$clothes to be washed
 n$labada$washed clothes
 adj$labag$against
 comp$labag sa batas$illicit
 v$labagin$go against
-n$labaha$razor
+n$labaha$razor#bathroom
 n$labahan$place or utensils for washing clothes
 n$labahin$clothes to be washed
 n$labahita$species of fish (blue-lined surgeon fish)
@@ -16841,7 +16839,7 @@ comp$lampas sa taning$overdue
 adj$lampas-lampasan$through and through
 adj$lampas-tao$taller than the average height
 v$lampasan$pass over
-n$lampaso$mop
+n$lampaso$mop#kitchen
 v$lampasuhin$mop
 n$lampik$wattle of roosters
 n$lampin$baby's diaper or swaddling clothes
@@ -16875,7 +16873,7 @@ n$lana$species of small banana
 adj$lanap$extensively inundated
 n$lanaw$pool
 adj$lanay$spread out as liquid spilt on a surface
-n$landas$path
+n$landas$path#nature
 n$landas$slipperiness
 n$landay$shallowness of concavity of plates/dishes
 adj$landi$sensuous
@@ -17036,7 +17034,7 @@ comp$larangan ng digmaan$battlefield
 n$laraw$figure
 n$larawan$effigy
 n$larawan$icon
-n$larawan$picture
+n$larawan$picture#bedroom
 comp$larawang inukit o lilok$carving
 n$larawang-buhay$living picture
 n$larba$larva
@@ -17119,7 +17117,7 @@ v$latiguhin$whip
 n$latik$scum of coconut milk or meat after cooking
 n$latiko$whip
 n$Latin$Latin (language)
-n$latitud$latitude (distance north-south)
+n$latitud$latitude#geography
 v$latlatin$examine meticulously
 n$latok$provisional low table for kitchen use
 n$latundan$variety of banana
@@ -17178,7 +17176,7 @@ intrj$Layas!$Go away! Depart!
 v$layasan$abandon someone by running away
 adj$layaw$pampered
 n$layaw$freedom from parental control
-n$laybraryan$librarian
+n$laybraryan$librarian#occupations
 n$layko$layman
 adj$laylay$hanging
 n$laylayan$hem of a garment
@@ -17196,7 +17194,7 @@ v$layunin$have something for an objective
 n$layunin$intention
 n$laywan$species of honeybee
 n$lebadura$leaven
-n$lechon$barbecued pig#food
+n$lechon$barbecued pig#food & drinks
 n$ledyer$ledger
 n$leeg$neck#body
 comp$leeg ng damit$part of a garment that fits the neck (collar, neck)
@@ -17243,7 +17241,7 @@ n$letse-kondensada$condensed milk
 intrj$Letse!$exclamation of of disgust or anger
 n$letseplan$custard
 n$letson$barbecued pig
-n$letsugas$lettuce#food
+n$letsugas$lettuce#food & drinks
 n$leukemya$leukemia
 n$ley$Hawaiian lei
 n$ley$law
@@ -17430,7 +17428,7 @@ v$likumin$fold
 n$likuran$back#around town
 v$likutin$tamper with
 adj$likwad$dilatory
-n$lila$lilac or violet colour
+n$lila$lilac (colour)#colours
 n$lilik$blade of a sickle
 n$lilim$shade
 adj$lilima-limayon$always gallivanting about
@@ -17567,8 +17565,8 @@ n$linggista$linguist
 n$linggistika$linguistics
 n$linggit$smallness
 v$linggitan$make something very small or tiny
-n$Linggo$Sunday#days
-n$linggo$week#Time
+n$Linggo$Sunday#date & time
+n$linggo$week#date & time
 n$Linggo-de-Ramos$Palm Sunday
 adv$linggu-linggo$weekly
 adj$lingguhan$weekly
@@ -17624,7 +17622,7 @@ n$lintang-kati$slug (without a shell)
 n$lintik$lightning
 adj$lintog$swollen
 n$lintos$blisters on the feet or hands from friction
-n$linugaw$rice porridge#food
+n$linugaw$rice porridge#food & drinks
 n$linumot$variety of rice
 n$linya$line
 comp$linya ng telepono$telephone line
@@ -17723,9 +17721,9 @@ n$litograpia$lithography
 adj$litograpiko$lithographic
 n$litograpo$lithographer
 n$litograpya$lithography
-n$litrato$photograph
+n$litrato$photograph#living room
 v$litratuhan$take a photo of someone
-n$litro$litre (US:liter)
+n$litro$litre
 v$litruhin$measure by the liter
 n$litsiyas$lychees
 n$litson$roast pig (the whole pig)
@@ -17794,8 +17792,8 @@ n$lomo$loin
 n$lomo$back of a book which is still to be bound
 n$lona$canvas
 n$Londres$London
-n$longganisa$pork sausage
-n$longhitud$longitude (distance east-west)
+n$longganisa$pork sausage#food & drinks
+n$longhitud$longitude#geography
 adj$longhitudinal$longitudinal
 n$loob$gift
 n$loob$interior
@@ -18148,7 +18146,7 @@ n$lumo$feeling of deep sympathy for somone
 v$lumoko$fool
 v$lumoko$fool
 adj$lumon$very ripe but not yet spoilt (fruit)
-n$lumot$general name for all kinds of algae
+n$lumot$moss#nature
 n$lumpiya$Chinese dish
 adj$lumpo$paralyzed
 n$lumpok$sheaf, ready for threshing
@@ -18221,7 +18219,7 @@ v$lundagin$leap over
 n$lunday$canoe
 n$lundo$slack
 n$lunduyan$centre
-n$Lunes$Monday#days
+n$Lunes$Monday#date & time
 n$lungad$vomiting of milk or food by babies
 adj$lungangi$with head bent down on the chest
 adj$lungas$broken off (teeth)
@@ -18236,7 +18234,7 @@ adj$lungkag$large in size but not heavy
 n$lungkot$sadness
 n$lungos$cape
 n$lungoy$entreaty
-n$lungsod$city
+n$lungsod$city#around town
 adj$lungti$green
 adj$lungtian$somewhat green
 n$luningning$sparkle
@@ -18255,12 +18253,12 @@ v$lunurin$drown someone
 adj$luom$enclosed to keep the air out
 n$luop$fumigation
 adj$luoy$withered
-n$lupa$soil
+n$lupa$soil#in the yard
 n$lupa$groundfloor
-n$lupa$landed property
+n$lupa$land
 n$lupa sa ibabaw$topsoil
 adj$lupagi$sitting on the haunches on the floor
-n$lupain$landed property
+n$lupain$land (property)#geography
 comp$lupaing-bayan$domain
 adj$lupainin$territorial
 comp$lupaining dagatan$territorial waters
@@ -18881,7 +18879,7 @@ n$maestra$female teacher
 n$maestro$male teacher
 v$mag-aabla$talk too much
 n$mag-aaklas$one who strikes (in work)
-n$mag-aalahas$jeweller (US: jeweler) (dealer in jewellery)
+n$mag-aalahas$jeweler#occupations
 v$mag-aalis$go away frequently or repeatedly
 v$mag-aaral$study continuously
 n$mag-aaral$student
@@ -22038,7 +22036,7 @@ v$magsarilinan$act independently of each other
 v$magsasabad$interrupt repeatedly
 n$magsasabong$one who is fond of cockfighting
 v$magsasagot$answer back boldly or repeatedly
-n$magsasaka$farmer
+n$magsasaka$farmer#occupations
 n$magsasakate$planter or dealer in grass for fodder
 v$magsasakyan$ride in or on a vehicle
 n$magsasapatos$shoemaker
@@ -22888,7 +22886,7 @@ v$maiplano$plan
 v$maipon$collect
 adj$mairog$fond
 adj$mairugin$affectionate
-n$mais$corn#food
+n$mais$corn#food & drinks
 v$maisagawa$be able to be implemented or done
 v$maisahan$say or do something that betters someone else
 adj$maisasagawa$feasible
@@ -23309,7 +23307,7 @@ v$makasundo$get along with
 v$makasunok$cloy
 v$makasuwato$get on well with another
 v$makasuya$become distasteful because of too much
-n$makata$poet
+n$makata$poet#occupations
 v$makataas$precede
 v$makatabla$tie
 v$makatagal$be able to endure
@@ -23952,8 +23950,8 @@ v$malumpo$be or become paralyzed or crippled
 v$malunasan$remedy
 v$malundag$clear
 adj$malundo$slack
-n$malunggay$horseradish#food
-adj$malungkot$cast down
+n$malunggay$horseradish#food & drinks
+adj$malungkot$sad#emotions
 adj$malungkutin$prone to be melancholic, sad
 adj$maluningning$sparkling
 v$malunisan$have an unpleasant exprerience on a Monday, or wrong start of the day
@@ -24032,14 +24030,14 @@ v$mamalusbos$be spilled (grains), due to breakage
 n$mamam$word used by babies to mean "drink"
 n$mamamahagi$distributor
 n$mamamahala$manager
-n$mamamahayag$newspaperman
+n$mamamahayag$journalist#occupations
 n$mamamaisan$parents and relatives of the bridegroom
 n$mamamakya$wearers of wooden shoes (hence also belonging to a lower social level)
 n$mamamakyaw$wholesale buyer
 n$mamamakyot$defrauder
 n$mamamalakaya$deep-sea fisherman
 n$mamamalit$barterer (person who barters)
-n$mamamana$archer
+n$mamamana$archer~
 n$mamamangka$boatman
 n$mamamansing$person who fishes with hook and line
 n$mamamaril$hunter
@@ -24096,7 +24094,7 @@ v$mamatnugot$manage
 v$mamato$throw stones or other things at people
 n$mamay$wet nurse
 n$mamay$grandfather
-adj$mamaya$soon#Time
+adj$mamaya$soon#date & time
 v$mamayabat$spawn to fish
 v$mamayagpag$flap
 v$mamayan$live or reside in a town
@@ -24371,7 +24369,7 @@ n$mananalakay$attacker
 n$mananalambuhay$biographer
 n$mananalasa$attacker
 n$mananalaysay$historian
-n$mananaliksik$researcher
+n$mananaliksik$researcher#occupations
 n$mananalo$frequent winner
 n$mananalumpati$speaker
 n$manananggol$defender
@@ -24379,8 +24377,8 @@ n$manananim$planter
 n$manananso$swindler
 n$mananatsa$faultfinder
 n$mananawad$bidder (at an auction)
-n$mananayaw$professional dancer
-n$mananaysay$essayist
+n$mananayaw$dancer#occupations
+n$mananaysay$essayist#occupations
 n$manang$devotee
 v$manangga$defend
 v$mananggap$admit the truth
@@ -24452,7 +24450,7 @@ v$maneobra$jockey
 n$mang-aabat$highwayman
 n$mang-aamak$tamer of wild animals
 n$mang-aapi$one who offends or hurts others' feelings
-n$mang-aawit$singer
+n$mang-aawit$singer#occupations
 v$mang-aba$disdain
 v$mang-abala$bother or trouble somebody
 v$mang-abang$stand near people who are eating hoping to be given some food
@@ -24603,7 +24601,7 @@ v$mangaya$be domineering
 v$mangayayat$become emaciated
 v$mangayupapa$humbly submit
 n$mangbabasa$reader
-n$mangga$mango#food
+n$mangga$mango#food & drinks
 n$manggagabot$one who uproots (grass, weeds)
 v$manggagad$mimic or imitate someone
 n$manggagaga$usurper
@@ -24729,7 +24727,7 @@ n$mangingibig$beau
 n$mangingikil$extortionist
 n$mangingilak$one who collects contributions
 n$mangingilalim$underground guerilla [not common]
-n$mangingisda$fisherman
+n$mangingisda$fisherman#occupations
 n$mangingitlog$hen that is a good layer
 v$manginig$tremble
 v$mangipot$become narrower
@@ -24744,7 +24742,7 @@ v$mangitlog$lay eggs
 n$mangkakalot$stripteaser in a show
 v$mangkaya$be domineering
 n$mangko$maimed hand
-n$mangkok$big bowl or saucer
+n$mangkok$bowl#kitchen
 n$mangkukulam$witch
 n$manglilingo$assassin
 adj$mangmang$delirious because of high fever
@@ -24867,7 +24865,7 @@ n$maninilip$peeper
 n$maniningil$bill collector
 n$maninipa$kicker (said of horses)
 n$maninipnay$mathematical worker
-n$maninisid$diver
+n$maninisid$diver#occupations
 n$maniniste$joker
 v$maninta$love
 n$maniobra$manoeuvre (US: maneuver)
@@ -24966,19 +24964,19 @@ v$manraket$racketeer
 n$manraraket$racketeer
 n$mansa$stain
 adj$mansahin$easily stained or soiled
-n$mansanas$apple#food
+n$mansanas$apple#food & drinks
 n$mansanilya$species of herb with medical properties
 n$mansera$plow-handle
 adj$manso$tame
 v$mansuhin$tame (e.g. animals)
 n$manta$woollen (US: woolen) blanket
 intrj$Mantak$just think of that!
-n$mantekado$French vanilla ice cream#food
+n$mantekado$French vanilla ice cream#food & drinks
 n$mantel$tablecloth
 v$mantelan$put a cloth on a table
 n$mantensiyon$maintenance
 n$mantika$lard
-n$mantikilya$butter#food
+n$mantikilya$butter#food & drinks
 v$mantikilyahan$put butter on
 n$mantilya$veil for the head
 n$mantini$subsistence
@@ -25039,7 +25037,7 @@ n$manunuklas$explorer
 n$manunukso$person fond of joking others
 n$manunula$poet
 n$manunulad$imitator
-n$manunulat$writer
+n$manunulat$writer#occupations
 n$manunuligsa$one who attacks others in speech/writing
 n$manunulsi$person who darns or mends clothes
 n$manunulsol$agitator
@@ -25557,7 +25555,7 @@ v$mapaurong$be repulsed
 v$mapautal-utal$falter
 v$mapawaglit$be misplaced
 v$mapawi$be blotted out (of memory)
-v$mapawi$clouds)
+v$mapawi$clouds~
 adj$mapawis$sweaty
 adj$mapawisin$sweating easily
 adj$mapayapa$peaceful
@@ -25721,7 +25719,7 @@ v$marimarim$feel disgust or loathing
 n$marinero$sailor
 adj$maringal$glorious
 v$marinig$hear
-n$marino$mariner
+n$marino$sailor#occupations
 n$mariposa$butterfly#animals
 n$mariskal$marshall
 adj$marisko$risky
@@ -25732,10 +25730,10 @@ v$markahan$mark
 n$marko$frame or case (for doors, pictures)
 n$marmol$marble
 n$marpil$ivory
-n$Marso$March#months
+n$Marso$March#date & time
 adj$marsyal$martial
 n$Marte$Mars (the planet) Mars (Roman God of war)
-n$Martes$Tuesday#days
+n$Martes$Tuesday#date & time
 n$martilyo$hammer
 comp$martilyo ng baril$hammer of a gun
 v$martilyuhin$hammer
@@ -25934,7 +25932,7 @@ v$masawata$obstruct
 v$masaway$be able to restrain someone from continuing
 v$masawi$meet with misfortunes
 v$masawsaw$be dipped in water, liquid
-adj$masaya$cheerful
+adj$masaya$cheerful#emotions
 adv$masaya$merrily
 v$masayad$happen to drag on the ground, floor
 v$masayahan$be gladdened
@@ -26229,7 +26227,7 @@ adj$matayangkad$tall
 adj$matayog$elevated
 v$matekas$be swindled
 n$matematika$mathematics
-n$matematiko$mathematician
+n$matematiko$mathematician#occupations
 v$matepok$be victimized, as by a goon [slang]
 n$materya$matter
 adj$materyal$material
@@ -26678,7 +26676,7 @@ n$maylikha$person who creates
 n$Maylikha, Ang -$The Creator
 n$maylupa$landowner
 n$Maynila$Manila (capital of the Philippines)
-n$Mayo$May#months
+n$Mayo$May#date & time
 n$mayonesa$mayonnaise dressing
 n$mayor$elder
 n$mayor$mayor of a town or city
@@ -26707,8 +26705,6 @@ n$medida$tape measure
 n$medikasyon$medication
 n$medikilyo$herbalist
 n$mediko$physician
-comp$medikong-laway$faith healer using saliva in curing
-n$medikong-tapal$quack doctor
 n$medisina$medicine
 n$meditasyon$meditation
 n$medley$medley (piece of music)
@@ -26730,12 +26726,12 @@ n$meil$mail
 n$mekanik$mechanic
 n$mekanika$mechanics
 adj$mekanikal$mechanical
-n$mekaniko$mechanic
+n$mekaniko$mechanic#occupations
 adj$mekanisado$mechanized
 n$mekanismo$mechanism
 v$mekapan$make up
 n$melodia$melody
-n$melokoton$peach#food
+n$melokoton$peach#food & drinks
 expr$meme$said to children: sleep!
 expr$memeng$said to children: sleep!
 n$memo$memorandum
@@ -26768,7 +26764,7 @@ n$merito$merit
 adj$meritoryo$meritorious
 n$meriyenda$afternoon tea
 n$merkader$merchant
-n$merkado$market#around town
+n$merkado$market
 n$merkansia$merchandise
 n$merkuryo$mercury (Hg)
 n$mersenarya$mercenary
@@ -26858,7 +26854,7 @@ n$minatamis$fruit preserved in syrup
 adj$minatamisan$candied
 n$mineralisasiyon$mineralization
 n$mineralohiya$mineralogy (geology)
-n$minero$miner
+n$minero$miner#occupations
 adj$mingkal$full of milk (breast of nursing mother)
 n$miniature$miniature
 adj$minimithi$cherished
@@ -26880,8 +26876,8 @@ adj$minumutya$beloved
 adj$minus-minos$somewhat demented
 n$minuskula$small letter
 n$minuta$minutes of a meeting
-n$minutero$minute hand of a watch or clock
-n$minuto$minute#Time
+n$minutero$minute hand of a watch or clock#date & time
+n$minuto$minute#date & time
 n$minyatur$miniature
 n$minyatura$miniature
 n$mira$myrrh
@@ -26938,7 +26934,7 @@ n$mitsero$burner of a stove
 n$mityoro$meteor
 n$miyembro$member
 adj$miyentras$while
-n$Miyerkules$Wednesday#days
+n$Miyerkules$Wednesday#date & time
 comp$Miyerkules ng abo$Ash Wednesday
 comp$Miyerkules ng abo$Ash Wednesday
 comp$Miyerkules-de-Senisa$Ash Wednesday
@@ -26972,7 +26968,7 @@ n$monarkia$monarchy
 n$monarkiya$monarchy
 n$monasilyo$acolyte
 n$monasteryo$monastery
-n$mongha$nun
+n$mongha$nunmonument
 n$monghe$monk
 n$monopolyo$monopoly
 n$monsenyor$monsignor
@@ -26980,7 +26976,7 @@ n$monsinyor$monsignor
 n$monsonayt$monzonite (geology)
 n$montadura$setting of jewels or gems
 n$monte$card game
-n$monumento$monument
+n$monumento$monument#around town
 n$Mora$Moor
 n$moral$morals
 n$moralidad$morality
@@ -27001,6 +26997,7 @@ n$mortuwaryo$funeral parlor
 n$mortwaryo$funeral parlor
 n$mosaik$mosaic
 n$mosaiko$mosaic
+n$moske$mosque#around town
 n$moskitero$mosquito net
 n$mosyon$motion
 n$motibo$motive
@@ -27144,9 +27141,10 @@ n$musa$muse (source of inspiration)
 n$musang$wild cat
 adj$musangsang$open (flower bud)
 n$muselina$muslin cloth
-n$museo$museum
+n$museo$museum#around town
 n$musika$music
 adj$musikal$musical
+n$musikero$musician#occupations
 n$musiko$musician
 n$muskatel$muscatel wine
 n$muskitero$mosquito net
@@ -27658,7 +27656,7 @@ v$nakatatakot$dreadful
 adj$nakatatanda$elder
 v$nakatataranta$stunning
 adj$nakatayo$situated
-adj$nakatibong$a roof or cliff)
+adj$nakatibong$a roof or cliff
 adj$nakatigda$on tiptoe
 adj$nakatiklop$folded
 adj$nakatikwas$tilted
@@ -27953,6 +27951,7 @@ n$naptalin$naphthalene
 adj$napugnaw$completely destroyed or razed fy fire
 adj$napuksa$exterminated
 n$nara$narra tree (Pterocarpus indicus)
+n$narangha$orange (Colour)#colours
 adj$naranghada$orange-coloured
 adj$naranghado$orange-coloured
 n$naranghita$species of orange tree and its fruit
@@ -27969,8 +27968,8 @@ adj$narkotiko$narcotic(s)
 gram$naron$is there
 gram$naroon$is there
 gram$naroroon$is there
-n$nars$nurse
-v$narsan$nurse (somebody)
+n$nars$nurse#occupations
+v$narsan$to nurse
 n$narseri$nursery
 n$narsing$career of nursing
 gram$nasa$is/are there in
@@ -27991,7 +27990,7 @@ adj$nasa tono$harmonious
 adv$nasaan$whereabouts
 n$nasab$movement of the jaws of animals when eating
 n$nasagip$salvage
-v$nasain$wish
+v$nasain$to wish
 adj$nasaktan$affected
 n$Nasareno$Nazarene (person from Nasareth)
 n$nasasakdal$defendant (legal)
@@ -28057,8 +28056,8 @@ adj$nawawari$discernible
 n$nawnaw$taking root
 n$naylon$nylon
 n$Nayobyum$Niobium (Nb)
-n$nayon$village
-n$nayt klab$nightclub
+n$nayon$village#around town
+n$nayt klab$nightclub#around town
 n$naytgaun$nightgown
 n$nebera$ice box
 n$neblina$fog
@@ -28068,8 +28067,6 @@ n$negatibo$film negative
 n$negosyante$businessman
 n$negosyo$business
 v$negosyohin$negotiate some business deal
-n$Negra$black woman
-n$Negrito$dwarf Negro of the Philippine mountains
 n$negro$black (colour/color)
 n$nektar$nectar
 n$Nene$affectionate term of addressing small girls
@@ -28155,7 +28152,7 @@ n$ngayaw$act of refusing to submit to
 n$ngayngay$continuous talk in a monotone
 n$ngayngay$the act of gnaw or grind into pieces
 v$ngayngayin$gnaw or grind into pieces
-adv$ngayon$now#Time
+adv$ngayon$now#date & time
 n$ngayupapa$humbling oneself
 n$ngibi$pursing of the lips by a child before crying
 n$ngibit$twisting of the mouth
@@ -28325,7 +28322,7 @@ pron$niya$postpositive of "kaniya": his/hers/its
 adj$niyan$of that
 adj$niyaon$of that to something far from all)
 adj$niyari$of this (close to the speaker)
-n$niyebe$snow
+n$niyebe$snow#nature
 n$niyog$coconut palm
 n$niyog na makapuno$species of coconut with thick and delicious meat
 n$niyomatiks$pneumatics
@@ -28338,7 +28335,7 @@ n$nobena$special prayer(s) for nine days
 n$nobisya$novice in a religious congregation
 n$nobisyado$novitiate (trial period in religous order)
 n$nobya$fiancee
-n$Nobyembre$November#months
+n$Nobyembre$November#date & time
 n$nobyo$fiance
 adj$nombrado$appointed
 v$nombrahan$appoint
@@ -28476,7 +28473,7 @@ n$oksihen$Oxygen#chemistry
 n$oksiheno$oxygen#chemistry
 adj$oktaba$eighth
 adj$oktabo$eighth
-n$oktubre$October#months
+n$oktubre$October#date & time
 n$oktupos$octopus#animals
 n$okulista$oculist
 n$okultismo$occultism
@@ -28533,7 +28530,7 @@ n$opsiyon$option
 n$opsyon$option
 n$optalmologo$ophthalmologist
 n$optalmolohia$ophthalmology
-n$optiko$optician
+n$optiko$optician#occupations
 n$optimista$optimist
 n$optisyan$optician
 n$optometra$optometrist
@@ -28542,10 +28539,10 @@ n$opyum$opium
 n$orador$orator
 n$orakulo$oracle
 n$oranggutang$orang-outang
-n$oras$hour#Time
+n$oras$hour#date & time
 adv$oras-oras$hourly
-v$orasan$time (measure the time of)
-n$orasan$timepiece
+v$orasan$to time (to measure time)
+n$orasan$clock#date & time
 n$orasyon$prayer
 v$orasyunan$chant magical words or a kind of prayer as casting a spell
 adj$oratorikal$oratorical
@@ -28595,7 +28592,7 @@ n$osa$bear
 n$Osmiyum$Osmium (Os)
 n$oso$bear#animals
 n$ospisyo$orphanage
-n$ospital$hospital
+n$ospital$hospital#around town
 n$ostentasyon$ostentation
 n$ostia$unconcentrated host or thin wafer of unleavened bread
 n$Ostia$the consecrated Host in the Mass and Holy Communion
@@ -28605,7 +28602,7 @@ adj$osyosera$unduly curious or prying on the actions of others
 adj$osyosero$unduly curious or prying on the actions of others
 adj$osyoso$watching
 n$otel$hotel#around town
-n$otmil$oatmeal#food
+n$otmil$oatmeal#food & drinks
 n$otomatik$press button
 adj$otomatiko$automatic
 n$otsenta$eighty (80)
@@ -28664,7 +28661,7 @@ n$paanyaya$invitation
 n$paanyaya$malicious or injurious act
 v$paapawin$cause to be flooded or inundated
 v$paaralan$get someone to study
-n$paaralan$school
+n$paaralan$school#around town
 comp$paaralang bayan$public sector school (UK)
 comp$paaralang mataas$high school
 comp$paaralang pribado$private school
@@ -28772,7 +28769,7 @@ n$paborita$pet
 n$paboritismo$favouritism (US: favoritism)
 n$paborito$pet
 comp$paboritong hayop$pet
-n$pabrika$factory
+n$pabrika$factory#around town
 n$pabrikante$manufacturer
 v$pabugahin$expel
 v$pabuhusan$have something poured on a person
@@ -29136,7 +29133,7 @@ n$pag-ukang$slow bodily movements
 n$pag-ukay$crawling motion of a snake
 n$pag-ukilkil$persistent inquiring or talking about something
 v$pag-ukul-ukulin$apportion properly according to some criteria
-v$pag-ukulan$time)
+v$pag-ukulan$time
 n$pag-ukyabit$scrambling up a wall, tree
 n$pag-ulit$repetition
 n$pag-ulok$coaxing
@@ -32991,7 +32988,7 @@ n$pakyaw$wholesale buying
 n$pakyawan$wholesale
 v$pakyawin$buy wholesale
 n$pal-am$notch on the trunk of a coconut tree
-n$pala$shovel
+n$pala$shovel#in the yard
 intrj$pala$So! (Ikaw pala, So! it's you!)
 n$pala$grace
 n$pala-palagay$opinion
@@ -33183,7 +33180,7 @@ v$palataan$make something soft in consistency
 v$palatain$make something soft in consistency
 n$palatak$clacking of the tongue
 n$palatak$sowing seed by hand
-n$palatandaan$landmark
+n$palatandaan$landmark#around town
 n$palatangkasan$algebra
 adj$palatanong$inquisitive
 n$palatanungan$questionnaire
@@ -33237,7 +33234,7 @@ n$paldias$brim of a hat
 n$paldiyas$brim of a hat
 n$paldo$bale
 v$palduhin$bale
-n$palengke$market
+n$palengke$market#around town
 n$paleontolohiya$paleontology (petro)
 n$paleosoko$Paleozoic (Cambrian Period)
 n$paleta$palette (used by artists)
@@ -33287,7 +33284,7 @@ adv$palikod$backward
 n$palikpik$fin of a fish
 adj$paliku-liko$serpentine
 v$palikuin$swing
-n$palikuran$toilet a public one)
+n$palikuran$toilet (public)#around town
 adj$palikwad-likwad$dilatory
 n$paliligo$bath
 n$palimbagan$printing shop
@@ -33390,7 +33387,7 @@ v$paluhurin$make someone kneel down
 v$paluin$beat
 n$palukso$river fish corral
 v$paluksuhin$cause to jump
-n$palumpong$scrub
+n$palumpong$shrub#nature
 n$palumpong$plants that grow from fallen seeds or from cuttings
 adj$palundag-lundag$jumpy
 n$palundagan$hurdle (framework in racing)
@@ -33521,7 +33518,7 @@ n$pamanli$something used for scalding
 n$pamansa$boasting
 n$pamansag$spreading of news
 n$pamansing$fishing tackle
-n$pamantasan$university
+n$pamantasan$university#around town
 n$pamantayan$standard
 n$pamantingin$broken pieces of chinaware
 n$pamantungan$standard
@@ -33884,8 +33881,8 @@ n$panabo$water scoop made of coconut shell
 n$panada$kind of meat pie
 n$panaderia$bakery
 n$panaderiya$bakery
-n$panadero$baker
-n$panaderya$bakery
+n$panadero$baker#occupations
+n$panaderya$bakery#around town
 n$panadirya$bakery
 n$panadiyok$dip net
 n$panadtad$chopping knife
@@ -33911,7 +33908,7 @@ n$panagpi$material used for patching
 n$panaguri$predicate)
 v$panagutan$assume responsibiity for
 v$panahanan$reside in
-n$panahon$time
+n$panahon$time#date & time
 comp$panahong heolohiko$geologic age
 comp$panahong hurasiko$jurassic age
 comp$panahong kambriyano$cambrian period (geology)
@@ -34066,7 +34063,7 @@ n$pandarayuhan$migration
 n$pandatig$material for lining
 n$pandaw$inspection of traps, corrals or snares
 v$pandawin$inspect traps, snares to see what has been caught
-n$panday$blacksmith
+n$panday$blacksmith#occupations
 n$panday-bakal$blacksmith
 n$panday-ginto$goldsmith
 n$panday-kaban$locksmith
@@ -34141,7 +34138,7 @@ adj$pang-isa$single
 n$pang-isa$singular]
 n$pang-itaas$blouse
 n$pang-iwak$wedge
-n$pang-iwang$toilet paper or some substitute
+n$pang-iwang$toilet paper#bathroom
 adj$pang-opisina$office
 n$pang-ugat$radical (mathematics)
 n$pang-ugnay$conjunction]
@@ -34231,7 +34228,7 @@ n$pangangayayat$emaciation
 n$pangangayupapa$act of self-humiliation
 n$panganib$danger
 v$panganiban$be careful about something or someone because of possible danger
-comp$panganlungan ng mga bapor$harbour (US: harbor)
+comp$panganlungan ng mga bapor$harbour
 n$panganorin$the high heavens beyond the clouds
 adj$panganto$corner
 n$panganyaya$harm
@@ -34776,7 +34773,7 @@ v$pansinin$pay attention to
 adj$pansinin$noticeable
 n$pansiper$fastener (anything that fastens)
 n$pansipit$rattrap (a kind of)
-n$pansit$noodles#food
+n$pansit$noodles#food & drinks
 n$pansitan$restaurant specializing in noodle dishes
 n$pansiteria$restaurant specializing in noodle dishes
 n$pansitirya$restaurant specializing in noodle dishes
@@ -34798,7 +34795,7 @@ n$pantalan$wooden or bamboo pier
 n$pantali$fastener (anything that fastens)
 n$pantalon$trousers
 adj$pantalumpati$rhetorical
-n$pantalya$lamp shade
+n$pantalya$lamp shade#bedroom
 n$pantambak$to soil, gravel, used for filling
 n$pantanda$retention
 adj$pantangi$occasional
@@ -35152,7 +35149,7 @@ n$parabola$parable
 n$parada$agricultural products, brought to town from farms to be sold wholesale
 n$parada$parade
 n$parada$parking
-n$paradahan$parking
+n$paradahan$parking lot#around town
 n$paradais$paradise
 adj$parado$parked
 n$paragala$tip for services rendered
@@ -35185,8 +35182,8 @@ n$paramisiyum$paramecium
 adj$paramit$supplied with clothing
 v$paramitan$get someone dressed (fully clothed)
 v$paramtan$get someone dressed (fully clothed)
-n$parang$meadow
-prep$parang$like a child)
+n$parang$meadow#geography
+prep$parang$like a child
 comp$parang ama$fatherly
 comp$parang anghel$angelic
 comp$parang baboy$piggish
@@ -35285,14 +35282,13 @@ n$paritadlong$rectangle (mathematics)
 intrj$Parito!$Come here!
 v$parituhan$come here
 n$pariugat$square root (mathematics)
-n$park$park (area for pleasure of the public)
-n$parke$park (area for pleasure of the public)
+n$parke$park#around town
 adj$parlamentaryo$parliamentary
 n$parlamento$parliament
 n$parlor$parlour (US: parlor)
 n$parluman$muse
 n$parmaseutika$pharmacist
-n$parmaseutiko$pharmacist
+n$parmaseutiko$pharmacist#occupations
 n$parmasiyutika$pharmacist
 n$parmasya$pharmacy
 n$parmasyutika$druggist
@@ -35600,7 +35596,7 @@ n$pasta$filling in a tooth
 v$pastahan$cover a wall with a plaster
 v$pastahan ang ngipin$fill a tooth
 n$pastel$pastel painting
-n$pastel$pie#food
+n$pastel$pie#food & drinks
 n$pasteleria$pastry
 n$pastelerya$pastry
 n$pastilyas$pastille
@@ -35652,7 +35648,7 @@ v$pataanan$allow
 adj$pataas$upward
 n$pataasan$kind of competition (to get the highest grades, points)
 v$pataasin$exalt
-n$pataba$fertilizer
+n$pataba$fertilizer#in the yard
 comp$pataba sa halaman$plant fertilizer
 v$patabaan$fertilize
 v$patabain$fatten
@@ -35748,7 +35744,7 @@ v$patasan$draw
 v$patasin$make a pile of things
 v$patatagin$entrench
 n$patatas$bad smell of dirty socks
-n$patatas$potato#food
+n$patatas$potato#food & drinks
 v$patatuhan$get tattooed
 n$pataw$ballast
 n$pataw$surcharge
@@ -36116,7 +36112,7 @@ n$payung-payungan$species of mushroom
 v$payungan$hold an umbrella over someone
 n$payupoy$wag of the tail
 n$pebre$sauce for grilled pig
-n$Pebrero$February#months
+n$Pebrero$February#date & time
 v$pedalan$provide with a pedal
 adj$pederal$federal
 n$pederasyon$federation
@@ -36172,7 +36168,7 @@ n$pera$money
 v$perahan$take advantage of someone's money by deceit
 n$perahan$bets in gambling
 v$perahin$convert a gift/payment into cash
-n$peras$pear#food
+n$peras$pear#food & drinks
 n$perdaya$mocking term for "daily expenses" unjustly collected by government officials
 n$perdible$safety pin
 n$perdiem$amount given for daily expenses while away from one's residence
@@ -36324,7 +36320,7 @@ n$pila$clay for making earthenware
 n$pila$line
 n$pila$small electric battery
 adj$pila$broken off (handle of jug)
-n$pilak$silver
+n$pilak$silver#colours
 comp$pilak sa mata$whitish film on the eye
 v$pilakan$cover with silver
 v$pilakin$make money out of something
@@ -36375,7 +36371,7 @@ comp$piling pagkain$dainty or choice kind of food
 v$pilingan$get beside or close to someone
 n$pilipig$immature rice grains lightly toasted and then pounded
 n$Pilipina$Filipina (female native of Philippines)
-n$Pilipinas$Philippines
+n$Pilipinas$Philippines#countries
 adj$Pilipino$Philippine
 n$Pilipino$citizen of the Philippines
 n$pilipisan$temple of the head
@@ -36395,7 +36391,7 @@ n$pilosopia$philosophy
 n$pilosopo$philosopher
 v$pilosopohin$philosophize
 n$pilote$pile (beam upright into the ground as support for constructions)
-n$piloto$pilot (for airplanes)
+n$piloto$pilot#occupations
 v$pilotohan$pilot
 adj$pilpil$compressed
 n$pilpil$refuse left by the tide, current or wind
@@ -36607,7 +36603,7 @@ adj$pintog$swollen
 n$pintog$swelling
 n$pinton$tall basket woven out of strips of bamboo (for storing rice)
 n$pintong$warehouse
-n$pintor$painter (painting houses)
+n$pintor$painter#occupations
 n$pintuan$doorway
 n$pintuho$showing admiration or respect
 v$pintuhuin$pay tribute of admiration, respect or affection
@@ -36685,7 +36681,7 @@ n$pisika$physics
 adj$pisikal$physical
 comp$pisikal kemistri$physical chemistry
 v$pisikan$splash someone or something
-n$pisiko$physicist
+n$pisiko$physicist#occupations
 n$pisil$squeeze pressure with the hand
 v$pisilin$squeeze with the hand
 n$pisiyologi$physiology
@@ -36757,9 +36753,9 @@ n$pitundaan$seven hundred
 n$piyador$guarantor
 v$piyaisin$attack the enemy in great numbers
 n$piyak$squawk (sudden cry of fowls when frightened)
-adj$piyambre$cold to food)
+adj$piyambre$cold to food
 n$piyambrera$tiered food container
-n$piyanista$pianist
+n$piyanista$pianist#occupations
 n$piyano$piano
 n$piyansa$bail (from jail)
 v$piyansahan$be bailed out (from arrest)
@@ -36819,8 +36815,8 @@ n$platilyo$pan of a balance
 n$platina$platen (mechanical)
 n$Platino$Platinum (Pt)
 n$Platinum$Platinum (Pt)
-n$platito$saucer
-n$plato$plate
+n$platito$saucer#kitchen
+n$plato$plate#kitchen
 n$plauta$flute (musical instrument)
 n$plawta$flute (musical instrument)
 n$playwud$plywood
@@ -36970,7 +36966,7 @@ n$potograp$photograph
 n$potograper$photographer
 n$potograpia$photography
 n$potograpiya$photography
-n$potograpo$photographer
+n$potograpo$photographer#occupations
 n$potosintesis$photosynthesis
 n$potospir$photoshere (astronomy)
 n$potostat$photostat machine
@@ -37008,7 +37004,7 @@ n$preparasyon$preparation
 n$prepasyo$preface
 n$preperensiya$preference
 n$preposisyon$preposition
-n$presas$strawberry#food
+n$presas$strawberry#food & drinks
 adj$presentado$presented
 n$presentasyon$presentation
 comp$preserba ng pagkain$preservative
@@ -37016,7 +37012,7 @@ adj$preserbado$preserved (food)
 v$preserbahin$preserve
 n$preserbatibo$preservative
 adj$presidensiyal$presidential
-n$presidente$president
+n$presidente$president#occupations
 n$presinto$precinct
 n$presiyon$pressure
 adj$presko$fresh
@@ -37050,13 +37046,13 @@ n$prinsa$dam
 n$prinsahan$provide with a dam
 n$prinsesa$princess
 n$prinsesita$young princess
-n$prinsipal$principal
+n$prinsipal$principal#occupations
 n$prinsipe$prince
 n$prinsipyo$beginning
 adj$prisintado$offered
-n$pritada$seasoned fried pork, meat or fish#food
+n$pritada$seasoned fried pork, meat or fish#food & drinks
 adj$prito$fried
-comp$pritong itlog$fried egg#food
+comp$pritong itlog$fried egg#food & drinks
 n$prituhan$frying pan
 v$prituhin$fry
 n$priyor$prior (superior in a monastery of men)
@@ -37080,7 +37076,7 @@ adj$prodigo$prodigal
 n$produksyon$production (something being produced)
 n$produkto$product
 n$prodyek$project
-n$prodyuser$producer
+n$prodyuser$producer#occupations
 n$programa$program (concert)
 n$progres$progress
 adj$progresibo$progressive
@@ -37097,7 +37093,7 @@ n$prontera$front
 n$propagandista$one who is spreading propaganda
 adj$propesa$having taken the vows of a religious order
 adj$propeso$having taken the vows of a religious order
-n$propesor$professor
+n$propesor$professor#occupations
 n$propesyon$profession (occupation )
 n$propesyonal$professional
 n$propeta$prophet
@@ -37134,7 +37130,7 @@ n$prueba$trial
 v$pruebahan$try or test something
 n$prun$prune (kind of dried plum)
 n$prusisyon$procession
-n$prutas$fruit#food
+n$prutas$fruit#food & drinks
 n$prutera$basket
 n$pruteria$fruit stall
 n$pruteriya$fruit stall
@@ -37174,7 +37170,7 @@ n$pugita$cuttlefish#animals
 adj$pugnaw$completely destroyed or razed fy fire
 v$pugnawin$raze
 n$pugo$quail#animals
-n$pugon$stove
+n$pugon$furnace#living room
 n$pugong$cord, used as a sack cord
 n$pugong$piece of cloth, knotted at the corners and used as head covering
 n$pugot$Negrito
@@ -37214,8 +37210,8 @@ v$pukulin$throw or hurl at someone
 n$pukyot$bee#animals
 n$pukyutan$bee
 n$pula$unfavorable criticism or comment
-n$pula$red colour
-comp$pula ng itlog$yolk (of an egg)#food
+n$pula$red#colours
+comp$pula ng itlog$yolk (of an egg)#food & drinks
 v$pulaan$criticise
 n$pulad$feather attached to the end of an arrow
 n$pulag$glare
@@ -37236,7 +37232,7 @@ comp$pulbos ng tabako$snuff (powdered tobacco)
 comp$pulbos sa mukha$face powder
 v$pulbuhan$powder
 n$pulbura$gunpowder
-n$pulburon$kind of cookie/biscuit#food
+n$pulburon$kind of cookie/biscuit#food & drinks
 v$pulbusan$powder
 v$pulbusin$pulverize
 n$pulea$pulley
@@ -37273,7 +37269,7 @@ n$Pulong-bituin$Milky Way
 adj$pulos$all of the same kind
 n$pulot$molasses
 n$pulot-gata$honeymoon
-n$pulot-pukyutan$honey from bees#food
+n$pulot-pukyutan$honey from bees#food & drinks
 n$pulot-sasa$nipa palm honey
 n$pulpito$pulpit
 adj$pulpol$blunt
@@ -37557,7 +37553,7 @@ n$punlo$bullet
 adj$puno$full
 n$puno$beginning
 n$puno$chief
-n$puno$tree
+n$puno$tree#nature
 comp$puno ng kahulugan$meaningful
 comp$puno ng ubas$grapevine
 comp$puno't dulo$beginning and end
@@ -37651,7 +37647,7 @@ n$puritana$puritan
 n$puritano$puritan
 n$purmas$unconsecrated host
 adj$puro$pure
-n$purok$district
+n$purok$district#around town
 n$purol$bluntness
 comp$purong tubig$soft water
 n$purpura$purple
@@ -37678,7 +37674,7 @@ n$puskart$pushcart
 n$puslit$spurt
 v$puslitan$escape secretly from
 n$puso$heart#body
-comp$puso ng mais$corncob#food
+comp$puso ng mais$corncob#food & drinks
 comp$puso sa puso$heart-to-heart (talk)
 n$pusod$navel)
 n$pusod$bodkin
@@ -37727,14 +37723,14 @@ n$putbol$football (soccer)
 n$puthaw$hatchet
 v$puthawin$make or do something with a hatchet
 n$puti$picking of flowers or fruits by cutting/pinching off from the stem
-n$puti$white
+n$puti$white#colours
 comp$puti ng itlog$albumen
 comp$puti ng mata$the white of the eye
 v$putian$colour with white colouring (US: coloring)
 adj$putian$whitish
 v$putihin$pick flowers/fruits by cutting/pinching off the stem
 v$putihin ang buhay$take the life of
-n$putik$mud
+n$putik$mud#nature
 n$putikan$muddy place
 adj$putikan$plastered with mud
 adj$puting-dilawan$yellowish-white
@@ -37789,7 +37785,7 @@ adv$puwersahan$by force
 v$puwersahin$force (physically, morally)
 n$puwerta$door
 adj$puwerte$strong
-n$puwerto$port
+n$puwerto$port#around town
 conj$puwes$therefore
 n$puwesto$place
 v$puwestuhan$take up a certain position
@@ -37920,6 +37916,7 @@ n$reduplikasyon$reduplication
 n$reeleksiyon$reelection
 n$reeleksyunista$one who takes re-election
 n$reenkarnasyon$reincarnation
+n$ref$refrigerator#kitchen
 n$regadera$sprinkler
 n$regadero$irrigation ditch
 n$regalo$gift
@@ -37989,7 +37986,7 @@ n$relihiyon$religion
 n$relihiyosa$member of a religious congregation
 n$relihiyoso$member of a religious congregation
 n$relikya$relic (something kept as a sacred memorial)
-n$relo$watch
+n$relo$watch#date & time
 n$reloheria$shop dealing in watches/clocks
 n$relohero$watchmaker (selling/repairing watches/clocks)
 n$relos$watch
@@ -38034,7 +38031,7 @@ n$repektoryo$refectory
 n$reperendum$referendum
 n$reperensiya$reference (direction of the attention)
 n$reperensya$reference (direction of the attention)
-n$reperi$referee
+n$reperi$referee#occupations
 v$reperihan$act as a referee
 n$repertoryo$repertoire
 n$repetisyon$repetition
@@ -38045,7 +38042,7 @@ adj$repinado$ground fine
 n$repinaria$refinery
 n$repineriya$refinery
 n$replektor$reflector
-n$repolyo$cabbage#food
+n$repolyo$cabbage#food & drinks
 n$reporm$reform
 n$reporma$reform
 adj$repormado$reformed
@@ -38247,7 +38244,7 @@ n$rosa$rose
 n$rosal$gardenia rose
 n$rosario$series of prayers called the "rosary"
 n$rosaryo$series of prayers called the "rosary"
-n$rosas$rose]
+n$rosas$rose
 n$roskas$thread (of a screw)
 v$roskasan$put threads on a screw
 n$roster$roster tasks)
@@ -38288,7 +38285,7 @@ n$rurok$acme
 n$Rusa$Russian
 n$Ruso$Russian
 n$rustika$paper cover of a book
-n$Rusya$Russia
+n$Rusya$Russia#countries
 n$Rusyan$Russian
 n$ruta$route
 n$Rutenyum$Ruthenium (Ru)
@@ -38413,7 +38410,7 @@ comp$saan naroroon$where is (are)
 adv$saanman$everywhere
 n$saba$species of banana
 n$sabad$interruption of the conversation of others
-n$Sabado$Saturday#days
+n$Sabado$Saturday#date & time
 n$sabak$blind attack on someone or something
 n$sabak$canyon#geography
 n$sabak$mortise on a post to hold a beam/rafter
@@ -38435,7 +38432,7 @@ v$sabat-sabatin$interweave together
 v$sabatan$weave a design into a fabric or matting
 n$sabatan$simultaneous butting into others conversation
 v$sabatin$cut across someone's path
-n$sabaw$broth#food
+n$sabaw$broth#food & drinks
 v$sabawan$provide with broth, as by adding water
 adj$sabay$at the same time
 adj$sabay-sabay$concurrent
@@ -38475,7 +38472,7 @@ n$sabo$large group
 n$sabog$scattering (seeds)
 adj$sabog$scattered
 comp$sabog ang laway$scattered when talking)
-n$sabon$soap
+n$sabon$soap#kitchen
 n$sabong$cockfight
 comp$sabong panlaba$laundry soap
 n$sabotahe$sabotage
@@ -38567,7 +38564,7 @@ n$sagi$momentary recollection of something long forgotten
 n$sagian$act of elbowing one another (in a crowd)
 n$sagiin$sideswipe intentionally
 n$sagimsim$presentiment
-n$saging$banana#food
+n$saging$banana#food & drinks
 n$saginsin$close weave
 n$sagip$salvage
 v$sagipin$save from any danger
@@ -38768,7 +38765,7 @@ n$sala-de-bisita$anteroom
 n$sala-sala$lattice
 adj$sala-salabat$crisscrossed
 v$sala-salahin$make bamboo slats into a railing, by interweaving
-n$salaan$sieve
+n$salaan$strainer#kitchen
 n$salab$dried leaf of the coconut palm
 n$salab$singeing
 adj$salab$singed
@@ -38812,14 +38809,14 @@ v$salalayan$provide with a support
 n$salalayan$mounting
 n$salamangka$magic
 v$salamangkahin$do tricks that require skill
-n$salamangkero$conjurer
+n$salamangkero$magician#occupations
 n$salamat$thanks (expression of gratitude)
 comp$salamat sa$thanks to
 intrj$Salamat!$Thank You!#conversation
 n$salambaw$kind of fishing net
 n$salami$salami (sausage)
 adj$salamin$made of glass
-n$salamin$mirror
+n$salamin$mirror#bathroom
 comp$salamin ng bintana$pane
 comp$salamin ng tainga$eardrum
 n$salaminan$glass in
@@ -38998,7 +38995,7 @@ comp$salpok ng tubig/alon$wash
 v$salpokhan$flavour (US: flavor) with sauce
 n$salpukan$crash
 v$salpukin$bump
-n$salsa$sauce#food
+n$salsa$sauce#food & drinks
 v$salsahin$make into sauce
 adj$salsal$dull at the end
 n$salta$leap
@@ -39154,7 +39151,7 @@ v$sampalukan$make sour by adding green tamarind fruits
 n$sampalukan$plantation of tamarind trees
 n$sampan$champagne (beverage)
 n$sampay$clothes (laundry) hanging on a line
-n$sampayan$clothesline
+n$sampayan$clothesline#in the yard
 n$sampilong$slap on the face
 v$sampilungin$slap someone on the face
 n$samporado$rice porridge with chocolate
@@ -39232,7 +39229,7 @@ n$sandigan$back of a seat
 v$sandigan$recline
 n$sandipa$length of both arms extended
 n$sando$sleeveless undershirt
-n$sandok$ladle made of coconut shell
+n$sandok$ladle#kitchen
 n$sandosena$one dozen
 n$sandugo$blood compact
 n$sanduguan$blood compact
@@ -39245,7 +39242,7 @@ adj$sang-ayon$disposed
 v$sang-ayunan$accede
 n$sang-isahan$union
 n$sang-usapan$agreement
-n$sanga$branch (tree)
+n$sanga$branch (tree)#nature
 comp$sanga ng sungay$prong
 adj$sanga-sanga$ramified
 n$sangab$inhalation of medicine or breathing in of smoke, air
@@ -39508,7 +39505,7 @@ adj$sarisari$assorted
 adj$sariwa$fresh
 v$sariwain$refresh
 adj$sariwang-sariwa$very fresh
-n$saro$jug
+n$saro$jug#kitchen
 n$sarol$patent leather
 n$sarsa$sauce
 n$sarsalida$bitter herb used as a vegetable
@@ -39623,7 +39620,7 @@ adj$segunda$second
 comp$segunda klase$second-class
 v$segundahan$second (a motion)
 adj$segundaryo$n secondary
-n$segundo$second (time)
+n$segundo$second (time)#date & time
 n$segundo kapitan$chief officer
 adj$segurado$insured
 n$seguridad$security
@@ -39652,7 +39649,7 @@ adj$sekular$secular
 n$sekularismo$secularism
 adj$sekundarya$secondary
 adj$sekundaryo$secondary
-n$sekundaryo$second hand of a watch
+n$sekundaryo$second hand of a watch#date & time
 n$sekwin$sequin
 n$sel$protoplasm
 n$selan$delicacy
@@ -39688,7 +39685,7 @@ n$seminarista$seminarian
 n$seminaryo$seminary
 n$semipaynal$semifinal
 n$senado$senate
-n$senador$senator
+n$senador$senator#occupations
 n$senadora$senator
 n$Senakulo$Passion Play
 n$senaryo$scenario
@@ -39717,7 +39714,7 @@ n$sentimetro$centimetre (US: centimeter)
 n$sentimos$centavo (monetary unit)
 n$sentimyento$sentiment
 adj$sentral$central
-n$sentro$centre (center)
+n$sentro$centre (of a city)#around town
 n$senyal$signal
 n$senyales$sign
 n$senyas$signal (give notice of something)
@@ -39732,16 +39729,16 @@ n$sepilyo$brush
 comp$sepilyo sa ngipin$toothbrush
 comp$sepilyo sa sapatos$shoe brush
 n$sepo$truss (beam connected to support a roof)
-n$Septiyembre$September#months
+n$Septiyembre$September#date & time
 n$sera$wax
 n$seradura$lock
 n$serb$serve (in tennis or the like)
 n$serbesa$beer
 n$serbesahan$brewery
 n$serbeseria$place where beer is sold
-n$serbidor$waiter
-n$serbidora$waitress
-n$serbilyeta$napkin
+n$serbidor$waiter#occupations
+n$serbidora$waitress#occupations
+n$serbilyeta$napkin#kitchen
 n$serbisyo$service
 n$serbisyo$chamber pot
 n$serbisyo sibil$civil service
@@ -39799,7 +39796,7 @@ n$siboy$the starting to simmer (of whatever is being boiled)
 n$sibsib$sunset
 n$sibul$spring (of water)
 v$sibulan$overgrow
-n$sibuyas$onion#food
+n$sibuyas$onion#food & drinks
 n$sidha$respect
 n$sidha$industriousness
 n$sidhi$intensity
@@ -39901,7 +39898,7 @@ adj$sikat$brilliant
 comp$sikat ng araw$suhshine
 n$sikatsikat$young crab
 n$sikayatri$psychiatry
-n$sikayatris$psychiatrist
+n$sikayatris$psychiatrist#occupations
 n$sikdo$vibration
 n$sikhay$zeal
 adj$siki$crowded
@@ -39929,7 +39926,7 @@ adj$sikmurain$subject to stomach trouble
 n$siko$elbow#body
 n$siko$sapodilla tree and fruit
 n$siko$nudge
-n$sikologo$psychologist
+n$sikologo$psychologist#occupations
 n$sikolohia$psychology
 adj$sikolohiko$psychological
 n$sikolohiya$psychology
@@ -39945,7 +39942,7 @@ n$sikulatihan$chocolate-making utensil
 n$sikwat$raising something wih a lever
 v$sikwatin$lift or push up with a lever
 n$sikyatria$psychiatry
-pron$sila$they#Pronouns
+pron$sila$they#pronouns
 pron$sila-sila$only among themselves
 n$silab$blaze
 n$silaba$syllable
@@ -40009,7 +40006,7 @@ adj$silsil$obtuse
 v$siluin$insnare
 n$silungan$shelter
 n$silweta$silhouette
-n$silya$chair
+n$silya$chair#living room
 n$silya$left turn
 comp$silyang may-gulong$wheelchair
 comp$silyang may-patungan ng kamay$arm chair
@@ -40028,7 +40025,7 @@ adj$simaron$wild
 n$simbad$act of plundering
 n$simbad$swooping down as a bird or prey does
 n$simbad$species of fish
-n$simbahan$church
+n$simbahan$church#around town
 n$simbal$cymbal (music)
 n$simbang-gabi$early morning or late evening Mass during the nine days before Christmas
 adj$simbergwensa$shameless
@@ -40080,7 +40077,7 @@ adj$sinadya$intended
 n$sinag$ray of light
 comp$sinag na bilog sa ulo$halo
 v$sinagan$beam on
-n$sinagoga$synagogue
+n$sinagoga$synagogue#around town
 n$sinaing$steamed rice (still in the pot)
 n$Sinakulo$Passion play
 n$sinala$flowerpot (kind of)
@@ -40105,7 +40102,7 @@ n$sindi$lighter
 v$sindihan$set fire to
 n$sindikato$syndicate
 n$sine$movie
-n$sinehan$cinema theatre
+n$sinehan$cinema theatre#around town
 n$sinelas$slippers
 v$sinelasan$put slippers on someone
 n$singa$act of blowing one's nose
@@ -40199,7 +40196,7 @@ n$sintak$jerky and shaking motion in separating milled rice from unmilled on a f
 n$sintas$ribbon
 comp$sintas ng sapatos$shoelace
 n$sintetik$synthetic product
-n$sintido$temple of the head
+n$sintido$temple of the head#body
 n$sintido komun$common sense
 n$sintido-kumun$common sense
 n$sinto$imbecility
@@ -40246,15 +40243,14 @@ n$sipi$copy
 v$sipiin$copy
 n$sipilis$syphilis
 adj$sipilitiko$syphilitic
-n$sipilyo$brush
-INPUT ERROR$sipilyo sa ngipin$comp toothbrush
+n$sipilyo$toothbrush#bathroom
 comp$sipilyo sa sapatos$shoe brush
 v$sipilyuhin$brush
 adj$siping$seated or lying down next to each other
 v$sipingan$put beside
 n$sipit$claw of a crab, lobster
 comp$sipit ng damit$clothespin
-comp$sipit ng Intsik$chopsticks
+comp$sipit ng Intsik$chopsticks#kitchen
 v$sipitin$nip as crabs do
 n$sipnayan$mathematics
 adj$sipnayanin$mathematical
@@ -40302,8 +40298,8 @@ n$sirkera$female acrobat
 n$sirkero$male acrobat
 n$sirkit$circuit
 n$sirkito$circuit
-n$sirko$circus
-n$Sirkonyum$zirconium (Zr)
+n$sirko$circus#around town
+n$Sirkonyum$zirconium (Zr)#chemistry
 n$sirkular$circular letter
 n$sirkulasyon$circulation
 n$sirkulo$circle
@@ -40311,7 +40307,7 @@ n$sirkumperensiya$circumference
 n$sirkumperensya$circumference
 n$sirok$spoon
 n$sirol$stirring something with the end of a stick
-n$siruhano$surgeon
+n$siruhano$surgeon#occupations
 n$siruhia$surgery
 n$sirup$syrup
 n$siryo$wax candle taper (long and thick)
@@ -40366,7 +40362,7 @@ n$siwang$slit
 n$siwi$corner of the mouth
 adj$siya$sufficient
 n$siya$the one
-pron$siya$he#Pronouns
+pron$siya$he#pronouns
 n$siya$saddle (for a horse)
 excl$Siya$Stop it! That's enough
 intrj$Siya$So!
@@ -40455,8 +40451,8 @@ n$soneto$sonnet
 n$soo$zoo
 n$soolohia$zoology
 n$soolohiya$zoology
-n$sopa$sofa
-n$sopas$soup#food
+n$sopa$sofa#living room
+n$sopas$soup#food & drinks
 n$sopera$soup bowl or tureen
 n$sopero$soup dish or plate
 n$sopomor$sophomore
@@ -40590,7 +40586,7 @@ n$sukgisan$geometry
 n$suki$old or regular customer or client
 n$sukiyaki$Japanese dish of food
 n$suklam$loathing
-n$suklay$comb
+n$suklay$comb#bathroom
 v$suklayan$comb someone's hair
 v$suklayin$comb or do the hair
 n$sukli$change given back when paying
@@ -40984,7 +40980,7 @@ v$sumuwag$butt/attack with the horns
 v$sumuway$violate or disobey an order or rule
 v$sumuyo$patronize
 n$sunda-sundaluhan$toy soldier
-n$sundalo$soldier
+n$sundalo$soldier#occupations
 v$sundan$follow someone
 n$sundang$dagger
 v$sundin$obey
@@ -41072,7 +41068,7 @@ v$supukin$be burnt to cinders
 n$suput-suputan$pocket
 n$sur$south
 n$suray$tottering
-n$surbetes$ice cream#food
+n$surbetes$ice cream#food & drinks
 n$suri$analysis
 n$suri$crease
 n$surian$institute
@@ -41277,7 +41273,7 @@ comp$tae ng bituin$shooting star
 n$taeb$high tide
 n$tag$tag (sticker fastened to something showing price)
 n$tag-araw$summer
-n$tag-init$summer
+n$tag-init$summer#nature
 adj$tag-op$touching end-to-end
 n$tag-ulan$rainy season
 n$taga$big cut or incision (made by a large knife)
@@ -41321,7 +41317,7 @@ v$tagain$cut, chop or hack with a big knife or the like
 n$tagak$cattle egret (species of bird)
 n$tagakantiyaw$barracker
 n$tagaktak$dripping of sweat
-n$tagal$time to length or duation)
+n$tagal$duration#date & time
 n$tagalabas$outsider
 adj$tagalalawigan$provincial (manners, dress)
 adv$tagalangit$heavenly
@@ -41366,7 +41362,7 @@ n$tagapagligtas$saviour
 n$tagapaglingkod$person who waits on another to help and serve
 n$tagapaglingkod$suite
 n$tagapaglinis$cleaner (person)
-n$tagapagluto$cook
+n$tagapagluto$cook#occupations
 n$tagapagmakinilya$typist
 n$tagapagmana$heir
 n$tagapagmasid$observer in official matters)
@@ -41456,7 +41452,7 @@ n$tagasakdal$lawyer who files a case in court on behalf of another
 n$tagasala$one whose duty is to do the filtering of something
 n$tagasalaysay$narrator
 n$tagasaliksik$researcher
-n$tagasalin$translator
+n$tagasalin$translator#occupations
 n$tagasaliw$accompanist
 n$tagasalo$catcher
 n$tagasalok$person whose job is to fetch water for others
@@ -41496,7 +41492,7 @@ n$tagatasa$assessor (one who estimates taxation)
 n$tagatawad$someone who does the bidding on behalf of another in auction
 n$tagatoy$tree that grows near the seashore
 n$tagatugis$pursuer
-n$tagatuos$accountant
+n$tagatuos$accountant#occupations
 n$tagatupad$executor
 n$tagatustos$supplier
 n$tagaugit$helmsman
@@ -41541,8 +41537,8 @@ n$tagisan$whetstone
 n$tagistis$dripping of liquid
 n$tagisukat$rhombus (mathematics)
 n$tagisuyo$obsequious person
-n$taglagas$autumn
-n$taglamig$cold season
+n$taglagas$autumn#nature
+n$taglamig$winter#nature
 adj$taglay$possessed
 v$taglayin$carry with
 n$tagni$piece of cloth joined to another end to end (side to side)
@@ -41564,7 +41560,7 @@ n$tagpo$meeting (of persons)
 n$tagpo$scene
 n$tagpuan$tryst (place of meeting)
 v$tagpuin$go to meet someone at an appointed place
-n$tagsibol$spring (when plants begin to grow)
+n$tagsibol$spring (season)#nature
 adj$tagtag$loosened
 n$tagtanim$planting season
 n$tagtuyot$long period of dry weather
@@ -41726,8 +41722,8 @@ n$taktika$tactics
 n$takuko$covering tor the head made of nipa leaves
 n$takukong$kind of helmet made of stripped palm leaves
 v$takungan$heel
-n$takupis$ear of corn#food
-n$takuri$teakettle
+n$takupis$ear of corn#food & drinks
+n$takuri$teakettle#kitchen
 v$takutin$frighten
 n$takuyan$basket (like harvesters carry on their hip or back)
 n$tala$species of herb
@@ -41780,7 +41776,7 @@ adj$talampak$flat
 n$talampakan$sole of the foot
 n$talampakan-libra$foot-pound
 v$talampakin$discuss something frankly and honestly
-n$talampas$mountain plateau#geography
+n$talampas$cliff#geography
 adj$talan$carried on the head
 n$talan$first attempts to talk intelligently (a child or when learning a foreign language)
 n$talandi$lascivious woman
@@ -41951,7 +41947,7 @@ adj$tamang-tama$absolutely correct
 comp$tamang-tama sa oras$timely
 n$tamaraw$carabao (wild)
 v$tamarin$be lazy
-n$tamarindo$tamarind#food
+n$tamarindo$tamarind#food & drinks
 v$tamasahin$enjoy wealth, good health
 n$tambaas$frank talk
 adj$tambad$exposed to view
@@ -41982,13 +41978,13 @@ n$tambo$reed
 n$tambobong$rice granary
 n$tambog$loud splash of something falling flat on water
 n$tambok$bulge
-n$tambol$drum (music)
-n$tambolero$drummer (music)
+n$tambol$drum#music
+n$tambolero$drummer
 n$tambubong$rice granary
 adj$tambugak$n big and fat to a woman)
 n$tambuko$handgrip behind a shield
 n$tambukulan$small deer
-n$tambulero$drummer (music)
+n$tambulero$drummer#occupations
 n$tambuli$native horn/bugle made out of horn
 v$tambulin$play (beat) the drum
 n$tambulog$elongated clam (species of)
@@ -42133,7 +42129,7 @@ n$tanod$guard
 n$tanod-gubat$ranger (person employed to guard the forest)
 n$tanong$question
 n$tansan$bottle cap
-n$tanso$bronze
+n$tanso$bronze#occupations
 n$Tanso$Copper#chemistry
 v$tansuin$swindle
 n$Tantalum$Tantalum#chemistry
@@ -42153,7 +42149,7 @@ intrj$Tao po$greeting of someone calling or knocking at the door
 adj$taob$upside down
 n$taog$high tide
 n$taol$disease of infants causing convulsions
-n$taon$year#Time
+n$taon$year#date & time
 n$taong$black veil used by one in mourning
 n$taong$metal or wooden container for water
 comp$taong bale-wala$a nobody
@@ -42205,7 +42201,7 @@ n$taong-mapanlinlang$sly and treacherous person
 n$taong-nayon$villager
 adj$taos$deep
 adj$taos-puso$heartfelt
-n$tapa$sliced dried meat#food
+n$tapa$sliced dried meat#food & drinks
 adj$tapa$cured by exposing to smoke (meat/fish)
 n$tapahan$smokehouse
 v$tapahin$jerk or dry meat in slices
@@ -42300,7 +42296,7 @@ n$tarugo$wooden peg for fastening a door or window
 v$tarukin$understand thoroughly
 n$tarundon$low and narrow bank of earth used as pathway betweeen rice paddies
 n$tasa$assessment (taxation)
-n$tasa$cup (coffee cup)
+n$tasa$mug#kitchen
 n$tasa$dieting
 n$tasa$sharpened point of a pencil
 n$Tasaday$tribe of cave dwellers living in Southern Cotobato (Mindanao)
@@ -42467,7 +42463,7 @@ n$tela$cloth
 n$tela-alambre$wire netting for fences
 n$tela-metalika$wire netting for fences
 n$telalambre$wire netting for fences
-n$telebisyon$television
+n$telebisyon$television#living room
 n$telegrama$telegram
 v$telegramahan$telegraph a certain person (locative stress)
 n$telegrapia$telegraphy
@@ -42476,14 +42472,14 @@ n$telegrapo$telegraph
 n$telekumunikasyon$telecommunication
 n$telepatia$telepathy
 n$teleponista$telephone operator
-n$telepono$telephone
+n$telepono$telephone#living room
 v$teleponohan$phone
 n$Teleryum$Tellurium (Te)
 n$teleskopyo$telescope
 n$telon$curtain
 n$tema$resentment]
 n$temperatura$temperature
-n$templo$temple
+n$templo$temple#around town
 adj$temporario$temporary
 adj$temporero$temporary
 n$tendensiya$tendency
@@ -42688,7 +42684,6 @@ n$tikop$circumference (mathematics)
 n$tikoy$sweet sticky Chinese cake
 n$tiktak$tick
 n$tiktik$tick
-n$tiktik$detective
 v$tiktikan$spy
 n$tiktok$tick
 adj$tikwas$tilted
@@ -42734,13 +42729,13 @@ n$timak$lowland or valley with a humid climate
 adj$timang$somewhat stupid
 n$timawa$freeman (one who was a slave before)
 n$timayok$cud
-n$timba$bucket
+n$timba$pail#in the yard
 v$timbaan$fill a large container with water by bailing from an open well
 n$timbabalak$species of lizard#animals
 v$timbain$scoop out with a pail or the like
 n$timbang$weight
 comp$timbang na pagkain$balanced diet
-n$timbangan$balance weight
+n$timbangan$scale#bathroom
 v$timbangan$give the equivalent
 v$timbangin$weight (find out the weight)
 n$timbanin$low footstool
@@ -42760,6 +42755,7 @@ adj$timbuwang$fallen flat on one's back with arms and legs outstretched
 adj$timbwang$fallen flat on one's back with arms and legs outstretched
 n$timig$humidity
 n$timog$south#geography
+n$timog-amerika$south america#countries
 comp$Timog polo$south geographic pole
 n$timog-kanluran$southwest#geography
 n$timog-silangan$southeast#geography
@@ -42797,7 +42793,7 @@ v$tinain$dye (clothes)
 adj$tinanga$eaten by moths
 adj$tinangay$carried away (by wind, current, bird of prey, animal or emotions)
 adj$tinapa$cured by exposure to smoke (meat/fish)
-n$tinapay$bread#food
+n$tinapay$bread#food & drinks
 n$tinapayan$bakery
 n$tinasa$tongs
 adv$tinatanggap$admittedly
@@ -42851,7 +42847,7 @@ v$tingnan$look at
 imp$Tingni$See! Look!
 n$tingting$midrib of palm leaves
 n$tiniblas$tenebrae
-n$tinidor$fork (for eating)
+n$tinidor$fork#kitchen
 v$tinidurin$use a fork
 n$tinig$voice
 n$tinik$thorn
@@ -43026,7 +43022,7 @@ adj$todos-todos$everybody
 n$toga$academic gown
 n$toge$mung bean sprout
 n$toka$one's turn to do something
-n$tokador$dresser
+n$tokador$dresser#bedroom
 v$tokahan$assign something to someone
 n$tokata$fanfare
 n$tokaya$namesake
@@ -43189,7 +43185,7 @@ n$trumpet$trumpet (music)
 n$trumpeta$trumpet (music)
 n$trumpo$humming top (toy)
 n$truss$bandage used for support of a hernia
-n$tsa$tea#food
+n$tsa$tea#food & drinks
 n$tsaketa$jacket
 n$tsaketilya$smoking jacket
 n$tsaleko$vest (sleeveless garment under the coat)
@@ -43219,7 +43215,7 @@ adj$tsikito$n small to a child)
 n$tsiko$sapodilla tree and fruit
 n$tsimenea$chimney
 n$tsiminea$funnel (of a ship)
-n$Tsina$China (the country)
+n$Tsina$China#countries
 n$tsinelas$slippers
 v$tsinelasan$put slippers on
 n$Tsinita$young Chinese girl
@@ -43234,7 +43230,7 @@ n$tsitsaro$pea
 n$tsitsaron$crispy and fried port rind
 n$tsok$chalk
 n$tsoke$collision
-n$tsokolate$chocolate#food
+n$tsokolate$chocolate#food & drinks
 n$tsoper$chauffeur
 n$tsoriso$pork sausage
 n$tsuper$chauffeur
@@ -43249,8 +43245,8 @@ n$tubal$dirt mixed with perspiration on clothes
 adj$tubalin$easily soiled or dirtied
 n$tubayan$species of sweet potato
 n$tuberiya$plumbing
-n$tubero$plumber
-n$tubig$water#food
+n$tubero$plumber#occupations
+n$tubig$water#food & drinks
 comp$tubig na maaaring inumin$potable water
 comp$tubig na mineral$mineral water
 comp$tubig na pakati$ebb-tide (ebb tide)
@@ -43802,7 +43798,7 @@ n$tuntungan$footing (place of support for the feet)
 v$tuntungan$step on
 n$tuntunin$rule
 n$tuntunin$bylaws
-n$tuod$stump of a tree
+n$tuod$stump of a tree#in the yard
 n$tuod$answer to a puzzle
 n$tuon$act of conspiring with one another
 n$tuon$pressure on something
@@ -43864,7 +43860,7 @@ n$turuturo$kind of fast-food restaurant
 adj$tusak$superabundant
 n$tusing$surfeit
 adj$tusing$satiated bacause of too much sweet food
-n$tusino$bacon#food
+n$tusino$bacon#food & drinks
 adj$tuso$subtle
 n$tusok$piercing
 adj$tustado$toasted (food)
@@ -43901,7 +43897,7 @@ v$tuusin$compute
 n$tuwa$joy
 adj$tuwad$bent down with head low and buttocks up
 n$tuwakang$species of Indian anchovy
-n$tuwalya$towel
+n$tuwalya$towel#bathroom
 n$tuwalyita$small towel
 adj$tuwang$supported on both sides
 adj$tuwang-tuwa$very cheerful
@@ -43952,7 +43948,7 @@ n$ubak$sheath of banana plant
 n$uban$gray hair
 v$ubanin$become gray or white (hair)
 adj$ubanin$gray-haired
-n$ubas$grape#food
+n$ubas$grape#food & drinks
 n$ubas$remains of "gugo" tree used for cleaning
 n$ubasan$vineyard
 n$ubi$species of yam with violet colour
@@ -44067,19 +44063,19 @@ v$ukupahan$occupy wholly
 n$ukupante$occupant
 n$ukupasyon$occupation
 v$ukyabitin$scramble
-n$ulag$moult (US: molt) of fowls
+n$ulag$moult of fowls
 n$ulak$spool
 n$ulakan$spool
 n$ulalo$grub found in tubers
 n$ulam$viand (eaten with rice)
 v$ulamin$make a dish (viand)
-n$ulan$rain
+n$ulan$rain#nature
 n$ulanag$nebula
 n$Ulandes$Dutch (person or language)
 n$Ulandesa$Dutch woman
 n$ulang$lobster#animals
 n$ulang-tikatik$light but continuous rain
-n$ulap$cloud
+n$ulap$cloud#nature
 n$ulapihan$scorpion
 n$ulapot$small bag
 n$ulasiman$species of herb used as amimal fodder
@@ -44250,7 +44246,7 @@ v$umalusitha$make a sworn statement
 v$umamak$tame
 v$umamba$make threatening gestures at someone
 v$umambag$contribute
-v$umambon$shower
+v$umambon$to shower
 v$umambun-ambon$drizzle on an off
 v$umamen$kiss the hand of an elder out of respect
 v$umamihan$blow from the northeast
@@ -44507,7 +44503,7 @@ adv$una-una$primarily
 v$unahan$forestall
 n$unahan$front#around town
 v$unahin$do first before anything else
-n$unan$pillow
+n$unan$pillow#bedroom
 n$unan-unanan$small pillow
 comp$Unang Ginang ng bansa$First Lady
 comp$unang kailangan$prerequisite
@@ -44582,7 +44578,7 @@ n$upa$rent
 v$upahan$lease
 adj$upahan$for hire
 n$upak$act of doing with gusto
-n$upak$bark of trees$nature
+n$upak$bark of trees#nature
 n$upakan$eat with relish
 v$upakan$husk
 gram$upan$in order to
@@ -44681,7 +44677,7 @@ v$utangan$be in debt to
 v$utangin$buy on credit
 adj$utas$completely finished
 v$utasin$completely finish
-n$utaw$soybean#food
+n$utaw$soybean#food & drinks
 adv$utay-utay$gradually
 v$utay-utayin$plod away
 n$utdo$lack of the required length/measure
@@ -45070,7 +45066,7 @@ n$waligwig$an animal's shaking of the body
 v$waligwigan$sprinkle with water (on clothes to be ironed)
 v$waling-bahala$disregard
 v$waling-halaga$pay too little attention to
-n$walis$broom
+n$walis$broom#in the yard
 comp$walis na tambo$broom mad of stalks of grass
 comp$walis na tingting$broom made of ribs from palm leaves
 v$walisan$sweep
