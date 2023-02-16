@@ -60,7 +60,7 @@ class SplashScreenActivity : AppCompatActivity() {
         //sharedPref.edit().clear().apply()
 
         //get current version of app
-        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        //version = sharedPref.getInt(Constants.KEY_VERSION, 0)
 
         println("version: $version")
 
@@ -99,23 +99,25 @@ class SplashScreenActivity : AppCompatActivity() {
 
         initText.text = "Fetching Lessons..."
         //create Lessons
-        lessonCreator = LessonCreator(viewModel)
+
+        var init = wordNum == 0
+
 
         //if the word list is empty
         //start initialization process
-        if (wordNum == 0) {
+        if (init) {
             //set first time opening to false
 //            sharedPref.edit()
 //                .putBoolean(Constants.KEY_FIRST_TIME_TOGGLE, false)
 //                .apply()
             //start full update function(words and lesson), with init set to true
-            updateWords(true, dataProcessor.getWords(), initText)
+            updateWords(init, dataProcessor.getWords(), initText)
         } else if (lessonNum == 0) {
             initLessons(initText)
         } else {
             if (wordUpdateAvailable) {
                 //start full update function(words and lesson), with init set to false
-                updateWords(false, dataProcessor.getWords(), initText)
+                updateWords(init, dataProcessor.getWords(), initText)
             } else if (lessonUpdateAvailable) {
                 //start lesson update function
                 updateLessons(initText)
@@ -159,7 +161,6 @@ class SplashScreenActivity : AppCompatActivity() {
                         updateLessons(initText)
                     else{
                         if(lessonNum == 0){
-                            lessonCreator.setLessonDifficulties()
                             initLessons(initText)
                         }else
                             goToHomeActivity()
@@ -172,7 +173,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun initLessons(initText: TextView) {
         initText.text = "Initializing Lesson Database..."
         println("initializing lessons...")
-
+        lessonCreator = LessonCreator(true, viewModel)
         GlobalScope.launch {
             suspend {
                 //clear any data in db
@@ -190,6 +191,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun updateLessons(initText: TextView) {
 
+        lessonCreator = LessonCreator(false, viewModel)
         initText.text = "Updating Lesson Database..."
         println("updating lessons...")
         var practiceCompleted: Boolean
@@ -203,6 +205,8 @@ class SplashScreenActivity : AppCompatActivity() {
                 //the old lesson in database will need to be replaced
                 //TODO: create better method of handling lesson name changes
                 if(version < 2){
+                    //mark lessons as current
+                        //--> need to add field to lesson
                     viewModel.deleteLesson("People", 3)
                     for(i in 1..5){
                         if(viewModel.lessonCategoryLevelExists("Food", i))

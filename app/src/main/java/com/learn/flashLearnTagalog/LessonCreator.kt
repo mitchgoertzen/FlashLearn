@@ -3,7 +3,7 @@ package com.learn.flashLearnTagalog
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 
-class LessonCreator(var viewModel: MainViewModel) {
+class LessonCreator(var init : Boolean, var viewModel: MainViewModel) {
 
     private val myLessons: MutableList<Lesson> = mutableListOf()
 
@@ -128,7 +128,8 @@ class LessonCreator(var viewModel: MainViewModel) {
         val id = category.plus(level).hashCode()
         val newLesson = Lesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
-        newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
+        if(!init)
+            newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
 
         //if the lesson is level 2 or higher, it will initially be locked
         if (level < 2)
@@ -137,16 +138,18 @@ class LessonCreator(var viewModel: MainViewModel) {
         return newLesson
     }
 
-    fun setLessonDifficulties(){
-        for(l in myLessons){
-            l.difficulty = getLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
-        }
-    }
+//    fun setLessonDifficulties(){
+//        for(l in myLessons){
+//            l.difficulty = getLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
+//        }
+//    }
 
     private fun getLessonDifficulty(category : String, minLength : Int, maxLength : Int) : Int {
         val lessonList = viewModel.getLessonWordList(category, minLength, maxLength)
 
         var difficulty = 5
+
+        println("$category: ${lessonList.size}")
         if(lessonList.isNotEmpty()){
             var sum = 0
 
@@ -165,6 +168,7 @@ class LessonCreator(var viewModel: MainViewModel) {
             difficulty = -1
         }
 
+        println("$difficulty")
         return difficulty
     }
 
