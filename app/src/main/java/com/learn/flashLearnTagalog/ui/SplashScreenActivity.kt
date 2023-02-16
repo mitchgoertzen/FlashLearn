@@ -203,6 +203,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 //the old lesson in database will need to be replaced
                 //TODO: create better method of handling lesson name changes
                 if(version < 2){
+                    viewModel.deleteLesson("People", 3)
                     for(i in 1..5){
                         if(viewModel.lessonCategoryLevelExists("Food", i))
                             viewModel.deleteLesson("Food", i)
