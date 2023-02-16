@@ -1,8 +1,9 @@
 package com.learn.flashLearnTagalog
 
 import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 
-class LessonCreator {
+class LessonCreator(var viewModel: MainViewModel) {
 
     private val myLessons: MutableList<Lesson> = mutableListOf()
 
@@ -21,6 +22,7 @@ class LessonCreator {
 
     //lessons created here
     init {
+
         val lesson1 =
             Lesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1, 2)
         lesson1.locked = false
@@ -126,6 +128,8 @@ class LessonCreator {
         val id = category.plus(level).hashCode()
         val newLesson = Lesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
+        newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
+
         //if the lesson is level 2 or higher, it will initially be locked
         if (level < 2)
             newLesson.locked = false
@@ -133,7 +137,39 @@ class LessonCreator {
         return newLesson
     }
 
+    fun setLessonDifficulties(){
+        for(l in myLessons){
+            l.difficulty = getLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
+        }
+    }
+
+    private fun getLessonDifficulty(category : String, minLength : Int, maxLength : Int) : Int {
+        val lessonList = viewModel.getLessonWordList(category, minLength, maxLength)
+
+        var difficulty = 5
+        if(lessonList.isNotEmpty()){
+            var sum = 0
+
+            for(word in lessonList){
+                sum += word.tagalog.length
+            }
+
+            when (sum / lessonList.size) {
+                in 0..4 -> difficulty = 1
+                in 5..6 -> difficulty = 2
+                in 7..9 -> difficulty = 3
+                in 9..10 -> difficulty = 4
+            }
+
+        }else{
+            difficulty = -1
+        }
+
+        return difficulty
+    }
+
     fun getLessons(): MutableList<Lesson> {
         return myLessons
     }
+
 }

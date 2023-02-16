@@ -22,5 +22,9 @@ abstract class WordDatabase : RoomDatabase() {
     @RenameColumn( tableName = "lesson_table",
         fromColumnName = "title",
         toColumnName = "category")
+
+    @RenameColumn( tableName = "lesson_table",
+        fromColumnName = "test_completed",
+        toColumnName = "test_passed")
     class MyAutoMigration : AutoMigrationSpec
 }

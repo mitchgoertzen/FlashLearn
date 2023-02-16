@@ -105,7 +105,7 @@ class Card(word: Word) : Fragment() {
         val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
         //flip card to reverse side on button press
         imFlipCard.setOnClickListener {
-            viewModel.flipWord(currentWord.id)
+            currentWord.id?.let { it1 -> viewModel.flipWord(it1) }
             //display translation of word that is currently shown
             //adjust max lines of text as done previously
             if (shownWord == currentWord.english)

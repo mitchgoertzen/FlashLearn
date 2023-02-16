@@ -27,7 +27,7 @@ import javax.inject.Inject
 private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
 private const val DEBUG = true
 
-private const val wordUpdateAvailable = false
+private const val wordUpdateAvailable = true
 private const val lessonUpdateAvailable = true
 
 @AndroidEntryPoint
@@ -99,7 +99,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         initText.text = "Fetching Lessons..."
         //create Lessons
-        lessonCreator = LessonCreator()
+        lessonCreator = LessonCreator(viewModel)
 
         //if the word list is empty
         //start initialization process
@@ -136,8 +136,6 @@ class SplashScreenActivity : AppCompatActivity() {
                     //add all words from previously created word list to db
                     viewModel.insertAll(words)
                     //continue to lesson initialization
-                    if(lessonNum == 0)
-                        initLessons(initText)
                 } else {
                     initText.text = "Updating Word Database..."
                     println("updating words...")
@@ -159,8 +157,13 @@ class SplashScreenActivity : AppCompatActivity() {
                     //continue to lesson update
                     if (!init && lessonUpdateAvailable)
                         updateLessons(initText)
-                    else
-                        goToHomeActivity()
+                    else{
+                        if(lessonNum == 0){
+                            lessonCreator.setLessonDifficulties()
+                            initLessons(initText)
+                        }else
+                            goToHomeActivity()
+                    }
                 }, 500)
             }.invoke()
         }
@@ -174,14 +177,9 @@ class SplashScreenActivity : AppCompatActivity() {
             suspend {
                 //clear any data in db
                 viewModel.nukeLessons()
-                val lessons = lessonCreator.getLessons()
-
-                for(l in lessons){
-                    l.difficulty = setLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
-                }
-
                 Handler(Looper.getMainLooper()).postDelayed({
-                    viewModel.insertAllLessons(lessons)
+                    viewModel.insertAllLessons(lessonCreator.getLessons())
+                    goToHomeActivity()
                 }, 500)
             }.invoke()
         }
@@ -200,16 +198,20 @@ class SplashScreenActivity : AppCompatActivity() {
         GlobalScope.launch {
             suspend {
 
-                if(version < 2)
-                for(i in 1..5){
-                    if(viewModel.lessonCategoryLevelExists("Food", i))
-                        viewModel.deleteLesson("Food", i)
+                //if lesson name has been changed
+                //needs to be manually checked for now
+                //the old lesson in database will need to be replaced
+                //TODO: create better method of handling lesson name changes
+                if(version < 2){
+                    for(i in 1..5){
+                        if(viewModel.lessonCategoryLevelExists("Food", i))
+                            viewModel.deleteLesson("Food", i)
+                    }
                 }
-                println("view model size: ${viewModel.getSize()}")
+
                 //for each lesson in lesson list
                 for (l in lessonCreator.getLessons()) {
 
-                    l.difficulty = setLessonDifficulty(l.category.lowercase(), l.minLength, l.maxLength)
                     //check if the lesson with exact id already exists in db
                     if (viewModel.lessonExists(l.id)) {
                         if (DEBUG)
@@ -271,31 +273,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 }, 500)
             }.invoke()
         }
-    }
-
-    private fun setLessonDifficulty(category : String, min : Int, max : Int): Int {
-        val lessonList = viewModel.getLessonWordList(category, min, max)
-
-        var difficulty = 5
-        if(lessonList.isNotEmpty()){
-            var sum = 0
-
-            for(word in lessonList){
-                sum += word.tagalog.length
-            }
-
-            when (sum / lessonList.size) {
-                in 0..4 -> difficulty = 1
-                in 5..6 -> difficulty = 2
-                in 7..9 -> difficulty = 3
-                in 9..10 -> difficulty = 4
-            }
-
-        }else{
-            difficulty = -1
-        }
-
-        return difficulty
     }
 
     //end splash screen and continue to home activity

@@ -19,10 +19,7 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -69,6 +66,7 @@ class DictionaryFragment : Fragment() {
 
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
+
 
         //when firstPage button is pressed, (de)/activate this and corresponding buttons
         firstPage.setOnClickListener {
@@ -141,14 +139,14 @@ class DictionaryFragment : Fragment() {
         return view
     }
 
-    //
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
-        //clear currently displayed words from the screen
-        dictionaryAdapter.deleteDictionaryWords()
 
         GlobalScope.launch(Dispatchers.Main) {
             suspend {
+                //clear currently displayed words from the screen
+                dictionaryAdapter.deleteDictionaryWords()
+
                 //gather next set of words, confined by current page and number of words per page
                 viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
                     .observe(viewLifecycleOwner) {
