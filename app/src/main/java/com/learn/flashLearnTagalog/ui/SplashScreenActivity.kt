@@ -185,8 +185,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }.invoke()
         }
 
-        //TODO: add delay on thread?
-        //add all previously created lessons to db
     }
 
     private fun updateLessons(initText: TextView) {
@@ -258,8 +256,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
                             val oldLesson = viewModel.getLessonByData(l.category, l.level)
                             l.practiceCompleted = oldLesson.practiceCompleted
-                            l.testPassed = oldLesson.testPassed
-                            l.locked = oldLesson.locked
+                            l.testPassed = false
+                            l.locked = l.level > 1
 
                             if (DEBUG)
                                 println("combo exists. delete old version")
