@@ -71,7 +71,6 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
             }
             holderBinding.tvCategory.text = currentLesson.category + " $level"
             holderBinding.tvDifficulty.text = difficulty
-            println("currentLesson: $currentLesson")
             holderBinding.ivPreview.setImageResource(currentLesson.imageID)
 
 

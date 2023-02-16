@@ -60,7 +60,7 @@ class SplashScreenActivity : AppCompatActivity() {
         //sharedPref.edit().clear().apply()
 
         //get current version of app
-        //version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
 
         println("version: $version")
 
