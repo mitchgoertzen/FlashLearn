@@ -254,10 +254,15 @@ class SplashScreenActivity : AppCompatActivity() {
                         //(this is a legacy check for app version 1, since lesson id has changed from version 2 onward)
                         if (viewModel.lessonCategoryLevelExists(l.category, l.level)) {
 
-                            val oldLesson = viewModel.getLessonByData(l.category, l.level)
-                            l.practiceCompleted = oldLesson.practiceCompleted
+
                             l.testPassed = false
                             l.locked = l.level > 1
+                            if(l.locked){
+                                l.practiceCompleted = false
+                            }else{
+                                val oldLesson = viewModel.getLessonByData(l.category, l.level)
+                                l.practiceCompleted = oldLesson.practiceCompleted
+                            }
 
                             if (DEBUG)
                                 println("combo exists. delete old version")
