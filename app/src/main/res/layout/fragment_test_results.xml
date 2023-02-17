@@ -104,7 +104,12 @@
             android:id="@+id/btnLessonSelect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:text="lesson select"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
 
@@ -112,7 +117,12 @@
             android:id="@+id/btnStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
             android:text="View Stats"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
     </LinearLayout>

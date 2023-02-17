@@ -138,7 +138,6 @@
             app:layout_constraintGuide_percent="0.8" />
 
 
-
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline36"
             android:layout_width="wrap_content"
