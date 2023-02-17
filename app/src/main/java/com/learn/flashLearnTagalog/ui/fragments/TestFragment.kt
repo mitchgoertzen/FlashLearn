@@ -274,7 +274,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, false)
             .apply()
-        val fragment = TestResultsFragment(wordsCorrect, answeredAdapter)
+        val fragment = TestResultsFragment(currentLesson, wordsCorrect, answeredAdapter)
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("results")?.commit()
         (activity as LearningActivity?)?.transitionFragment()

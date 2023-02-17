@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
+import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestResultsFragment(wordsCorrect: Int, var adapter: TestWordAdapter) :
+class TestResultsFragment(var lesson : Lesson, wordsCorrect: Int, var adapter: TestWordAdapter) :
     Fragment(R.layout.fragment_test_results) {
 
     @Inject
@@ -46,11 +47,41 @@ class TestResultsFragment(wordsCorrect: Int, var adapter: TestWordAdapter) :
         val totalText: TextView = view.findViewById(R.id.tvTotal)
         val percentageText: TextView = view.findViewById(R.id.tvPercentage)
 
-        val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
+        val retryButton: Button = view.findViewById(R.id.btnRetry)
         val statsButton: Button = view.findViewById(R.id.btnStats)
+        val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
 
         rvTodoList.adapter = adapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+
+        retryButton.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_IN_RESULTS, false)
+                .apply()
+
+//            sharedPref.edit()
+//                .putBoolean(Constants.KEY_IN_RESULTS, false)
+//                .apply()
+//            val fragment = TestFragment(wordList, lesson)
+//            val transaction = activity?.supportFragmentManager?.beginTransaction()
+//            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")
+//                ?.commit()
+//            (activity as LearningActivity?)?.transitionFragment()
+        }
+
+        statsButton.setOnClickListener {
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_IN_RESULTS, false)
+                .apply()
+            val fragment = StatsFragment()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
+                ?.commit()
+            (activity as LearningActivity?)?.transitionFragment()
+        }
+
+
 
         lessonSelectButton.setOnClickListener {
             sharedPref.edit()
@@ -65,17 +96,6 @@ class TestResultsFragment(wordsCorrect: Int, var adapter: TestWordAdapter) :
             val fragment = LessonSelectFragment()
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson select")
-                ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
-        }
-
-        statsButton.setOnClickListener {
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_RESULTS, false)
-                .apply()
-            val fragment = StatsFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
                 ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
         }

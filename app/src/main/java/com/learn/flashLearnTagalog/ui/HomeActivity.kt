@@ -280,6 +280,7 @@ class HomeActivity : AppCompatActivity() {
                         "unpolished features and UI elements\n" +
                         "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
                         "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
+                        "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com" +
                         "2022, mitch goertzen"
 
             val dialog: DialogFragment = HintFragment(infoText)

@@ -16369,7 +16369,7 @@ adj$kuyad-kuyad$very, very slow
 n$kuyapo$species of aquatic plant
 n$kuyog$swarm
 adj$kuyom$closed
-n$kuyukot$coccyx (anatomy)
+n$kuyukot$coccyx#body
 n$kuyumad$the young of a common hair louse
 v$kuyumin$clench (the fists)
 adj$kuyumos$crumpled, pressed, mashed in the hand
@@ -22451,7 +22451,6 @@ v$magtulakan$shove/push one another
 v$magtulay$construct a bridge
 v$magtuldik$accent
 v$magtuldok$mark with a dot/point
-v$magtuli$circumcise
 v$magtuligsaan$engage in controversy
 v$magtulis$sharpen
 v$magtulisan$rob someone on a highway
@@ -35995,7 +35994,6 @@ n$patuto$boundary between properties
 n$patuto$low embankment as boundary between fields or rice paddies
 n$patuto$small beam
 n$patutop$trimming or facing for a dress
-n$patutot$prostitute
 n$patutsada$mockery done with insult
 v$patutsadahan$make someone the object of derogatory remarks
 n$patutunguhan$destination
@@ -37104,8 +37102,6 @@ n$propyetaryo$landlord (who owns land or buildings that they rent to others)
 n$prosa$prose
 n$prospekto$prospect
 n$prospektus$prospectus
-n$prostitusyon$prostitution
-n$prostituta$prostitute
 n$Protaktinyum$Protactinium#chemistry
 n$protehido$protege
 n$proteksiyon$protection
@@ -37186,7 +37182,7 @@ v$pugutin$decapitate
 adj$puhag$castrated
 n$puhunan$capital
 v$puhunanin$capitalize
-n$puil$coccyx (anatomy)#body
+n$puil$coccyx
 adj$puka$rotten to the end of a post underground)
 adj$pukaw$aroused
 v$pukawin$incite
@@ -37707,7 +37703,6 @@ v$pusunin$suffer from abdominal pain
 adj$pusunin$having a large abdomen
 v$pusuran$knot the hair of someone (make into a topknot)
 n$pusyaw$paleness of colour
-n$puta$prostitute
 n$putahe$viand
 n$putahe$menu
 v$putahihin$cook something into a choice dish
@@ -41059,7 +41054,6 @@ n$supling$progeny
 adj$supok$burnt to cinders
 n$supositoryo$suppository
 n$supot$bag
-adj$supot$uncircumcised
 adj$suprema$supreme
 adj$supremo$supreme
 n$supsop$sucking
@@ -42954,8 +42948,6 @@ adj$tisurin$said of one who is prone to trip over something
 n$tita$auntie
 adj$titaniko$titanic
 n$Titanyum$Titanium (Ti)
-n$titatita$go-betweeen or procurer for a prostitute
-n$titi$penis (anatomy)
 n$titig$stare
 v$titigan$stare
 n$titigan$act of staring at each other
@@ -43377,11 +43369,7 @@ adj$tulali$unique
 v$tularan$imitate
 v$tularan$imitate
 n$tularan$model (person/thing to be imitated)
-n$tulas$stool from diarrhoea (US: diarrhea)
-n$tulas$gonorrhea
-n$tulasok$diarrhoea (US: diarrhea)
-n$tulatod$coccyx (anatomy)
-v$tulawin$kill an animal by blows on the neck
+n$tulatod$coccyx
 n$tulay$bridge
 n$tulay$keeping one's balance on a narrow/elevated foothold
 v$tulayan$bridge
@@ -43391,18 +43379,15 @@ gram$tuldik na paiwa$grave accent (`)
 gram$tuldik na pakupya$circumflex accent (^)
 v$tuldikan$accent
 n$tuldok$period
-n$tuldok-kuwit$semicolon (
+n$tuldok-kuwit$semicolon
 n$tuldok-sampuan$decimal point
 n$tulduk-tuldok$series of dots (as in a dotted line)
 v$tulduk-tuldukan$mark with dots
 v$tuldukan$mark with a dot
-adj$tuli$circumcised]
-n$tuli$circumcision]
 adj$tulig$deafened and confused by too much noise
 v$tuligin$confuse/stupefy by some deafening noise
 n$tuligsa$invective
 v$tuligsain$attack in words or writing
-n$tuliin$circumcise]
 adj$tulik$multicoloured
 n$tulikan$multicoloured (US: multicolored) rooster
 n$tulin$speed
@@ -43695,7 +43680,6 @@ v$tumulad$imitate
 v$tumulak$push
 v$tumulak$depart
 v$tumulay$keep one's balance
-v$tumuli$circumcise
 v$tumulig$confuse or stupefy by some deafening noise
 v$tumuligsa$attack in words or writing
 v$tumulin$accelerate
@@ -44682,9 +44666,7 @@ adv$utay-utay$gradually
 v$utay-utayin$plod away
 n$utdo$lack of the required length/measure
 v$utduhan$shorten
-n$utero$uterus
 adj$util$useful
-n$utin$penis
 adj$utita$inquisitive
 n$utitab$mucous film over eyeballs/eyelids
 n$utitab$species of small spider
