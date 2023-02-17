@@ -67,16 +67,18 @@
             app:srcCompat="@drawable/profile"
             tools:ignore="SpeakableTextPresentCheck" />
 
+
         <com.google.android.gms.ads.AdView
             android:id="@+id/adView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-7133464705699933/5992646757"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline27"
-            app:layout_constraintStart_toStartOf="@+id/guideline26"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:scrollbars="none"
+            ads:layout_constraintEnd_toStartOf="@+id/guideline27"
+            ads:layout_constraintStart_toStartOf="@+id/guideline26"
+            ads:layout_constraintTop_toTopOf="parent"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-7133464705699933/8781983311"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline26"

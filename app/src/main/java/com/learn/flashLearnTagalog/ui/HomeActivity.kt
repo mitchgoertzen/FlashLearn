@@ -21,7 +21,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
-    private val DEBUG = true
+    private val DEBUG = false
 
     @Inject
     lateinit var wordDAO: WordDAO
@@ -277,10 +277,10 @@ class HomeActivity : AppCompatActivity() {
                 "This app is intended for English speakers who are interested in learning words from the " +
                         "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
                         "I created this project as a way to practice mobile development in Android Studio, so expect many " +
-                        "unpolished features and UI elements\n" +
+                        "unpolished features and UI elements\n\n" +
                         "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
                         "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
-                        "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com" +
+                        "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
                         "2022, mitch goertzen"
 
             val dialog: DialogFragment = HintFragment(infoText)

@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 //get current version from build version
 private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
-private const val DEBUG = true
+private const val DEBUG = false
 
 private const val wordUpdateAvailable = true
 private const val lessonUpdateAvailable = true
@@ -173,7 +173,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun initLessons(initText: TextView) {
         initText.text = "Initializing Lesson Database..."
         println("initializing lessons...")
-        lessonCreator = LessonCreator(true, viewModel)
+        lessonCreator = LessonCreator(viewModel)
         GlobalScope.launch {
             suspend {
                 //clear any data in db
@@ -189,7 +189,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun updateLessons(initText: TextView) {
 
-        lessonCreator = LessonCreator(false, viewModel)
+        lessonCreator = LessonCreator(viewModel)
         initText.text = "Updating Lesson Database..."
         println("updating lessons...")
         var practiceCompleted: Boolean

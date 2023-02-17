@@ -3,7 +3,7 @@ package com.learn.flashLearnTagalog
 import com.learn.flashLearnTagalog.db.Lesson
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 
-class LessonCreator(var init : Boolean, var viewModel: MainViewModel) {
+class LessonCreator(var viewModel: MainViewModel) {
 
     private val myLessons: MutableList<Lesson> = mutableListOf()
 
@@ -128,8 +128,7 @@ class LessonCreator(var init : Boolean, var viewModel: MainViewModel) {
         val id = category.plus(level).hashCode()
         val newLesson = Lesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
-        if(!init)
-            newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
+        newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
 
         //if the lesson is level 2 or higher, it will initially be locked
         if (level < 2)
@@ -149,7 +148,7 @@ class LessonCreator(var init : Boolean, var viewModel: MainViewModel) {
 
         var difficulty = 5
 
-        println("$category: ${lessonList.size}")
+       //println("$category: ${lessonList.size}")
         if(lessonList.isNotEmpty()){
             var sum = 0
 
@@ -168,7 +167,7 @@ class LessonCreator(var init : Boolean, var viewModel: MainViewModel) {
             difficulty = -1
         }
 
-        println("$difficulty")
+       // println("$difficulty")
         return difficulty
     }
 
