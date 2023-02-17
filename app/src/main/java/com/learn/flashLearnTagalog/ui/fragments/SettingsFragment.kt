@@ -163,7 +163,7 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
 
         }
 
-        showEngFirst = sharedPref.getBoolean(KEY_ENG_FIRST, false)
+        showEngFirst = sharedPref.getBoolean(KEY_ENG_FIRST, true)
         languageSwitch.isChecked = showEngFirst
         languageSwitch.setOnClickListener {
             showEngFirst = !showEngFirst

@@ -103,6 +103,7 @@ class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFrag
         //selection will be saved for future use
         var showEngFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
         engFirst.isChecked = showEngFirst
+        println("eng: $showEngFirst")
         engFirst.setOnClickListener {
             showEngFirst = !showEngFirst
             sharedPref.edit()

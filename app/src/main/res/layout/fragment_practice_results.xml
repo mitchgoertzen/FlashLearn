@@ -37,42 +37,80 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline7" />
 
+
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:divider="@drawable/empty_short_divider"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
         android:showDividers="middle"
+        android:paddingBottom="15dp"
+        android:divider="@drawable/empty_short_divider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline10"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline10">
 
-        <Button
-            android:id="@+id/btnLessonTest"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="start test"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnLessonSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="lesson select"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            <Button
+                android:id="@+id/btnLessonTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:text="start test"
+                android:maxLines="1"
+                app:autoSizeMaxTextSize="13sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:strokeColor="#FCD116"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/btnLessonSelect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="50dp"
+                android:layout_weight="1"
+                android:text="lesson select"
+                android:maxLines="1"
+                app:autoSizeMaxTextSize="13sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:strokeColor="#FCD116"
+                app:strokeWidth="3dp" />
+
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btnStats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="View Stats"
+            android:maxLines="1"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
+
+
     </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"

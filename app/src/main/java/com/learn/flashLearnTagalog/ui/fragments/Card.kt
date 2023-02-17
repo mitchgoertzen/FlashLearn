@@ -39,7 +39,7 @@ class Card(word: Word) : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_card, container, false)
 
-        engFirst = sharedPref.getBoolean(KEY_ENG_FIRST, false)
+        engFirst = sharedPref.getBoolean(KEY_ENG_FIRST, true)
 
         val wordType: TextView = view.findViewById(R.id.tvType)
 

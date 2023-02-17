@@ -84,7 +84,7 @@ object AppModule {
     @Singleton
     @Provides
     fun providesShowEngFirst(sharedPref: SharedPreferences) =
-        sharedPref.getBoolean(KEY_ENG_FIRST, false)
+        sharedPref.getBoolean(KEY_ENG_FIRST, true)
 
     @Singleton
     @Provides
