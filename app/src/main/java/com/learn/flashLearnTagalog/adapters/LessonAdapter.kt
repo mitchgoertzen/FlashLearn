@@ -140,21 +140,21 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
                 0 -> {
                     lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
                 }
-                //Subcategory
+                //Level
                 1 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
+                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.difficulty })
                 }
                 //Difficulty low to high
                 2 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.category })
+                    lessons.sortWith(compareBy<Lesson> { it.difficulty }.thenBy { it.category })
                 }
                 //Difficulty high to low
                 3 -> {
-                    lessons.sortWith(compareByDescending<Lesson> { it.level }.thenBy { it.category })
+                    lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
                 }
                 //Locked
-                4 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.level }
+                4-> {
+                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.difficulty }
                         .thenBy { it.category })
                 }
             }

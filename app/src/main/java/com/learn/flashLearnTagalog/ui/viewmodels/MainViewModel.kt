@@ -82,7 +82,7 @@ class MainViewModel @Inject constructor(
 
     fun nukeTable() = viewModelScope.launch {
         mainRepo.nukeTable()
-        Log.d("NUKE", "nuked")
+        Log.d("NUKE", "words nuked")
     }
 
     fun getAllWordsForLesson(category: String) = mainRepo.getAllWordsForLesson(category)
@@ -97,17 +97,7 @@ class MainViewModel @Inject constructor(
 
     fun getDictionaryWords(offset: Int, limit: Int) = mainRepo.getDictionaryWords(offset, limit)
 
-    fun getEasyWords() = mainRepo.getEasyWords()
-
-    fun getIntermediateWords() = mainRepo.getIntermediateWords()
-
-    fun getHardWords() = mainRepo.getHardWords()
-
-    fun getPracticedEasyWords() = mainRepo.getPracticedEasyWords()
-
-    fun getPracticedIntermediateWords() = mainRepo.getPracticedIntermediateWords()
-
-    fun getPracticedHardWords() = mainRepo.getPracticedHardWords()
+    fun getWordsByDifficulty(practiced : Int, minLength : Int, maxLength : Int) = mainRepo.getWordsByDifficulty(practiced, minLength, maxLength)
 
     fun getAllPracticedWords() = mainRepo.getAllPracticedWords()
 

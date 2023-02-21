@@ -22,7 +22,6 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.reflect.Field
 import javax.inject.Inject
 
 
@@ -74,7 +73,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         val window: FrameLayout = view.findViewById(R.id.clHintBackground)
 
         sortOptionAdapter =
-            SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 2))
+            SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 1))
 
         val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
 
@@ -82,7 +81,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         sortOptionAdapter.addOption("Category")
-        sortOptionAdapter.addOption("Subcategory")
+        sortOptionAdapter.addOption("Lesson Level")
         sortOptionAdapter.addOption("Difficulty: Low to High")
         sortOptionAdapter.addOption("Difficulty: High to Low")
         sortOptionAdapter.addOption("Unlocked")
@@ -137,9 +136,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         val difficulty5: CheckBox = view.findViewById(R.id.cbLevel5)
         setDifficultyCheckBox("5", difficulty5)
-
-        val difficulty6: CheckBox = view.findViewById(R.id.cbLevel6)
-        setDifficultyCheckBox("6", difficulty6)
 
         val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
@@ -198,18 +194,18 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         return view
     }
 
-    private fun setDifficultyCheckBox(level : String, checkBox : CheckBox){
+    private fun setDifficultyCheckBox(difficulty : String, checkBox : CheckBox){
         //if this checkBoxes level is included in difficulties
         //set box to checked
-        if (difficulties.contains(level))
+        if (difficulties.contains(difficulty))
             checkBox.isChecked = true
         checkBox.setOnClickListener {
             //when this box is checked/unchecked,
             //add or remove its corresponding difficulty to difficulties
             if (checkBox.isChecked) {
-                difficulties.add(level)
+                difficulties.add(difficulty)
             } else {
-                difficulties.remove(level)
+                difficulties.remove(difficulty)
             }
         }
     }

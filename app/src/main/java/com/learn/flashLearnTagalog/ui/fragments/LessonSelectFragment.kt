@@ -75,7 +75,7 @@ class LessonSelectFragment : Fragment() {
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
 
-        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
+        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5")
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()
@@ -101,7 +101,7 @@ class LessonSelectFragment : Fragment() {
                         add = true
                         //only add lessons that fit within the selected filter requirements
                         if (lesson.level > 0) {
-                            if (difficulties.contains((lesson.level).toString())) {
+                            if (difficulties.contains((lesson.difficulty).toString())) {
 
                                 val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
@@ -128,7 +128,7 @@ class LessonSelectFragment : Fragment() {
                             lessonAdapter.addLesson(lesson)
                     }
                     //TODO: used saved variable, not hardcoded
-                    lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 2))
+                    lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
                 }, 500)
             }.invoke()
         }

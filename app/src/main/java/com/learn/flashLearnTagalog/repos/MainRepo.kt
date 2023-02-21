@@ -61,17 +61,7 @@ class MainRepo @Inject constructor(
 
     fun getAllWords() = wordDao.getAllWords()
 
-    fun getEasyWords() = wordDao.getEasyWords()
-
-    fun getIntermediateWords() = wordDao.getIntermediateWords()
-
-    fun getHardWords() = wordDao.getHardWords()
-
-    fun getPracticedEasyWords() = wordDao.getPracticedEasyWords()
-
-    fun getPracticedIntermediateWords() = wordDao.getPracticedIntermediateWords()
-
-    fun getPracticedHardWords() = wordDao.getPracticedHardWords()
+    fun getWordsByDifficulty(practiced : Int, minLength : Int, maxLength : Int) = wordDao.getWordsByDifficulty(practiced, minLength, maxLength)
 
     fun getAllPracticedWords() = wordDao.getAllPracticedWords()
 

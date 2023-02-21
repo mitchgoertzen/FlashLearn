@@ -38,23 +38,8 @@ interface WordDAO {
     @Query("SELECT * FROM word_table ORDER BY english DESC")
     fun getAllWords(): LiveData<List<Word>>
 
-    @Query("SELECT * FROM word_table WHERE LENGTH(tagalog) <= 6")
-    fun getEasyWords(): LiveData<List<Word>>
-
-    @Query("SELECT * FROM word_table WHERE LENGTH(tagalog) >6 AND LENGTH(tagalog) <= 11")
-    fun getIntermediateWords(): LiveData<List<Word>>
-
-    @Query("SELECT * FROM word_table WHERE LENGTH(tagalog) > 11")
-    fun getHardWords(): LiveData<List<Word>>
-
-    @Query("SELECT * FROM word_table WHERE word_practiced == 1 AND LENGTH(tagalog) <= 6")
-    fun getPracticedEasyWords(): LiveData<List<Word>>
-
-    @Query("SELECT * FROM word_table WHERE word_practiced == 1 AND LENGTH(tagalog) >6 AND LENGTH(tagalog) <= 11")
-    fun getPracticedIntermediateWords(): LiveData<List<Word>>
-
-    @Query("SELECT * FROM word_table WHERE word_practiced == 1 AND LENGTH(tagalog) > 11")
-    fun getPracticedHardWords(): LiveData<List<Word>>
+    @Query("SELECT * FROM word_table WHERE (word_practiced == :practiced OR word_practiced == 1) AND (LENGTH(tagalog) >= :minLength AND LENGTH(tagalog) <= :maxLength)")
+    fun getWordsByDifficulty(practiced : Int, minLength : Int, maxLength : Int): LiveData<List<Word>>
 
     @Query("SELECT * FROM word_table WHERE word_practiced == 1 ORDER BY LENGTH(tagalog) DESC")
     fun getAllPracticedWords(): LiveData<List<Word>>

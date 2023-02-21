@@ -157,10 +157,10 @@ class LessonCreator(var viewModel: MainViewModel) {
             }
 
             when (sum / lessonList.size) {
-                in 0..4 -> difficulty = 1
-                in 5..6 -> difficulty = 2
-                in 7..9 -> difficulty = 3
-                in 9..10 -> difficulty = 4
+                in 0..5 -> difficulty = 1
+                in 6..7 -> difficulty = 2
+                in 8..9 -> difficulty = 3
+                in 10..11 -> difficulty = 4
             }
 
         }else{

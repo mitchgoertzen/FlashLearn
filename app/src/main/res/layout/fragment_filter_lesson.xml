@@ -188,13 +188,6 @@
                     android:text="Level 4"
                     android:textColor="@color/blue" />
 
-                <CheckBox
-                    android:id="@+id/cbLevel6"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
-                    android:text="Level 6"
-                    android:textColor="@color/blue" />
             </LinearLayout>
 
         </LinearLayout>

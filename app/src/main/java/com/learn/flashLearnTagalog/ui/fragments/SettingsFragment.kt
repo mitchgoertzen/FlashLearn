@@ -199,14 +199,16 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
         })
 
         difficulty.progress = difficultyBarValue
-        setDifficultyBarText(difficulty, difficultyBarValue)
+        difficulty.thumbOffset = 16
+        difficulty.thumb = getThumb("${difficultyBarValue + 1}")
         difficulty.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
 
             override fun onProgressChanged(
                 seekBar: SeekBar, progress: Int,
                 fromUser: Boolean
             ) {
-                setDifficultyBarText(difficulty, progress)
+              difficulty.thumb = getThumb("${progress + 1}")
+               // setDifficultyBarText(difficulty, progress)
 
                 difficultyBarValue = progress
             }
@@ -314,26 +316,6 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
 
     }
 
-    private fun setDifficultyBarText(difficulty: SeekBar, progress: Int) {
-        when (progress) {
-            0 -> {
-                difficulty.thumb = getThumb("easy")
-                difficulty.thumbOffset = 12
-                difficulty.setPadding(12, 0, 0, 0)
-            }
-            1 -> {
-                difficulty.thumb = getThumb("medium")
-                difficulty.thumbOffset = 0
-                difficulty.setPadding(0, 0, 0, 0)
-            }
-            2 -> {
-                difficulty.thumb = getThumb("hard")
-                difficulty.thumbOffset = 0
-                difficulty.setPadding(0, 0, 12, 0)
-            }
-        }
-    }
-
     private fun transitionFragment(fragment: Fragment) {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("custom lesson")
@@ -429,37 +411,58 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
     private fun gatherPracticeWords() {
         when (difficultyBarValue) {
             0 -> {
-                viewModel.getEasyWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(0, 0, 5).observe(viewLifecycleOwner) {
                     practiceWordList = it.toMutableList()
                 }
             }
             1 -> {
-                viewModel.getIntermediateWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(0, 6, 7).observe(viewLifecycleOwner) {
                     practiceWordList = it.toMutableList()
                 }
             }
             2 -> {
-                viewModel.getHardWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(0, 8, 9).observe(viewLifecycleOwner) {
                     practiceWordList = it.toMutableList()
                 }
             }
+            3 -> {
+                viewModel.getWordsByDifficulty(0, 10, 11).observe(viewLifecycleOwner) {
+                    practiceWordList = it.toMutableList()
+                }
+            }
+            4 -> {
+                viewModel.getWordsByDifficulty(0, 12, 100).observe(viewLifecycleOwner) {
+                    practiceWordList = it.toMutableList()
+                }
+            }
+
         }
     }
 
     private fun gatherTestWords() {
         when (difficultyBarValue) {
             0 -> {
-                viewModel.getPracticedEasyWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(1, 0, 4).observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }
             }
             1 -> {
-                viewModel.getPracticedIntermediateWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(1, 5, 6).observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }
             }
             2 -> {
-                viewModel.getPracticedHardWords().observe(viewLifecycleOwner) {
+                viewModel.getWordsByDifficulty(1, 7, 8).observe(viewLifecycleOwner) {
+                    testWordList = it.toMutableList()
+                }
+            }
+            3 -> {
+                viewModel.getWordsByDifficulty(1, 9, 10).observe(viewLifecycleOwner) {
+                    testWordList = it.toMutableList()
+                }
+            }
+            4 -> {
+                viewModel.getWordsByDifficulty(1, 11, 100).observe(viewLifecycleOwner) {
                     testWordList = it.toMutableList()
                 }
             }

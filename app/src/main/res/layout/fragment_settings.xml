@@ -135,11 +135,12 @@
 
                 <TextView
                     android:id="@+id/dif"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:gravity="center"
                     android:text="Difficulty"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -149,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:max="2"
+                    android:max="4"
                     android:progressDrawable="@drawable/selector_"
                     android:splitTrack="false"
                     android:thumb="@drawable/seek_thumb" />
