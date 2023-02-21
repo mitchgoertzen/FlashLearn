@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "172412554210",
+    "project_id": "flash-learn-6fbc4",
+    "storage_bucket": "flash-learn-6fbc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172412554210:android:6231b3f75a938ff34347bb",
+        "android_client_info": {
+          "package_name": "com.learn.flashLearnTagalog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172412554210-8vm6ok2v797gm1m7e7c7eesmdpe5vrgc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd1LDEbGo41NyT7jMOZiHNMyjvlTfod3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172412554210-8vm6ok2v797gm1m7e7c7eesmdpe5vrgc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
