@@ -121,7 +121,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun lessonFilterSort(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_LESSON_SORTING, 2)
+    fun lessonFilterSort(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_LESSON_SORTING, 1)
 
     @Singleton
     @Provides
