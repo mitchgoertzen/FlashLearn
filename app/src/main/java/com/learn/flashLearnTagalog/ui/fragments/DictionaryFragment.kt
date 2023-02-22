@@ -142,7 +142,7 @@ class DictionaryFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
 
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             suspend {
                 //clear currently displayed words from the screen
                 dictionaryAdapter.deleteDictionaryWords()

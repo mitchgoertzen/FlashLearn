@@ -26,10 +26,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -87,7 +84,7 @@ class LessonSelectFragment : Fragment() {
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
         var dbLessons: MutableList<Lesson> = mutableListOf()
-        GlobalScope.launch(Dispatchers.Main) {
+        CoroutineScope(Dispatchers.Main).launch {
             suspend {
                 //get lessons from database
                 viewModel.getAllLessons().observe(viewLifecycleOwner) {

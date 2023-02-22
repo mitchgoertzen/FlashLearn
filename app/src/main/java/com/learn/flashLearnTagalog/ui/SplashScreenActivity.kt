@@ -1,6 +1,5 @@
 package com.learn.flashLearnTagalog.ui
 
-import android.R.attr.x
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,7 +10,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
@@ -21,7 +19,10 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -63,7 +64,7 @@ class SplashScreenActivity : AppCompatActivity() {
         //sharedPref.edit().clear().apply()
 
         //get current version of app
-        //version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
 
         println("version: $version")
 
@@ -132,9 +133,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @DelicateCoroutinesApi
     fun updateWords(init: Boolean, words: MutableList<Word>, initText: TextView) {
-        var i = 1
-        val size = words.size
-        lifecycleScope.async(Dispatchers.IO) {
+        CoroutineScope(Dispatchers.IO).launch {
             suspend {
                 if (init) {
                     initText.text = "Initializing Word Database..."
@@ -177,11 +176,12 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    @DelicateCoroutinesApi
     private fun initLessons(initText: TextView) {
         initText.text = "Initializing Lesson Database..."
         println("initializing lessons...")
         lessonCreator = LessonCreator(viewModel)
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             suspend {
                 //clear any data in db
                 viewModel.nukeLessons()
@@ -194,6 +194,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     }
 
+    @DelicateCoroutinesApi
     private fun updateLessons(initText: TextView) {
 
         lessonCreator = LessonCreator(viewModel)
@@ -202,7 +203,7 @@ class SplashScreenActivity : AppCompatActivity() {
         var practiceCompleted: Boolean
         var testPassed: Boolean
         var locked: Boolean
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             suspend {
 
                 //if lesson name has been changed
