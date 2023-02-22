@@ -41,7 +41,7 @@
         <ImageButton
             android:id="@+id/ibHome"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:background="#00FFFF00"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -55,7 +55,7 @@
         <ImageButton
             android:id="@+id/ibProfile"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:background="#00FFFF00"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
@@ -85,14 +85,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.2" />
+            app:layout_constraintGuide_percent="0.15" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline27"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8" />
+            app:layout_constraintGuide_percent="0.85" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
