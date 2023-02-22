@@ -35,7 +35,10 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_SHOW_WORD
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -204,8 +207,8 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
                 seekBar: SeekBar, progress: Int,
                 fromUser: Boolean
             ) {
-              difficulty.thumb = getThumb("${progress + 1}")
-               // setDifficultyBarText(difficulty, progress)
+                difficulty.thumb = getThumb("${progress + 1}")
+                // setDifficultyBarText(difficulty, progress)
 
                 difficultyBarValue = progress
             }

@@ -43,7 +43,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivitySplashScreenBinding
-    private lateinit var progress : ProgressBar
+    private lateinit var progress: ProgressBar
 
     private lateinit var dataProcessor: DataProcessor
     private lateinit var lessonCreator: LessonCreator
@@ -165,10 +165,10 @@ class SplashScreenActivity : AppCompatActivity() {
                     //continue to lesson update
                     if (!init && lessonUpdateAvailable)
                         updateLessons(initText)
-                    else{
-                        if(lessonNum == 0){
+                    else {
+                        if (lessonNum == 0) {
                             initLessons(initText)
-                        }else
+                        } else
                             goToHomeActivity()
                     }
                 }, 500)
@@ -210,12 +210,12 @@ class SplashScreenActivity : AppCompatActivity() {
                 //needs to be manually checked for now
                 //the old lesson in database will need to be replaced
                 //TODO: create better method of handling lesson name changes
-                if(version < 2){
+                if (version < 2) {
                     //mark lessons as current
-                        //--> need to add field to lesson
+                    //--> need to add field to lesson
                     viewModel.deleteLesson("People", 3)
-                    for(i in 1..5){
-                        if(viewModel.lessonCategoryLevelExists("Food", i))
+                    for (i in 1..5) {
+                        if (viewModel.lessonCategoryLevelExists("Food", i))
                             viewModel.deleteLesson("Food", i)
                     }
                 }
@@ -265,9 +265,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
                             l.testPassed = false
                             l.locked = l.level > 1
-                            if(l.locked){
+                            if (l.locked) {
                                 l.practiceCompleted = false
-                            }else{
+                            } else {
                                 val oldLesson = viewModel.getLessonByData(l.category, l.level)
                                 l.practiceCompleted = oldLesson.practiceCompleted
                             }
