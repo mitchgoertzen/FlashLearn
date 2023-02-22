@@ -49,12 +49,14 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
 
         val finishButton: Button = view.findViewById(R.id.btFinish)
 
+        prevButton.isEnabled = false
+
         if (currentWordList.size == 1) {
             nextButton.isEnabled = false
-            prevButton.isEnabled = false
             finishButton.visibility = View.VISIBLE
-        } else
+        } else{
             finishButton.visibility = View.GONE
+        }
 
         finishButton.setOnClickListener {
             viewModel.completePractice(currentLesson.id)

@@ -1104,7 +1104,7 @@ n$aparato$apparatus
 v$aparin$suffer pain in the side
 n$aparisyon$apparition
 adj$apasyonado$passionate
-n$apat$four (4)#numbers
+n$apat$four#numbers
 adj$apat-apat$four by four
 adj$apatan$four by four
 n$apatan$quadruplet
@@ -1114,7 +1114,7 @@ n$apatia$apathy
 v$apatin$make four, or divide into four equal parts
 n$apatita$apatite (geology)
 n$apatiya$apathy
-n$apatnapu$forty (40)#numbers
+n$apatnapu$forty#numbers
 n$apatya$apathy
 adj$apaw$overflowing
 adj$apaw$dumb
@@ -4833,7 +4833,7 @@ n$dalaw$visitor
 adj$dalawa$two
 adj$dalawahan$two by two
 v$dalawahin$make into two
-adj$dalawampu$twenty (20)#numbers
+adj$dalawampu$twenty#numbers
 adv$dalawang beses$twice
 comp$dalawang linggo$fortnight
 comp$dalawang mukha$double-faced
@@ -6143,13 +6143,13 @@ adj$dorado$gilded
 n$dormitoryana$resident of a dormitory
 n$dormitoryano$resident of a dormitory
 n$dormitoryo$dormitory
-n$dos$two (2)#numbers
-n$dose$twelve (12)#numbers
+n$dos$two#numbers
+n$dose$twelve#numbers
 adv$dose-dosena$by the dozen
-n$dosena$dozen (12)#numbers
+n$dosena$dozen#numbers
 v$dosenahin$make a dozen of
 n$dosis$dose
-n$dosyentos$two hundred (200)#numbers
+n$dosyentos$two hundred#numbers
 n$dote$dowry (gift from a man to his bride)
 n$doyli$doily
 n$draga$dredger
@@ -16441,13 +16441,13 @@ n$labi$lip#body
 v$labian$pout
 adj$labian$thick-lipped
 n$labilabi$small freshwater turtle
-n$labing-anim$sixteen (16)#numbers
-n$labing-apat$fourteen (14)#numbers
-n$labing-isa$eleven (11)#numbers
-n$labing-pito$seventeen (17)#numbers
-n$labing-walo$eighteen (18)#numbers
-n$labinlima$fifteen (15)#numbers
-n$labinsiyam$nineteen (19)#numbers
+n$labing-anim$sixteen#numbers
+n$labing-apat$fourteen#numbers
+n$labing-isa$eleven#numbers
+n$labing-pito$seventeen#numbers
+n$labing-walo$eighteen#numbers
+n$labinlima$fifteen#numbers
+n$labinsiyam$nineteen#numbers
 n$labintador$firecracker
 adj$labis$excessive
 adv$labis$deeply
@@ -17284,7 +17284,7 @@ n$libis$slope
 adj$liblib$heavier in the front than at the back (vehicles)
 adj$liblib$hidden
 n$libliban$refuge
-n$libo$thousand (1,000)#numbers
+n$libo$thousand#numbers
 n$libog$lust
 comp$libong angaw$billion
 comp$libong taon$millennium
@@ -17451,17 +17451,17 @@ adj$limahid$dirty on dress and body
 n$limahid$shabbiness and dirtiness (clothes
 v$limahin$make into five
 adj$limak$beside the point in a conversation
-n$limampu$fifty (50)#numbers
+n$limampu$fifty#numbers
 n$limandas$tetrode (electron tube)
 n$limang$mistake or distraction in counting
 n$limang-angaw$five million
-n$limang-daan$five hundred (500)#numbers
+n$limang-daan$five hundred#numbers
 n$limang-laksa$fifty thousand
-n$limang-yuta$five hundred thousand (500 000)
+n$limang-yuta$five hundred thousand
 v$limangin$put out or cause to err in counting
-n$limangyuta$five hundred thousand (500 000)
-n$limanlaksa$fifty thousand (50 000)
-n$limanlibo$five thousand (5000)
+n$limangyuta$five hundred thousand
+n$limanlaksa$fifty thousand
+n$limanlibo$five thousand
 n$limas$act of bailing out water from a small boat, pond or pool
 v$limasan$bail/scoop out water from a small boat, pond or pool
 v$limasin$bail/scoop out water from a small boat, pond or pool
@@ -39152,7 +39152,7 @@ v$sampilungin$slap someone on the face
 n$samporado$rice porridge with chocolate
 n$sampot$acquiring something accidentally
 n$sampoy$dried fruit (salted or sweetened)
-n$sampu$ten (10)#numbers
+n$sampu$ten#numbers
 n$sampuan$decimal (mathematics)
 adj$sampuan$ten by ten
 comp$sampuang diulitin$nonrepeating decimal (mathematics)
@@ -39623,7 +39623,7 @@ n$segurista$person who does things only when sure of success
 n$seguro$certainty
 n$seguro$insurance (property)
 comp$seguro sa sunog$fire insurance
-n$seis$six (6)#numbers
+n$seis$six#numbers
 n$seisiyentos$six hundred
 n$seisyentos$six hundred
 n$sekante$blotting paper
@@ -39759,10 +39759,10 @@ n$seryo$serious
 n$Seryum$Cerium (Ce)#Chemistry
 n$sesante$dismissed employee
 adj$sesaryan$caesarian
-n$sesenta$sixty (60)#numbers
+n$sesenta$sixty#numbers
 n$sesyon$session (meeting of a court, council) lesson
 n$Sesyum$Cesium (Cs)
-n$setenta$seventy (70)#numbers
+n$setenta$seventy#numbers
 n$setro$scepter
 gram$si (si Juan, si Maria)$used in nominative case before names of persons
 n$siba$gluttony
@@ -40133,7 +40133,7 @@ n$singki$greenhorn
 n$singkil$elbowing one's way
 v$singkilin$elbow one's way
 adj$singkit$slanting to the eyes)
-n$singko$five (5)#numbers
+n$singko$five#numbers
 adj$singkol$crooked
 n$singkom$species of citrus tree and its fruit
 n$singkopa$syncope (elision of words)
@@ -40366,12 +40366,12 @@ comp$siya mismo$himself
 intrj$Siya na$Stop it! That's enough
 intrj$Siya nawa$Amen! So may it be!
 v$siyahan$saddle
-n$siyam$nine (9)#numbers
+n$siyam$nine#numbers
 comp$siyam na beses$ninefold
 comp$siyam na libo$nine thousand#numbers
 comp$siyam na raan$nine hundred#numbers
 n$siyaman$nine day's prayer for the dead
-n$siyamnapu$ninety (90)#numbers
+n$siyamnapu$ninety#numbers
 n$siyampu$shampoo
 v$siyampuhin$shampoo
 adv$siyanga$indeed
@@ -40387,11 +40387,11 @@ adv$siyempre$always
 n$siyensiya$science
 n$siyensya$science
 n$siyentipiko$scientist
-n$siyento$hundred (100)#numbers
+n$siyento$hundred#numbers
 adj$siyerto$certain
 v$siyertuhin$make sure of
 n$siyesta$siesta
-n$siyete$seven (7)#numbers
+n$siyete$seven#numbers
 n$siyok$frightened cry of chickens
 n$siyoktong$rice wine
 n$siyopaw$steamed rice cake with meat and condiments
@@ -42339,7 +42339,7 @@ adv$tatluhan$in groups of three
 adj$tatluhang-buwan$quarterly
 v$tatluhin$triple
 v$tatluhing sipi$triple
-n$tatlumpu$thirty (30)#numbers
+n$tatlumpu$thirty#numbers
 v$tatlumpuin$increase to thirty
 n$tatoo$tattooing
 n$tatsa$faultfinding
@@ -43132,8 +43132,8 @@ n$tray$tray (for carrying things on)
 n$treinta$thirty
 n$tren$train#around town
 n$tres$three
-n$trese$thirteen (13)#numbers
-n$tresyentos$three hundred (300)#numbers
+n$trese$thirteen#numbers
+n$tresyentos$three hundred#numbers
 n$trianggulo$triangle
 n$tribu$tribe
 n$tribuna$board of judges
@@ -45057,15 +45057,15 @@ n$waliswalisan$broom weed (weed used for making brooms)
 n$waliswis$swishing sound from trees made by the wind
 n$waliwali$closeness of the time of delivery of pregnant woman
 n$waliwali$defective eyesight caused by extreme exhaustion/hunger
-n$wallet$wallet (US: billfold)
-n$walo$eight (8)#numbers
+n$wallet$wallet
+n$walo$eight#numbers
 n$walsiha$octagon (mathematics)
 adv$walu-walo$in groups of eight
 adv$waluhan$in groups of eight
 v$waluhin$make eight (in numbers)
-n$walumpu$eighty (80)#numbers
-n$walundaan$eight hundred (800)#numbers
-n$walunlibo$eight thousand (8000)#numbers
+n$walumpu$eighty#numbers
+n$walundaan$eight hundred#numbers
+n$walunlibo$eight thousand#numbers
 adj$walwal$spread out
 n$wangis$similitude
 adj$wangis-wangis$like
