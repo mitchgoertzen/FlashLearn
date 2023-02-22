@@ -251,7 +251,7 @@ class HomeActivity : AppCompatActivity() {
             val adRequest = AdRequest.Builder().build()
 
             // Start loading the ad in the background.
-            binding.adView.loadAd(adRequest)
+            binding.adViewHome.loadAd(adRequest)
             launch = false
         }
 

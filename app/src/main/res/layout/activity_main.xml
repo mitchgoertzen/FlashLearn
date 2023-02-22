@@ -69,7 +69,7 @@
 
 
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+            android:id="@+id/adViewLearning"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:scrollbars="none"
