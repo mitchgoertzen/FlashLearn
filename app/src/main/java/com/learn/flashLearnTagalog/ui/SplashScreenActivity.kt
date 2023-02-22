@@ -1,14 +1,17 @@
 package com.learn.flashLearnTagalog.ui
 
+import android.R.attr.x
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
@@ -18,10 +21,9 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
+
 
 //get current version from build version
 private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
@@ -40,6 +42,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivitySplashScreenBinding
+    private lateinit var progress : ProgressBar
 
     private lateinit var dataProcessor: DataProcessor
     private lateinit var lessonCreator: LessonCreator
@@ -66,6 +69,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         val view = binding.root
+
+        //progress = view.findViewById(R.id.progressBar)
 
         setContentView(view)
         val initText: TextView = view.findViewById(R.id.tvInit)
@@ -127,8 +132,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @DelicateCoroutinesApi
     fun updateWords(init: Boolean, words: MutableList<Word>, initText: TextView) {
-
-        GlobalScope.launch {
+        var i = 1
+        val size = words.size
+        lifecycleScope.async(Dispatchers.IO) {
             suspend {
                 if (init) {
                     initText.text = "Initializing Word Database..."
@@ -142,6 +148,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     initText.text = "Updating Word Database..."
                     println("updating words...")
                     for (w in words) {
+                        //progress.progress = (i++/size)*100
                         viewModel.updateWordInfo(
                             w.id,
                             w.type,

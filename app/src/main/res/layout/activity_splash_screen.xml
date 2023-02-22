@@ -10,13 +10,35 @@
         android:id="@+id/tvInit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:outlineAmbientShadowColor="@color/black"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/flInit"
+        app:layout_constraintBottom_toTopOf="@+id/tvInit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progressBar"-->
+<!--        style="?android:attr/progressBarStyleHorizontal"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"/>-->
+
+    <TextView
+        android:id="@+id/tvInit2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:outlineAmbientShadowColor="@color/black"
+        android:paddingBottom="25dp"
+        android:text="(this may take a while)"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
