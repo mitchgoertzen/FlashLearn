@@ -30,7 +30,6 @@
             android:layout_marginBottom="-20dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/horsey"
             android:visibility="invisible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,17 +3,14 @@ package com.learn.flashLearnTagalog.ui
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
-import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import javax.inject.Inject
@@ -47,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
         if(DEBUG){
 
-            val viewModel: MainViewModel by viewModels()
+          //  val viewModel: MainViewModel by viewModels()
 
 
             //world

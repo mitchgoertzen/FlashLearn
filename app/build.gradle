@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.kapt'
-    id 'com.google.gms.google-services'
+//    id 'com.google.gms.google-services'
 }
 
 android {
@@ -18,15 +18,15 @@ android {
         applicationId "com.learn.flashLearnTagalog"
         minSdk 21
         targetSdk 32
-        versionCode 6
-        versionName "0.6"
+        versionCode 9
+        versionName "0.9"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,9 +47,6 @@ android {
 }
 
 dependencies {
-
-    implementation platform('com.google.firebase:firebase-bom:31.2.2')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
