@@ -111,4 +111,10 @@ dependencies {
     def splashScreenVersion = "1.0.0"
     implementation("androidx.core:core-splashscreen:$splashScreenVersion")
 
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
+    implementation("com.google.firebase:firebase-database")
+
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.database
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
@@ -15,11 +19,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     private val DEBUG = false
 
+    private lateinit var database: DatabaseReference
     @Inject
     lateinit var wordDAO: WordDAO
 
@@ -41,6 +47,14 @@ class HomeActivity : AppCompatActivity() {
         val view = binding.root
 
         setContentView(view)
+
+        var database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("message")
+
+        val message: MutableMap<String, String> = HashMap()
+        message["text"] = "Hello, World!"
+
+        myRef.push().setValue(message)
 
         if(DEBUG){
 
