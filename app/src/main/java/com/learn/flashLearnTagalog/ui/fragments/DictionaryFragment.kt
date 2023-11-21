@@ -19,10 +19,7 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -145,7 +142,7 @@ class DictionaryFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
 
-        CoroutineScope(Dispatchers.Main).launch {
+        GlobalScope.launch(Dispatchers.Main) {
             suspend {
                 //clear currently displayed words from the screen
                 dictionaryAdapter.deleteDictionaryWords()

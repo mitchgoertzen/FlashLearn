@@ -19,10 +19,7 @@ import com.learn.flashLearnTagalog.db.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -133,7 +130,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @DelicateCoroutinesApi
     fun updateWords(init: Boolean, words: MutableList<Word>, initText: TextView) {
-        CoroutineScope(Dispatchers.IO).launch {
+        GlobalScope.launch {
             suspend {
                 if (init) {
                     initText.text = "Initializing Word Database..."
@@ -170,6 +167,7 @@ class SplashScreenActivity : AppCompatActivity() {
                             initLessons(initText)
                         } else
                             goToHomeActivity()
+                        this.cancel("thread no longer needed. thread cancelled")
                     }
                 }, 500)
             }.invoke()
@@ -181,7 +179,7 @@ class SplashScreenActivity : AppCompatActivity() {
         initText.text = "Initializing Lesson Database..."
         println("initializing lessons...")
         lessonCreator = LessonCreator(viewModel)
-        CoroutineScope(Dispatchers.IO).launch {
+        GlobalScope.launch {
             suspend {
                 //clear any data in db
                 viewModel.nukeLessons()
@@ -203,7 +201,7 @@ class SplashScreenActivity : AppCompatActivity() {
         var practiceCompleted: Boolean
         var testPassed: Boolean
         var locked: Boolean
-        CoroutineScope(Dispatchers.IO).launch {
+        GlobalScope.launch {
             suspend {
 
                 //if lesson name has been changed

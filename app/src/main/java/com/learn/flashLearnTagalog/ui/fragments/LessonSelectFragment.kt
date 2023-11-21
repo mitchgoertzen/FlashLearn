@@ -84,7 +84,8 @@ class LessonSelectFragment : Fragment() {
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
         var dbLessons: MutableList<Lesson> = mutableListOf()
-        CoroutineScope(Dispatchers.Main).launch {
+
+       GlobalScope.launch(Dispatchers.Main){
             suspend {
                 //get lessons from database
                 viewModel.getAllLessons().observe(viewLifecycleOwner) {

@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     buildFeatures {
         viewBinding = true
@@ -17,9 +17,9 @@ android {
     defaultConfig {
         applicationId "com.learn.flashLearnTagalog"
         minSdk 21
-        targetSdk 32
-        versionCode 9
-        versionName "0.9"
+        targetSdk 33
+        versionCode 10
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,6 +44,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.learn.flashLearnTagalog'
 }
 
 dependencies {
