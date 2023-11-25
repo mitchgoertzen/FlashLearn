@@ -1,7 +1,7 @@
 package com.learn.flashLearnTagalog
 
 import android.content.res.Resources
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomWord
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 class DataProcessor(val resources: Resources) {
 
-    private var words: MutableList<Word> = mutableListOf()
+    private var words: MutableList<RoomWord> = mutableListOf()
 
     init {
         val input: InputStream = resources.openRawResource(R.raw.tag_dollar)
@@ -69,14 +69,14 @@ class DataProcessor(val resources: Resources) {
             }
             tag = tag.lowercase()
             eng = eng.lowercase()
-            val word = Word(id++, type, tag, eng, cat)
+            val word = RoomWord(id++, type, tag, eng, cat)
             words.add(word)
         }
 
         input.close()
     }
 
-    fun getWords(): MutableList<Word> {
+    fun getWords(): MutableList<RoomWord> {
         return words
     }
 }

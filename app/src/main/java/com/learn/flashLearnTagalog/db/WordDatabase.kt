@@ -6,7 +6,7 @@ import androidx.room.migration.AutoMigrationSpec
 
 @Database(
     version = 2,
-    entities = [Word::class, Lesson::class],
+    entities = [RoomWord::class, RoomLesson::class],
     exportSchema = true,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = WordDatabase.MyAutoMigration::class)

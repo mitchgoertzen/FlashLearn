@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 //table in database to hold lessons
 @Entity(tableName = "lesson_table")
-data class Lesson(
+data class RoomLesson(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val category: String,

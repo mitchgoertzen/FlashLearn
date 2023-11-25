@@ -1,13 +1,12 @@
 package com.learn.flashLearnTagalog.db
 
-import android.media.Image
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 //table in database to hold words
 @Entity(tableName = "word_table")
-data class Word(
+data class RoomWord(
         @PrimaryKey(autoGenerate = false)
         val id: Int,
         val type:String,

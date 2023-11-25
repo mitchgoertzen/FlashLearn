@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.databinding.DictionaryWordBinding
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomWord
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>) :
+class DictionaryAdapter @Inject constructor(private val words: MutableList<RoomWord>) :
     RecyclerView.Adapter<DictionaryAdapter.DictionaryViewHolder>() {
 
-    lateinit var currentList: List<Word>
+    lateinit var currentList: List<RoomWord>
 
     class DictionaryViewHolder(val binding: DictionaryWordBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -32,7 +32,7 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         }
     }
 
-    fun addDictionaryWord(word: Word) {
+    fun addDictionaryWord(word: RoomWord) {
         words.add(word)
         notifyItemInserted(words.size - 1)
     }
@@ -43,7 +43,7 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         notifyItemRangeRemoved(0, size)
     }
 
-    fun intiList(list: List<Word>) {
+    fun intiList(list: List<RoomWord>) {
         currentList = list
     }
 
@@ -55,7 +55,7 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         return words.size
     }
 
-    fun getLessons(): MutableList<Word> {
+    fun getLessons(): MutableList<RoomWord> {
         return words
     }
 }

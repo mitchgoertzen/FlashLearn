@@ -1,7 +1,7 @@
 package com.learn.flashLearnTagalog.repos
 
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.db.WordDAO
 import javax.inject.Inject
 
@@ -10,11 +10,11 @@ import javax.inject.Inject
 class MainRepo @Inject constructor(
     private val wordDao: WordDAO
 ) {
-    suspend fun insertWord(word: Word) = wordDao.insertWord(word)
+    suspend fun insertWord(word: RoomWord) = wordDao.insertWord(word)
 
-    fun insertAll(words: List<Word>) = wordDao.insertAll(words)
+    fun insertAll(words: List<RoomWord>) = wordDao.insertAll(words)
 
-    suspend fun deleteWord(word: Word) = wordDao.deleteWord(word)
+    suspend fun deleteWord(word: RoomWord) = wordDao.deleteWord(word)
 
     fun getSize() = wordDao.getSize()
 
@@ -105,9 +105,9 @@ class MainRepo @Inject constructor(
     fun previousTestPassed(category: String, level: Int) =
         wordDao.previousTestPassed(category, level)
 
-    fun insertAllLessons(lessons: List<Lesson>) = wordDao.insertAllLessons(lessons)
+    fun insertAllLessons(lessons: List<RoomLesson>) = wordDao.insertAllLessons(lessons)
 
-    suspend fun insertLesson(lesson: Lesson) = wordDao.insertLesson(lesson)
+    suspend fun insertLesson(lesson: RoomLesson) = wordDao.insertLesson(lesson)
 
     fun unlockNextLesson(category: String, level: Int) = wordDao.unlockNextLesson(category, level)
 

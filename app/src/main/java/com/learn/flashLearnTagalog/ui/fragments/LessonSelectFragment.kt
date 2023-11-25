@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.LessonAdapter
-import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
@@ -83,7 +83,7 @@ class LessonSelectFragment : Fragment() {
 
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
-        var dbLessons: MutableList<Lesson> = mutableListOf()
+        var dbLessons: MutableList<RoomLesson> = mutableListOf()
 
        GlobalScope.launch(Dispatchers.Main){
             suspend {

@@ -12,8 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -22,12 +22,12 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LessonTypeDialogueFragment(private var currentLesson: Lesson) : DialogFragment() {
+class LessonTypeDialogueFragment(private var currentLesson: RoomLesson) : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
     private val viewModel: MainViewModel by viewModels()
-    private var wordList: MutableList<Word> = mutableListOf()
+    private var wordList: MutableList<RoomWord> = mutableListOf()
     private var practiceCompleted: Boolean = false
 
     override fun onStart() {

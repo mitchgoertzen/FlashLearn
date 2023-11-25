@@ -15,7 +15,7 @@ import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,6 +53,8 @@ class SplashScreenActivity : AppCompatActivity() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
 
         lessonNum = viewModel.getLessonCount()
         wordNum = viewModel.getSize()
@@ -129,7 +131,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     @DelicateCoroutinesApi
-    fun updateWords(init: Boolean, words: MutableList<Word>, initText: TextView) {
+    fun updateWords(init: Boolean, words: MutableList<RoomWord>, initText: TextView) {
         GlobalScope.launch {
             suspend {
                 if (init) {

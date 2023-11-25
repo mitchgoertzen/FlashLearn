@@ -22,8 +22,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
 import com.learn.flashLearnTagalog.data.TestWord
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
+class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson: RoomLesson) :
     Fragment(R.layout.fragment_test) {
 
     private lateinit var testWordAdapter: TestWordAdapter
@@ -50,9 +50,9 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     private var skipped: Boolean = false
     private var engFirst: Boolean = false
     private var masterWordList = masterList
-    private var currentWordList: MutableList<Word> = mutableListOf()
+    private var currentWordList: MutableList<RoomWord> = mutableListOf()
     private var wordsCorrect: Int = 0
-    private lateinit var currentWord: Word
+    private lateinit var currentWord: RoomWord
     private var i = 1
     private lateinit var textLine: String
 

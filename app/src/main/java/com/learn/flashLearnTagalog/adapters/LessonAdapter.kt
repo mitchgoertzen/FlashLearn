@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.LessonBinding
-import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonTypeDialogueFragment
 import com.learn.flashLearnTagalog.ui.fragments.SettingsFragment
@@ -15,10 +15,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>) :
+class LessonAdapter @Inject constructor(private val lessons: MutableList<RoomLesson>) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
-    lateinit var currentList: List<Lesson>
+    lateinit var currentList: List<RoomLesson>
 
     class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -104,7 +104,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         }
     }
 
-    fun addLesson(lesson: Lesson) {
+    fun addLesson(lesson: RoomLesson) {
         lessons.add(lesson)
         notifyItemInserted(lessons.size - 1)
     }
@@ -115,7 +115,7 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         notifyItemRangeRemoved(0, size)
     }
 
-    fun intiList(list: List<Lesson>) {
+    fun intiList(list: List<RoomLesson>) {
         currentList = list
     }
 
@@ -127,34 +127,34 @@ class LessonAdapter @Inject constructor(private val lessons: MutableList<Lesson>
         return lessons.size
     }
 
-    fun getLessons(): MutableList<Lesson> {
+    fun getLessons(): MutableList<RoomLesson> {
         return lessons
     }
 
     fun sortList(type: Int) {
         if (lessons.size > 0) {
-            val customLesson: Lesson = lessons.removeAt(0)
+            val customLesson: RoomLesson = lessons.removeAt(0)
 
             when (type) {
                 //Category
                 0 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
+                    lessons.sortWith(compareBy<RoomLesson> { it.category }.thenBy { it.level })
                 }
                 //Level
                 1 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.difficulty })
+                    lessons.sortWith(compareBy<RoomLesson> { it.level }.thenBy { it.difficulty })
                 }
                 //Difficulty low to high
                 2 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.difficulty }.thenBy { it.category })
+                    lessons.sortWith(compareBy<RoomLesson> { it.difficulty }.thenBy { it.category })
                 }
                 //Difficulty high to low
                 3 -> {
-                    lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
+                    lessons.sortWith(compareByDescending<RoomLesson> { it.difficulty }.thenBy { it.category })
                 }
                 //Locked
                 4-> {
-                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.difficulty }
+                    lessons.sortWith(compareBy<RoomLesson> { it.locked }.thenBy { it.difficulty }
                         .thenBy { it.category })
                 }
             }

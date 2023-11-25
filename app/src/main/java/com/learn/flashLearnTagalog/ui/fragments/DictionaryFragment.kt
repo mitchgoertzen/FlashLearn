@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +28,7 @@ class DictionaryFragment : Fragment() {
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
     private val viewModel: MainViewModel by viewModels()
-    private var wordList: MutableList<Word> = mutableListOf()
+    private var wordList: MutableList<RoomWord> = mutableListOf()
     private var wordsPerPage = 200
     private var numPages = 1
     private var currentPage = 1

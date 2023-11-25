@@ -3,8 +3,8 @@ package com.learn.flashLearnTagalog.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.repos.MainRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -17,14 +17,14 @@ class MainViewModel @Inject constructor(
     val mainRepo: MainRepo
 ) : ViewModel() {
 
-    fun insertWord(word: Word) = viewModelScope.launch {
+    fun insertWord(word: RoomWord) = viewModelScope.launch {
         //Log.d("INSERT", "$word has been inserted")
         val insert = async { mainRepo.insertWord(word) }
         insert.await()
 
     }
 
-    fun insertAll(words: List<Word>) = viewModelScope.launch {
+    fun insertAll(words: List<RoomWord>) = viewModelScope.launch {
         //Log.d("INSERT", "$word has been inserted")
         mainRepo.insertAll(words)
     }
@@ -137,12 +137,12 @@ class MainViewModel @Inject constructor(
     fun previousTestPassed(category: String, level: Int) =
         mainRepo.previousTestPassed(category, level)
 
-    fun insertAllLessons(lessons: List<Lesson>) = viewModelScope.launch {
+    fun insertAllLessons(lessons: List<RoomLesson>) = viewModelScope.launch {
         Log.d("INSERT", "$lessons have been inserted")
         mainRepo.insertAllLessons(lessons)
     }
 
-    fun insertLesson(lesson: Lesson) = viewModelScope.launch {
+    fun insertLesson(lesson: RoomLesson) = viewModelScope.launch {
         Log.d("INSERT", "$lesson has been inserted")
         val insert = async { mainRepo.insertLesson(lesson) }
         insert.await()

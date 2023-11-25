@@ -9,20 +9,20 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PracticeFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
+class PracticeFragment(masterList: MutableList<RoomWord>, private var currentLesson: RoomLesson) :
     Fragment(R.layout.fragment_practice) {
 
     private var masterWordList = masterList
-    private lateinit var currentWord: Word
-    private var currentWordList: MutableList<Word> = mutableListOf()
+    private lateinit var currentWord: RoomWord
+    private var currentWordList: MutableList<RoomWord> = mutableListOf()
     private var i = 0
 
     private val viewModel: MainViewModel by viewModels()

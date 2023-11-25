@@ -21,8 +21,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENABLE_PRONUNCIATION
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
@@ -40,7 +40,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fragment_settings) {
+class SettingsFragment(private var currentLesson: RoomLesson) : Fragment(R.layout.fragment_settings) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -48,8 +48,8 @@ class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fr
     private val viewModel: MainViewModel by viewModels()
 
 
-    private var practiceWordList: MutableList<Word> = mutableListOf()
-    private var testWordList: MutableList<Word> = mutableListOf()
+    private var practiceWordList: MutableList<RoomWord> = mutableListOf()
+    private var testWordList: MutableList<RoomWord> = mutableListOf()
     private var practicedWordListLargeEnough: Boolean = true
 
     private var showImage: Boolean = false

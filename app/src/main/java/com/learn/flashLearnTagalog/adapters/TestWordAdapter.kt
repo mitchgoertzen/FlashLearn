@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.databinding.TestWordBinding
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomWord
 
 class TestWordAdapter(
 
@@ -16,7 +16,7 @@ class TestWordAdapter(
 
 ) : RecyclerView.Adapter<TestWordAdapter.TestWordViewHolder>() {
 
-    lateinit var currentList: List<Word>
+    lateinit var currentList: List<RoomWord>
     private var showEngFirst: Boolean = false
     private var isAnswer: Boolean = false
 
@@ -56,7 +56,7 @@ class TestWordAdapter(
         return testWords.size
     }
 
-    fun intiList(list: List<Word>) {
+    fun intiList(list: List<RoomWord>) {
         currentList = list
     }
 

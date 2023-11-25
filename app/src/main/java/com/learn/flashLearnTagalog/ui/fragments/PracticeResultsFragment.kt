@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
-import com.learn.flashLearnTagalog.db.Lesson
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,8 +20,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class PracticeResultsFragment(
-    private var wordList: MutableList<Word>,
-    private var currentLesson: Lesson
+    private var wordList: MutableList<RoomWord>,
+    private var currentLesson: RoomLesson
 ) : Fragment(R.layout.fragment_practice_results) {
 
     @Inject

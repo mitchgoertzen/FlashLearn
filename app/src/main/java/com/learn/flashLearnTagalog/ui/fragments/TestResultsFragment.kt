@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
-import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestResultsFragment(var lesson : Lesson, wordsCorrect: Int, var adapter: TestWordAdapter) :
+class TestResultsFragment(var lesson : RoomLesson, wordsCorrect: Int, var adapter: TestWordAdapter) :
     Fragment(R.layout.fragment_test_results) {
 
     @Inject

@@ -1,11 +1,11 @@
 package com.learn.flashLearnTagalog
 
-import com.learn.flashLearnTagalog.db.Lesson
+import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 
 class LessonCreator(var viewModel: MainViewModel) {
 
-    private val myLessons: MutableList<Lesson> = mutableListOf()
+    private val myLessons: MutableList<RoomLesson> = mutableListOf()
 
     //if a lesson's min or max word length have not been set manually,
     //they will default to these values
@@ -24,7 +24,7 @@ class LessonCreator(var viewModel: MainViewModel) {
     init {
 
         val lesson1 =
-            Lesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1, 2)
+            RoomLesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1, 2)
         lesson1.locked = false
         myLessons.add(lesson1)
 
@@ -99,7 +99,7 @@ class LessonCreator(var viewModel: MainViewModel) {
         imageID: Int,
         overrideMin: Int,
         overrideMax: Int
-    ): Lesson {
+    ): RoomLesson {
         var minLength = overrideMin
         var maxLength = overrideMax
 
@@ -126,7 +126,7 @@ class LessonCreator(var viewModel: MainViewModel) {
         }
         //id of each lesson is the hashcode of the string containing category+level
         val id = category.plus(level).hashCode()
-        val newLesson = Lesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
+        val newLesson = RoomLesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
         newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
 
@@ -171,7 +171,7 @@ class LessonCreator(var viewModel: MainViewModel) {
         return difficulty
     }
 
-    fun getLessons(): MutableList<Lesson> {
+    fun getLessons(): MutableList<RoomLesson> {
         return myLessons
     }
 
