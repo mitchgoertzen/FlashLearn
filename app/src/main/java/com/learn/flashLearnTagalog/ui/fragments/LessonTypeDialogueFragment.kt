@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.Button
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.alpha
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R

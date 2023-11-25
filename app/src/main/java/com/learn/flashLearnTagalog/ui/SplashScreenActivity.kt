@@ -1,19 +1,24 @@
 package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
@@ -54,35 +59,105 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val db = Firebase.firestore
+
+        val newWord = Word(
+            "bear",
+            "oso",
+            "noun",
+            "Animals",
+        )
+
+        db.collection("words").document("bearoso").set(newWord)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: bearoso, $documentReference")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+            }
 
 
-        lessonNum = viewModel.getLessonCount()
-        wordNum = viewModel.getSize()
 
-        //manually reset user preferences
-        //sharedPref.edit().clear().apply()
+            lessonNum = viewModel.getLessonCount()
+            wordNum = viewModel.getSize()
+        /*
 
-        //get current version of app
-        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+        if(not a user){
+            wordstatslist = []
+            lessonstatslist = []
+            //before user is added to db
+            email = input
 
-        println("version: $version")
+            if(lessonNum > 0){
+                for(roomlesson in viewModel.getalllessons){
+                    migratedlesson = LessonStats(
+                    rl.locked,
+                    rl.practice,
+                    rl.test
+                    )
+                    lessonstatslist.add(migratedlesson)
+                }
+            }
 
-        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        val view = binding.root
 
-        //progress = view.findViewById(R.id.progressBar)
+            if(wordNum > 0){
+                for(roomword in viewmodel.getpracticedwords){
+                    migratedword  = wordstats(
+                    mw.practiced,
+                    mw.prevResult,
+                    mw.timescorrect,
+                    mw.timesanswered,
+                    mw.skipped,
+                    mw.flipped
+                    )
+                    wordstatslist.add(migratedword)
+                }
+            }
 
-        setContentView(view)
-        val initText: TextView = view.findViewById(R.id.tvInit)
+            if(sign up){
+                user = User(
+                id = email,
+                wordstats = wordstats,
+                lessonstats = lessonstats
+                )
 
-        //if version is lower, it will be set to update's version
-        if (version < CURRENT_VERSION || viewModel.getSize() == 0) {
-            //begin update check
-            update(initText)
-        } else {
-            //continue to home activity
-            goToHomeActivity()
+                db.collections("users").add(user)
+            }else{
+                save wordstatslist,lessonstatslist to text file?
+
+            }
+
         }
+
+         */
+
+        goToHomeActivity()
+
+
+//        //manually reset user preferences
+//        //sharedPref.edit().clear().apply()
+//
+//        //get current version of app
+//        version = sharedPref.getInt(Constants.KEY_VERSION, 0)
+//
+//        println("version: $version")
+//
+//        binding = ActivitySplashScreenBinding.inflate(layoutInflater)
+//        val view = binding.root
+//
+//        //progress = view.findViewById(R.id.progressBar)
+//
+//        setContentView(view)
+//        val initText: TextView = view.findViewById(R.id.tvInit)
+//
+//        //if version is lower, it will be set to update's version
+//        if (version < CURRENT_VERSION || viewModel.getSize() == 0) {
+//            //begin update check
+//            update(initText)
+//        } else {
+//            //continue to home activity
+//            goToHomeActivity()
+//        }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
