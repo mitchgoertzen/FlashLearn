@@ -8,4 +8,6 @@ data class Word (
     val image : String? = "",
     val correctTranslation : Boolean? = null,
     val uncommon : Boolean? = null
-    )
+    ){
+    val id : Int get() = hashCode()
+}

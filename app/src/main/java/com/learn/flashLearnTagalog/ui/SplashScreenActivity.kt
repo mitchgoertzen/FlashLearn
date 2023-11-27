@@ -1,24 +1,18 @@
 package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
-import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
@@ -58,23 +52,6 @@ class SplashScreenActivity : AppCompatActivity() {
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val db = Firebase.firestore
-
-        val newWord = Word(
-            "bear",
-            "oso",
-            "noun",
-            "Animals",
-        )
-
-        db.collection("words").document("bearoso").set(newWord)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: bearoso, $documentReference")
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
 
 
 
