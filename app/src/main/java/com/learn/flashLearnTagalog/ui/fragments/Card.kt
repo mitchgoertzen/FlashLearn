@@ -9,21 +9,20 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.RoomWord
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class Card(word: RoomWord) : Fragment() {
+class Card(word: Word) : Fragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    private val viewModel: MainViewModel by viewModels()
+   // private val viewModel: MainViewModel by viewModels()
 
     val currentWord = word
     var shownWord: String = ""
@@ -105,7 +104,10 @@ class Card(word: RoomWord) : Fragment() {
         val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
         //flip card to reverse side on button press
         imFlipCard.setOnClickListener {
-            currentWord.id?.let { it1 -> viewModel.flipWord(it1) }
+            currentWord.id.let { it1 ->
+                DataUtility.flipWord(it1)
+                //viewModel.flipWord(it1)
+            }
             //display translation of word that is currently shown
             //adjust max lines of text as done previously
             if (shownWord == currentWord.english)

@@ -22,6 +22,10 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -159,7 +163,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
-            lessonAdapter.sortList(sortOptionAdapter.getSelected())
+           // lessonAdapter.sortList(sortOptionAdapter.getSelected())
 
             sharedPref.edit()
                 .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
@@ -185,11 +189,19 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
                 .putBoolean(KEY_LESSON_UNLOCKED, selectUnlocked)
                 .apply()
 
+
+
             lessonAdapter.deleteLessons()
 
             dialog?.dismiss()
 
-            (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
+            val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+            scope.launch {
+                //TODO: flicker on filter comes from having to delete words then recreate the list
+                //find way to replace words in llist rather than delete and refill
+                (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
+            }
         }
         return view
     }

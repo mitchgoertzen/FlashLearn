@@ -21,8 +21,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.RoomLesson
-import com.learn.flashLearnTagalog.db.RoomWord
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENABLE_PRONUNCIATION
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
@@ -33,23 +34,22 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_SHOW_HINTS
 import com.learn.flashLearnTagalog.other.Constants.KEY_SHOW_IMAGE
 import com.learn.flashLearnTagalog.other.Constants.KEY_SHOW_WORD
 import com.learn.flashLearnTagalog.ui.LearningActivity
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SettingsFragment(private var currentLesson: RoomLesson) : Fragment(R.layout.fragment_settings) {
+class SettingsFragment(private var currentLesson: Lesson) : Fragment(R.layout.fragment_settings) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    private val viewModel: MainViewModel by viewModels()
+    //private val viewModel: MainViewModel by viewModels()
 
 
-    private var practiceWordList: MutableList<RoomWord> = mutableListOf()
-    private var testWordList: MutableList<RoomWord> = mutableListOf()
+    private var practiceWordList: MutableList<Word> = mutableListOf()
+    private var testWordList: MutableList<Word> = mutableListOf()
     private var practicedWordListLargeEnough: Boolean = true
 
     private var showImage: Boolean = false
@@ -406,61 +406,104 @@ class SettingsFragment(private var currentLesson: RoomLesson) : Fragment(R.layou
     }
 
     private fun gatherPracticeWords() {
-        when (difficultyBarValue) {
-            0 -> {
-                viewModel.getWordsByDifficulty(0, 0, 5).observe(viewLifecycleOwner) {
-                    practiceWordList = it.toMutableList()
-                }
-            }
-            1 -> {
-                viewModel.getWordsByDifficulty(0, 6, 7).observe(viewLifecycleOwner) {
-                    practiceWordList = it.toMutableList()
-                }
-            }
-            2 -> {
-                viewModel.getWordsByDifficulty(0, 8, 9).observe(viewLifecycleOwner) {
-                    practiceWordList = it.toMutableList()
-                }
-            }
-            3 -> {
-                viewModel.getWordsByDifficulty(0, 10, 11).observe(viewLifecycleOwner) {
-                    practiceWordList = it.toMutableList()
-                }
-            }
-            4 -> {
-                viewModel.getWordsByDifficulty(0, 12, 100).observe(viewLifecycleOwner) {
-                    practiceWordList = it.toMutableList()
-                }
-            }
 
+
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+        scope.launch {
+            practiceWordList = when (difficultyBarValue) {
+                0 -> {
+                    DataUtility.getWordsByDifficulty(0, 0, 5).toMutableList()
+//                viewModel.getWordsByDifficulty(0, 0, 5).observe(viewLifecycleOwner) {
+//                    practiceWordList = it.toMutableList()
+//                }
+                }
+
+                1 -> {
+                    DataUtility.getWordsByDifficulty(0, 6, 7).toMutableList()
+//                viewModel.getWordsByDifficulty(0, 6, 7).observe(viewLifecycleOwner) {
+//                    practiceWordList = it.toMutableList()
+//                }
+                }
+
+                2 -> {
+
+                    DataUtility.getWordsByDifficulty(0, 8, 9).toMutableList()
+//                viewModel.getWordsByDifficulty(0, 8, 9).observe(viewLifecycleOwner) {
+//                    practiceWordList = it.toMutableList()
+//                }
+                }
+
+                3 -> {
+
+                    DataUtility.getWordsByDifficulty(0, 10, 11).toMutableList()
+//                viewModel.getWordsByDifficulty(0, 10, 11).observe(viewLifecycleOwner) {
+//                    practiceWordList = it.toMutableList()
+//                }
+                }
+
+                4 -> {
+
+                    DataUtility.getWordsByDifficulty(0, 12, 100).toMutableList()
+//                viewModel.getWordsByDifficulty(0, 12, 100).observe(viewLifecycleOwner) {
+//                    practiceWordList = it.toMutableList()
+//                }
+                }
+
+                else -> {
+                    mutableListOf()
+                }
+            }
         }
     }
 
     private fun gatherTestWords() {
-        when (difficultyBarValue) {
-            0 -> {
-                viewModel.getWordsByDifficulty(1, 0, 4).observe(viewLifecycleOwner) {
-                    testWordList = it.toMutableList()
+
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+        scope.launch {
+            testWordList = when (difficultyBarValue) {
+                0 -> {
+
+                    DataUtility.getWordsByDifficulty(1, 0, 4).toMutableList()
+//                viewModel.getWordsByDifficulty(1, 0, 4).observe(viewLifecycleOwner) {
+//                    testWordList = it.toMutableList()
+//                }
                 }
-            }
-            1 -> {
-                viewModel.getWordsByDifficulty(1, 5, 6).observe(viewLifecycleOwner) {
-                    testWordList = it.toMutableList()
+
+                1 -> {
+
+                    DataUtility.getWordsByDifficulty(1, 5, 6).toMutableList()
+//                viewModel.getWordsByDifficulty(1, 5, 6).observe(viewLifecycleOwner) {
+//                    testWordList = it.toMutableList()
+//                }
                 }
-            }
-            2 -> {
-                viewModel.getWordsByDifficulty(1, 7, 8).observe(viewLifecycleOwner) {
-                    testWordList = it.toMutableList()
+
+                2 -> {
+
+                    DataUtility.getWordsByDifficulty(1, 7, 8).toMutableList()
+//                viewModel.getWordsByDifficulty(1, 7, 8).observe(viewLifecycleOwner) {
+//                    testWordList = it.toMutableList()
+//                }
                 }
-            }
-            3 -> {
-                viewModel.getWordsByDifficulty(1, 9, 10).observe(viewLifecycleOwner) {
-                    testWordList = it.toMutableList()
+
+                3 -> {
+
+                    DataUtility.getWordsByDifficulty(1, 9, 10).toMutableList()
+//                viewModel.getWordsByDifficulty(1, 9, 10).observe(viewLifecycleOwner) {
+//                    testWordList = it.toMutableList()
+//                }
                 }
-            }
-            4 -> {
-                viewModel.getWordsByDifficulty(1, 11, 100).observe(viewLifecycleOwner) {
-                    testWordList = it.toMutableList()
+
+                4 -> {
+
+                    DataUtility.getWordsByDifficulty(1, 11, 100).toMutableList()
+//                viewModel.getWordsByDifficulty(1, 11, 100).observe(viewLifecycleOwner) {
+//                    testWordList = it.toMutableList()
+//                }
+                }
+
+                else -> {
+                    mutableListOf()
                 }
             }
         }

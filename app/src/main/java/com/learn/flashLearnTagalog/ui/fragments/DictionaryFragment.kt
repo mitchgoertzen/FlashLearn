@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.toObject
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
-import com.learn.flashLearnTagalog.db.RoomWord
+import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.ui.LearningActivity
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -27,9 +29,12 @@ class DictionaryFragment : Fragment() {
 
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
-    private val viewModel: MainViewModel by viewModels()
-    private var wordList: MutableList<RoomWord> = mutableListOf()
-    private var wordsPerPage = 200
+
+    val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+   // private val viewModel: MainViewModel by viewModels()
+    private var wordList: MutableList<Word> = mutableListOf()
+    private var wordsPerPage: Long = 200
     private var numPages = 1
     private var currentPage = 1
 
@@ -57,16 +62,21 @@ class DictionaryFragment : Fragment() {
         val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
         val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
 
-        numPages = viewModel.getSize() / wordsPerPage
 
-        if (viewModel.getSize() % wordsPerPage > 0)
-            numPages++
+        scope.launch{
+            val wordCount = DataUtility.getWordCount()
+            println("WORD COUNT: $wordCount")
 
-        totalPages.text = numPages.toString()
+            numPages = wordCount / wordsPerPage.toInt()
+
+            if (wordCount % wordsPerPage > 0)
+                numPages++
+
+            totalPages.text = numPages.toString()
+        }
 
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
-
 
         //when firstPage button is pressed, (de)/activate this and corresponding buttons
         firstPage.setOnClickListener {
@@ -142,23 +152,36 @@ class DictionaryFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
 
-        GlobalScope.launch(Dispatchers.Main) {
-            suspend {
-                //clear currently displayed words from the screen
-                dictionaryAdapter.deleteDictionaryWords()
 
-                //gather next set of words, confined by current page and number of words per page
-                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
-                    .observe(viewLifecycleOwner) {
-                        wordList = it.toMutableList()
-                    }
-                Handler(Looper.getMainLooper()).postDelayed({
-                    for (word in wordList) {
-                        dictionaryAdapter.addDictionaryWord(word)
-                    }
-                }, 1000)
-            }.invoke()
+        scope.launch {
+            //clear currently displayed words from the screen
+            dictionaryAdapter.deleteDictionaryWords()
+
+        //TODO: need to use for start at: ((currentPage - 1) * wordsPerPage.toInt())
+            println("1")
+            wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
+            //gather next set of words, confined by current page and number of words per page
+
+            println("3")
+//                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
+//                    .observe(viewLifecycleOwner) {
+//                        wordList = it.toMutableList()
+//                    }
+            Handler(Looper.getMainLooper()).postDelayed({
+
+                println("4")
+                for (word in wordList) {
+                    dictionaryAdapter.addDictionaryWord(word)
+                }
+            }, 1000)
         }
+
+
+//        GlobalScope.launch(Dispatchers.Main) {
+//            suspend {
+//
+//            }.invoke()
+//        }
     }
 
     private fun activateSwitch(switch: ImageButton) {

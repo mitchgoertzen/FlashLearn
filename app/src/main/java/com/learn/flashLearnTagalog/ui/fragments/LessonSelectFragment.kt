@@ -1,22 +1,25 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.app.Activity
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.LessonAdapter
-import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
@@ -24,7 +27,6 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -34,11 +36,10 @@ import javax.inject.Inject
 class LessonSelectFragment : Fragment() {
 
     private lateinit var lessonAdapter: LessonAdapter
-
+    //TODO: replace with persistent data list
+    private lateinit var dbLessons: MutableList<Lesson>
     @Inject
     lateinit var sharedPref: SharedPreferences
-    private val viewModel: MainViewModel by viewModels()
-
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(
@@ -47,7 +48,7 @@ class LessonSelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        lessonAdapter = LessonAdapter(mutableListOf())
+        lessonAdapter = LessonAdapter(mutableListOf(), mutableListOf())
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 
@@ -76,60 +77,106 @@ class LessonSelectFragment : Fragment() {
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()
-        createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+        scope.launch {
+//            if(list is empty){
+//
+//            }
+            dbLessons = async { DataUtility.getAllLessons().toMutableList() }.await()
+
+            Log.d(TAG, "SIZE -  ${dbLessons.size}")
+            createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+            scope.cancel()
+        }
 
         return view
     }
 
     @DelicateCoroutinesApi
-    fun createLessonList(difficulties: MutableSet<String>) {
-        var dbLessons: MutableList<RoomLesson> = mutableListOf()
+     fun createLessonList(difficulties: MutableSet<String>)  {
+//                viewModel.getAllLessons().observe(viewLifecycleOwner) {
+//                    dbLessons = it.toMutableList()
+//                }
+            // Handler(Looper.getMainLooper()).postDelayed({
+            var add: Boolean
+            //after database access is complete, add lessons to adapter
+            for (lesson in dbLessons) {
 
-       GlobalScope.launch(Dispatchers.Main){
-            suspend {
-                //get lessons from database
-                viewModel.getAllLessons().observe(viewLifecycleOwner) {
-                    dbLessons = it.toMutableList()
-                }
-                Handler(Looper.getMainLooper()).postDelayed({
+                Log.d(TAG, "lesson -  ${lesson.category} ${lesson.level}")
 
-                    var add: Boolean
-                    //after database access is complete, add lessons to adapter
-                    for (lesson in dbLessons) {
-                        add = true
-                        //only add lessons that fit within the selected filter requirements
-                        if (lesson.level > 0) {
-                            if (difficulties.contains((lesson.difficulty).toString())) {
+            //    Log.d(TAG, "title: ${lesson.category}")
+                //val lessonStats = DataUtility.getLessonStats(lesson.id)
+                val lessonStats = LessonStats()
 
-                                val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
+                add = true
+                //only add lessons that fit within the selected filter requirements
+                if (lesson.level > 0) {
 
-                                if (!category.equals("All")) {
-                                    if (lesson.category != category)
-                                        add = false
-                                }
+                   // Log.d(TAG, "OVER 0")
+                    if (difficulties.contains((lesson.difficulty).toString())) {
 
-                                if (sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
-                                    if (!lesson.practiceCompleted)
-                                        add = false
+                      //  Log.d(TAG, "CONTAINS difficulty")
+                        val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
-                                if (sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
-                                    if (!lesson.testPassed)
-                                        add = false
-
-                                if (sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
-                                    if (lesson.locked)
-                                        add = false
-                            } else
+                        if (!category.equals("All")) {
+                            if (lesson.category != category){
                                 add = false
+                                Log.d(TAG, "not in cats")
+                            }
                         }
-                        if (add)
-                            lessonAdapter.addLesson(lesson)
+
+                        if (sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
+                            if (!lessonStats.practiceCompleted){
+                                add = false
+                                Log.d(TAG, "practice not completed")
+                            }
+
+                        if (sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
+                            if (!lessonStats.testPassed){
+                                add = false
+                        Log.d(TAG, "test passed")
                     }
-                    //TODO: used saved variable, not hardcoded
-                    lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
-                }, 500)
-            }.invoke()
+
+                        if (sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
+                            if (lessonStats.locked){
+                                add = false
+                        Log.d(TAG, "locked")
+                    }
+                    } else{
+                        add = false
+                        Log.d(TAG, " difficulty ${lesson.difficulty} not in list")
+                }
+                }else{
+
+                    Log.d(TAG, "level under 0")
+                }
+                if (add){
+                  //  Log.d(TAG, "ADD")
+                    lessonAdapter.addLesson(lesson, lessonStats)
+
+                    Log.d(ContentValues.TAG, "ADDED")
+                }else{
+
+                    Log.d(ContentValues.TAG, "NOT ADDED")
+                }
+
+//
+          //      Log.d(TAG, "SIZE -  ${dbLessons.size}")
         }
+
+
+
+        //TODO: used saved variable, not hardcoded
+        lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
+//        GlobalScope.launch(Dispatchers.Main) {
+//            suspend {
+//                //get lessons from database
+//
+//                // }, 500)
+//            }.invoke()
+//        }
     }
 
 }

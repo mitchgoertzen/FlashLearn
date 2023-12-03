@@ -13,22 +13,32 @@ import androidx.core.graphics.alpha
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LessonTypeDialogueFragment(private var currentLesson: RoomLesson) : DialogFragment() {
+class LessonTypeDialogueFragment(
+    private var currentLesson: Lesson,
+    private var currentLessonStats: LessonStats
+) : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-    private val viewModel: MainViewModel by viewModels()
-    private var wordList: MutableList<RoomWord> = mutableListOf()
+    //private val viewModel: MainViewModel by viewModels()
+    private var wordList: MutableList<Word> = mutableListOf()
     private var practiceCompleted: Boolean = false
 
     override fun onStart() {
@@ -54,6 +64,7 @@ class LessonTypeDialogueFragment(private var currentLesson: RoomLesson) : Dialog
 
         var currentTitle = currentLesson.category
 
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
         //popup window
         val window: ConstraintLayout = view.findViewById(R.id.clMain)
         //when popup is touched, but no buttons are, popup will close
@@ -64,13 +75,24 @@ class LessonTypeDialogueFragment(private var currentLesson: RoomLesson) : Dialog
             v?.onTouchEvent(event) ?: true
         }
 
-        viewModel.getWordsByDifficultyForLesson(
-            currentTitle.lowercase(),
-            currentLesson.minLength,
-            currentLesson.maxLength
-        ).observe(viewLifecycleOwner) {
-            wordList = it.toMutableList()
+        scope.launch {
+            // New coroutine that can call suspend functions
+            wordList = DataUtility.getLessonWordList(
+                currentTitle.lowercase(),
+                currentLesson.minLength,
+                currentLesson.maxLength
+            ).toMutableList()
         }
+
+
+
+//        viewModel.getWordsByDifficultyForLesson(
+//            currentTitle.lowercase(),
+//            currentLesson.minLength,
+//            currentLesson.maxLength
+//        ).observe(viewLifecycleOwner) {
+//            wordList = it.toMutableList()
+//        }
 
         val testButton: Button = view.findViewById(R.id.btnTest)
         val practiceButton: Button = view.findViewById(R.id.btnPractice)
@@ -86,7 +108,7 @@ class LessonTypeDialogueFragment(private var currentLesson: RoomLesson) : Dialog
             dialog?.dismiss()
         }
 
-        if (!currentLesson.practiceCompleted) {
+        if (!currentLessonStats.practiceCompleted) {
             testButton.isEnabled = false
             testButton.alpha = .5f
         }

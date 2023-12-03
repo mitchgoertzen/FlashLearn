@@ -1,28 +1,68 @@
 package com.learn.flashLearnTagalog.db
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import com.google.firebase.firestore.Filter
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
+import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.data.WordStats
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class DataUtility {
+
     companion object {
+        const val USER_COLLECTION = "users"
+        const val WORD_COLLECTION = "words"
+        const val LESSON_COLLECTION = "lessons"
+        const val WORDSTAT_COLLECTION = "wordStats"
+        const val LESSONSTAT_COLLECTION = "lessonStats"
+
         private val firestore = FirestoreUtility()
 
-        //SORT BY ADD,GET,ETC...
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+
+        //SORT BY ADD,GET,ETC????
+        /****************************************_ADD_*************************************************/
+        /****************************************_GET_*************************************************/
+        /***************************************_UPDATE_***********************************************/
+        /***************************************_UPDATE_***********************************************/
+
 
         /*************************************_USERS_**********************************************/
+        fun addUser() {
+
+        }
+
+        suspend fun getCurrentUser() {
+
+        }
+
+        fun deleteUser() {
+
+        }
+
+
         /*************************************_WORDS_**********************************************/
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insertWord(word: Word) {
-            firestore.addDocument("words", (word.id).toString(), word)
+            firestore.addDocument(WORD_COLLECTION, (word.id).toString(), word)
         }
 
         fun insertAllWords(words: Map<String, Word>) {
-            firestore.batchAdd("words", words)
+            firestore.batchAdd(WORD_COLLECTION, words)
         }
 
         fun updateWordInfo(updatedWord: Word) {
-            firestore.updateDocument("words", updatedWord.id.toString(),
+            firestore.updateDocument(
+                "words", updatedWord.id.toString(),
                 mapOf(
                     "category" to updatedWord.category,
                     "type" to updatedWord.type,
@@ -37,117 +77,195 @@ class DataUtility {
         fun updateWordTranslation(previousId: String, updatedWord: Word) {
             //get wordStats of previousId
             //add to id of updated word
-            firestore.deleteDocument("words", previousId)
-            firestore.addDocument("words", updatedWord.id.toString(), updatedWord)
+            firestore.deleteDocument(WORD_COLLECTION, previousId)
+            firestore.addDocument(WORD_COLLECTION, updatedWord.id.toString(), updatedWord)
         }
 
-        fun getWord(wordId: String): Word? {
-
-            return firestore.getDocument("words", wordId).toObject<Word>()
+        suspend fun getWord(wordId: String): Word? {
+            return firestore.getDocument(WORD_COLLECTION, wordId)!!.toObject<Word>()
         }
 
-        fun getWordCount(): Int {
-            return firestore.getCollectionCount("words").toInt()
+        suspend fun getWordCount(): Int {
+            return firestore.getCollectionCount(WORD_COLLECTION).toInt()
         }
 
 
-        //   @Query("SELECT * FROM word_table ORDER BY english DESC")
-        fun getAllWords() {
-            //firestore.get
+        suspend fun getAllWords(): List<Word> {
+            return firestore.getSelectDocuments(WORD_COLLECTION, order = "english").toObjects()
         }
 
 
         //  @Query("SELECT * FROM word_table WHERE word_practiced == 1 ORDER BY LENGTH(tagalog) DESC")
-        fun getAllPracticedWords() {
+        suspend fun getAllPracticedWords() {
 
+            //get current user
+            //get word stats wherer practice == true
+            //get all word documents with matching id
 
         }
 
-
-        //  @Query("SELECT * FROM word_table WHERE category == :category")
-        fun getAllWordsForLesson(category: String) {
-            firestore.getDocumentsEqualTo("words", "category", category)
+        suspend fun getAllWordsForLesson(category: String) {
+            firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", category))
         }
 
         // @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
-        fun getLessonWordList(category: String, min: Int, max: Int) {
-            firestore.getDocumentsEqualTo("words", "category", category)
-            //from this get results within length bounds
+        suspend fun getLessonWordList(category: String, min: Int, max: Int): List<Word> {
+            val list = firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", category)).toObjects<Word>()
+            val lessonWords = mutableListOf<Word>()
+            for(w in list){
+                val length = w.tagalog.length
+                if(length in (min + 1)..max)
+                    lessonWords.add(w)
+
+            }
+            return lessonWords
         }
 
         //  @Query("SELECT * FROM word_table WHERE (word_practiced == :practiced OR word_practiced == 1) AND (LENGTH(tagalog) >= :minLength AND LENGTH(tagalog) <= :maxLength)")
-        fun getWordsByDifficulty(practiced: Int, minLength: Int, maxLength: Int) {
+        suspend fun getWordsByDifficulty(
+            practiced: Int,
+            minLength: Int,
+            maxLength: Int
+        ): List<Word> {
+            val list = listOf<Word>()
+//            firestore.getSelectDocuments("words",
+//                Filter.and(Filter.))
+            /*
+            * if practiced
+            * getAllpracticed words
+            * else getallwords
+            * filter out by length
+            */
+            return list
+        }
 
+        suspend fun getDictionaryWords(order: String, limit: Long): List<Word> {
+            return firestore.getSelectDocuments(
+                WORD_COLLECTION,
+                order = order,
+                limit = limit
+            ).toObjects()
+        }
+
+        fun setCorrect(id: String) {
+            firestore.updateDocument(WORD_COLLECTION, id, mapOf("correctTranslation" to true))
+        }
+
+        suspend fun getIncorrectWords() {
+            firestore.getSelectDocuments(
+                WORD_COLLECTION,
+                Filter.equalTo("correctTranslation", false)
+            )
 
         }
 
-        fun getDictionaryWords(order: String, offset: Int, limit: Long) {
-            firestore.getOrderedDocumentBlock("words", order, offset, limit)
-        }
-
-        // @Query("UPDATE word_table SET correctTranslation = 1 WHERE id == :id")
-        fun setCorrect(id: Int) {
-
-
-        }
-
-        //  @Query("SELECT COUNT(*) FROM word_table WHERE correctTranslation = 0")
-        fun getIncorrectWords() {
-
-
-        }
-
-        //    @Query("DELETE FROM word_table WHERE correctTranslation = 0")
         fun deleteIncorrectWords() {
-
-
+            firestore.deleteDocumentsEqualTo(WORD_COLLECTION, "correctTranslation", false)
         }
 
         fun deleteWord(wordId: String) {
-            firestore.deleteDocument("words", wordId)
+            firestore.deleteDocument(WORD_COLLECTION, wordId)
         }
 
 
         /*************************************_WORDSTATS_******************************************/
-        //    @Query("UPDATE word_table SET word_practiced = :value WHERE id == :wordID")
-        fun updatePractice(wordID: Int, value: Boolean) {
-
-
-        }
-
-        //     @Query("SELECT word_practiced FROM word_table WHERE id == :wordID")
-        fun getPractice(wordID: Int) {
-
-
-        }
-
-        //    @Query("UPDATE word_table SET timesCorrect = (timesCorrect + :result), timesAnswered = (timesAnswered + 1), previousResult = :result WHERE id == :wordID")
-        fun answerWord(wordID: Int, result: Boolean) {
-
+        fun updatePractice(wordID: String, value: Boolean) {
+            val userId = ""
+            //get user
+            firestore.updateSubDocument(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                wordID,
+                mapOf(
+                    "practiced" to true
+                )
+            )
 
         }
 
-        //  @Query("UPDATE word_table SET timesSkipped = (timesSkipped + 1) WHERE id == :wordID")
-        fun skipWord(wordID: Int) {
-
-
-        }
-
-        //  @Query("UPDATE word_table SET timesFlipped = (timesFlipped + 1) WHERE id == :wordID")
-        fun flipWord(wordID: Int) {
-
+        suspend fun getPractice(wordID: String) {
+            val userId = ""
+            //get user
+            firestore.getSubDocument(USER_COLLECTION, userId, WORDSTAT_COLLECTION, wordID)
+                .toObject<WordStats>()!!.practiced
 
         }
 
-        // @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesCorrect DESC LIMIT 5")
-        fun getMostCorrect() {
+        fun answerWord(wordID: String, result: Boolean) {
+            val userId = ""
 
+            if (result) {
+                firestore.incrementSubDocumentField(
+                    USER_COLLECTION,
+                    userId,
+                    WORDSTAT_COLLECTION,
+                    wordID,
+                    "timesCorrect",
+                    1
+                )
+            }
+
+            firestore.incrementSubDocumentField(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                wordID,
+                "timesAnswered",
+                1
+            )
+        }
+
+        fun skipWord(wordID: String) {
+            val userId = ""
+            firestore.incrementSubDocumentField(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                wordID,
+                "timesSkipped",
+                1
+            )
+        }
+
+        fun flipWord(wordID: String) {
+            val userId = ""
+            firestore.incrementSubDocumentField(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                wordID,
+                "timesFlipped",
+                1
+            )
+        }
+
+        suspend fun getMostCorrect(limit: Long): List<WordStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                Filter.greaterThan("timesAnswered", 0),
+                "timesCorrect",
+                limit = limit
+            ).toObjects()
 
         }
+
+        /*TODO: new field for timesAnswered - timesCorrect
 
         //  @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesAnswered - timesCorrect DESC LIMIT 5")
-        fun getLeastCorrect() {
-
+        fun getLeastCorrect(limit: Long) {
+            val userId = ""
+            firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                Filter.greaterThan("timesAnswered", 0),
+                "timesCorrect",
+                limit = limit
+            )
 
         }
 
@@ -163,104 +281,230 @@ class DataUtility {
 
         }
 
-        //  @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesAnswered DESC LIMIT 5")
-        fun getMostEncountered() {
+        */
 
+        suspend fun getMostEncountered(limit: Long): List<WordStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                Filter.greaterThan("timesAnswered", 0),
+                "timesAnswered",
+                limit = limit
+            ).toObjects()
 
         }
 
-        //   @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesSkipped DESC LIMIT 5")
-        fun getMostSkipped() {
-
+        suspend fun getMostSkipped(limit: Long): List<WordStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                Filter.greaterThan("timesAnswered", 0),
+                "timesSkipped",
+                limit = limit
+            ).toObjects()
 
         }
 
-        //      @Query("SELECT * FROM word_table WHERE timesAnswered > 0 ORDER BY timesFlipped DESC LIMIT 5")
-        fun getMostFlipped() {
-
+        suspend fun getMostFlipped(limit: Long): List<WordStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                WORDSTAT_COLLECTION,
+                Filter.greaterThan("timesAnswered", 0),
+                "timesFlipped",
+                limit = limit
+            ).toObjects()
 
         }
 
         /*************************************_LESSONS_********************************************/
 
-
-        //  @Query("SELECT * FROM lesson_table ORDER BY level ASC")
-        fun getAllLessons() {
-
-
+        suspend fun getAllLessons(): List<Lesson> {
+            return firestore.getSelectDocuments(
+                LESSON_COLLECTION,
+                order = "level",
+                direction = Query.Direction.ASCENDING
+            ).toObjects()
         }
 
         //  @Query("SELECT COUNT(*) FROM lesson_table")
-        fun getLessonCount() {
+        suspend fun getLessonCount() {
 
+            firestore.getCollectionCount(LESSON_COLLECTION)
+        }
 
+        suspend fun getLessonWordCount(lessonCategory: String, min: Int, max: Int): Int {
+            val list = firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", lessonCategory)).toObjects<Word>()
+            Log.d(TAG, "Category: $lessonCategory")
+            Log.d(TAG, "size: ${list.size}")
+
+            Log.d(TAG, "min: $min")
+            Log.d(TAG, "max: $max")
+            var count = 0
+            for(w in list){
+                val length = w.tagalog.length
+
+                Log.d(TAG, "length: $length")
+                if(length in (min + 1)..max){
+                    count++
+                }
+            }
+            return count
         }
 
         //   @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE id = :id)")
-        fun lessonExists(id: Int) {
+        suspend fun lessonExists(lessonId: String) {
 
-
+            firestore.getDocument(LESSON_COLLECTION, lessonId) == null
         }
 
         //   @Query("SELECT * FROM lesson_table WHERE category = :category AND level = :level")
-        fun getLessonByData(category: String, level: Int) {
+        suspend fun getLessonByData(category: String, level: Int) {
 
-
+            firestore.getSelectDocuments(
+                LESSON_COLLECTION,
+                Filter.and(Filter.equalTo("category", category), Filter.equalTo("level", level))
+            )
         }
 
         //   @Query("SELECT * FROM lesson_table WHERE id = :id")
-        fun getLessonByID(id: Int) {
-
-
+        suspend fun getLessonByID(lessonId: String) {
+            firestore.getDocument(LESSON_COLLECTION, lessonId)
         }
 
         //  @Insert
-        fun insertAllLessons(lessons: List<Lesson>) {
-
+        fun insertAllLessons(lessons: Map<String, Lesson>) {
+            firestore.batchAdd(LESSON_COLLECTION, lessons)
 
         }
 
         //  @Insert(onConflict = OnConflictStrategy.IGNORE)
         suspend fun insertLesson(lesson: Lesson) {
-
+            firestore.addDocument(LESSON_COLLECTION, lesson.id, lesson)
 
         }
 
+        //TODO: choose what will be updated
         //  @Query("UPDATE lesson_table SET id = :newID WHERE category = :category AND level == :level")
-        fun updateLessonID(category: String, level: Int, newID: Int) {
+        fun updateLesson(
+            previousLesson: Lesson,
+            newCategory: String,
+            newLevel: Int?,
+            min: Int?,
+            max: Int?,
+            lines: Int?
+        ) {
 
+            val userId = ""
+            firestore.deleteDocument(LESSON_COLLECTION, previousLesson.id)
+
+            val newLesson = Lesson(
+                newCategory,
+                newLevel ?: previousLesson.level,
+                previousLesson.difficulty,
+                previousLesson.image,
+                min ?: previousLesson.minLength,
+                max ?: previousLesson.maxLength,
+                lines ?: previousLesson.maxLines
+            )
+
+
+            firestore.addDocument(LESSON_COLLECTION, newLesson.id, newLesson)
+
+
+            scope.launch {
+                // New coroutine that can call suspend functions
+                val stats = firestore.getSubDocument(
+                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, previousLesson.id
+                )
+                    .toObject<LessonStats>()
+
+                firestore.deleteSubDocument(
+                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, previousLesson.id
+                )
+
+                firestore.addSubDocument(
+                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, newLesson.id, stats!!
+                )
+            }
 
         }
 
-        //        @Query(
-//            "UPDATE lesson_table SET category = :newTitle, imageID = :newImageID, level = :newLevel " +
-//                    ", minLength = :newMin, maxLength = :newMax, maxLines = :newLines, difficulty = :newDifficulty, practice_completed = :practiceCompleted, test_passed = :testPassed, locked = :locked WHERE id == :id"
-//        )
+
         fun updateLessonInfo(
-            id: Int,
-            newTitle: String,
+            id: String,
             newImageID: Int,
-            newLevel: Int,
             newMin: Int,
             newMax: Int,
             newLines: Int,
             newDifficulty: Int,
-            practiceCompleted: Boolean,
-            testPassed: Boolean,
-            locked: Boolean
         ) {
-
+            firestore.updateDocument(
+                LESSON_COLLECTION,
+                id,
+                mapOf(
+                    "difficulty" to newDifficulty,
+                    "image" to newImageID,
+                    "minLength" to newMin,
+                    "maxLength" to newMax,
+                    "maxLines" to newLines
+                )
+            )
 
         }
 
 
-        //   @Query("DELETE FROM lesson_table WHERE category = :category AND level = :level")
-        suspend fun deleteLesson(category: String, level: Int) {
-
-
+        fun deleteLesson(lessonId: String) {
+            firestore.deleteDocument(LESSON_COLLECTION, lessonId)
         }
 
         /*************************************_LESSONSTATS_****************************************/
+
+        suspend fun getLessonStats(lessonId: String): LessonStats {
+            val userId = ""
+            return firestore.getSubDocument(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                lessonId
+            ).toObject<LessonStats>()!!
+        }
+
+        suspend fun getUnlockedLessons(lessonId: String): List<LessonStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                Filter.equalTo("locked", false)
+            ).toObjects()
+        }
+
+        suspend fun getPracticedLessons(lessonId: String): List<LessonStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                Filter.equalTo("practiceCompleted", true)
+            ).toObjects()
+        }
+
+        suspend fun getPassedLessons(lessonId: String): List<LessonStats> {
+            val userId = ""
+            return firestore.getSelectSubDocuments(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                Filter.equalTo("testPassed", true)
+            ).toObjects()
+        }
+
 
         // @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE category = :category AND level = :level)")
         fun lessonCategoryLevelExists(category: String, level: Int) {
@@ -277,30 +521,50 @@ class DataUtility {
 
         // @Query("UPDATE lesson_table SET locked = 0 WHERE category = :category AND level == (:level + 1)")
         fun unlockNextLesson(category: String, level: Int) {
-
-
+            val userId = ""
+            val nextLevel = level + 1
+            firestore.updateSubDocument(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                category + "_" + nextLevel,
+                mapOf("locked" to false)
+            )
         }
 
         //   @Query("UPDATE lesson_table SET practice_completed = 1 WHERE id == :id")
-        fun completePractice(id: Int) {
-
-
+        fun completePractice(lessonId: String) {
+            val userId = ""
+            firestore.updateSubDocument(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                lessonId,
+                mapOf("practiceCompleted" to true)
+            )
         }
 
         // @Query("UPDATE lesson_table SET test_passed = 1 WHERE id == :id")
-        fun passTest(id: Int) {
-
-
+        fun passTest(lessonId: String) {
+            val userId = ""
+            firestore.updateSubDocument(
+                USER_COLLECTION,
+                userId,
+                LESSONSTAT_COLLECTION,
+                lessonId,
+                mapOf("testCompleted" to true)
+            )
         }
 
 
+        //TODO: cloud functions
         //  @Query("DELETE FROM lesson_table")
         fun nukeLessons() {
 
 
         }
 
-        fun nukeTable() {
+        fun nukeWords() {
 
 
         }

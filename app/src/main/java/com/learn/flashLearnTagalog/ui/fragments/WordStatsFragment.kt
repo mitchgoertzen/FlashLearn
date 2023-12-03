@@ -11,14 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.WordStatAdapter
+import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStat
+import com.learn.flashLearnTagalog.data.WordStats
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class WordStatsFragment : Fragment() {
 
-    private val viewModel: MainViewModel by viewModels()
+    //private val viewModel: MainViewModel by viewModels()
 
     private lateinit var correctAdapter: WordStatAdapter
     private lateinit var incorrectAdapter: WordStatAdapter
@@ -89,26 +96,30 @@ class WordStatsFragment : Fragment() {
 
     private fun fillStats() {
 
-        viewModel.getMostCorrect().observe(viewLifecycleOwner) {
-            val list = it.toMutableList()
-            for (word in list) {
-                correctAdapter.addWordStat(WordStat(word.tagalog, word.timesCorrect, 0.0), false)
-            }
-        }
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-        viewModel.getLeastCorrect().observe(viewLifecycleOwner) {
-            val list = it.toMutableList()
-            for (word in list) {
-                incorrectAdapter.addWordStat(
-                    WordStat(
-                        word.tagalog,
-                        word.timesAnswered - word.timesCorrect,
-                        0.0
-                    ), false
-                )
+        scope.launch {
+            for (wordStat in DataUtility.getMostCorrect(5).toMutableList()) {
+                //get tagalog of wordStat
+                val tagalog = ""
+                correctAdapter.addWordStat(WordStat(tagalog, wordStat.timesCorrect, 0.0), false)
             }
-        }
 
+//        for (word in DataUtility.getLeastCorrect(5).toMutableList()) {
+//            //get tagalog of wordStat
+//            val tagalog = ""
+//            incorrectAdapter.addWordStat(
+//                WordStat(
+//                    word.tagalog,
+//                    word.timesAnswered - word.timesCorrect,
+//                    0.0
+//                ), false
+//            )
+//
+//        }
+
+
+            //TODO: percentage correct
 //        viewModel.getBest().observe(viewLifecycleOwner) {
 //            val list = it.toMutableList()
 //            for(word in list){
@@ -131,27 +142,26 @@ class WordStatsFragment : Fragment() {
 //            }
 //        }
 
-        viewModel.getMostEncountered().observe(viewLifecycleOwner) {
-            val list = it.toMutableList()
-            for (word in list) {
-                encounteredAdapter.addWordStat(WordStat(word.tagalog, word.timesAnswered, 0.0), false)
+            for (word in DataUtility.getMostEncountered(5).toMutableList()) {
+                //get tagalog of wordStat
+                val tagalog = ""
+                encounteredAdapter.addWordStat(WordStat(tagalog, word.timesAnswered, 0.0), false)
             }
-        }
 
-        viewModel.getMostSkipped().observe(viewLifecycleOwner) {
-            val list = it.toMutableList()
-            for (word in list) {
-                skippedAdapter.addWordStat(WordStat(word.tagalog, word.timesSkipped, 0.0), false)
+
+            for (word in DataUtility.getMostSkipped(5).toMutableList()) {
+                //get tagalog of wordStat
+                val tagalog = ""
+                skippedAdapter.addWordStat(WordStat(tagalog, word.timesSkipped, 0.0), false)
             }
-        }
 
-        viewModel.getMostFlipped().observe(viewLifecycleOwner) {
-            val list = it.toMutableList()
-            for (word in list) {
-                flippedAdapter.addWordStat(WordStat(word.tagalog, word.timesFlipped, 0.0), false)
+            for (word in DataUtility.getMostFlipped(5).toMutableList()) {
+                //get tagalog of wordStat
+                val tagalog = ""
+                flippedAdapter.addWordStat(WordStat(tagalog, word.timesFlipped, 0.0), false)
             }
-        }
 
+        }
     }
 
 }

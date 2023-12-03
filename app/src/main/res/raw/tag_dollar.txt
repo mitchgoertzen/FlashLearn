@@ -67,7 +67,6 @@ n$abogado$lawyer#occupations
 n$abogasia$law
 n$abogasya$law
 n$abok$dust
-n$abokado$avocado#food & drinks & drinks
 adj$abonado$to a person who add money to someone else, because he is short of money
 n$abono$fertilizer
 v$abonohan$fertilize

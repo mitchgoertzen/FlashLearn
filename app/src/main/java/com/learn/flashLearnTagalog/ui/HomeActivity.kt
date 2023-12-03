@@ -1,18 +1,34 @@
 package com.learn.flashLearnTagalog.ui
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
+import com.learn.flashLearnTagalog.DataProcessor
+import com.learn.flashLearnTagalog.LessonCreator
+import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import java.util.Arrays
 import javax.inject.Inject
 
 
@@ -33,6 +49,8 @@ class HomeActivity : AppCompatActivity() {
 
     var size = 0
 
+    private val lessonCreator = LessonCreator()
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,200 +60,12 @@ class HomeActivity : AppCompatActivity() {
         val view = binding.root
 
         setContentView(view)
-
-
-
-        if(DEBUG){
-
-          //  val viewModel: MainViewModel by viewModels()
-
-
-            //world
-//            viewModel.getWordsByDifficultyForLesson("animals", 0, 100).observe(this) {
-//                println("animals: ${it.size}")//117
-//            }
-
-//            viewModel.getWordsByDifficultyForLesson("geography", 0, 5).observe(this) {
-//                println("Geography1: ${it.size}")//55
-//            }
-//            viewModel.getWordsByDifficultyForLesson("geography", 5, 7).observe(this) {
-//                println("Geography2: ${it.size}")//55
-//            }
-//            viewModel.getWordsByDifficultyForLesson("geography", 7, 100).observe(this) {
-//                println("Geography3: ${it.size}")//55
-//            }
-//
-//
-//
-//            viewModel.getWordsByDifficultyForLesson("nature", 0, 5).observe(this) {
-//                println("nature1: ${it.size}")//26
-//            }
-//            viewModel.getWordsByDifficultyForLesson("nature", 5, 100).observe(this) {
-//                println("nature2: ${it.size}")//26
-//            }
-
-
-
-//            viewModel.getWordsByDifficultyForLesson("around town", 0, 5).observe(this) {
-//                println("around town1: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("around town", 5, 7).observe(this) {
-//                println("around town2: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("around town", 7, 8).observe(this) {
-//                println("around town3: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("around town", 8, 100).observe(this) {
-//                println("around town4: ${it.size}")//63
-//            }
-
-
-//            viewModel.getWordsByDifficultyForLesson("countries", 0, 100).observe(this) {
-//                println("countries1: ${it.size}")//19
-//            }
-
-
-            //at home
-//            viewModel.getWordsByDifficultyForLesson("food", 0, 4).observe(this) {
-//                println("food1: ${it.size}")//85
-//            }
-//            viewModel.getWordsByDifficultyForLesson("food", 4, 5).observe(this) {
-//                println("food2: ${it.size}")//85
-//            }
-//            viewModel.getWordsByDifficultyForLesson("food", 5, 6).observe(this) {
-//                println("food3: ${it.size}")//85
-//            }
-//            viewModel.getWordsByDifficultyForLesson("food", 6, 8).observe(this) {
-//                println("food4: ${it.size}")//85
-//            }
-//            viewModel.getWordsByDifficultyForLesson("food", 8, 100).observe(this) {
-//                println("food5: ${it.size}")//85
-//            }
-
-
-//            viewModel.getWordsByDifficultyForLesson("kitchen", 0, 6).observe(this) {
-//                println("kitchen1: ${it.size}")//30
-//            }
-//            viewModel.getWordsByDifficultyForLesson("kitchen", 6, 100).observe(this) {
-//                println("kitchen2: ${it.size}")//30
-//            }
-
-
-            //combine to around the house?
-//            viewModel.getWordsByDifficultyForLesson("bathroom", 0, 100).observe(this) {
-//                println("bathroom: ${it.size}")//12
-//            }
-//            viewModel.getWordsByDifficultyForLesson("in the yard", 0, 100).observe(this) {
-//                println("in the yard: ${it.size}")//21
-//            }
-//            viewModel.getWordsByDifficultyForLesson("living room", 0, 100).observe(this) {
-//                println("living room: ${it.size}")//9
-//            }
-//            viewModel.getWordsByDifficultyForLesson("bedroom", 0, 100).observe(this) {
-//                println("bedroom: ${it.size}")//13
-//            }
-
-
-//            //recreation
-//            viewModel.getWordsByDifficultyForLesson("sports & games", 0, 100).observe(this) {
-//                println("sports & games: ${it.size}")//0
-//            }
-
-
-            //people
-//            viewModel.getWordsByDifficultyForLesson("pronouns", 0, 100).observe(this) {
-//                println("pronouns: ${it.size}")//7
-//            }
-//            viewModel.getWordsByDifficultyForLesson("exclamations/reactions", 0, 100).observe(this) {
-//                println("exclamations/reactions: ${it.size}")//0
-//            }
-//            viewModel.getWordsByDifficultyForLesson("conversation", 0, 100).observe(this) {
-//                println("conversation: ${it.size}")//15
-//            }
-//
-//            viewModel.getWordsByDifficultyForLesson("body", 0, 4).observe(this) {
-//                println("body1: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("body", 4, 5).observe(this) {
-//                println("body2: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("body", 5, 7).observe(this) {
-//                println("body3: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("body", 7, 100).observe(this) {
-//                println("body4: ${it.size}")//63
-//            }
-//            viewModel.getWordsByDifficultyForLesson("emotions", 0, 100).observe(this) {
-//                println("emotions: ${it.size}")//2
-//            }
-//            viewModel.getWordsByDifficultyForLesson("actions", 0, 100).observe(this) {
-//                println("actions: ${it.size}")//0
-//            }
-
-
-//            viewModel.getWordsByDifficultyForLesson("people", 0, 7).observe(this) {
-//                println("people1: ${it.size}")//29
-//            }
-//            viewModel.getWordsByDifficultyForLesson("people", 7, 100).observe(this) {
-//                println("people2: ${it.size}")//29
-//            }
-
-//            viewModel.getWordsByDifficultyForLesson("occupations", 0, 5).observe(this) {
-//                println("occupations1: ${it.size}")//90
-//            }
-//            viewModel.getWordsByDifficultyForLesson("occupations", 5, 6).observe(this) {
-//                println("occupations2: ${it.size}")//90
-//            }
-//            viewModel.getWordsByDifficultyForLesson("occupations", 6, 7).observe(this) {
-//                println("occupations3: ${it.size}")//90
-//            }
-//            viewModel.getWordsByDifficultyForLesson("occupations", 7, 8).observe(this) {
-//                println("occupations4: ${it.size}")//90
-//            }
-//            viewModel.getWordsByDifficultyForLesson("occupations", 9, 10).observe(this) {
-//                println("occupations5: ${it.size}")//90
-//            }
-//            viewModel.getWordsByDifficultyForLesson("occupations", 10, 100).observe(this) {
-//                println("occupations6: ${it.size}")//90
-//            }
-
-
-            //date & time -- combine
-//            viewModel.getWordsByDifficultyForLesson("date & time", 0, 5).observe(this) {
-//                println("date & time1: ${it.size}")//18
-//            }
-//            viewModel.getWordsByDifficultyForLesson("date & time", 5, 100).observe(this) {
-//                println("date & time2: ${it.size}")//18
-//            }
-//            viewModel.getWordsByDifficultyForLesson("days", 0, 100).observe(this) {
-//                println("days: ${it.size}")//7
-//            }
-//            viewModel.getWordsByDifficultyForLesson("months", 0, 100).observe(this) {
-//                println("months: ${it.size}")//12
-//            }
-
-
-
-
-            //education
-//            viewModel.getWordsByDifficultyForLesson("colours", 0, 100).observe(this) {
-//                println("colours: ${it.size}")//16
-//            }
-//            viewModel.getWordsByDifficultyForLesson("chemistry", 0, 100).observe(this) {
-//                println("chemistry: ${it.size}")//23
-//            }
-//            viewModel.getWordsByDifficultyForLesson("numbers", 0, 7).observe(this) {
-//                println("numbers1: ${it.size}")//41
-//            }
-//            viewModel.getWordsByDifficultyForLesson("numbers", 7, 100).observe(this) {
-//                println("numbers2: ${it.size}")//41
-//            }
-
-        }
+        val dataProcessor = DataProcessor(resources)
 
 
         if (launch) {
-
+            RequestConfiguration.Builder()
+                .setTestDeviceIds(listOf("AAFD161D953789428592D83CCA602CDC"))
             MobileAds.initialize(this) {}
 
             // Create an ad request.
@@ -245,6 +75,53 @@ class HomeActivity : AppCompatActivity() {
             binding.adViewHome.loadAd(adRequest)
             launch = false
         }
+
+
+        binding.btnAddWords.setOnClickListener {
+
+            val words = dataProcessor.getWords()
+
+            val lessonWords = mutableMapOf<String, Word>()
+
+            Log.d(TAG, "COUNT: ${words.size}")
+
+            for (i in 1..20) {
+
+                val w = words[i]
+                lessonWords[w.id] = w
+
+            }
+
+            DataUtility.insertAllWords(lessonWords)
+
+            Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+        }
+
+        binding.btnAddLessons.setOnClickListener {
+
+            val scope = CoroutineScope(Job() + Dispatchers.Main)
+            scope.launch {
+                async { lessonCreator.createLessons() }.await()
+
+                val lessonList = lessonCreator.getLessons()
+
+                Log.d(TAG, "lesson list size: ${lessonList.size}")
+                val lessonMap = mutableMapOf<String, Lesson>()
+
+                for (l in lessonList) {
+                    lessonMap[l.id] = l
+                }
+
+                Log.d(TAG, "lesson map size: ${lessonMap.size}")
+                DataUtility.insertAllLessons(lessonMap)
+                scope.cancel()
+            }
+
+
+
+
+        }
+
 
         val learning = LearningActivity()
 

@@ -9,7 +9,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -17,15 +20,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class PracticeFragment(masterList: MutableList<RoomWord>, private var currentLesson: RoomLesson) :
+class PracticeFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
     Fragment(R.layout.fragment_practice) {
 
     private var masterWordList = masterList
-    private lateinit var currentWord: RoomWord
-    private var currentWordList: MutableList<RoomWord> = mutableListOf()
+    private lateinit var currentWord: Word
+    private var currentWordList: MutableList<Word> = mutableListOf()
     private var i = 0
 
-    private val viewModel: MainViewModel by viewModels()
+   // private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,7 +62,8 @@ class PracticeFragment(masterList: MutableList<RoomWord>, private var currentLes
         }
 
         finishButton.setOnClickListener {
-            viewModel.completePractice(currentLesson.id)
+            DataUtility.completePractice(currentLesson.id)
+            //viewModel.completePractice(currentLesson.id)
             val fragment = PracticeResultsFragment(masterWordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)
@@ -103,12 +107,15 @@ class PracticeFragment(masterList: MutableList<RoomWord>, private var currentLes
         return view
     }
 
-    fun changeCard(index: TextView) {
+    private fun changeCard(index: TextView) {
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
-        if (!viewModel.getPractice(currentWord.id)) {
-            viewModel.updatePractice(currentWord.id, true)
+
+        if(!TempListUtility.practicedWords.contains(currentWord)){
+            DataUtility.updatePractice(currentWord.id, true)
+            TempListUtility.practicedWords.add(currentWord)
         }
+
         val fragment = Card(currentWord)
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.fcCard, fragment)?.commit()

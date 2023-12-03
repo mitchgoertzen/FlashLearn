@@ -21,7 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
+import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TestWord
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
@@ -31,13 +34,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson: RoomLesson) :
+class TestFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
     Fragment(R.layout.fragment_test) {
 
     private lateinit var testWordAdapter: TestWordAdapter
     private lateinit var answeredAdapter: TestWordAdapter
 
-    private val viewModel: MainViewModel by viewModels()
+    //private val viewModel: MainViewModel by viewModels()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -50,9 +53,9 @@ class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson:
     private var skipped: Boolean = false
     private var engFirst: Boolean = false
     private var masterWordList = masterList
-    private var currentWordList: MutableList<RoomWord> = mutableListOf()
+    private var currentWordList: MutableList<Word> = mutableListOf()
     private var wordsCorrect: Int = 0
-    private lateinit var currentWord: RoomWord
+    private lateinit var currentWord: Word
     private var i = 1
     private lateinit var textLine: String
 
@@ -190,7 +193,10 @@ class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson:
             etTodoTitle.text.clear()
             btnEnter.isEnabled = false
             if (!skipped) {
-                currentWord.id?.let { it -> viewModel.skipWord(it) }
+                currentWord.id.let {
+                    DataUtility.skipWord(it)
+                    // viewModel.skipWord(it)
+                }
                 answerWord(false)
                 skipped = true
                 btnSkip.alpha = .2f
@@ -267,8 +273,10 @@ class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson:
     private fun goToResults() {
 
         if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
-            viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
-            viewModel.passTest(currentLesson.id)
+            DataUtility.unlockNextLesson(currentLesson.category, currentLesson.level)
+            DataUtility.passTest(currentLesson.id)
+            //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
+            // viewModel.passTest(currentLesson.id)
         }
 
         sharedPref.edit()
@@ -286,9 +294,10 @@ class TestFragment(masterList: MutableList<RoomWord>, private var currentLesson:
     }
 
     private fun answerWord(result: Boolean) {
-        currentWord.previousResult = result
-        currentWord.id?.let {
-            viewModel.answerWord(it, result)
+       //TODO: currentWord.previousResult = result
+        currentWord.id.let {
+            DataUtility.answerWord(it, result)
+            //viewModel.answerWord(it, result)
             textLine = getCurrentWord(engFirst) + " : " + getCurrentWord(!engFirst)
             val toDo = TestWord(textLine, result)
             toDo.isCorrect = result

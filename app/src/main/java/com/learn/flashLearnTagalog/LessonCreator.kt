@@ -1,11 +1,22 @@
 package com.learn.flashLearnTagalog
 
-import com.learn.flashLearnTagalog.db.RoomLesson
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
+import android.content.ContentValues.TAG
+import android.util.Log
+import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
-class LessonCreator(var viewModel: MainViewModel) {
+class LessonCreator() {
 
-    private val myLessons: MutableList<RoomLesson> = mutableListOf()
+    private val myLessons: MutableList<Lesson> = mutableListOf()
 
     //if a lesson's min or max word length have not been set manually,
     //they will default to these values
@@ -18,15 +29,20 @@ class LessonCreator(var viewModel: MainViewModel) {
     private val hardMinLength = 9
     private val hardMaxLength = 100
 
+    private var lessonWords = mutableListOf<Word>()
+    private var lessons = mutableListOf<Lesson>()
+
     //private var oldID = 1
 
     //lessons created here
     init {
 
-        val lesson1 =
-            RoomLesson("Custom\nLesson0".hashCode(), "Custom\nLesson", R.drawable.custom, 0, -1, -1, 2)
-        lesson1.locked = false
-        myLessons.add(lesson1)
+
+//        myLessons.add(createLesson(1,"Speech", R.drawable.hand_wave, 0,4))
+//        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
+    }
+
+    suspend fun createLessons(){
 
         myLessons.add(createLessonObject(1, "Animals", R.drawable.dog, 0, 4))
         myLessons.add(createLessonObject(2, "Animals", R.drawable.dog, 4, 5))
@@ -43,7 +59,7 @@ class LessonCreator(var viewModel: MainViewModel) {
         myLessons.add(createLessonObject(2, "Nature", R.drawable.nature, 5, 30))
 
         myLessons.add(createLessonObject(1, "Around Town", R.drawable.city, 0, 5))
-        myLessons.add(createLessonObject(2, "Around Town",R.drawable.city, 5, 7))
+        myLessons.add(createLessonObject(2, "Around Town", R.drawable.city, 5, 7))
         myLessons.add(createLessonObject(3, "Around Town", R.drawable.city, 7, 8))
         myLessons.add(createLessonObject(4, "Around Town", R.drawable.city, 8, 30))
 
@@ -88,18 +104,17 @@ class LessonCreator(var viewModel: MainViewModel) {
 
         myLessons.add(createLessonObject(1, "Numbers", R.drawable.numbers, 0, 7))
         myLessons.add(createLessonObject(2, "Numbers", R.drawable.numbers, 7, 30))
+        Log.d(TAG, "ALL LESSONS ADDED")
 
-//        myLessons.add(createLesson(1,"Speech", R.drawable.hand_wave, 0,4))
-//        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
     }
 
-    private fun createLessonObject(
+    private suspend fun createLessonObject(
         level: Int,
         category: String,
         imageID: Int,
         overrideMin: Int,
         overrideMax: Int
-    ): RoomLesson {
+    ): Lesson = coroutineScope {
         var minLength = overrideMin
         var maxLength = overrideMax
 
@@ -114,10 +129,12 @@ class LessonCreator(var viewModel: MainViewModel) {
                     minLength = easyMinLength
                     maxLength = easyMaxLength
                 }
+
                 2 -> {
                     minLength = mediumMinLength
                     maxLength = mediumMaxLength
                 }
+
                 3 -> {
                     minLength = hardMinLength
                     maxLength = hardMaxLength
@@ -125,16 +142,18 @@ class LessonCreator(var viewModel: MainViewModel) {
             }
         }
         //id of each lesson is the hashcode of the string containing category+level
-        val id = category.plus(level).hashCode()
-        val newLesson = RoomLesson(id, category, imageID, level, minLength, maxLength, (numOfWords + 1))
 
-        newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
+        val wordCount = async { DataUtility.getLessonWordCount(category.lowercase(), minLength, maxLength) }.await()
+
+        return@coroutineScope Lesson(category, level, minLength, maxLength, wordCount, (numOfWords + 1), imageID)
+
+        // newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
 
         //if the lesson is level 2 or higher, it will initially be locked
-        if (level < 2)
-            newLesson.locked = false
+        //  if (level < 2)
+        //TODO: newLesson.locked = false
 
-        return newLesson
+
     }
 
 //    fun setLessonDifficulties(){
@@ -143,35 +162,47 @@ class LessonCreator(var viewModel: MainViewModel) {
 //        }
 //    }
 
-    private fun getLessonDifficulty(category : String, minLength : Int, maxLength : Int) : Int {
-        val lessonList = viewModel.getLessonWordList(category, minLength, maxLength)
+//    private fun getLessonDifficulty(category : String, minLength : Int, maxLength : Int) : Int {
+//
+//
+//        val scope = CoroutineScope(Job() + Dispatchers.Main)
+//        scope.launch {
+//            lessonWords = DataUtility.getLessonWordList(category, minLength, maxLength).toMutableList()
+//            Log.d(TAG, "words done")
+////            lessons = DataUtility.getAllLessons().toMutableList()
+////            Log.d(TAG, "lessons done")
+//        }
+//
+//
+//      //  val lessonList = viewModel.getLessonWordList(category, minLength, maxLength)
+//
+//        var difficulty = 5
+//
+//        Log.d(TAG, "if lessonwords not empty")
+//       //println("$category: ${lessonList.size}")
+//        if(lessonWords.isNotEmpty()){
+//            var sum = 0
+//
+//            for(word in lessonWords){
+//                sum += word.tagalog.length
+//            }
+//
+//            when (sum / lessonWords.size) {
+//                in 0..5 -> difficulty = 1
+//                in 6..7 -> difficulty = 2
+//                in 8..9 -> difficulty = 3
+//                in 10..11 -> difficulty = 4
+//            }
+//
+//        }else{
+//            difficulty = -1
+//        }
+//
+//       // println("$difficulty")
+//        return difficulty
+//    }
 
-        var difficulty = 5
-
-       //println("$category: ${lessonList.size}")
-        if(lessonList.isNotEmpty()){
-            var sum = 0
-
-            for(word in lessonList){
-                sum += word.tagalog.length
-            }
-
-            when (sum / lessonList.size) {
-                in 0..5 -> difficulty = 1
-                in 6..7 -> difficulty = 2
-                in 8..9 -> difficulty = 3
-                in 10..11 -> difficulty = 4
-            }
-
-        }else{
-            difficulty = -1
-        }
-
-       // println("$difficulty")
-        return difficulty
-    }
-
-    fun getLessons(): MutableList<RoomLesson> {
+    fun getLessons(): MutableList<Lesson> {
         return myLessons
     }
 

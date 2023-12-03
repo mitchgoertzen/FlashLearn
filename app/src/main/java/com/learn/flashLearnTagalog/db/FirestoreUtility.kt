@@ -7,142 +7,175 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.tasks.await
 
 
 class FirestoreUtility {
     val db = Firebase.firestore
 
     /****************************************_GET_*************************************************/
-    fun getCollection(collectionId: String): CollectionReference {
+    suspend fun getCollection(collectionId: String): CollectionReference {
         return db.collection(collectionId)
     }
 
-    fun getSubCollection(
+    suspend fun getSubCollection(
         collectionId: String,
         documentId: String,
         subCollectionId: String
     ): CollectionReference {
-        return db.collection(collectionId)
+        return db.collection(collectionId).document(documentId).collection(subCollectionId)
     }
 
-    fun getDocument(collectionId: String, documentId: String): DocumentSnapshot {
-        lateinit var document: DocumentSnapshot
+    suspend fun getDocument(collectionId: String, documentId: String): DocumentSnapshot? {
 
-        db.collection(collectionId).document(documentId).get()
-            .addOnSuccessListener { result ->
-                document = result
-            }
-
-        return document
+        return db.collection(collectionId).document(documentId).get().await()
     }
 
-    fun getSubDocument(
+    suspend fun getSubDocument(
         collectionId: String, documentId: String,
         subCollectionId: String, subDocumentId: String
     ): DocumentSnapshot {
-        lateinit var document: DocumentSnapshot
-        db.collection(collectionId).document(documentId)
+        return db.collection(collectionId).document(documentId)
             .collection(subCollectionId).document(subDocumentId)
-            .get().addOnSuccessListener { result ->
-                document = result
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-        return document
+            .get().await()
     }
 
-    fun getAllDocuments(collectionId: String): MutableList<DocumentSnapshot> {
+    suspend fun getAllDocuments(collectionId: String): QuerySnapshot? {
         lateinit var query: QuerySnapshot
-        db.collection(collectionId).get().addOnSuccessListener { d ->
-            query = d
-        }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-        return query.documents
+        return db.collection(collectionId).get().await()
     }
 
-    fun getAllSubDocuments(
+    suspend fun getAllSubDocuments(
         collectionId: String, documentId: String,
         subCollectionId: String
-    ): MutableList<DocumentSnapshot> {
-        lateinit var query: QuerySnapshot
-        db.collection(collectionId).document(documentId)
+    ): QuerySnapshot {
+        return db.collection(collectionId).document(documentId)
             .collection(subCollectionId)
-            .get().addOnSuccessListener { d ->
-                query = d
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
-        return query.documents
+            .get().await()
     }
 
-    //TODO: probably combine with orderedblock
-    fun getOrderedDocuments(collectionId: String, order: String): MutableList<DocumentSnapshot> {
+//    fun getDocumentsEqualTo(
+//        collectionId: String,
+//        field: String,
+//        value: Any
+//    ): MutableList<DocumentSnapshot> {
+//
+//        lateinit var query: QuerySnapshot
+//        db.collection(collectionId)
+//            .whereEqualTo(field, value)
+//            .get().addOnSuccessListener { snapshot ->
+//                query = snapshot
+//            }
+//
+//        return query.documents
+//    }
 
-        lateinit var query: QuerySnapshot
-        db.collection(collectionId).orderBy(order, Query.Direction.DESCENDING).get()
-            .addOnSuccessListener { snapshot ->
-                query = snapshot
-            }
-        return query.documents
-    }
-
-    fun getDocumentsEqualTo(
+    //TODO: might not work --> filtered ref as query/ref
+    suspend fun getSelectDocuments(
         collectionId: String,
-        field: String,
-        value: Any
-    ): MutableList<DocumentSnapshot> {
+        filter: Filter? = null,
+        order: String = "",
+        direction: Query.Direction = Query.Direction.DESCENDING,
+        limit: Long = 10000
+    ): QuerySnapshot {
 
-        lateinit var query: QuerySnapshot
-        db.collection(collectionId)
-            .whereEqualTo(field, value)
-            .get().addOnSuccessListener { snapshot ->
-                query = snapshot
+        val collectionRef = if (filter != null) {
+            if (order != "") {
+                db.collection(collectionId).where(filter).orderBy(order, direction).limit(limit)
+            }else{
+                db.collection(collectionId).where(filter).limit(limit)
             }
+        }else{
+            db.collection(collectionId).limit(limit)
+        }
 
-        return query.documents
+
+        return collectionRef.get().await()
+//
+//
+//        db.collection("lessons")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//
+//                Log.d(TAG, "GET SELECT DOCUMENTS 1")
+//                for (document in documents) {
+//                    Log.d(TAG, "${document.id} => ${document.data}")
+//                }
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
+//
+//
+//        Log.d(TAG, collectionId)
+//        Log.d(TAG, collectionRef.toString())
+//
+//
+//            collectionRef.get()
+//                .addOnSuccessListener { snapshot ->
+//
+//                    Log.d(TAG, "GET SELECT DOCUMENTS 2")
+//                    query = snapshot
+//                }
+
+
     }
 
-    //citiesRef.orderBy("name", Query.Direction.DESCENDING).limit(3)
-    fun getOrderedDocumentBlock(
-        collectionId: String, order: String,
-        offset: Int, limit: Long
-    ): MutableList<DocumentSnapshot> {
+    suspend fun getSelectSubDocuments(
+        collectionId: String,
+        documentId: String, subCollectionId: String,
+        filter: Filter? = null,
+        order: String = "",
+        direction: Query.Direction = Query.Direction.DESCENDING,
+        offset: Int = 0,
+        limit: Long = Long.MAX_VALUE
+    ): QuerySnapshot {
         lateinit var query: QuerySnapshot
-        db.collection(collectionId).orderBy(order).startAt(offset).limit(limit).get()
-            .addOnSuccessListener { snapshot ->
-                query = snapshot
-            }
-        return query.documents
+
+        val collectionRef =
+            db.collection(collectionId).document(documentId).collection(subCollectionId)
+
+        val filteredRef = if (filter != null) collectionRef.where(filter) else collectionRef
+
+        query = filteredRef.orderBy(order, direction).startAt(offset)
+            .limit(limit).get().await()
+
+        return query
     }
 
 
-    fun getCollectionCount(collectionId: String): Long {
+    suspend fun getCollectionCount(collectionId: String): Long {
         val query = db.collection(collectionId)
         val countQuery = query.count()
         var count: Long = -1
-        countQuery.get(AggregateSource.SERVER).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // Count fetched successfully
-                val snapshot = task.result
-                count = snapshot.count
-                Log.d(TAG, "Count: ${snapshot.count}")
-            } else {
-                Log.d(TAG, "Count failed: ", task.getException())
-            }
-        }
+
+        count = countQuery.get(AggregateSource.SERVER).await().count
+
         return count
     }
 
+//    suspend fun getSelectDocumentCount(){
+//
+//    }
+
 
     /****************************************_ADD_*************************************************/
-    fun addSubCollection(
+    fun addDocument(collection: String, newId: String, data: Any) {
+        db.collection(collection).document(newId).set(data)
+            .addOnSuccessListener { documentReference ->
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: `$newId`")
+            }
+            .addOnFailureListener { e ->
+                Log.w(ContentValues.TAG, "Error adding document", e)
+            }
+    }
+
+    fun addSubDocument(
         collectionId: String, document: String,
         subCollectionId: String, newId: String, data: Any
     ) {
@@ -159,33 +192,83 @@ class FirestoreUtility {
             }
     }
 
-    fun addDocument(collection: String, newId: String, data: Any) {
-        db.collection(collection).document(newId).set(data)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: `$newId`")
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
-    }
 
     fun batchAdd(collectionId: String, newDocuments: Map<String, Any>) {
         val collectionRef = db.collection(collectionId)
-        db.runBatch { batch ->
-            for (doc in newDocuments) {
-                batch.set(collectionRef.document(doc.key), doc.value)
-            }
+
+//        db.runBatch { batch ->
+//            for (doc in newDocuments) {
+//                batch.set(collectionRef.document(doc.key), doc.value)
+//            }
+//        }
+
+        var batch = db.batch()
+
+        for (doc in newDocuments) {
+            batch.set(collectionRef.document(doc.key), doc.value)
+        }
+
+        batch.commit().addOnSuccessListener {
+            Log.d(TAG, "woohoo")
         }
     }
 
 
     /***************************************_UPDATE_***********************************************/
-    fun updateDocument(collection: String, document: String, data: Map<String, Any>) {
-        db.collection(collection).document(document)
+    fun updateDocument(collectionId: String, documentId: String, data: Map<String, Any>) {
+        db.collection(collectionId).document(documentId)
             .update(
                 data
             )
     }
+
+    fun updateSubDocument(
+        collectionId: String, documentId: String, subCollectionId: String,
+        subDocumentId: String, data: Map<String, Any>
+    ) {
+        db.collection(collectionId).document(documentId).collection(subCollectionId)
+            .document(subDocumentId)
+            .update(
+                data
+            )
+    }
+
+    fun incrementDocumentField(
+        collectionId: String,
+        documentId: String,
+        field: String,
+        incrementValue: Long
+    ) {
+        db.collection(collectionId).document(documentId)
+            .update(mapOf(field to FieldValue.increment(incrementValue)))
+    }
+
+    fun incrementSubDocumentField(
+        collectionId: String, documentId: String, subCollectionId: String,
+        subDocumentId: String,
+        field: String,
+        incrementValue: Long
+    ) {
+        db.collection(collectionId).document(documentId).collection(subCollectionId)
+            .document(subDocumentId)
+            .update(mapOf(field to FieldValue.increment(incrementValue)))
+    }
+
+//    fun updateDocumentField(collectionId: String, documentId: String, field: String, value: Any) {
+//        db.collection(collectionId).document(documentId).update(field, value)
+//    }
+//
+//    fun updateSubDocumentField(
+//        collectionId: String,
+//        documentId: String,
+//        subCollectionId: String,
+//        subDocumentId: String,
+//        field: String,
+//        value: Any
+//    ) {
+//        db.collection(collectionId).document(documentId).collection(subCollectionId)
+//            .document(subDocumentId).update(field, value)
+//    }
 
     fun batchUpdate() {
         db.runBatch { batch ->
@@ -199,12 +282,41 @@ class FirestoreUtility {
         db.collection(collectionId).document(documentId).delete()
     }
 
-    fun batchDelete() {
+    fun deleteSubDocument(
+        collectionId: String,
+        documentId: String,
+        subCollectionId: String,
+        subDocumentId: String
+    ) {
+        db.collection(collectionId).document(documentId).collection(subCollectionId)
+            .document(subDocumentId).delete()
+    }
+
+    fun deleteDocumentsEqualTo(collectionId: String, field: String, value: Any) {
+        db.collection(collectionId).whereEqualTo(field, value).get()
+            .addOnSuccessListener { snapshot ->
+                db.runBatch { batch ->
+                    for (document in snapshot) {
+                        batch.delete(document.reference)
+                    }
+                }
+            }
+
+    }
+
+    //TODO: must split batch size into 500 max
+    fun deleteAllDocuments(collectionId: String) {
+        val collectionRef = db.collection(collectionId)
+
         db.runBatch { batch ->
-            // Set the value of 'NYC'
-            //  batch.set(nycRef, City())
+            collectionRef.get().addOnSuccessListener { snapshot ->
+                for (document in snapshot) {
+                    batch.delete(document.reference)
+                }
+            }
         }
     }
+
 
 }
 
