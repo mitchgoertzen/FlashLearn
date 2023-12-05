@@ -3,11 +3,13 @@ package com.learn.flashLearnTagalog.data
 class TempListUtility {
 
     companion object {
-        val practicedWords = mutableListOf<Word>()
+        var practicedWords = mutableMapOf<String, MutableList<Word>>()
 
-        val unlockedLessons = mutableListOf<Lesson>()
-        val practicedLessons = mutableListOf<Lesson>()
-        val passedLessons = mutableListOf<Lesson>()
+        //TODO: here or shared pref
+        var viewedLessons = mutableListOf<String>()
+        var unlockedLessons = mutableListOf<String>()
+        var practicedLessons = mutableListOf<String>()
+        var passedLessons = mutableListOf<String>()
 
     }
 }

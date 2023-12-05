@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.databinding.LessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonTypeDialogueFragment
@@ -46,22 +47,19 @@ class LessonAdapter @Inject constructor(
 
         // Log.d(TAG, "1")
         val currentLesson = lessons[position]
+        val lessonId = currentLesson.id
         //Log.d(TAG, "2")
         val currentLessonStats = lessonStats[position]
         //Log.d(TAG, "2")
 
         holder.itemView.apply {
-            //  Log.d(TAG, "4")
             val mContext = FragmentComponentManager.findActivity(context) as Activity
             var level = ""
             var difficulty = ""
             val holderBinding = holder.binding
             holderBinding.tvCategory.maxLines = currentLesson.maxLines
 
-            //Log.d(TAG, "5")
-            holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
 
-            // Log.d(TAG, "6")
             if (currentLesson.level == 0) {
                 level = ""
             } else {
@@ -91,15 +89,14 @@ class LessonAdapter @Inject constructor(
                         level = "(VI)"
                     }
                 }
+            }
 
-                //  Log.d(TAG, "7")
-                if (currentLessonStats.testPassed)
-                    holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_tested)
-                else if (currentLessonStats.practiceCompleted)
-                    holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_practiced)
-
-
-                // Log.d(TAG, "8")
+            if (TempListUtility.passedLessons.contains(lessonId)) {
+                holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_tested)
+            } else if (TempListUtility.practicedLessons.contains(lessonId)) {
+                holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_practiced)
+            } else {
+                holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
             }
             holderBinding.tvCategory.text = currentLesson.category + " $level"
             holderBinding.tvDifficulty.text = difficulty
@@ -109,7 +106,7 @@ class LessonAdapter @Inject constructor(
 
 
 
-            if (currentLessonStats.locked) {
+            if (!TempListUtility.unlockedLessons.contains(lessonId)) {
                 holderBinding.ibLesson.isEnabled = false
                 holderBinding.ibLesson.alpha = .7f
             } else {
@@ -146,7 +143,7 @@ class LessonAdapter @Inject constructor(
 
     fun addLesson(lesson: Lesson, stats: LessonStats) {
 
-        Log.d(ContentValues.TAG, "current size: ${lessons.size}")
+        //  Log.d(TAG, "current size: ${lessons.size}")
         lessons.add(lesson)
         lessonStats.add(stats)
         notifyItemInserted(lessons.size - 1)
@@ -177,7 +174,7 @@ class LessonAdapter @Inject constructor(
 
     fun sortList(type: Int) {
 
-        Log.d(TAG, "SORT 1ST LESSON -  ${lessons[0].category} ${lessons[0].level}")
+        // Log.d(TAG, "SORT 1ST LESSON -  ${lessons[0].category} ${lessons[0].level}")
         //  Log.d(TAG, "sort 1")
         // Log.d(TAG, "sort size + ${lessons.size}")
 
@@ -220,7 +217,7 @@ class LessonAdapter @Inject constructor(
                 //TODO: only make once
                 LessonStats()
             )
-        //    notifyItemRangeChanged(0, lessons.size)
+            //    notifyItemRangeChanged(0, lessons.size)
         }
     }
 }

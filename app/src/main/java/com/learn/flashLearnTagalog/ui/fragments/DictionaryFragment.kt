@@ -159,7 +159,7 @@ class DictionaryFragment : Fragment() {
 
         //TODO: need to use for start at: ((currentPage - 1) * wordsPerPage.toInt())
             println("1")
-            wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
+          //  wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
             //gather next set of words, confined by current page and number of words per page
 
             println("3")

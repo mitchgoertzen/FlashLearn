@@ -1,11 +1,13 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.learn.flashLearnTagalog.R
@@ -13,6 +15,7 @@ import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
@@ -28,7 +31,7 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
     private var currentWordList: MutableList<Word> = mutableListOf()
     private var i = 0
 
-   // private val viewModel: MainViewModel by viewModels()
+    // private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +43,7 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
         currentWordList = masterWordList.toMutableList()
 
         val index: TextView = view.findViewById(R.id.tvIndex)
+        val id = currentLesson.id
 
         changeCard(index)
 
@@ -57,12 +61,18 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
         if (currentWordList.size == 1) {
             nextButton.isEnabled = false
             finishButton.visibility = View.VISIBLE
-        } else{
+        } else {
             finishButton.visibility = View.GONE
         }
 
         finishButton.setOnClickListener {
-            DataUtility.completePractice(currentLesson.id)
+            if (!TempListUtility.practicedLessons.contains(id)){
+//TODO:             DataUtility.completePractice(currentLesson.id)
+                TempListUtility.practicedLessons.add(id)
+                JsonUtility.writeJSON(
+                    requireActivity(), "practicedLessons.json", TempListUtility.practicedLessons
+                )
+            }
             //viewModel.completePractice(currentLesson.id)
             val fragment = PracticeResultsFragment(masterWordList, currentLesson)
             val transaction = activity?.supportFragmentManager?.beginTransaction()
@@ -111,10 +121,8 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
 
-        if(!TempListUtility.practicedWords.contains(currentWord)){
-            DataUtility.updatePractice(currentWord.id, true)
-            TempListUtility.practicedWords.add(currentWord)
-        }
+        //TODO: DataUtility.updatePractice(currentWord.id, true)
+
 
         val fragment = Card(currentWord)
         val transaction = activity?.supportFragmentManager?.beginTransaction()

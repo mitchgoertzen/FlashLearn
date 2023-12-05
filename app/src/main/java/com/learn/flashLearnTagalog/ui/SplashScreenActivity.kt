@@ -1,27 +1,27 @@
 package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.firestore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.gson.Gson
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
-import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.LessonStats
-import com.learn.flashLearnTagalog.data.User
-import com.learn.flashLearnTagalog.data.Word
-import com.learn.flashLearnTagalog.data.WordStats
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -42,7 +42,8 @@ class SplashScreenActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-   // private val viewModel: MainViewModel by viewModels()
+    private lateinit var auth: FirebaseAuth
+    // private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivitySplashScreenBinding
     private lateinit var progress: ProgressBar
@@ -54,23 +55,79 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private var lessonNum = 0
     private var wordNum = 0
+    private val gson = Gson()
+
+    //TODO: save as shared pref
+    private val lessonJSON = "savedLessons.json"
+    private val unlockedLessonJSON = "unlockedLessons.json"
+//    val file = "JOSN_TEST.json"
+//    val file = "JOSN_TEST.json"
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //TODO: save in sharedpref?
+        TempListUtility.unlockedLessons = JsonUtility.getStringList(this, "unlockedLessons.json")
+        TempListUtility.practicedLessons = JsonUtility.getStringList(this, "practicedLessons.json")
+        TempListUtility.passedLessons = JsonUtility.getStringList(this, "passedLessons.json")
+        TempListUtility.viewedLessons = JsonUtility.getStringList(this, "viewedLessons.json")
 
-        val db = Firebase.firestore
+        TempListUtility.practicedWords = JsonUtility.getPracticedWords(this, "savedWords.json")
 
-
-
-//        if(local lists dont exist){
-//           save DataUtility.getAllPracticedWords()
-//           save DataUtility.getUnlockedLessons()
-//            save DataUtility.getPracticedLessons()
-//            save DataUtility.getPassedLessons()
-//        }
+//        TempListUtility.unlockedLessons.add("Custom Lesson_0")
 //
+//        for(l in JsonUtility.getSavedLessons(this, lessonJSON)){
+//            if (l.level < 2)
+//                TempListUtility.unlockedLessons.add(l.id)
+//        }
+//        Log.d(TAG, "${TempListUtility.unlockedLessons.size} lessons have been unlocked")
+
+
+        JsonUtility.writeJSON(this@SplashScreenActivity, unlockedLessonJSON, TempListUtility.unlockedLessons)
+
+        Log.d(TAG, "practicedWord size: ${TempListUtility.practicedWords.size}")
+
+        val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
+        lessonScope.launch {
+
+            //if the user has not saved lessons list to internal storage
+            if (!sharedPref.getBoolean(Constants.KEY_LESSON_JSON_EXISTS, false)) {
+                Log.d(TAG, "FIRST TIME, NO INTERNAL STORAGE")
+                val lessons = DataUtility.getAllLessons().toMutableList()
+
+                for(l in lessons){
+                    if (l.level == 1)
+                        TempListUtility.unlockedLessons.add(l.id)
+                }
+
+                JsonUtility.writeJSON(this@SplashScreenActivity, unlockedLessonJSON, TempListUtility.unlockedLessons)
+                JsonUtility.writeJSON(this@SplashScreenActivity, lessonJSON, lessons)
+
+                sharedPref.edit()
+                    .putBoolean(Constants.KEY_LESSON_JSON_EXISTS, true)
+                    .apply()
+
+                Log.d(TAG, "DONE")
+
+            }
+
+            lessonScope.cancel()
+        }
+
+
+        //TODO: user account
+
+
+
+        //  if ()
+
+//        val userScope = CoroutineScope(Job() + Dispatchers.Main)
+//        userScope.launch {
+//            userScope.cancel()
+//        }
+
+
 
 
 //        lessonNum = viewModel.getLessonCount()
@@ -126,7 +183,17 @@ class SplashScreenActivity : AppCompatActivity() {
 
          */
 
-        goToHomeActivity()
+        if(true){
+
+            goToHomeActivity()
+        }else{
+
+            auth = Firebase.auth
+        }
+
+// ...
+// Initialize Firebase Auth
+
 
 
 //        //manually reset user preferences
@@ -176,7 +243,6 @@ class SplashScreenActivity : AppCompatActivity() {
         //create Lessons
 
         var init = wordNum == 0
-
 
 
         //if the word list is empty

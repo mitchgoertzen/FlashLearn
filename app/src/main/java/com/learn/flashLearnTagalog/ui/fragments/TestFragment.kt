@@ -22,9 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
 import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
@@ -90,10 +92,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
         engFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
 
         tvCurrentWord.text = getCurrentWord(engFirst)
-        tvCurrentWord.text = if (engFirst)
-            currentWord.english
-        else
-            currentWord.tagalog
+
 
         etTodoTitle.isEnabled = true
 
@@ -165,7 +164,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
                             etTodoTitle.hint = hintMessage
                             correctAnswer = false
                             currentWord = currentWordList.random()
-                            tvCurrentWord.text = currentWord.english
+                            tvCurrentWord.text = getCurrentWord(engFirst)
                             index.text = (i++).toString() + "/" + masterWordList.size.toString()
                         }
                     } else {
@@ -194,7 +193,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
             btnEnter.isEnabled = false
             if (!skipped) {
                 currentWord.id.let {
-                    DataUtility.skipWord(it)
+//TODO:premium                    DataUtility.skipWord(it)
                     // viewModel.skipWord(it)
                 }
                 answerWord(false)
@@ -273,8 +272,26 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     private fun goToResults() {
 
         if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
-            DataUtility.unlockNextLesson(currentLesson.category, currentLesson.level)
-            DataUtility.passTest(currentLesson.id)
+            val id = currentLesson.id
+            if (!TempListUtility.passedLessons.contains(id)){
+//TODO:             DataUtility.passTest(id)
+                //TODO: constant
+                val nextLevel = currentLesson.level + 1
+                val nextId = currentLesson.category + "_" + nextLevel
+                for(l in JsonUtility.getSavedLessons(requireActivity(), "savedLessons.json")){
+                    if(l.id == nextId){
+                        TempListUtility.unlockedLessons.add(nextId)
+                    }
+                }
+
+                TempListUtility.passedLessons.add(id)
+                JsonUtility.writeJSON(
+                    requireActivity(), "passedLessons.json", TempListUtility.passedLessons
+                )
+            }
+
+//TODO:            DataUtility.unlockNextLesson(currentLesson.category, currentLesson.level)
+            //DataUtility.passTest(currentLesson.id)
             //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
             // viewModel.passTest(currentLesson.id)
         }
@@ -296,7 +313,7 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     private fun answerWord(result: Boolean) {
        //TODO: currentWord.previousResult = result
         currentWord.id.let {
-            DataUtility.answerWord(it, result)
+           //TODO: premium feature DataUtility.answerWord(it, result)
             //viewModel.answerWord(it, result)
             textLine = getCurrentWord(engFirst) + " : " + getCurrentWord(!engFirst)
             val toDo = TestWord(textLine, result)

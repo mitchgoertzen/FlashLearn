@@ -1,6 +1,6 @@
 package com.learn.flashLearnTagalog.other
 
-//contains used for shared preferences, which acts as storage for users' chosen app preferences
+//constants used for shared preferences, which acts as storage for users' chosen app preferences
 object Constants {
     const val WORD_DATABASE_NAME = "word_db"
     const val SHARED_PREFERENCES_NAME = "sharedPref"
@@ -29,4 +29,7 @@ object Constants {
     const val KEY_LESSON_PRACTICE_COMPLETED = "KEY_LESSON_PRACTICE_COMPLETED"
     const val KEY_LESSON_TEST_PASSED = "KEY_LESSON_TEST_PASSED"
     const val KEY_LESSON_UNLOCKED = "KEY_LESSON_UNLOCKED"
+
+
+    const val KEY_LESSON_JSON_EXISTS = "KEY_SHOW_WORD"
 }

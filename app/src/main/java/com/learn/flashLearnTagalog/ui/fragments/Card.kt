@@ -105,7 +105,7 @@ class Card(word: Word) : Fragment() {
         //flip card to reverse side on button press
         imFlipCard.setOnClickListener {
             currentWord.id.let { it1 ->
-                DataUtility.flipWord(it1)
+//TODO:                DataUtility.flipWord(it1)
                 //viewModel.flipWord(it1)
             }
             //display translation of word that is currently shown

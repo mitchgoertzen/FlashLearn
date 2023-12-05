@@ -81,21 +81,38 @@ class FirestoreUtility {
         filter: Filter? = null,
         order: String = "",
         direction: Query.Direction = Query.Direction.DESCENDING,
+        start: Any? = null,
         limit: Long = 10000
     ): QuerySnapshot {
 
+        Log.d(TAG, "limit --> $limit")
         val collectionRef = if (filter != null) {
+            Log.d(TAG, "filter --> $filter")
             if (order != "") {
-                db.collection(collectionId).where(filter).orderBy(order, direction).limit(limit)
+                Log.d(TAG, "order --> $order")
+                if(start != null){
+                    Log.d(TAG, "start --> $start")
+                    db.collection(collectionId).where(filter).orderBy(order, direction).startAt(start).limit(limit)
+
+                }else{
+                    Log.d(TAG, "no start at")
+                    db.collection(collectionId).where(filter).orderBy(order, direction).limit(limit)
+                }
             }else{
+                Log.d(TAG, "no order")
                 db.collection(collectionId).where(filter).limit(limit)
             }
         }else{
+
+            Log.d(TAG, "no filter")
             db.collection(collectionId).limit(limit)
         }
 
+        val words = collectionRef.get().await()
 
-        return collectionRef.get().await()
+        Log.d(TAG, "reads: ${words.size()}")
+
+        return words
 //
 //
 //        db.collection("lessons")

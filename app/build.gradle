@@ -122,6 +122,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-analytics")
 
+    //JSON
+    implementation 'com.google.code.gson:gson:2.9.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

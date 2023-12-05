@@ -104,22 +104,33 @@ class DataUtility {
 
         }
 
-        suspend fun getAllWordsForLesson(category: String) {
-            firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", category))
+        suspend fun getAllWordsForLesson(category: String, min: Int, limit: Long = 100): List<Word> {
+
+            return firestore.getSelectDocuments(
+                WORD_COLLECTION,
+                Filter.equalTo("category", category),
+                "length",
+                Query.Direction.ASCENDING,
+                min + 1,
+                limit
+            ).toObjects()
         }
 
-        // @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
-        suspend fun getLessonWordList(category: String, min: Int, max: Int): List<Word> {
-            val list = firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", category)).toObjects<Word>()
-            val lessonWords = mutableListOf<Word>()
-            for(w in list){
-                val length = w.tagalog.length
-                if(length in (min + 1)..max)
-                    lessonWords.add(w)
-
-            }
-            return lessonWords
-        }
+//        // @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
+//        suspend fun getLessonWordList(category: String, min: Int, max: Int): List<Word> {
+//            val list =
+//                firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", category))
+//                    .toObjects<Word>()
+//            Log.d(TAG, "reads used: ${list.size}")
+//            val lessonWords = mutableListOf<Word>()
+//            for (w in list) {
+//                val length = w.tagalog.length
+//                if (length in (min + 1)..max)
+//                    lessonWords.add(w)
+//
+//            }
+//            return lessonWords
+//        }
 
         //  @Query("SELECT * FROM word_table WHERE (word_practiced == :practiced OR word_practiced == 1) AND (LENGTH(tagalog) >= :minLength AND LENGTH(tagalog) <= :maxLength)")
         suspend fun getWordsByDifficulty(
@@ -338,21 +349,34 @@ class DataUtility {
             firestore.getCollectionCount(LESSON_COLLECTION)
         }
 
+        //TODO: this
         suspend fun getLessonWordCount(lessonCategory: String, min: Int, max: Int): Int {
-            val list = firestore.getSelectDocuments(WORD_COLLECTION, Filter.equalTo("category", lessonCategory)).toObjects<Word>()
-            Log.d(TAG, "Category: $lessonCategory")
-            Log.d(TAG, "size: ${list.size}")
+            val list = getAllWordsForLesson(lessonCategory, min).toMutableList()
 
-            Log.d(TAG, "min: $min")
-            Log.d(TAG, "max: $max")
+//            val list = firestore.getSelectDocuments(
+//                WORD_COLLECTION,
+//                Filter.equalTo("category", lessonCategory)
+//            ).toObjects<Word>()
+//            Log.d(TAG, "Category: $lessonCategory")
+//            Log.d(TAG, "size: ${list.size}")
+//
+//            Log.d(TAG, "min: $min")
+//            Log.d(TAG, "max: $max")
             var count = 0
-            for(w in list){
+
+            for (w in list) {
                 val length = w.tagalog.length
 
-                Log.d(TAG, "length: $length")
-                if(length in (min + 1)..max){
+                if (length <= max) {
                     count++
+                } else {
+                    break
                 }
+//
+//                Log.d(TAG, "length: $length")
+//                if (length in (min + 1)..max) {
+//                    count++
+//                }
             }
             return count
         }
@@ -363,6 +387,7 @@ class DataUtility {
             firestore.getDocument(LESSON_COLLECTION, lessonId) == null
         }
 
+        //TODO: name
         //   @Query("SELECT * FROM lesson_table WHERE category = :category AND level = :level")
         suspend fun getLessonByData(category: String, level: Int) {
 
