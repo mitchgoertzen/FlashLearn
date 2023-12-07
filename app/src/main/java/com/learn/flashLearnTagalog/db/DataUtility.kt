@@ -8,6 +8,7 @@ import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStats
 import kotlinx.coroutines.CoroutineScope
@@ -37,12 +38,22 @@ class DataUtility {
 
 
         /*************************************_USERS_**********************************************/
-        fun addUser() {
-
+        fun addUser(user: User, userId: String) {
+            firestore.addDocument(USER_COLLECTION, userId, user)
         }
 
-        suspend fun getCurrentUser() {
+        suspend fun getCurrentUser(userId: String): User? {
+            Log.d(TAG, "ID: $userId")
+            return firestore.getDocument(USER_COLLECTION, userId)!!.toObject<User>()
+        }
 
+        suspend fun getUserCount(): Int{
+            return firestore.getCollectionCount(USER_COLLECTION).toInt()
+        }
+
+
+        suspend fun getUsersUnlockedLessons(userId: String) {
+            //TODO: firestore.getDocument(USER_COLLECTION, userId) neeeedd????
         }
 
         fun deleteUser() {
@@ -104,7 +115,11 @@ class DataUtility {
 
         }
 
-        suspend fun getAllWordsForLesson(category: String, min: Int, limit: Long = 100): List<Word> {
+        suspend fun getAllWordsForLesson(
+            category: String,
+            min: Int,
+            limit: Long = 100
+        ): List<Word> {
 
             return firestore.getSelectDocuments(
                 WORD_COLLECTION,
@@ -381,6 +396,15 @@ class DataUtility {
             return count
         }
 
+
+        suspend fun getLessonIDsByLevel(level: Int): List<Lesson> {
+            return firestore.getSelectDocuments(
+                LESSON_COLLECTION,
+                Filter.equalTo("level", level),
+                direction = Query.Direction.ASCENDING
+            ).toObjects()
+        }
+
         //   @Query("SELECT EXISTS(SELECT * FROM lesson_table WHERE id = :id)")
         suspend fun lessonExists(lessonId: String) {
 
@@ -593,5 +617,6 @@ class DataUtility {
 
 
         }
+
     }
 }

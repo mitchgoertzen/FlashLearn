@@ -19,6 +19,9 @@ class JsonUtility {
         private val gson = Gson()
 
         fun writeJSON(activity: Activity, file: String, data: Any) {
+
+
+            Log.d(TAG, "writeJSON")
             val jsonString = gson.toJson(data)
 
             val fOut = activity.openFileOutput(file, Context.MODE_PRIVATE)

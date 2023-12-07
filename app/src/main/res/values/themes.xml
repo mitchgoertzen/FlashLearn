@@ -25,8 +25,24 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="colorPrimary">@color/white</item>
         <item name="android:statusBarColor">@color/white</item>
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">#0038A8</item>
+
+        <!-- Secondary brand color. -->
+        <item name="android:textColorPrimaryDisableOnly">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorSecondaryVariant">@color/yellow</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/futura_pt_bold</item>
+        <item name="fontFamily">@font/futura_pt_bold</item>
+        <item name="android:textAllCaps">true</item>
+
     </style>
 
     <style name="Tagalog.NoActionBar">

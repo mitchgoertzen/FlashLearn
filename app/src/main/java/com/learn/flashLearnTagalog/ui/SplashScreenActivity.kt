@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -23,6 +22,7 @@ import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.ui.fragments.SignInFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -42,7 +42,6 @@ class SplashScreenActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    private lateinit var auth: FirebaseAuth
     // private val viewModel: MainViewModel by viewModels()
 
     private lateinit var binding: ActivitySplashScreenBinding
@@ -57,52 +56,44 @@ class SplashScreenActivity : AppCompatActivity() {
     private var wordNum = 0
     private val gson = Gson()
 
+    private lateinit var auth: FirebaseAuth
+
     //TODO: save as shared pref
-    private val lessonJSON = "savedLessons.json"
+    private val savedLessonJSON = "savedLessons.json"
+    private val viewedLessonJSON = "viewedLessons.json"
     private val unlockedLessonJSON = "unlockedLessons.json"
-//    val file = "JOSN_TEST.json"
-//    val file = "JOSN_TEST.json"
+    private val practicedLessonJSON = "practicedLessons.json"
+    private val passedLessonJSON = "passedLessons.json"
+
+    private val unlockedList = JsonUtility.getStringList(this, unlockedLessonJSON)
+    private val practicedList = JsonUtility.getStringList(this, practicedLessonJSON)
+    private val passedList = JsonUtility.getStringList(this, passedLessonJSON)
+
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TODO: save in sharedpref?
-        TempListUtility.unlockedLessons = JsonUtility.getStringList(this, "unlockedLessons.json")
-        TempListUtility.practicedLessons = JsonUtility.getStringList(this, "practicedLessons.json")
-        TempListUtility.passedLessons = JsonUtility.getStringList(this, "passedLessons.json")
-        TempListUtility.viewedLessons = JsonUtility.getStringList(this, "viewedLessons.json")
-
-        TempListUtility.practicedWords = JsonUtility.getPracticedWords(this, "savedWords.json")
-
-//        TempListUtility.unlockedLessons.add("Custom Lesson_0")
-//
-//        for(l in JsonUtility.getSavedLessons(this, lessonJSON)){
-//            if (l.level < 2)
-//                TempListUtility.unlockedLessons.add(l.id)
-//        }
-//        Log.d(TAG, "${TempListUtility.unlockedLessons.size} lessons have been unlocked")
-
-
-        JsonUtility.writeJSON(this@SplashScreenActivity, unlockedLessonJSON, TempListUtility.unlockedLessons)
-
-        Log.d(TAG, "practicedWord size: ${TempListUtility.practicedWords.size}")
-
         val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
         lessonScope.launch {
 
-            //if the user has not saved lessons list to internal storage
+            //if the user has not saved a lessons list to internal storage
             if (!sharedPref.getBoolean(Constants.KEY_LESSON_JSON_EXISTS, false)) {
                 Log.d(TAG, "FIRST TIME, NO INTERNAL STORAGE")
                 val lessons = DataUtility.getAllLessons().toMutableList()
 
-                for(l in lessons){
+                TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+                for (l in lessons) {
                     if (l.level == 1)
                         TempListUtility.unlockedLessons.add(l.id)
                 }
 
-                JsonUtility.writeJSON(this@SplashScreenActivity, unlockedLessonJSON, TempListUtility.unlockedLessons)
-                JsonUtility.writeJSON(this@SplashScreenActivity, lessonJSON, lessons)
+                JsonUtility.writeJSON(
+                    this@SplashScreenActivity,
+                    unlockedLessonJSON,
+                    TempListUtility.unlockedLessons
+                )
+                JsonUtility.writeJSON(this@SplashScreenActivity, savedLessonJSON, lessons)
 
                 sharedPref.edit()
                     .putBoolean(Constants.KEY_LESSON_JSON_EXISTS, true)
@@ -110,91 +101,46 @@ class SplashScreenActivity : AppCompatActivity() {
 
                 Log.d(TAG, "DONE")
 
+            } else {
+                //locally saved data from, not tied to user account
+                TempListUtility.practicedWords =
+                    JsonUtility.getPracticedWords(this@SplashScreenActivity, "savedWords.json")
+                TempListUtility.viewedLessons =
+                    JsonUtility.getStringList(this@SplashScreenActivity, viewedLessonJSON)
             }
 
             lessonScope.cancel()
         }
 
+        auth = Firebase.auth
+        //auth.currentUser!!.delete()
+        //TODO: for deleting account auth.currentUser!!.delete()
+        if (auth.currentUser == null) {
+            val dialog: DialogFragment =
+                SignInFragment(
+                    this@SplashScreenActivity::goToHomeActivity,
+                    this@SplashScreenActivity::initializeUserData
+                )
 
-        //TODO: user account
+            dialog.isCancelable = true
+            dialog.show(this@SplashScreenActivity.supportFragmentManager, "user sign-in")
+        } else {
+            goToHomeActivity(true)
+        }
 
 
+        //  finish()
 
-        //  if ()
 
+        //to populate user based lists
 //        val userScope = CoroutineScope(Job() + Dispatchers.Main)
 //        userScope.launch {
 //            userScope.cancel()
 //        }
 
 
-
-
 //        lessonNum = viewModel.getLessonCount()
 //        wordNum = viewModel.getSize()
-        /*
-
-        if(not a user){
-            wordstatslist = []
-            lessonstatslist = []
-            //before user is added to db
-            email = input
-
-            if(lessonNum > 0){
-                for(roomlesson in viewModel.getalllessons){
-                    migratedlesson = LessonStats(
-                    rl.locked,
-                    rl.practice,
-                    rl.test
-                    )
-                    lessonstatslist.add(migratedlesson)
-                }
-            }
-
-
-            if(wordNum > 0){
-                for(roomword in viewmodel.getpracticedwords){
-                    migratedword  = wordstats(
-                    mw.practiced,
-                    mw.prevResult,
-                    mw.timescorrect,
-                    mw.timesanswered,
-                    mw.skipped,
-                    mw.flipped
-                    )
-                    wordstatslist.add(migratedword)
-                }
-            }
-
-            if(sign up){
-                user = User(
-                id = email,
-                wordstats = wordstats,
-                lessonstats = lessonstats
-                )
-
-                db.collections("users").add(user)
-            }else{
-                save wordstatslist,lessonstatslist to text file?
-
-            }
-
-        }
-
-         */
-
-        if(true){
-
-            goToHomeActivity()
-        }else{
-
-            auth = Firebase.auth
-        }
-
-// ...
-// Initialize Firebase Auth
-
-
 
 //        //manually reset user preferences
 //        //sharedPref.edit().clear().apply()
@@ -431,8 +377,67 @@ class SplashScreenActivity : AppCompatActivity() {
 //    }
 
     //end splash screen and continue to home activity
-    private fun goToHomeActivity() {
-        startActivity(Intent(this@SplashScreenActivity, HomeActivity::class.java))
+    private fun goToHomeActivity(needInit: Boolean) {
+
+        if (needInit) {
+            initializeUserData()
+        }
+
+        startActivity(Intent(this, HomeActivity::class.java))
+        //TODO: finish from next activity
         finish()
     }
+
+    private fun initializeUserData() {
+
+        val userScope = CoroutineScope(Job() + Dispatchers.Main)
+        userScope.launch {
+            val thisUser = DataUtility.getCurrentUser(auth.currentUser!!.uid)
+
+            if (thisUser != null) {
+                populateInternalStorageList(
+                    unlockedList,
+                    "unlocked",
+                    thisUser.unlockedLessons,
+                    unlockedLessonJSON
+                )
+                populateInternalStorageList(
+                    practicedList,
+                    "practiced",
+                    thisUser.practicedLessons,
+                    practicedLessonJSON
+                )
+                populateInternalStorageList(
+                    passedList,
+                    "passed",
+                    thisUser.passedLessons,
+                    passedLessonJSON
+                )
+            }
+            userScope.cancel()
+        }
+    }
+
+
+    private fun populateInternalStorageList(
+        internalList: MutableList<String>,
+        listType: String,
+        cloudList: MutableList<String>,
+        jsonFile: String
+    ) {
+        if (internalList.isEmpty()) {
+            Log.d(TAG, "EMPTY LIST")
+            TempListUtility.setList(listType, cloudList)
+            JsonUtility.writeJSON(
+                this,
+                jsonFile,
+                cloudList
+            )
+        } else {
+            Log.d(TAG, "NON-EMPTY LIST")
+            TempListUtility.setList(listType, internalList)
+        }
+    }
+
 }
+

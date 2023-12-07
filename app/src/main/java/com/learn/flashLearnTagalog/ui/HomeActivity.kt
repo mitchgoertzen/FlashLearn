@@ -36,7 +36,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity() : AppCompatActivity() {
 
     private val DEBUG = false
 
@@ -58,6 +58,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
