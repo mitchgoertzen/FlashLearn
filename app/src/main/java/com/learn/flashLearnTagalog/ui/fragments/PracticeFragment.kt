@@ -1,5 +1,6 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,15 +18,19 @@ import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.db.RoomWord
+import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class PracticeFragment(masterList: MutableList<Word>, private var currentLesson: Lesson) :
     Fragment(R.layout.fragment_practice) {
 
+    @Inject
+    lateinit var sharedPref: SharedPreferences
     private var masterWordList = masterList
     private lateinit var currentWord: Word
     private var currentWordList: MutableList<Word> = mutableListOf()
@@ -67,7 +72,9 @@ class PracticeFragment(masterList: MutableList<Word>, private var currentLesson:
 
         finishButton.setOnClickListener {
             if (!TempListUtility.practicedLessons.contains(id)){
-//TODO:             DataUtility.completePractice(currentLesson.id)
+                if(sharedPref.getBoolean(KEY_USER_SIGNED_IN, false)){
+                    DataUtility.addPracticedLesson(id)
+                }
                 TempListUtility.practicedLessons.add(id)
                 JsonUtility.writeJSON(
                     requireActivity(), "practicedLessons.json", TempListUtility.practicedLessons

@@ -5,6 +5,7 @@ object Constants {
     const val WORD_DATABASE_NAME = "word_db"
     const val SHARED_PREFERENCES_NAME = "sharedPref"
     const val KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
+    const val KEY_USER_SIGNED_IN = "KEY_USER_SIGNED_IN"
     //    const val KEY_WORD_UPDATE = "KEY_WORD_UPDATE"
     //    const val KEY_LESSON_UPDATE = "KEY_LESSON_UPDATE"
     const val KEY_IN_TEST = "KEY_IN_TEST"

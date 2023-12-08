@@ -2,6 +2,9 @@ package com.learn.flashLearnTagalog.db
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
@@ -27,6 +30,8 @@ class DataUtility {
 
         private val firestore = FirestoreUtility()
 
+        private val auth = Firebase.auth
+
         val scope = CoroutineScope(Job() + Dispatchers.Main)
 
 
@@ -42,12 +47,31 @@ class DataUtility {
             firestore.addDocument(USER_COLLECTION, userId, user)
         }
 
+
+        fun addUnlockedLesson(lessonId: String) {
+            //TODO: make shared pref
+             val uid = auth.currentUser!!.uid
+            firestore.addItemToArray(USER_COLLECTION, uid, "unlockedLessons", lessonId)
+        }
+
+
+        fun addPracticedLesson(lessonId: String) {
+            val uid = auth.currentUser!!.uid
+            firestore.addItemToArray(USER_COLLECTION, uid, "practicedLessons", lessonId)
+        }
+
+        fun addPassedLesson(lessonId: String) {
+            val uid = auth.currentUser!!.uid
+            firestore.addItemToArray(USER_COLLECTION, uid, "passedLessons", lessonId)
+        }
+
+
         suspend fun getCurrentUser(userId: String): User? {
             Log.d(TAG, "ID: $userId")
             return firestore.getDocument(USER_COLLECTION, userId)!!.toObject<User>()
         }
 
-        suspend fun getUserCount(): Int{
+        suspend fun getUserCount(): Int {
             return firestore.getCollectionCount(USER_COLLECTION).toInt()
         }
 
@@ -617,6 +641,7 @@ class DataUtility {
 
 
         }
+
 
     }
 }

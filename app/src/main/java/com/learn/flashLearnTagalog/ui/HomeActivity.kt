@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.common.base.Stopwatch
 import com.google.gson.Gson
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
@@ -32,7 +33,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.util.Timer
 import javax.inject.Inject
+import kotlin.system.measureTimeMillis
 
 
 @AndroidEntryPoint
@@ -67,15 +70,19 @@ class HomeActivity() : AppCompatActivity() {
         val dataProcessor = DataProcessor(resources)
 
         if (launch) {
-//            RequestConfiguration.Builder()
-//                .setTestDeviceIds(listOf("AAFD161D953789428592D83CCA602CDC"))
+
             MobileAds.initialize(this) {}
+
 
             // Create an ad request.
             val adRequest = AdRequest.Builder().build()
 
             // Start loading the ad in the background.
             binding.adViewHome.loadAd(adRequest)
+
+//            RequestConfiguration.Builder()
+//                .setTestDeviceIds(listOf("AAFD161D953789428592D83CCA602CDC"))
+
             launch = false
         }
 
@@ -148,8 +155,6 @@ class HomeActivity() : AppCompatActivity() {
                 DataUtility.insertAllLessons(lessonMap)
                 scope.cancel()
             }
-
-
 
 
         }

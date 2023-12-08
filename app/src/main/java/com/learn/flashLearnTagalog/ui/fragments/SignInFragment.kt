@@ -27,6 +27,7 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,14 +35,16 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.reflect.KFunction0
+import kotlin.reflect.KFunction
 import kotlin.reflect.KFunction1
 
 
 class SignInFragment(
-    val onClose: KFunction1<Boolean, Unit>,
-    private val initUser: KFunction0<Unit>
+    private val inProfile: Boolean = false,
+    private val onClose: KFunction1<Boolean, Unit>? = null,
+    private val initUser: KFunction1<User, Unit>? = null
 ) : DialogFragment() {
+
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -79,7 +82,7 @@ class SignInFragment(
         window.setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    onClose(true)
+                    invokeCallbacks(true, null)
                     dialog?.dismiss()
                 }
             }
@@ -93,17 +96,19 @@ class SignInFragment(
 
         val header: TextView = view.findViewById(R.id.tvHeader)
         val inputError: TextView = view.findViewById(R.id.tvInputError)
+
+        val continueWithoutAccount: TextView = view.findViewById(R.id.tvContinue)
         inputError.text = ""
 
         val confirmPasswordBox: LinearLayout = view.findViewById(R.id.llConfirmPassword)
         confirmPasswordBox.visibility = View.GONE
 
-        val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
 
         val emailText: EditText = view.findViewById(R.id.etEmail)
         val passwordText: EditText = view.findViewById(R.id.etPassword)
         val confirmPasswordText: EditText = view.findViewById(R.id.etConfirmPassword)
 
+        val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
         val signUpText: TextView = view.findViewById(R.id.tvSignUpPrompt)
 
         val confirmButton: Button = view.findViewById(R.id.btnConfirm)
@@ -113,12 +118,6 @@ class SignInFragment(
             true
         }
 
-        emailText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                checkValidEmail(emailText.text.toString(), inputError)
-            }
-        }
-
         signUpText.setOnClickListener {
             header.text = "Sign Up"
             inputError.text = ""
@@ -126,8 +125,19 @@ class SignInFragment(
             signUpPrompt.visibility = View.GONE
             confirmPasswordBox.visibility = View.VISIBLE
             signUp = true
-
         }
+
+        emailText.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                checkValidEmail(emailText.text.toString(), inputError)
+            }
+        }
+
+
+        if (inProfile) {
+            continueWithoutAccount.visibility = View.GONE
+        }
+
 
         confirmButton.setOnClickListener {
             email = emailText.text.toString()
@@ -143,7 +153,8 @@ class SignInFragment(
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    onClose.invoke(false)
+                                    sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
+                                    invokeCallbacks(false, null)
                                     dialog?.dismiss()
                                     Log.d(TAG, "createUserWithEmail:success")
                                     val firebaseUser = auth.currentUser
@@ -167,7 +178,7 @@ class SignInFragment(
                                                 firebaseUser!!.uid
                                             )
                                         }.await()
-                                        initUser.invoke()
+                                        invokeCallbacks(false, newUser)
                                         loadLessonsScope.cancel()
                                     }
 
@@ -185,8 +196,8 @@ class SignInFragment(
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                                //TODO: callback not being reached
-                                onClose.invoke(true)
+                                invokeCallbacks(true, null)
+                                sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
                                 dialog?.dismiss()
                                 Log.d(TAG, "signInWithEmail:success")
                             } else {
@@ -201,6 +212,17 @@ class SignInFragment(
         }
 
         return view
+    }
+
+    private fun invokeCallbacks(initData: Boolean, user: User?) {
+
+        if (onClose != null) {
+            if (user != null) {
+                initUser!!.invoke(user)
+            } else {
+                onClose.invoke(initData)
+            }
+        }
     }
 
     private fun checkValidEmail(email: String, errorText: TextView): Boolean {

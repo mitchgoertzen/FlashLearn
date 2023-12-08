@@ -18,6 +18,7 @@ import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
@@ -65,14 +66,18 @@ class SplashScreenActivity : AppCompatActivity() {
     private val practicedLessonJSON = "practicedLessons.json"
     private val passedLessonJSON = "passedLessons.json"
 
-    private val unlockedList = JsonUtility.getStringList(this, unlockedLessonJSON)
-    private val practicedList = JsonUtility.getStringList(this, practicedLessonJSON)
-    private val passedList = JsonUtility.getStringList(this, passedLessonJSON)
+    private lateinit var unlockedList: MutableList<String>
+    private lateinit var practicedList: MutableList<String>
+    private lateinit var passedList: MutableList<String>
 
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        unlockedList = JsonUtility.getStringList(this, unlockedLessonJSON)
+        practicedList = JsonUtility.getStringList(this, practicedLessonJSON)
+        passedList = JsonUtility.getStringList(this, passedLessonJSON)
 
         val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
         lessonScope.launch {
@@ -118,8 +123,8 @@ class SplashScreenActivity : AppCompatActivity() {
         if (auth.currentUser == null) {
             val dialog: DialogFragment =
                 SignInFragment(
-                    this@SplashScreenActivity::goToHomeActivity,
-                    this@SplashScreenActivity::initializeUserData
+                    onClose = this@SplashScreenActivity::goToHomeActivity,
+                    initUser = this@SplashScreenActivity::initializeUserData
                 )
 
             dialog.isCancelable = true
@@ -380,7 +385,39 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun goToHomeActivity(needInit: Boolean) {
 
         if (needInit) {
-            initializeUserData()
+            val userScope = CoroutineScope(Job() + Dispatchers.Main)
+            userScope.launch {
+                val authUser = auth.currentUser
+
+                if (authUser != null) {
+                    val thisUser = DataUtility.getCurrentUser(auth.currentUser!!.uid)
+
+                    if (thisUser != null) {
+                        initializeUserData(thisUser)
+                    }
+                }else{
+                    populateInternalStorageList(
+                        unlockedList,
+                        "unlocked",
+                        mutableListOf(),
+                        unlockedLessonJSON
+                    )
+                    populateInternalStorageList(
+                        practicedList,
+                        "practiced",
+                        mutableListOf(),
+                        practicedLessonJSON
+                    )
+                    populateInternalStorageList(
+                        passedList,
+                        "passed",
+                        mutableListOf(),
+                        passedLessonJSON
+                    )
+                }
+
+                userScope.cancel()
+            }
         }
 
         startActivity(Intent(this, HomeActivity::class.java))
@@ -388,34 +425,27 @@ class SplashScreenActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun initializeUserData() {
+    private fun initializeUserData(thisUser: User) {
 
-        val userScope = CoroutineScope(Job() + Dispatchers.Main)
-        userScope.launch {
-            val thisUser = DataUtility.getCurrentUser(auth.currentUser!!.uid)
+        populateInternalStorageList(
+            unlockedList,
+            "unlocked",
+            thisUser.unlockedLessons,
+            unlockedLessonJSON
+        )
+        populateInternalStorageList(
+            practicedList,
+            "practiced",
+            thisUser.practicedLessons,
+            practicedLessonJSON
+        )
+        populateInternalStorageList(
+            passedList,
+            "passed",
+            thisUser.passedLessons,
+            passedLessonJSON
+        )
 
-            if (thisUser != null) {
-                populateInternalStorageList(
-                    unlockedList,
-                    "unlocked",
-                    thisUser.unlockedLessons,
-                    unlockedLessonJSON
-                )
-                populateInternalStorageList(
-                    practicedList,
-                    "practiced",
-                    thisUser.practicedLessons,
-                    practicedLessonJSON
-                )
-                populateInternalStorageList(
-                    passedList,
-                    "passed",
-                    thisUser.passedLessons,
-                    passedLessonJSON
-                )
-            }
-            userScope.cancel()
-        }
     }
 
 

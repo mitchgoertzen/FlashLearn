@@ -88,7 +88,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         sortOptionAdapter.addOption("Lesson Level")
         sortOptionAdapter.addOption("Difficulty: Low to High")
         sortOptionAdapter.addOption("Difficulty: High to Low")
-        sortOptionAdapter.addOption("Unlocked")
+       // sortOptionAdapter.addOption("Unlocked")
 
         //close dialog when touch is detected outside of its window
         window.setOnTouchListener { v, event ->

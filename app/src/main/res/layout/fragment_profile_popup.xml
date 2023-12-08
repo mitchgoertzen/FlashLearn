@@ -46,10 +46,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stats"
+            android:visibility="gone"
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
 
-<!--        <Button-->
+        <!--        <Button-->
 <!--            android:id="@+id/btnSettings"-->
 <!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
@@ -64,4 +65,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
+
+    <Button
+        android:id="@+id/btnSignInOrOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+
+        android:text="Sign Out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        app:strokeColor="#FCD116"
+        app:strokeWidth="3dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -90,19 +90,20 @@ class FirestoreUtility {
             Log.d(TAG, "filter --> $filter")
             if (order != "") {
                 Log.d(TAG, "order --> $order")
-                if(start != null){
+                if (start != null) {
                     Log.d(TAG, "start --> $start")
-                    db.collection(collectionId).where(filter).orderBy(order, direction).startAt(start).limit(limit)
+                    db.collection(collectionId).where(filter).orderBy(order, direction)
+                        .startAt(start).limit(limit)
 
-                }else{
+                } else {
                     Log.d(TAG, "no start at")
                     db.collection(collectionId).where(filter).orderBy(order, direction).limit(limit)
                 }
-            }else{
+            } else {
                 Log.d(TAG, "no order")
                 db.collection(collectionId).where(filter).limit(limit)
             }
-        }else{
+        } else {
 
             Log.d(TAG, "no filter")
             db.collection(collectionId).limit(limit)
@@ -250,6 +251,14 @@ class FirestoreUtility {
             )
     }
 
+    fun addItemToArray(collectionId: String, documentId: String, field: String, value: String) {
+        db.collection(collectionId).document(documentId)
+            .update(field, FieldValue.arrayUnion(value)).addOnSuccessListener {
+                Log.d(TAG, "ITEM ADDED TO ARRAY")
+            }
+
+    }
+
     fun incrementDocumentField(
         collectionId: String,
         documentId: String,
@@ -333,6 +342,8 @@ class FirestoreUtility {
             }
         }
     }
+
+
 
 
 }

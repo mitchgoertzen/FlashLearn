@@ -33,6 +33,10 @@ import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -43,6 +47,8 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     private lateinit var answeredAdapter: TestWordAdapter
 
     //private val viewModel: MainViewModel by viewModels()
+
+    val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -235,27 +241,35 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
             "n" -> {
                 "Noun"
             }
+
             "comp" -> {
                 "Noun"
             }
+
             "v" -> {
                 "Verb"
             }
+
             "adj" -> {
                 "Adjective"
             }
+
             "adv" -> {
                 "adverb"
             }
+
             "inf" -> {
                 "infinitive"
             }
+
             "intrj" -> {
                 "interjection"
             }
+
             "prep" -> {
                 "preposition"
             }
+
             else -> {
                 currentWord.type
             }
@@ -273,16 +287,29 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
 
         if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
             val id = currentLesson.id
-            if (!TempListUtility.passedLessons.contains(id)){
-//TODO:             DataUtility.passTest(id)
-                //TODO: constant
+            if (!TempListUtility.passedLessons.contains(id)) {
+
                 val nextLevel = currentLesson.level + 1
                 val nextId = currentLesson.category + "_" + nextLevel
-                for(l in JsonUtility.getSavedLessons(requireActivity(), "savedLessons.json")){
-                    if(l.id == nextId){
+                for (l in JsonUtility.getSavedLessons(requireActivity(), "savedLessons.json")) {
+                    if (l.id == nextId) {
+
+                        if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                            DataUtility.addUnlockedLesson(nextId)
+                        }
                         TempListUtility.unlockedLessons.add(nextId)
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            "unlockedLessons.json",
+                            TempListUtility.unlockedLessons
+                        )
                     }
                 }
+
+                if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                    DataUtility.addPassedLesson(id)
+                }
+
 
                 TempListUtility.passedLessons.add(id)
                 JsonUtility.writeJSON(
@@ -311,9 +338,9 @@ class TestFragment(masterList: MutableList<Word>, private var currentLesson: Les
     }
 
     private fun answerWord(result: Boolean) {
-       //TODO: currentWord.previousResult = result
+        //TODO: currentWord.previousResult = result
         currentWord.id.let {
-           //TODO: premium feature DataUtility.answerWord(it, result)
+            //TODO: premium feature DataUtility.answerWord(it, result)
             //viewModel.answerWord(it, result)
             textLine = getCurrentWord(engFirst) + " : " + getCurrentWord(!engFirst)
             val toDo = TestWord(textLine, result)
