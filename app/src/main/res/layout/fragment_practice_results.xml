@@ -61,11 +61,8 @@
 
             <Button
                 android:id="@+id/btnLessonTest"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
                 android:maxLines="1"
                 android:text="start test"
                 app:autoSizeMaxTextSize="13sp"
@@ -84,6 +81,7 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:text="View Stats"
+                android:visibility="gone"
                 app:autoSizeMaxTextSize="13sp"
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeStepGranularity="1sp"

@@ -8,20 +8,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.constraintlayout.widget.Guideline
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
 import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.db.RoomLesson
+import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class TestResultsFragment(var lesson : Lesson, wordsCorrect: Int, var adapter: TestWordAdapter) :
+class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: TestWordAdapter) :
     Fragment(R.layout.fragment_test_results) {
 
     @Inject
@@ -49,11 +59,82 @@ class TestResultsFragment(var lesson : Lesson, wordsCorrect: Int, var adapter: T
         val percentageText: TextView = view.findViewById(R.id.tvPercentage)
 
         val retryButton: Button = view.findViewById(R.id.btnRetry)
+        val nextButton: Button = view.findViewById(R.id.btnNextLesson)
         val statsButton: Button = view.findViewById(R.id.btnStats)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
 
         rvTodoList.adapter = adapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+
+        val guideline: Guideline = view.findViewById(R.id.glRight)
+
+        guideline.setGuidelinePercent(1f)
+        nextButton.visibility = View.GONE
+
+
+
+        if ((score / listSize) >= 0.5f) {
+            val nextId = "${lesson.category}_${lesson.level + 1}"
+            //TODO: better solution
+            val lessonJSON = "savedLessons.json"
+            val savedLessons = JsonUtility.getSavedLessons(requireActivity(), lessonJSON)
+            var nextLesson: Lesson? = null
+
+            var nextLessonWordList: MutableList<Word> = mutableListOf()
+
+            for (l in savedLessons) {
+                if (l.id == nextId) {
+                    nextLesson = l
+                }
+            }
+            if (nextLesson != null) {
+                guideline.setGuidelinePercent(0.60f)
+                nextButton.visibility = View.VISIBLE
+
+                val scope = CoroutineScope(Job() + Dispatchers.Main)
+                scope.launch {
+
+                    if (TempListUtility.viewedLessons.contains(nextId)) {
+                        nextLessonWordList = TempListUtility.practicedWords[nextId]!!
+                    } else {
+                        nextLessonWordList = DataUtility.getAllWordsForLesson(
+                            nextLesson.category.lowercase(),
+                            nextLesson.minLength,
+                            nextLesson.wordCount.toLong()
+                        ).toMutableList()
+                        TempListUtility.practicedWords[nextId] = nextLessonWordList
+                        TempListUtility.viewedLessons.add(nextId)
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "viewedLessons.json",
+                            TempListUtility.viewedLessons
+                        )
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "savedWords.json",
+                            TempListUtility.practicedWords
+                        )
+                    }
+                    scope.cancel()
+                }
+                nextButton.setOnClickListener {
+                    val fragment =
+                        TestFragment(
+                            nextLessonWordList.asSequence().shuffled().toMutableList(),
+                            nextLesson
+                        )
+                    val transaction = fragmentManager?.beginTransaction()
+                    transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")
+                        ?.commit()
+                    (activity as LearningActivity?)?.transitionFragment()
+                }
+            }
+        }
+
+
+
 
         retryButton.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()

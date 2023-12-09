@@ -137,6 +137,7 @@ class LessonTypeDialogueFragment(
 
 
         testButton.setOnClickListener {
+            //TODO: make fragment transition universal fun?
             val fragment =
                 TestFragment(wordList.asSequence().shuffled().toMutableList(), currentLesson)
             val transaction = fragmentManager?.beginTransaction()
@@ -171,6 +172,8 @@ class LessonTypeDialogueFragment(
 
         return view
     }
+
+
 
 
     private fun disableButton(btn: Button) {
