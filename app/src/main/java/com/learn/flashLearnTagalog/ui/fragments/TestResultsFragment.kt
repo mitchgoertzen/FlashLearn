@@ -1,8 +1,10 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,9 +73,8 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
         guideline.setGuidelinePercent(1f)
         nextButton.visibility = View.GONE
 
+        if ((100 * score / listSize) >= 50) {
 
-
-        if ((score / listSize) >= 0.5f) {
             val nextId = "${lesson.category}_${lesson.level + 1}"
             //TODO: better solution
             val lessonJSON = "savedLessons.json"
@@ -84,6 +85,7 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
 
             for (l in savedLessons) {
                 if (l.id == nextId) {
+
                     nextLesson = l
                 }
             }
@@ -121,7 +123,7 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
                 }
                 nextButton.setOnClickListener {
                     val fragment =
-                        TestFragment(
+                        PracticeFragment(
                             nextLessonWordList.asSequence().shuffled().toMutableList(),
                             nextLesson
                         )

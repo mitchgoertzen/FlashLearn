@@ -77,7 +77,7 @@ class LessonSelectFragment : Fragment() {
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
 
-        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5")
+        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()
@@ -130,6 +130,7 @@ class LessonSelectFragment : Fragment() {
             //only add lessons that fit within the selected filter requirements
             if (lesson.level > 0) {
 
+                //TODO: replace with difficulty, set names for 1-5
                 // Log.d(TAG, "OVER 0")
                 if (difficulties.contains((lesson.level).toString())) {
 
@@ -162,7 +163,7 @@ class LessonSelectFragment : Fragment() {
                         }
                 } else {
                     add = false
-                    Log.d(TAG, " difficulty ${lesson.difficulty} not in list")
+                    Log.d(TAG, "${lesson.category} ${lesson.level}'s difficulty ${lesson.difficulty} not in list")
                 }
             } else {
 

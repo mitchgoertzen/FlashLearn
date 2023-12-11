@@ -124,7 +124,7 @@ class HomeActivity() : AppCompatActivity() {
 
             Log.d(TAG, "COUNT: ${words.size}")
 
-            for (i in 1..100) {
+            for (i in 0 until words.size) {
 
                 val w = words[i]
                 lessonWords[w.id] = w
@@ -162,6 +162,7 @@ class HomeActivity() : AppCompatActivity() {
 
         val learning = LearningActivity()
 
+        //TODO: json listener
         //on lesson button press, start learning activity
         binding.btnLesson.setOnClickListener {
             learning.setType(2)

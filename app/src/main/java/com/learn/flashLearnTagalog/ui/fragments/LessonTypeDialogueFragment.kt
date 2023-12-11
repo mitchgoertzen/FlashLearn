@@ -84,8 +84,10 @@ class LessonTypeDialogueFragment(
         //when popup is touched, but no buttons are, popup will close
         window.setOnTouchListener { v, event ->
             when (event?.action) {
-                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-            }
+                MotionEvent.ACTION_DOWN -> {
+                    scope.cancel()
+                    dialog?.dismiss()
+            }}
             v?.onTouchEvent(event) ?: true
         }
 
@@ -101,7 +103,7 @@ class LessonTypeDialogueFragment(
                         currentLesson.minLength,
                         currentLesson.wordCount.toLong()
                     ).toMutableList()
-                    Log.d(TAG, "reads used: ${wordList.size}")
+                   // Log.d(TAG, "reads used: ${wordList.size}")
                     TempListUtility.practicedWords[id] = wordList
                     TempListUtility.viewedLessons.add(id)
                     JsonUtility.writeJSON(

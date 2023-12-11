@@ -273,6 +273,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add words"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnAddLessons"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -283,6 +284,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add lessons"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guideline36"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -293,6 +295,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="all words"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnDictionary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline33" />
@@ -302,6 +305,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="start at"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnDictionary"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -310,6 +314,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="only filter"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAll" />

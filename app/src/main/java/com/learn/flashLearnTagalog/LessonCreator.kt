@@ -143,6 +143,7 @@ class LessonCreator() {
         }
         //id of each lesson is the hashcode of the string containing category+level
 
+        //TODO: stop when word length reaches max??
         val wordCount = async { DataUtility.getLessonWordCount(category.lowercase(), minLength, maxLength) }.await()
 
         return@coroutineScope Lesson(category, level, minLength, maxLength, wordCount, (numOfWords + 1), imageID)

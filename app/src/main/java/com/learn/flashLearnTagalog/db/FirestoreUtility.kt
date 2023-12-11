@@ -163,6 +163,7 @@ class FirestoreUtility {
         query = filteredRef.orderBy(order, direction).startAt(offset)
             .limit(limit).get().await()
 
+
         return query
     }
 

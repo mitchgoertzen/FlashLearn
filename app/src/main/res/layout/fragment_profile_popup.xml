@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.ProfilePopupFragment"
-    android:background="#B3000000"
+    android:background="#D9000000"
     android:clickable="true"
     android:focusable="true">
 

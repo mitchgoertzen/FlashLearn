@@ -1,5 +1,6 @@
 package com.learn.flashLearnTagalog.db
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
@@ -11,6 +12,7 @@ import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStats
@@ -43,14 +45,29 @@ class DataUtility {
 
 
         /*************************************_USERS_**********************************************/
-        fun addUser(user: User, userId: String) {
-            firestore.addDocument(USER_COLLECTION, userId, user)
+        fun addUser(user: User) {
+            if (auth.currentUser != null) {
+                firestore.addDocument(USER_COLLECTION, auth.currentUser!!.uid, user)
+            }
+        }
+
+        fun updateUserData(user: User) {
+            if (auth.currentUser != null) {
+                firestore.updateDocument(
+                    USER_COLLECTION, auth.currentUser!!.uid, mapOf(
+                        "unlockedLessons" to user.unlockedLessons,
+                        "practicedLessons" to user.practicedLessons,
+                        "passedLessons" to user.passedLessons
+                    )
+                )
+            }
+
         }
 
 
         fun addUnlockedLesson(lessonId: String) {
             //TODO: make shared pref
-             val uid = auth.currentUser!!.uid
+            val uid = auth.currentUser!!.uid
             firestore.addItemToArray(USER_COLLECTION, uid, "unlockedLessons", lessonId)
         }
 
@@ -66,9 +83,15 @@ class DataUtility {
         }
 
 
-        suspend fun getCurrentUser(userId: String): User? {
-            Log.d(TAG, "ID: $userId")
-            return firestore.getDocument(USER_COLLECTION, userId)!!.toObject<User>()
+        suspend fun getCurrentUser(): User? {
+
+            return if (auth.currentUser != null) {
+                Log.d(TAG, "ID: $auth.currentUser!!.uid")
+                firestore.getDocument(USER_COLLECTION, auth.currentUser!!.uid)!!
+                    .toObject<User>()
+            } else {
+                null
+            }
         }
 
         suspend fun getUserCount(): Int {
@@ -145,14 +168,18 @@ class DataUtility {
             limit: Long = 100
         ): List<Word> {
 
-            return firestore.getSelectDocuments(
+            val words = firestore.getSelectDocuments(
                 WORD_COLLECTION,
                 Filter.equalTo("category", category),
                 "length",
                 Query.Direction.ASCENDING,
                 min + 1,
                 limit
-            ).toObjects()
+            )
+
+            //Log.d(TAG, "reads: ${words.size()}")
+
+            return words.toObjects()
         }
 
 //        // @Query("SELECT * FROM word_table WHERE category == :category AND LENGTH(tagalog) > :min AND LENGTH(tagalog) <= :max")
@@ -639,6 +666,107 @@ class DataUtility {
 
         fun nukeWords() {
 
+
+        }
+
+        /*************************************_LOCAL STORAGE_****************************************/
+
+        suspend fun updateLocalData(
+            activity: Activity, signUp: Boolean, rewriteJSON: Boolean
+        ) {
+
+            Log.d(TAG, "UPDATING LOCAL DATA")
+
+            val unlockedJSON = "unlockedLessons.json"
+            val practicedJSON = "practicedLessons.json"
+            val passedJSON = "passedLessons.json"
+
+            var currentUnlocked =
+                JsonUtility.getStringList(activity, unlockedJSON)
+
+            var currentPracticed =
+                JsonUtility.getStringList(activity, practicedJSON)
+
+            var currentPassed =
+                JsonUtility.getStringList(activity, passedJSON)
+
+            val user = getCurrentUser()
+            if (user != null) {
+
+                Log.d(TAG, "THERE IS A USER")
+                if (!signUp) {
+
+                    Log.d(TAG, "THEY ARE SIGNED IN")
+                    val unlocked = currentUnlocked.toSet() + user.unlockedLessons.toSet()
+                    var practiced = currentPracticed.toSet() + user.practicedLessons.toSet()
+                    var passed = currentPassed.toSet() + user.passedLessons.toSet()
+
+                    currentUnlocked = unlocked.toMutableList()
+                    currentPracticed = practiced.toMutableList()
+                    currentPassed = passed.toMutableList()
+                } else {
+                    Log.d(TAG, "THEY HAVE JUST SIGNED UP")
+                }
+
+                user.unlockedLessons = currentUnlocked
+                user.practicedLessons = currentPracticed
+                user.passedLessons = currentPassed
+
+                updateUserData(user)
+            }
+
+            if (currentUnlocked.isNotEmpty()) {
+                populateInternalStorageList(
+                    activity,
+                    "unlocked",
+                    currentUnlocked,
+                    unlockedJSON,
+                    rewriteJSON
+                )
+            }
+
+            if (currentPracticed.isNotEmpty()) {
+                populateInternalStorageList(
+                    activity,
+                    "practiced",
+                    currentPracticed,
+                    practicedJSON,
+                    rewriteJSON
+                )
+            }
+
+            if (currentPassed.isNotEmpty()) {
+                populateInternalStorageList(
+                    activity,
+                    "passed",
+                    currentPassed,
+                    passedJSON,
+                    rewriteJSON
+                )
+            }
+
+        }
+
+
+        private fun populateInternalStorageList(
+            activity: Activity,
+            listType: String,
+            list: MutableList<String>,
+            jsonFile: String,
+            rewriteJSON: Boolean
+        ) {
+
+            Log.d(TAG, "POPULATING TEMP")
+            TempListUtility.setList(listType, list)
+
+            if (rewriteJSON){
+                Log.d(TAG, " AND (RE)POPULATING JSON")
+                JsonUtility.writeJSON(
+                    activity,
+                    jsonFile,
+                    list
+                )
+            }
 
         }
 

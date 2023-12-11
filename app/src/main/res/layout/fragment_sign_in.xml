@@ -5,7 +5,7 @@
     android:id="@+id/clBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3000000"
+    android:background="#D9000000"
     tools:context=".ui.fragments.SignInFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Email:"
+                    android:textColor="#0038A8"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
 
@@ -99,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-5dp"
                     android:ems="10"
+                    android:textColor="#0038A8"
                     android:inputType="textEmailAddress"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
@@ -116,6 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Password:"
+                    android:textColor="#0038A8"
                     android:textSize="12sp" />
 
                 <EditText
@@ -124,6 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-5dp"
                     android:ems="10"
+                    android:textColor="#0038A8"
                     android:inputType="textPassword"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
@@ -142,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Confirm Password:"
+                    android:textColor="#0038A8"
                     android:textSize="12sp" />
 
                 <EditText
@@ -151,6 +156,7 @@
                     android:layout_marginTop="-5dp"
                     android:ems="10"
                     android:inputType="textPassword"
+                    android:textColor="#0038A8"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
             </LinearLayout>

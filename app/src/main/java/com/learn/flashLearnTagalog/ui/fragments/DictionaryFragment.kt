@@ -17,6 +17,7 @@ import com.google.firebase.firestore.toObject
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
 import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.ui.LearningActivity
@@ -32,11 +33,13 @@ class DictionaryFragment : Fragment() {
 
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-   // private val viewModel: MainViewModel by viewModels()
-    private var wordList: MutableList<Word> = mutableListOf()
-    private var wordsPerPage: Long = 200
+    // private val viewModel: MainViewModel by viewModels()
+    private var masterWordList: MutableList<Word> = mutableListOf()
+    private var wordsPerPage = 200
     private var numPages = 1
-    private var currentPage = 1
+    private var currentPage = 0
+
+    private var wordCount = 0
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -63,20 +66,43 @@ class DictionaryFragment : Fragment() {
         val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
 
 
-        scope.launch{
-            val wordCount = DataUtility.getWordCount()
-            println("WORD COUNT: $wordCount")
-
-            numPages = wordCount / wordsPerPage.toInt()
-
-            if (wordCount % wordsPerPage > 0)
-                numPages++
-
-            totalPages.text = numPages.toString()
+        for (wordList in TempListUtility.practicedWords) {
+            wordCount += wordList.value.size
+            masterWordList.addAll(wordList.value)
         }
+
+        if (wordCount == 0) {
+            numPages = 0
+        } else {
+            currentPage = 1
+            numPages = wordCount / wordsPerPage
+        }
+
+        if (wordCount % wordsPerPage > 0)
+            numPages++
+
+        currPage.text = "$currentPage"
+        totalPages.text = numPages.toString()
+
+//        scope.launch{
+//            val wordCount = DataUtility.getWordCount()
+//            println("WORD COUNT: $wordCount")
+//
+//            numPages = wordCount / wordsPerPage.toInt()
+//
+//            if (wordCount % wordsPerPage > 0)
+//                numPages++
+//
+//            totalPages.text = numPages.toString()
+//        }
 
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
+
+        if (numPages < 1 || currentPage == numPages) {
+            deactivateSwitch(nextPage)
+            deactivateSwitch(lastPage)
+        }
 
         //when firstPage button is pressed, (de)/activate this and corresponding buttons
         firstPage.setOnClickListener {
@@ -152,29 +178,41 @@ class DictionaryFragment : Fragment() {
     @OptIn(DelicateCoroutinesApi::class)
     private fun gatherWords() {
 
+        dictionaryAdapter.deleteDictionaryWords()
 
-        scope.launch {
-            //clear currently displayed words from the screen
-            dictionaryAdapter.deleteDictionaryWords()
+        if (masterWordList.isNotEmpty()) {
+            val start = (currentPage - 1) * wordsPerPage
 
-        //TODO: need to use for start at: ((currentPage - 1) * wordsPerPage.toInt())
-            println("1")
-          //  wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
-            //gather next set of words, confined by current page and number of words per page
-
-            println("3")
-//                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
-//                    .observe(viewLifecycleOwner) {
-//                        wordList = it.toMutableList()
-//                    }
-            Handler(Looper.getMainLooper()).postDelayed({
-
-                println("4")
-                for (word in wordList) {
-                    dictionaryAdapter.addDictionaryWord(word)
+            for (i in start..(start + wordsPerPage)) {
+                if (i < wordCount) {
+                    dictionaryAdapter.addDictionaryWord(masterWordList[i])
                 }
-            }, 1000)
+            }
+            dictionaryAdapter.sort()
         }
+
+//        scope.launch {
+//            //clear currently displayed words from the screen
+//            dictionaryAdapter.deleteDictionaryWords()
+//
+//            //TODO: need to use for start at: ((currentPage - 1) * wordsPerPage.toInt())
+//            println("1")
+//            //  wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
+//            //gather next set of words, confined by current page and number of words per page
+//
+//            println("3")
+////                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
+////                    .observe(viewLifecycleOwner) {
+////                        wordList = it.toMutableList()
+////                    }
+//            Handler(Looper.getMainLooper()).postDelayed({
+//
+//                println("4")
+//                for (word in wordList) {
+//                    dictionaryAdapter.addDictionaryWord(word)
+//                }
+//            }, 1000)
+//        }
 
 
 //        GlobalScope.launch(Dispatchers.Main) {

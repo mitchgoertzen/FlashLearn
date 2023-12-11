@@ -1,6 +1,7 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -21,13 +22,17 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.google.firebase.Firebase
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.db.DataUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.internal.managers.FragmentComponentManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,19 +40,27 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.reflect.KFunction
+import kotlin.reflect.KFunction0
 import kotlin.reflect.KFunction1
 
 
+@AndroidEntryPoint
 class SignInFragment(
-    private val inProfile: Boolean = false,
-    private val onClose: KFunction1<Boolean, Unit>? = null,
-    private val initUser: KFunction1<User, Unit>? = null
+    private val inProfile: Boolean,
+    private val onClose: KFunction0<Unit>? = null
 ) : DialogFragment() {
-
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    private val errors = mapOf(
+        "The email address is badly formatted." to "Invalid email format",
+        "The supplied auth credential is incorrect, malformed or has expired." to "No account with this Email/password",
+        "The given password is invalid. [ Password should be at least 6 characters ]" to "Password must be at least 6 characters",
+        "The email address is already in use by another account." to "Email already in use"
+    )
+
+    private lateinit var mContext: Activity
 
     private lateinit var auth: FirebaseAuth
     private var email = ""
@@ -55,6 +68,8 @@ class SignInFragment(
     private var confirmPassword = ""
     private var signUp = false
     private val pattern = Patterns.EMAIL_ADDRESS
+
+//    private val manager = parentFragmentManager
 
     override fun onStart() {
         super.onStart()
@@ -73,22 +88,30 @@ class SignInFragment(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
-
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val mContext = FragmentComponentManager.findActivity(context) as Activity
+        Log.d(TAG, "pref: ${sharedPref.getBoolean(KEY_USER_SIGNED_IN, false)}")
 
         val window: ConstraintLayout = view.findViewById(R.id.clBackground)
         window.setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    invokeCallbacks(true, null)
+                    sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, false).apply()
+                    val listScope = CoroutineScope(Job() + Dispatchers.Main)
+                    listScope.launch {
+                        DataUtility.updateLocalData(mContext, signUp = false, rewriteJSON = false)
+                        listScope.cancel()
+                    }
+                    onClose!!.invoke()
                     dialog?.dismiss()
                 }
             }
             v?.onTouchEvent(event) ?: true
         }
-
+        //   mContext = context as Activity
+        //  mContext = childFragmentManager.f .findActivity(context) as Activity
         val tapBlocker: ConstraintLayout = view.findViewById(R.id.clTapBlock)
 
         val form: ImageView = view.findViewById(R.id.ivFormBackground)
@@ -145,46 +168,72 @@ class SignInFragment(
             confirmPassword = confirmPasswordText.text.toString()
 
             auth = Firebase.auth
+            //checkValidEmail(email, inputError)
 
             inputError.text = ""
-            if (checkValidEmail(email, inputError)) {
+            if (email != "" && password != "") {
                 if (signUp) {
                     if (password == confirmPassword) {
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
-                                    invokeCallbacks(false, null)
+                                    onClose!!.invoke()
                                     dialog?.dismiss()
                                     Log.d(TAG, "createUserWithEmail:success")
-                                    val firebaseUser = auth.currentUser
 
+                                    Log.d(TAG, "1")
                                     val loadLessonsScope = CoroutineScope(Job() + Dispatchers.Main)
                                     loadLessonsScope.launch {
 
-                                        val lessons =
-                                            async { DataUtility.getLessonIDsByLevel(1) }.await()
-                                        Log.d(TAG, "lessons: ${lessons.size}")
-                                        for (l in lessons) {
-                                            if (l.level == 1)
-                                                TempListUtility.unlockedLessons.add(l.id)
-                                        }
-                                        TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+                                        Log.d(TAG, "2")
                                         val newUser = User(email)
-                                        newUser.unlockedLessons = TempListUtility.unlockedLessons
+                                        if (TempListUtility.unlockedLessons.isEmpty()) {
+
+                                            Log.d(TAG, "3")
+                                            val lessons =
+                                                async { DataUtility.getLessonIDsByLevel(1) }.await()
+                                            Log.d(TAG, "lessons: ${lessons.size}")
+
+                                            Log.d(TAG, "4")
+                                            for (l in lessons) {
+                                                if (l.level == 1)
+                                                    TempListUtility.unlockedLessons.add(l.id)
+                                            }
+                                            TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+
+                                            JsonUtility.writeJSON(
+                                                mContext,
+                                                "unlockedLessons.json",
+                                                TempListUtility.unlockedLessons
+                                            )
+                                        }
+
+                                        Log.d(TAG, "6")
                                         async {
                                             DataUtility.addUser(
-                                                newUser,
-                                                firebaseUser!!.uid
+                                                newUser
                                             )
+                                            Log.d(TAG, "add user done")
                                         }.await()
-                                        invokeCallbacks(false, newUser)
+
+                                        Log.d(TAG, "7")
+                                        DataUtility.updateLocalData(mContext,
+                                            signUp = true,
+                                            rewriteJSON = false
+                                        )
+
+                                        Log.d(TAG, "12")
                                         loadLessonsScope.cancel()
                                     }
 
-                                    Log.d(TAG, firebaseUser!!.email.toString())
                                 } else {
-                                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+
+                                    val code: FirebaseException =
+                                        task.exception as FirebaseException
+
+                                    Log.d(TAG, "ERROR: ${code.message.toString()}")
+
+                                    inputError.text = errors[code.message]
                                 }
                             }
                     } else {
@@ -196,33 +245,35 @@ class SignInFragment(
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(requireActivity()) { task ->
                             if (task.isSuccessful) {
-                                invokeCallbacks(true, null)
+                                val userScope = CoroutineScope(Job() + Dispatchers.Main)
+                                userScope.launch {
+                                    DataUtility.updateLocalData(mContext,
+                                        signUp = false,
+                                        rewriteJSON = true
+                                    )
+                                    userScope.cancel()
+                                }
+
+                                onClose!!.invoke()
+
                                 sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
                                 dialog?.dismiss()
                                 Log.d(TAG, "signInWithEmail:success")
                             } else {
+                                val code: FirebaseException = task.exception as FirebaseException
 
-                                inputError.text = "Incorrect email/password"
-                                Log.w(TAG, "signInWithEmail:failure", task.exception)
-
+                                Log.d(TAG, code.message.toString())
+                                inputError.text = errors[code.message]
                             }
                         }
                 }
+            } else {
+                inputError.text = "Must enter email/password"
+
             }
         }
 
         return view
-    }
-
-    private fun invokeCallbacks(initData: Boolean, user: User?) {
-
-        if (onClose != null) {
-            if (user != null) {
-                initUser!!.invoke(user)
-            } else {
-                onClose.invoke(initData)
-            }
-        }
     }
 
     private fun checkValidEmail(email: String, errorText: TextView): Boolean {

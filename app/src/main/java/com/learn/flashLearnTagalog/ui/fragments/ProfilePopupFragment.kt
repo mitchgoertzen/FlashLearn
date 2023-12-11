@@ -78,6 +78,8 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
 
         signInButton.setOnClickListener {
             if (userSignedIn) {
+
+                sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false).apply()
                 auth.signOut()
                 userSignedIn = false
 
@@ -115,9 +117,7 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         return view
     }
 
-    private fun reloadCallback(b: Boolean) {
-        //TODo: reload dialog
-        Log.d(TAG, "reload bool: $b")
+    private fun reloadCallback() {
         dialog?.show()
     }
 }

@@ -199,7 +199,7 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
             scope.launch {
                 //TODO: flicker on filter comes from having to delete words then recreate the list
-                //find way to replace words in llist rather than delete and refill
+                //find way to replace words in list rather than delete and refill
                 (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
             }
         }

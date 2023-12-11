@@ -3,6 +3,7 @@ package com.learn.flashLearnTagalog.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.DictionaryWordBinding
 import javax.inject.Inject
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>) :
     RecyclerView.Adapter<DictionaryAdapter.DictionaryViewHolder>() {
 
-    lateinit var currentList: List<Word>
+    private lateinit var currentList: List<Word>
 
     class DictionaryViewHolder(val binding: DictionaryWordBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -57,5 +58,9 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
 
     fun getLessons(): MutableList<Word> {
         return words
+    }
+
+    fun sort(){
+        words.sortWith(compareBy<Word> { it.english }.thenBy { it.tagalog })
     }
 }

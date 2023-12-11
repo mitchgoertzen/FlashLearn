@@ -1,11 +1,12 @@
 package com.learn.flashLearnTagalog.adapters
 
 import android.app.Activity
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
@@ -19,6 +20,7 @@ import dagger.hilt.android.internal.managers.FragmentComponentManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
+
 @Singleton
 class LessonAdapter @Inject constructor(
     private val lessons: MutableList<Lesson>,
@@ -26,11 +28,9 @@ class LessonAdapter @Inject constructor(
 ) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
-//    lateinit var lessonList: List<Lesson>
 //    lateinit var lessonStatsList: List<LessonStats>
 
     class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
 
@@ -58,7 +58,23 @@ class LessonAdapter @Inject constructor(
             var difficulty = ""
             val holderBinding = holder.binding
             holderBinding.tvCategory.maxLines = currentLesson.maxLines
-
+//
+//            val newLayoutParams =
+//                holderBinding.ibLesson.layoutParams as ConstraintLayout.LayoutParams
+//
+////            LinearLayout.LayoutParams(
+////                169, 169
+////            )
+//            Log.d(TAG, "number: ${lessonNumbers[currentLesson.id]}")
+//            if ((lessonNumbers[currentLesson.id] != null) && (lessonNumbers[currentLesson.id])!!.toInt() % 2 == 0) {
+//                newLayoutParams.marginStart = 0
+//                newLayoutParams.marginEnd = 2
+//            } else {
+//                newLayoutParams.marginStart = 2
+//                newLayoutParams.marginEnd = 0
+//            }
+//
+//            holderBinding.ibLesson.layoutParams = newLayoutParams
 
             if (currentLesson.level == 0) {
                 level = ""
@@ -217,7 +233,11 @@ class LessonAdapter @Inject constructor(
                 //TODO: only make once
                 LessonStats()
             )
-            //    notifyItemRangeChanged(0, lessons.size)
+//            var i = 0
+//            for (l in lessons) {
+//                lessonNumbers[l.id] = i++
+//            }
+
         }
     }
 }
