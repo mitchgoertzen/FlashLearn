@@ -86,14 +86,14 @@ class HomeActivity() : AppCompatActivity() {
             launch = false
         }
 
-        binding.btnAll.setOnClickListener {
-            val scope = CoroutineScope(Job() + Dispatchers.Main)
-            scope.launch {
-                val someList = DataUtility.getAllWords().toMutableList()
-                Log.d(TAG, "reads used: ${someList.size}")
-                scope.cancel()
-            }
-        }
+//        binding.btnAll.setOnClickListener {
+//            val scope = CoroutineScope(Job() + Dispatchers.Main)
+//            scope.launch {
+//                val someList = DataUtility.getAllWords().toMutableList()
+//                Log.d(TAG, "reads used: ${someList.size}")
+//                scope.cancel()
+//            }
+//        }
 
 //        binding.btnFilter.setOnClickListener {
 //            val scope = CoroutineScope(Job() + Dispatchers.Main)
@@ -104,60 +104,58 @@ class HomeActivity() : AppCompatActivity() {
 //                scope.cancel()
 //            }
 //        }
-
-        binding.btnStart.setOnClickListener {
-            val scope = CoroutineScope(Job() + Dispatchers.Main)
-            scope.launch {
-                val someList = DataUtility.getAllWordsForLesson("animals", 4).toMutableList()
-
-                Log.d(TAG, "reads used: ${someList.size}")
-                scope.cancel()
-            }
-        }
-
-
-        binding.btnAddWords.setOnClickListener {
-
-            val words = dataProcessor.getWords()
-
-            val lessonWords = mutableMapOf<String, Word>()
-
-            Log.d(TAG, "COUNT: ${words.size}")
-
-            for (i in 0 until words.size) {
-
-                val w = words[i]
-                lessonWords[w.id] = w
-
-            }
-
-            DataUtility.insertAllWords(lessonWords)
-
-            Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
-        }
-
-        binding.btnAddLessons.setOnClickListener {
-
-            val scope = CoroutineScope(Job() + Dispatchers.Main)
-            scope.launch {
-                async { lessonCreator.createLessons() }.await()
-
-                val lessonList = lessonCreator.getLessons()
-
-                Log.d(TAG, "lesson list size: ${lessonList.size}")
-                val lessonMap = mutableMapOf<String, Lesson>()
-
-                for (l in lessonList) {
-                    lessonMap[l.id] = l
-                }
-
-                Log.d(TAG, "lesson map size: ${lessonMap.size}")
-                DataUtility.insertAllLessons(lessonMap)
-                scope.cancel()
-            }
+//
+//        binding.btnStart.setOnClickListener {
+//            val scope = CoroutineScope(Job() + Dispatchers.Main)
+//            scope.launch {
+//                val someList = DataUtility.getAllWordsForLesson("animals", 4).toMutableList()
+//
+//                Log.d(TAG, "reads used: ${someList.size}")
+//                scope.cancel()
+//            }
+//        }
 
 
-        }
+//        binding.btnAddWords.setOnClickListener {
+//
+//            val words = dataProcessor.getWords()
+//
+//            val lessonWords = mutableMapOf<String, Word>()
+//
+//            Log.d(TAG, "COUNT: ${words.size}")
+//
+//            for (i in 0 until words.size) {
+//
+//                val w = words[i]
+//                lessonWords[w.id] = w
+//
+//            }
+//
+//            DataUtility.insertAllWords(lessonWords)
+//
+//            Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+//        }
+
+//        binding.btnAddLessons.setOnClickListener {
+//
+//            val scope = CoroutineScope(Job() + Dispatchers.Main)
+//            scope.launch {
+//                async { lessonCreator.createLessons() }.await()
+//
+//                val lessonList = lessonCreator.getLessons()
+//
+//                val lessonMap = mutableMapOf<String, Lesson>()
+//
+//                for (l in lessonList) {
+//                    lessonMap[l.id] = l
+//                }
+//
+//                DataUtility.insertAllLessons(lessonMap)
+//                scope.cancel()
+//            }
+//
+//
+//        }
 
 
         val learning = LearningActivity()

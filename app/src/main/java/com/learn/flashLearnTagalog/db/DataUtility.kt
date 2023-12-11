@@ -19,11 +19,13 @@ import com.learn.flashLearnTagalog.data.WordStats
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class DataUtility {
 
     companion object {
+        const val ADMIN_COLLECTION = "admin"
         const val USER_COLLECTION = "users"
         const val WORD_COLLECTION = "words"
         const val LESSON_COLLECTION = "lessons"
@@ -43,6 +45,10 @@ class DataUtility {
         /***************************************_UPDATE_***********************************************/
         /***************************************_UPDATE_***********************************************/
 
+        /*************************************_ADMIN_**********************************************/
+        private suspend fun getAppVersion(): Long {
+            return firestore.getDocument(ADMIN_COLLECTION, "appInfo")?.get("version") as Long
+        }
 
         /*************************************_USERS_**********************************************/
         fun addUser(user: User) {
@@ -57,7 +63,8 @@ class DataUtility {
                     USER_COLLECTION, auth.currentUser!!.uid, mapOf(
                         "unlockedLessons" to user.unlockedLessons,
                         "practicedLessons" to user.practicedLessons,
-                        "passedLessons" to user.passedLessons
+                        "passedLessons" to user.passedLessons,
+                        "version" to user.currentVersion
                     )
                 )
             }
@@ -86,7 +93,7 @@ class DataUtility {
         suspend fun getCurrentUser(): User? {
 
             return if (auth.currentUser != null) {
-                Log.d(TAG, "ID: $auth.currentUser!!.uid")
+                Log.d(TAG, "ID: ${auth.currentUser!!.uid}")
                 firestore.getDocument(USER_COLLECTION, auth.currentUser!!.uid)!!
                     .toObject<User>()
             } else {
@@ -712,7 +719,27 @@ class DataUtility {
                 user.practicedLessons = currentPracticed
                 user.passedLessons = currentPassed
 
-                updateUserData(user)
+                Log.d(TAG, "version: ${user.currentVersion}")
+
+                val appVersion = getAppVersion().toInt()
+                if (user.currentVersion < appVersion) {
+
+                    TempListUtility.practicedWords.clear()
+                    TempListUtility.viewedLessons.clear()
+                    user.currentVersion = appVersion
+                    val userScope = CoroutineScope(Job() + Dispatchers.Main)
+                    userScope.launch {
+                        val lessons = getAllLessons().toMutableList()
+                        JsonUtility.writeJSON(activity, "savedLessons.json", lessons)
+                        updateUserData(user)
+                        userScope.cancel()
+                    }
+
+                } else {
+                    updateUserData(user)
+                }
+
+
             }
 
             if (currentUnlocked.isNotEmpty()) {
@@ -759,7 +786,7 @@ class DataUtility {
             Log.d(TAG, "POPULATING TEMP")
             TempListUtility.setList(listType, list)
 
-            if (rewriteJSON){
+            if (rewriteJSON) {
                 Log.d(TAG, " AND (RE)POPULATING JSON")
                 JsonUtility.writeJSON(
                     activity,

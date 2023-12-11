@@ -13,7 +13,6 @@ import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.fragments.DictionaryFragment
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
-import com.learn.flashLearnTagalog.ui.fragments.StatsFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -87,11 +86,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     .replace(R.id.main_nav_container, LessonSelectFragment())
                     .addToBackStack("lesson select").commit()
             }
-            3 -> {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_nav_container, StatsFragment()).addToBackStack("stats")
-                    .commit()
-            }
+//            3 -> {
+//                supportFragmentManager.beginTransaction()
+//                    .replace(R.id.main_nav_container, StatsFragment()).addToBackStack("stats")
+//                    .commit()
+//            }
         }
     }
 

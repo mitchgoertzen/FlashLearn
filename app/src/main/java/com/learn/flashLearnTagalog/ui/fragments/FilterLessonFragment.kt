@@ -141,6 +141,9 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         val difficulty5: CheckBox = view.findViewById(R.id.cbLevel5)
         setDifficultyCheckBox("5", difficulty5)
 
+        val difficulty6: CheckBox = view.findViewById(R.id.cbLevel6)
+        setDifficultyCheckBox("6", difficulty6)
+
         val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
         practiceCompleted.setOnClickListener {

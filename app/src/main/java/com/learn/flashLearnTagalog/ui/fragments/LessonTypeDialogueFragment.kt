@@ -34,8 +34,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LessonTypeDialogueFragment(
-    private var currentLesson: Lesson,
-    private var currentLessonStats: LessonStats
+    private var currentLesson: Lesson
 ) : DialogFragment() {
 
     @Inject
@@ -43,7 +42,6 @@ class LessonTypeDialogueFragment(
 
     //private val viewModel: MainViewModel by viewModels()
     private var wordList: MutableList<Word> = mutableListOf()
-    private var practiceCompleted: Boolean = false
 
     override fun onStart() {
         super.onStart()
@@ -128,16 +126,6 @@ class LessonTypeDialogueFragment(
             scope.cancel()
         }
 
-
-//        viewModel.getWordsByDifficultyForLesson(
-//            currentTitle.lowercase(),
-//            currentLesson.minLength,
-//            currentLesson.maxLength
-//        ).observe(viewLifecycleOwner) {
-//            wordList = it.toMutableList()
-//        }
-
-
         testButton.setOnClickListener {
             //TODO: make fragment transition universal fun?
             val fragment =
@@ -148,8 +136,6 @@ class LessonTypeDialogueFragment(
             (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
-
-
 
         practiceButton.setOnClickListener {
             val fragment =
@@ -174,9 +160,6 @@ class LessonTypeDialogueFragment(
 
         return view
     }
-
-
-
 
     private fun disableButton(btn: Button) {
         btn.isEnabled = false

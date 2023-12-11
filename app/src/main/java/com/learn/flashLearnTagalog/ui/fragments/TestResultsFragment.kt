@@ -96,32 +96,34 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
                 val scope = CoroutineScope(Job() + Dispatchers.Main)
                 scope.launch {
 
-                    if (TempListUtility.viewedLessons.contains(nextId)) {
-                        nextLessonWordList = TempListUtility.practicedWords[nextId]!!
+                    nextLessonWordList = if (TempListUtility.viewedLessons.contains(nextId)) {
+                        TempListUtility.practicedWords[nextId]!!
                     } else {
-                        nextLessonWordList = DataUtility.getAllWordsForLesson(
+                        DataUtility.getAllWordsForLesson(
                             nextLesson.category.lowercase(),
                             nextLesson.minLength,
                             nextLesson.wordCount.toLong()
                         ).toMutableList()
-                        TempListUtility.practicedWords[nextId] = nextLessonWordList
-                        TempListUtility.viewedLessons.add(nextId)
-                        JsonUtility.writeJSON(
-                            requireActivity(),
-                            //TODO: save as shared pref
-                            "viewedLessons.json",
-                            TempListUtility.viewedLessons
-                        )
-                        JsonUtility.writeJSON(
-                            requireActivity(),
-                            //TODO: save as shared pref
-                            "savedWords.json",
-                            TempListUtility.practicedWords
-                        )
                     }
                     scope.cancel()
                 }
                 nextButton.setOnClickListener {
+                    TempListUtility.practicedWords[nextId] = nextLessonWordList
+                    TempListUtility.viewedLessons.add(nextId)
+
+                    JsonUtility.writeJSON(
+                        requireActivity(),
+                        //TODO: save as shared pref
+                        "viewedLessons.json",
+                        TempListUtility.viewedLessons
+                    )
+                    JsonUtility.writeJSON(
+                        requireActivity(),
+                        //TODO: save as shared pref
+                        "savedWords.json",
+                        TempListUtility.practicedWords
+                    )
+
                     val fragment =
                         PracticeFragment(
                             nextLessonWordList.asSequence().shuffled().toMutableList(),
@@ -154,16 +156,16 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
 //            (activity as LearningActivity?)?.transitionFragment()
         }
 
-        statsButton.setOnClickListener {
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_RESULTS, false)
-                .apply()
-            val fragment = StatsFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
-                ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
-        }
+//        statsButton.setOnClickListener {
+//            sharedPref.edit()
+//                .putBoolean(Constants.KEY_IN_RESULTS, false)
+//                .apply()
+//            val fragment = StatsFragment()
+//            val transaction = activity?.supportFragmentManager?.beginTransaction()
+//            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
+//                ?.commit()
+//            (activity as LearningActivity?)?.transitionFragment()
+//        }
 
 
 

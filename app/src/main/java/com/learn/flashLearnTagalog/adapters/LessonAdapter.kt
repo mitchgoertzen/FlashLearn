@@ -23,34 +23,21 @@ import javax.inject.Singleton
 
 @Singleton
 class LessonAdapter @Inject constructor(
-    private val lessons: MutableList<Lesson>,
-    private val lessonStats: MutableList<LessonStats>
+    private val lessons: MutableList<Lesson>
 ) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
-
-//    lateinit var lessonStatsList: List<LessonStats>
 
     class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-
-        // Log.d(TAG, "13")
         val binding = LessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-        //   Log.d(TAG, "14")
         return LessonViewHolder(binding)
-
     }
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
 
-
-        // Log.d(TAG, "1")
         val currentLesson = lessons[position]
         val lessonId = currentLesson.id
-        //Log.d(TAG, "2")
-        val currentLessonStats = lessonStats[position]
-        //Log.d(TAG, "2")
 
         holder.itemView.apply {
             val mContext = FragmentComponentManager.findActivity(context) as Activity
@@ -58,23 +45,6 @@ class LessonAdapter @Inject constructor(
             var difficulty = ""
             val holderBinding = holder.binding
             holderBinding.tvCategory.maxLines = currentLesson.maxLines
-//
-//            val newLayoutParams =
-//                holderBinding.ibLesson.layoutParams as ConstraintLayout.LayoutParams
-//
-////            LinearLayout.LayoutParams(
-////                169, 169
-////            )
-//            Log.d(TAG, "number: ${lessonNumbers[currentLesson.id]}")
-//            if ((lessonNumbers[currentLesson.id] != null) && (lessonNumbers[currentLesson.id])!!.toInt() % 2 == 0) {
-//                newLayoutParams.marginStart = 0
-//                newLayoutParams.marginEnd = 2
-//            } else {
-//                newLayoutParams.marginStart = 2
-//                newLayoutParams.marginEnd = 0
-//            }
-//
-//            holderBinding.ibLesson.layoutParams = newLayoutParams
 
             if (currentLesson.level == 0) {
                 level = ""
@@ -139,46 +109,32 @@ class LessonAdapter @Inject constructor(
                     //    Log.d(TAG, "11")
                     val settingsFragment = SettingsFragment(currentLesson)
                     val transaction = mContext.supportFragmentManager.beginTransaction()
-                    if (currentLesson.category == "Custom\nLesson") {
-                        transaction.replace(R.id.main_nav_container, settingsFragment)
-                            .addToBackStack("settings").commit()
-                    } else {
-                        val dialog = LessonTypeDialogueFragment(currentLesson, currentLessonStats)
-                        dialog.isCancelable = true
-                        dialog.show(
-                            mContext.supportFragmentManager, "lesson popup"
-                        )
-                    }
+//                    if (currentLesson.category == "Custom\nLesson") {
+//                        transaction.replace(R.id.main_nav_container, settingsFragment)
+//                            .addToBackStack("settings").commit()
+//                    } else {
+                    val dialog = LessonTypeDialogueFragment(currentLesson)
+                    dialog.isCancelable = true
+                    dialog.show(
+                        mContext.supportFragmentManager, "lesson popup"
+                    )
+                    //   }
                     (mContext as LearningActivity?)?.transitionFragment()
                 }
             }
         }
-
-        //   Log.d(TAG, "12")
     }
 
-    fun addLesson(lesson: Lesson, stats: LessonStats) {
-
-        //  Log.d(TAG, "current size: ${lessons.size}")
+    fun addLesson(lesson: Lesson) {
         lessons.add(lesson)
-        lessonStats.add(stats)
         notifyItemInserted(lessons.size - 1)
     }
 
     fun deleteLessons() {
         val size = lessons.size
         lessons.clear()
-        lessonStats.clear()
         notifyItemRangeRemoved(0, size)
     }
-
-//    fun intiList(list: List<Lesson>) {
-//        lessonList = list
-//    }
-//
-//    fun showListSize() {
-//        println(lessonList.size)
-//    }
 
     override fun getItemCount(): Int {
         return lessons.size
@@ -189,55 +145,34 @@ class LessonAdapter @Inject constructor(
     }
 
     fun sortList(type: Int) {
-
-        // Log.d(TAG, "SORT 1ST LESSON -  ${lessons[0].category} ${lessons[0].level}")
-        //  Log.d(TAG, "sort 1")
-        // Log.d(TAG, "sort size + ${lessons.size}")
-
-        if (lessons.size > 0) {
-            //  val customLesson: Lesson = lessons.removeAt(0)
-
-            //   Log.d(TAG, "sort 2")
-            when (type) {
-                //Category
-                0 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
-                }
-                //Level
-                1 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.difficulty })
-                }
-                //Difficulty low to high
-                2 -> {
-                    lessons.sortWith(compareBy<Lesson> { it.difficulty }.thenBy { it.category })
-                }
-                //Difficulty high to low
-                3 -> {
-                    lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
-                }
-                //Locked
+        when (type) {
+            //Category
+            0 -> {
+                lessons.sortWith(compareBy<Lesson> { it.category }.thenBy { it.level })
+            }
+            //Level
+            1 -> {
+                lessons.sortWith(compareBy<Lesson> { it.level }.thenBy { it.difficulty })
+            }
+            //Difficulty low to high
+            2 -> {
+                lessons.sortWith(compareBy<Lesson> { it.difficulty }.thenBy { it.category })
+            }
+            //Difficulty high to low
+            3 -> {
+                lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
+            }
+            //Locked
 //                4 -> {
 //                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.difficulty }
 //                        .thenBy { it.category })
 //                }
-            }
-
-            //  Log.d(TAG, "sort 3")
-            lessons.add(
-                0,
-                //TODO: only make once
-                Lesson("Custom\nLesson", 0, -1, -1, 0, 2, R.drawable.custom)
-            )
-            lessonStats.add(
-                0,
-                //TODO: only make once
-                LessonStats()
-            )
-//            var i = 0
-//            for (l in lessons) {
-//                lessonNumbers[l.id] = i++
-//            }
-
         }
+
+//                //TODO: only make once
+//                Lesson("Custom\nLesson", 0, -1, -1, 0, 2, R.drawable.custom)
+//            )
+
+
     }
 }

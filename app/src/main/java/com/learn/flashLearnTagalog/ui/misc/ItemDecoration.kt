@@ -16,7 +16,6 @@ class ItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
     ) {
         outRect.top = spacing / 2
 
-        Log.d(TAG, "position: ${parent.getChildAdapterPosition(view)}")
         if (parent.getChildAdapterPosition(view) % 2 == 0) {
             outRect.left = spacing / 6
             outRect.right = spacing

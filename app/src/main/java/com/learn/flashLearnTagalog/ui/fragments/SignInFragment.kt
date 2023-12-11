@@ -21,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +32,7 @@ import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
+import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +43,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.reflect.KFunction0
-import kotlin.reflect.KFunction1
 
 
 @AndroidEntryPoint
@@ -49,6 +50,8 @@ class SignInFragment(
     private val inProfile: Boolean,
     private val onClose: KFunction0<Unit>? = null
 ) : DialogFragment() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -91,6 +94,53 @@ class SignInFragment(
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        auth = Firebase.auth
+
+
+        if (!inProfile) {
+
+            if (auth.currentUser == null) {
+
+                val roomScope = CoroutineScope(Job() + Dispatchers.Main)
+                roomScope.launch {
+                    if (viewModel.getLessonCount() > 0) {
+
+                        val unlocked = mutableListOf<String>()
+                        val practiced = mutableListOf<String>()
+                        val passed = mutableListOf<String>()
+
+                        viewModel.getAllLessons().observe(viewLifecycleOwner) {
+                            val lessons = it.toMutableList()
+                            for (l in lessons) {
+
+                                if (!l.locked) {
+                                    unlocked.add("${l.category}_${l.level}")
+                                }
+
+                                if (l.practiceCompleted) {
+                                    practiced.add("${l.category}_${l.level}")
+                                }
+
+                                if (l.testPassed) {
+                                    passed.add("${l.category}_${l.level}")
+                                }
+
+                            }
+                        }
+
+                        JsonUtility.writeJSON(requireActivity(), "unlockedLessons.json", unlocked)
+                        JsonUtility.writeJSON(requireActivity(), "practicedLessons.json", practiced)
+                        JsonUtility.writeJSON(requireActivity(), "passedLessons.json", passed)
+
+                        viewModel.nukeLessons()
+                        viewModel.nukeTable()
+                    }
+                    roomScope.cancel()
+                }
+            }
+        }
+
+
         val mContext = FragmentComponentManager.findActivity(context) as Activity
         Log.d(TAG, "pref: ${sharedPref.getBoolean(KEY_USER_SIGNED_IN, false)}")
 
@@ -104,14 +154,11 @@ class SignInFragment(
                         DataUtility.updateLocalData(mContext, signUp = false, rewriteJSON = false)
                         listScope.cancel()
                     }
-                    onClose!!.invoke()
-                    dialog?.dismiss()
+                    close()
                 }
             }
             v?.onTouchEvent(event) ?: true
         }
-        //   mContext = context as Activity
-        //  mContext = childFragmentManager.f .findActivity(context) as Activity
         val tapBlocker: ConstraintLayout = view.findViewById(R.id.clTapBlock)
 
         val form: ImageView = view.findViewById(R.id.ivFormBackground)
@@ -167,9 +214,6 @@ class SignInFragment(
             password = passwordText.text.toString()
             confirmPassword = confirmPasswordText.text.toString()
 
-            auth = Firebase.auth
-            //checkValidEmail(email, inputError)
-
             inputError.text = ""
             if (email != "" && password != "") {
                 if (signUp) {
@@ -177,29 +221,26 @@ class SignInFragment(
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    onClose!!.invoke()
-                                    dialog?.dismiss()
+                                    if(!inProfile){
+                                        close()
+                                    }
                                     Log.d(TAG, "createUserWithEmail:success")
 
-                                    Log.d(TAG, "1")
                                     val loadLessonsScope = CoroutineScope(Job() + Dispatchers.Main)
                                     loadLessonsScope.launch {
 
-                                        Log.d(TAG, "2")
                                         val newUser = User(email)
                                         if (TempListUtility.unlockedLessons.isEmpty()) {
 
-                                            Log.d(TAG, "3")
                                             val lessons =
                                                 async { DataUtility.getLessonIDsByLevel(1) }.await()
-                                            Log.d(TAG, "lessons: ${lessons.size}")
 
-                                            Log.d(TAG, "4")
+
                                             for (l in lessons) {
                                                 if (l.level == 1)
                                                     TempListUtility.unlockedLessons.add(l.id)
                                             }
-                                            TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+                                            // TempListUtility.unlockedLessons.add("Custom\nLesson_0")
 
                                             JsonUtility.writeJSON(
                                                 mContext,
@@ -208,7 +249,6 @@ class SignInFragment(
                                             )
                                         }
 
-                                        Log.d(TAG, "6")
                                         async {
                                             DataUtility.addUser(
                                                 newUser
@@ -216,13 +256,16 @@ class SignInFragment(
                                             Log.d(TAG, "add user done")
                                         }.await()
 
-                                        Log.d(TAG, "7")
-                                        DataUtility.updateLocalData(mContext,
+                                        DataUtility.updateLocalData(
+                                            mContext,
                                             signUp = true,
                                             rewriteJSON = false
                                         )
 
-                                        Log.d(TAG, "12")
+
+                                        if(inProfile){
+                                            close()
+                                        }
                                         loadLessonsScope.cancel()
                                     }
 
@@ -247,17 +290,24 @@ class SignInFragment(
                             if (task.isSuccessful) {
                                 val userScope = CoroutineScope(Job() + Dispatchers.Main)
                                 userScope.launch {
-                                    DataUtility.updateLocalData(mContext,
+                                    DataUtility.updateLocalData(
+                                        mContext,
                                         signUp = false,
                                         rewriteJSON = true
                                     )
+
+
+                                    if(inProfile){
+                                        close()
+                                    }
                                     userScope.cancel()
                                 }
 
-                                onClose!!.invoke()
+                                if(!inProfile){
+                                    close()
+                                }
 
                                 sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
-                                dialog?.dismiss()
                                 Log.d(TAG, "signInWithEmail:success")
                             } else {
                                 val code: FirebaseException = task.exception as FirebaseException
@@ -274,6 +324,11 @@ class SignInFragment(
         }
 
         return view
+    }
+
+    private fun close(){
+        onClose!!.invoke()
+        dialog?.dismiss()
     }
 
     private fun checkValidEmail(email: String, errorText: TextView): Boolean {

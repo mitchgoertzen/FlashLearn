@@ -2,14 +2,21 @@ package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
+import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -17,13 +24,16 @@ import com.google.gson.Gson
 import com.learn.flashLearnTagalog.BuildConfig
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
+import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_JSON_EXISTS
 import com.learn.flashLearnTagalog.ui.fragments.SignInFragment
+import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -40,7 +50,7 @@ class SplashScreenActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    // private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var dataProcessor: DataProcessor
 
@@ -63,9 +73,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        sharedPref.edit().putBoolean(KEY_LESSON_JSON_EXISTS, false).apply()
-
+        auth = Firebase.auth
 
         val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
         lessonScope.launch {
@@ -75,7 +83,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 Log.d(TAG, "FIRST TIME, NO INTERNAL STORAGE")
                 val lessons = DataUtility.getAllLessons().toMutableList()
 
-                TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+             //   TempListUtility.unlockedLessons.add("Custom\nLesson_0")
                 for (l in lessons) {
                     if (l.level == 1)
                         TempListUtility.unlockedLessons.add(l.id)
@@ -106,8 +114,6 @@ class SplashScreenActivity : AppCompatActivity() {
             lessonScope.cancel()
         }
 
-        auth = Firebase.auth
-        //auth.currentUser!!.delete()
         //TODO: for deleting account auth.currentUser!!.delete()
         if (auth.currentUser == null) {
             val dialog: DialogFragment =
@@ -126,32 +132,6 @@ class SplashScreenActivity : AppCompatActivity() {
             }
             goToHomeActivity()
         }
-
-
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun update(initText: TextView) {
-
-        if (DEBUG) {
-            println("size: $wordNum")
-            println("lesson count: $lessonNum")
-        }
-
-        //set user's version to current build version
-        sharedPref.edit()
-            .putInt(Constants.KEY_VERSION, CURRENT_VERSION)
-            .apply()
-
-        initText.text = "Fetching Words..."
-        //parse words from txt file
-        dataProcessor = DataProcessor(resources)
-
-        initText.text = "Fetching Lessons..."
-        //create Lessons
-
-        var init = wordNum == 0
-
     }
 
     //end splash screen and continue to home activity
@@ -193,6 +173,32 @@ class SplashScreenActivity : AppCompatActivity() {
 //            //continue to home activity
 //            goToHomeActivity()
 //        }
+
+
+//
+//@OptIn(DelicateCoroutinesApi::class)
+//private fun update(initText: TextView) {
+//
+//    if (DEBUG) {
+//        println("size: $wordNum")
+//        println("lesson count: $lessonNum")
+//    }
+//
+//    //set user's version to current build version
+//    sharedPref.edit()
+//        .putInt(Constants.KEY_VERSION, CURRENT_VERSION)
+//        .apply()
+//
+//    initText.text = "Fetching Words..."
+//    //parse words from txt file
+//    dataProcessor = DataProcessor(resources)
+//
+//    initText.text = "Fetching Lessons..."
+//    //create Lessons
+//
+//    var init = wordNum == 0
+//
+//}
 
 
 //if the word list is empty

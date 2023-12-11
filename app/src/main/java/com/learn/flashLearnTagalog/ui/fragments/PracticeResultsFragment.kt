@@ -64,16 +64,16 @@ class PracticeResultsFragment(
             (activity as LearningActivity?)?.transitionFragment()
         }
 
-        statsButton.setOnClickListener {
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_RESULTS, false)
-                .apply()
-            val fragment = StatsFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
-                ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
-        }
+//        statsButton.setOnClickListener {
+//            sharedPref.edit()
+//                .putBoolean(Constants.KEY_IN_RESULTS, false)
+//                .apply()
+//            val fragment = StatsFragment()
+//            val transaction = activity?.supportFragmentManager?.beginTransaction()
+//            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("stats")
+//                ?.commit()
+//            (activity as LearningActivity?)?.transitionFragment()
+//        }
 
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_RESULTS, true)

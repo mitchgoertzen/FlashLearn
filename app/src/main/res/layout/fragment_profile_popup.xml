@@ -15,31 +15,69 @@
         android:id="@+id/tvProfile"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="PROFILE"
         android:textAlignment="center"
-        android:gravity="center"
         android:textColor="@color/white"
         app:autoSizeMaxTextSize="86sp"
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/glTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/llStats"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="@drawable/empty_tall_divider"
         android:gravity="center"
         android:orientation="vertical"
+        android:padding="15dp"
         android:showDividers="middle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8">
+        app:layout_constraintTop_toTopOf="@+id/glQuarter">
+
+        <TextView
+            android:id="@+id/tvUnlocked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lessons Unlocked: "
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvPracticedLessons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lessons Practiced: "
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvPracticedWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Words Practiced: "
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvPassed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lesson Tests Passed: "
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tvScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Average Test Score: "
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
 
         <Button
             android:id="@+id/btnStats"
@@ -50,31 +88,54 @@
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
 
+
         <!--        <Button-->
-<!--            android:id="@+id/btnSettings"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Settings"
+        <!--            android:id="@+id/btnSettings"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="Settings"
         app:strokeColor="#FCD116"
         app:strokeWidth="3dp" />-->
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
+        android:id="@+id/glTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glQuarter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
     <Button
         android:id="@+id/btnSignInOrOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
 
         android:text="Sign Out"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/llStats"
         app:strokeColor="#FCD116"
         app:strokeWidth="3dp" />
+
+
+    <TextView
+        android:id="@+id/tvAccountEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textAlignment="textStart"
+        android:paddingStart="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSignInOrOut"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
