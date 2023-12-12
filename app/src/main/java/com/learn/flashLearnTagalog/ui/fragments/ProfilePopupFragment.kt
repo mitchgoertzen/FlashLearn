@@ -2,14 +2,10 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
-import android.content.Intent
-import android.content.Intent.getIntent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -53,7 +49,6 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         val view = inflater.inflate(R.layout.fragment_profile_popup, container, false)
 
         group = view.findViewById(R.id.clProfileBackground)
-        Log.d(TAG, "PROFILE CREATE VIEW")
         auth = Firebase.auth
         userSignedIn = (auth.currentUser != null)
 
@@ -73,13 +68,11 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         val email: TextView = view.findViewById(R.id.tvAccountEmail)
 
 
-
-
         val unlock: TextView = view.findViewById(R.id.tvUnlocked)
         val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
         val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
         var words = 0
-        for(wordList in TempListUtility.practicedWords.values){
+        for (wordList in TempListUtility.practicedWords.values) {
             words += wordList.size
         }
 
@@ -91,7 +84,6 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         "Words Practiced: $words".also { pracWords.text = it }
         "Lesson Tests Passed: ${TempListUtility.passedLessons.size}".also { test.text = it }
         //"Average Test Score:${TempListUtility.unlockedLessons.size}".also { testScore.text = it }
-
 
 
         stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
@@ -113,8 +105,9 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
                 //TODO: reload dialog
                 dialog?.dismiss()
             } else {
-                val signInDialog: DialogFragment =
-                    SignInFragment(true, this::reloadCallback)
+                val signInDialog = SignInFragment.newInstance(true, this::reloadCallback)
+//                val signInDialog: DialogFragment =
+//                    SignInFragment(true, this::reloadCallback)
 
                 signInDialog.isCancelable = true
                 signInDialog.show(parentFragmentManager, "user sign-in")
@@ -143,12 +136,9 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
     }
 
     private fun reloadCallback() {
-
         dialog?.dismiss()
         val dialog: DialogFragment = ProfilePopupFragment(newActivity)
-
         dialog.isCancelable = true
         dialog.show(parentFragmentManager, "profile popup")
-//        group.postInvalidate()
     }
 }

@@ -41,15 +41,41 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import java.io.Serializable
 import javax.inject.Inject
 import kotlin.reflect.KFunction0
 
-
 @AndroidEntryPoint
-class SignInFragment(
-    private val inProfile: Boolean,
-    private val onClose: KFunction0<Unit>? = null
-) : DialogFragment() {
+class SignInFragment : DialogFragment() {
+
+    private val ON_CLOSE = "ON_CLOSE"
+    private val IN_PROFILE = "IN_PROFILE"
+
+    private var inProfile: Boolean = false
+    private var onClose: KFunction0<Unit>? = null
+
+    companion object {
+        fun newInstance(inProfile: Boolean, onClose: KFunction0<Unit>? = null): SignInFragment {
+            val args = Bundle()
+            args.putSerializable("ON_CLOSE", onClose as Serializable)
+            args.putSerializable("IN_PROFILE", inProfile as Serializable)
+            val fragment = SignInFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+
+//
+//    fun newInstance( inProfile: Boolean,
+//                      onClose: KFunction0<Unit>? = null): SignInFragment? {
+//        val args = Bundle()
+//        args.putString("id", id.toString())
+//        val f = SignInFragment(inProfile, onClose)
+//        f.arguments = args
+//        return f
+//    }
+
 
     private val viewModel: MainViewModel by viewModels()
 
@@ -96,44 +122,78 @@ class SignInFragment(
 
         auth = Firebase.auth
 
+        onClose = arguments?.getSerializable(ON_CLOSE) as KFunction0<Unit>?
+        inProfile = arguments?.getSerializable(IN_PROFILE) as Boolean
 
         if (!inProfile) {
+//
+//            val newLesson1 = RoomLesson(1, "test", 1, 1, 1, 1, 1)
+//            newLesson1.locked = false
+//            val newLesson2 = RoomLesson(2, "test", 1, 1, 1, 1, 1)
+//            newLesson2.locked = false
+//            val newLesson3 = RoomLesson(3, "test", 1, 1, 1, 1, 1)
+//            newLesson3.locked = false
+//
+//            viewModel.insertLesson(newLesson1)
+//            viewModel.completePractice(1)
+//            viewModel.passTest(1)
+//            viewModel.insertLesson(newLesson2)
+//            viewModel.completePractice(2)
+//            viewModel.insertLesson(newLesson3)
+//            viewModel.completePractice(3)
 
             if (auth.currentUser == null) {
 
+          //      Log.d(TAG, "USER NULL")
                 val roomScope = CoroutineScope(Job() + Dispatchers.Main)
                 roomScope.launch {
-                    if (viewModel.getLessonCount() > 0) {
 
+                   // Log.d(TAG, " LESSON: ${viewModel.getLessonCount()}")
+                    if (viewModel.getLessonCount() > 0) {
+//
+//                        Log.d(TAG, "HAS LESSONS")
                         val unlocked = mutableListOf<String>()
                         val practiced = mutableListOf<String>()
                         val passed = mutableListOf<String>()
 
                         viewModel.getAllLessons().observe(viewLifecycleOwner) {
+
+                         //   Log.d(TAG, "IN HERE")
                             val lessons = it.toMutableList()
+
+                          //  Log.d(TAG, "${lessons.size} lessons...")
                             for (l in lessons) {
 
+                                val id = "${l.category}_${l.level}"
+
+                            //    Log.d(TAG, "id: $id")
                                 if (!l.locked) {
-                                    unlocked.add("${l.category}_${l.level}")
+                                //    Log.d(TAG, "$id is not locked")
+                                    unlocked.add(id)
                                 }
 
                                 if (l.practiceCompleted) {
-                                    practiced.add("${l.category}_${l.level}")
+                                  //  Log.d(TAG, "$id is practiced")
+                                    practiced.add(id)
                                 }
 
                                 if (l.testPassed) {
-                                    passed.add("${l.category}_${l.level}")
+                                   // Log.d(TAG, "$id is passed")
+                                    passed.add(id)
                                 }
 
                             }
+
+                            JsonUtility.writeJSON(requireActivity(), "unlockedLessons.json", unlocked)
+                            JsonUtility.writeJSON(requireActivity(), "practicedLessons.json", practiced)
+                            JsonUtility.writeJSON(requireActivity(), "passedLessons.json", passed)
+
+                            viewModel.nukeLessons()
+                            viewModel.nukeTable()
                         }
 
-                        JsonUtility.writeJSON(requireActivity(), "unlockedLessons.json", unlocked)
-                        JsonUtility.writeJSON(requireActivity(), "practicedLessons.json", practiced)
-                        JsonUtility.writeJSON(requireActivity(), "passedLessons.json", passed)
 
-                        viewModel.nukeLessons()
-                        viewModel.nukeTable()
+
                     }
                     roomScope.cancel()
                 }
@@ -221,7 +281,7 @@ class SignInFragment(
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
-                                    if(!inProfile){
+                                    if (!inProfile) {
                                         close()
                                     }
                                     Log.d(TAG, "createUserWithEmail:success")
@@ -263,7 +323,7 @@ class SignInFragment(
                                         )
 
 
-                                        if(inProfile){
+                                        if (inProfile) {
                                             close()
                                         }
                                         loadLessonsScope.cancel()
@@ -297,13 +357,13 @@ class SignInFragment(
                                     )
 
 
-                                    if(inProfile){
+                                    if (inProfile) {
                                         close()
                                     }
                                     userScope.cancel()
                                 }
 
-                                if(!inProfile){
+                                if (!inProfile) {
                                     close()
                                 }
 
@@ -326,7 +386,7 @@ class SignInFragment(
         return view
     }
 
-    private fun close(){
+    private fun close() {
         onClose!!.invoke()
         dialog?.dismiss()
     }
@@ -343,4 +403,6 @@ class SignInFragment(
             true
         }
     }
+
+
 }

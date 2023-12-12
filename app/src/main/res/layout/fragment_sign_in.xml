@@ -223,8 +223,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:clickable="true"
-            android:onClick="onClick"
             android:text="Don't have an account?"
             android:paddingEnd="5dp"
             android:textColor="@color/white"
@@ -234,8 +232,6 @@
             android:id="@+id/tvSignUpPrompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:onClick="onClick"
             android:text="Sign Up!"
 
             android:textColor="@color/white"

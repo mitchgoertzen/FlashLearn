@@ -513,11 +513,11 @@ class DataUtility {
             val newLesson = Lesson(
                 newCategory,
                 newLevel ?: previousLesson.level,
-                previousLesson.difficulty,
-                previousLesson.image,
                 min ?: previousLesson.minLength,
                 max ?: previousLesson.maxLength,
-                lines ?: previousLesson.maxLines
+                previousLesson.wordCount,
+                lines ?: previousLesson.maxLines,
+                previousLesson.image
             )
 
 

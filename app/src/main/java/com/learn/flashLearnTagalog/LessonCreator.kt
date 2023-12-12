@@ -1,18 +1,13 @@
 package com.learn.flashLearnTagalog
 
 import android.content.ContentValues.TAG
+import android.content.res.Resources
 import android.util.Log
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class LessonCreator() {
 
@@ -31,7 +26,7 @@ class LessonCreator() {
 
     private var lessonWords = mutableListOf<Word>()
     private var lessons = mutableListOf<Lesson>()
-
+    lateinit var resources: Resources
     //private var oldID = 1
 
     //lessons created here
@@ -42,8 +37,8 @@ class LessonCreator() {
 //        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
     }
 
-    suspend fun createLessons(){
-
+    suspend fun createLessons(r: Resources) {
+        resources = r
         myLessons.add(createLessonObject(1, "Animals", R.drawable.dog, 0, 4))
         myLessons.add(createLessonObject(2, "Animals", R.drawable.dog, 4, 5))
         myLessons.add(createLessonObject(3, "Animals", R.drawable.dog, 5, 6))
@@ -144,9 +139,23 @@ class LessonCreator() {
         //id of each lesson is the hashcode of the string containing category+level
 
         //TODO: stop when word length reaches max??
-        val wordCount = async { DataUtility.getLessonWordCount(category.lowercase(), minLength, maxLength) }.await()
+        val wordCount = async {
+            DataUtility.getLessonWordCount(
+                category.lowercase(),
+                minLength,
+                maxLength
+            )
+        }.await()
 
-        return@coroutineScope Lesson(category, level, minLength, maxLength, wordCount, (numOfWords + 1), imageID)
+        return@coroutineScope Lesson(
+            category,
+            level,
+            minLength,
+            maxLength,
+            wordCount,
+            (numOfWords + 1),
+            resources.getResourceEntryName(imageID)
+        )
 
         // newLesson.difficulty = getLessonDifficulty(newLesson.category.lowercase(), newLesson.minLength, newLesson.maxLength)
 

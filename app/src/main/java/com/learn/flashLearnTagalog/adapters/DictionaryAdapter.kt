@@ -3,7 +3,6 @@ package com.learn.flashLearnTagalog.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.DictionaryWordBinding
 import javax.inject.Inject

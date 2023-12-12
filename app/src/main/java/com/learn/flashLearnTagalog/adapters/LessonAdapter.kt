@@ -84,12 +84,18 @@ class LessonAdapter @Inject constructor(
             } else {
                 holderBinding.ibLesson.setBackgroundResource(R.drawable.lesson_background_blank)
             }
+
             holderBinding.tvCategory.text = currentLesson.category + " $level"
             holderBinding.tvDifficulty.text = difficulty
-
             //  Log.d(TAG, "image: ${currentLesson.image} from:\n ${currentLesson.category}")
-            holderBinding.ivPreview.setImageResource(currentLesson.image)
-
+            holderBinding.ivPreview.setImageResource(
+                resources.getIdentifier(
+                    currentLesson.image,
+                    "drawable",
+                    "com.learn.flashLearnTagalog"
+                )
+            )
+            holderBinding.ivPreview.imageTintList = null
 
 
             if (!TempListUtility.unlockedLessons.contains(lessonId)) {
@@ -107,8 +113,8 @@ class LessonAdapter @Inject constructor(
                 //  Log.d(TAG, "10")
                 if (mContext is LearningActivity) {
                     //    Log.d(TAG, "11")
-                    val settingsFragment = SettingsFragment(currentLesson)
-                    val transaction = mContext.supportFragmentManager.beginTransaction()
+//                    val settingsFragment = SettingsFragment(currentLesson)
+//                    val transaction = mContext.supportFragmentManager.beginTransaction()
 //                    if (currentLesson.category == "Custom\nLesson") {
 //                        transaction.replace(R.id.main_nav_container, settingsFragment)
 //                            .addToBackStack("settings").commit()

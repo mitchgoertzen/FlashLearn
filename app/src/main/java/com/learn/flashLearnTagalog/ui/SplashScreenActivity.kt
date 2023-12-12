@@ -2,46 +2,24 @@ package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.google.gson.Gson
-import com.learn.flashLearnTagalog.BuildConfig
-import com.learn.flashLearnTagalog.DataProcessor
-import com.learn.flashLearnTagalog.LessonCreator
-import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
-import com.learn.flashLearnTagalog.databinding.ActivitySplashScreenBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
-import com.learn.flashLearnTagalog.db.RoomLesson
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_JSON_EXISTS
 import com.learn.flashLearnTagalog.ui.fragments.SignInFragment
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-
-//get current version from build version
-private const val CURRENT_VERSION = BuildConfig.VERSION_CODE
-private const val DEBUG = false
 
 @AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
@@ -50,23 +28,12 @@ class SplashScreenActivity : AppCompatActivity() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    private val viewModel: MainViewModel by viewModels()
-
-    private lateinit var dataProcessor: DataProcessor
-
-    private var version = 0
-
-    private var lessonNum = 0
-    private var wordNum = 0
-
     private lateinit var auth: FirebaseAuth
 
     //TODO: save as shared pref
     private val savedLessonJSON = "savedLessons.json"
     private val viewedLessonJSON = "viewedLessons.json"
     private val unlockedLessonJSON = "unlockedLessons.json"
-    private val practicedLessonJSON = "practicedLessons.json"
-    private val passedLessonJSON = "passedLessons.json"
 
     private lateinit var unlockedList: MutableList<String>
 
@@ -74,6 +41,7 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
+
 
         val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
         lessonScope.launch {
@@ -83,7 +51,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 Log.d(TAG, "FIRST TIME, NO INTERNAL STORAGE")
                 val lessons = DataUtility.getAllLessons().toMutableList()
 
-             //   TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+                //   TempListUtility.unlockedLessons.add("Custom\nLesson_0")
                 for (l in lessons) {
                     if (l.level == 1)
                         TempListUtility.unlockedLessons.add(l.id)
@@ -114,10 +82,13 @@ class SplashScreenActivity : AppCompatActivity() {
             lessonScope.cancel()
         }
 
+
         //TODO: for deleting account auth.currentUser!!.delete()
         if (auth.currentUser == null) {
-            val dialog: DialogFragment =
-                SignInFragment(false, this::goToHomeActivity)
+            val dialog = SignInFragment.newInstance(false, this::goToHomeActivity)
+
+//            val dialog: DialogFragment = SignInFragment.new
+//                SignInFragment(false, this::goToHomeActivity)
             dialog.isCancelable = true
             dialog.show(this@SplashScreenActivity.supportFragmentManager, "user sign-in")
         } else {

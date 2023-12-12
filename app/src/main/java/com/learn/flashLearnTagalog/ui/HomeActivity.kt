@@ -1,41 +1,20 @@
 package com.learn.flashLearnTagalog.ui
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
-import com.google.common.base.Stopwatch
-import com.google.gson.Gson
-import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
-import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
-import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.util.Timer
 import javax.inject.Inject
-import kotlin.system.measureTimeMillis
 
 
 @AndroidEntryPoint
@@ -67,7 +46,7 @@ class HomeActivity() : AppCompatActivity() {
         val view = binding.root
 
         setContentView(view)
-        val dataProcessor = DataProcessor(resources)
+        //val dataProcessor = DataProcessor(resources)
 
         if (launch) {
 
@@ -140,7 +119,7 @@ class HomeActivity() : AppCompatActivity() {
 //
 //            val scope = CoroutineScope(Job() + Dispatchers.Main)
 //            scope.launch {
-//                async { lessonCreator.createLessons() }.await()
+//                async { lessonCreator.createLessons(resources) }.await()
 //
 //                val lessonList = lessonCreator.getLessons()
 //

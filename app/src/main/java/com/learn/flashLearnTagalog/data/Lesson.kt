@@ -11,7 +11,7 @@ data class Lesson(
     val wordCount: Int = 0,
     //will not need, fix ui
     val maxLines: Int = -1,
-    val image: Int = R.drawable.bathroom,
+    val image: String = "",
 
     ) {
     val id: String = category + "_" + level
