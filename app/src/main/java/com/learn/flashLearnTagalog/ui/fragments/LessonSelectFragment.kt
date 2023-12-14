@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
+import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -33,6 +35,8 @@ import javax.inject.Inject
 class LessonSelectFragment : Fragment() {
 
     private lateinit var lessonAdapter: LessonAdapter
+
+    private val viewModel: LessonViewModel by activityViewModels()
 
     //TODO: replace with persistent data list
     private lateinit var dbLessons: MutableList<Lesson>
@@ -47,7 +51,7 @@ class LessonSelectFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        lessonAdapter = LessonAdapter(mutableListOf())
+        lessonAdapter = LessonAdapter(viewModel, mutableListOf())
 
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 

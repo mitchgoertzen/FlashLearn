@@ -1,21 +1,16 @@
 package com.learn.flashLearnTagalog.adapters
 
 import android.app.Activity
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.databinding.LessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonTypeDialogueFragment
-import com.learn.flashLearnTagalog.ui.fragments.SettingsFragment
+import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -23,6 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 class LessonAdapter @Inject constructor(
+    private val viewModel: LessonViewModel,
     private val lessons: MutableList<Lesson>
 ) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
@@ -35,6 +31,7 @@ class LessonAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
+
 
         val currentLesson = lessons[position]
         val lessonId = currentLesson.id
@@ -119,7 +116,8 @@ class LessonAdapter @Inject constructor(
 //                        transaction.replace(R.id.main_nav_container, settingsFragment)
 //                            .addToBackStack("settings").commit()
 //                    } else {
-                    val dialog = LessonTypeDialogueFragment(currentLesson)
+                    viewModel.updateLesson(currentLesson)
+                    val dialog = LessonTypeDialogueFragment()
                     dialog.isCancelable = true
                     dialog.show(
                         mContext.supportFragmentManager, "lesson popup"

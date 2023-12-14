@@ -5,7 +5,6 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.toObject
@@ -64,7 +63,7 @@ class DataUtility {
                         "unlockedLessons" to user.unlockedLessons,
                         "practicedLessons" to user.practicedLessons,
                         "passedLessons" to user.passedLessons,
-                        "version" to user.currentVersion
+                        "currentVersion" to user.currentVersion
                     )
                 )
             }
@@ -722,6 +721,7 @@ class DataUtility {
                 Log.d(TAG, "version: ${user.currentVersion}")
 
                 val appVersion = getAppVersion().toInt()
+                Log.d(TAG, "appVersion: $appVersion")
                 if (user.currentVersion < appVersion) {
 
                     TempListUtility.practicedWords.clear()

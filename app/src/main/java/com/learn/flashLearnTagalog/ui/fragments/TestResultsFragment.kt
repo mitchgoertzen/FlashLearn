@@ -1,10 +1,8 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -123,11 +121,9 @@ class TestResultsFragment(var lesson: Lesson, wordsCorrect: Int, var adapter: Te
                         "savedWords.json",
                         TempListUtility.practicedWords
                     )
-
+//TODO: update lesson viewmodel
                     val fragment =
                         PracticeFragment(
-                            nextLessonWordList.asSequence().shuffled().toMutableList(),
-                            nextLesson
                         )
                     val transaction = fragmentManager?.beginTransaction()
                     transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")

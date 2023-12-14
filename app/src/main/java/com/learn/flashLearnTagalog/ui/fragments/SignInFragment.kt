@@ -46,7 +46,7 @@ import javax.inject.Inject
 import kotlin.reflect.KFunction0
 
 @AndroidEntryPoint
-class SignInFragment : DialogFragment() {
+class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
     private val ON_CLOSE = "ON_CLOSE"
     private val IN_PROFILE = "IN_PROFILE"
@@ -54,6 +54,7 @@ class SignInFragment : DialogFragment() {
     private var inProfile: Boolean = false
     private var onClose: KFunction0<Unit>? = null
 
+    //TODO: no --> signin viewmodel
     companion object {
         fun newInstance(inProfile: Boolean, onClose: KFunction0<Unit>? = null): SignInFragment {
             val args = Bundle()
@@ -64,18 +65,6 @@ class SignInFragment : DialogFragment() {
             return fragment
         }
     }
-
-
-//
-//    fun newInstance( inProfile: Boolean,
-//                      onClose: KFunction0<Unit>? = null): SignInFragment? {
-//        val args = Bundle()
-//        args.putString("id", id.toString())
-//        val f = SignInFragment(inProfile, onClose)
-//        f.arguments = args
-//        return f
-//    }
-
 
     private val viewModel: MainViewModel by viewModels()
 

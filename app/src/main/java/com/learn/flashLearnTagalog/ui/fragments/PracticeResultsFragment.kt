@@ -13,8 +13,6 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.Word
-import com.learn.flashLearnTagalog.db.RoomLesson
-import com.learn.flashLearnTagalog.db.RoomWord
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,7 +46,7 @@ class PracticeResultsFragment(
 
         testButton.setOnClickListener {
             leaveResults()
-            val fragment = TestFragment(wordList, currentLesson)
+            val fragment = TestFragment()
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")
                 ?.commit()
