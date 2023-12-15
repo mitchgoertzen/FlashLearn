@@ -7,18 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.DelicateCoroutinesApi
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class HomeActivity() : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private val DEBUG = false
 
@@ -34,9 +32,6 @@ class HomeActivity() : AppCompatActivity() {
 
     var size = 0
 
-    private val lessonCreator = LessonCreator()
-
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -174,7 +169,7 @@ class HomeActivity() : AppCompatActivity() {
 
         //go to user profile
         binding.ibProfile.setOnClickListener {
-            val dialog: DialogFragment = ProfilePopupFragment(this)
+            val dialog: DialogFragment = ProfilePopupFragment()
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "profile popup")

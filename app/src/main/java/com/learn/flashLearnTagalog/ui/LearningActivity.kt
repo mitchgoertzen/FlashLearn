@@ -68,7 +68,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         //show profile popup dialog
         binding.ibProfile.setOnClickListener {
-            val dialog: DialogFragment = ProfilePopupFragment(this)
+            val dialog: DialogFragment = ProfilePopupFragment()
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "profile popup")

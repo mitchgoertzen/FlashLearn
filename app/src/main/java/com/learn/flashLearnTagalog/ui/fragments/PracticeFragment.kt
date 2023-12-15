@@ -20,21 +20,16 @@ import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-//masterList: MutableList<Word>, private var currentLesson: Lesson
 @AndroidEntryPoint
-class PracticeFragment :
-    Fragment(R.layout.fragment_practice) {
+class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-
-    //private var masterWordList = masterList
     private lateinit var currentWord: Word
     private var currentWordList: MutableList<Word> = mutableListOf()
     private var i = 0
 
     private val viewModel: LessonViewModel by activityViewModels()
-    // private val viewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +79,7 @@ class PracticeFragment :
                         )
                     }
                     //viewModel.completePractice(currentLesson.id)
-                    val fragment = PracticeResultsFragment(list.toMutableList(), lesson)
+                    val fragment = PracticeResultsFragment()
                     val transaction = activity?.supportFragmentManager?.beginTransaction()
                     transaction?.replace(R.id.main_nav_container, fragment)
                         ?.addToBackStack("practice results")?.commit()
@@ -127,9 +122,6 @@ class PracticeFragment :
             }
         }
 
-
-
-
         return view
     }
 
@@ -137,8 +129,7 @@ class PracticeFragment :
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
 
-        //TODO: DataUtility.updatePractice(currentWord.id, true)
-
+        //TODO - Stats: DataUtility.updatePractice(currentWord.id, true)
 
         val fragment = Card(currentWord)
         val transaction = activity?.supportFragmentManager?.beginTransaction()

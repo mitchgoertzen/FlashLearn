@@ -2,12 +2,7 @@ package com.learn.flashLearnTagalog.db
 
 import android.app.Activity
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.os.Build
-import android.os.Environment
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.FragmentActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.gson.Gson
@@ -49,10 +44,10 @@ class JsonUtility {
         fun getPracticedWords(
             activity: Activity,
             file: String
-        ): MutableMap<String, MutableList<Word>> {
+        ): MutableMap<String, List<Word>> {
 
-            val json = readJSON(activity,file)
-            val type = object : TypeToken<Map<String, MutableList<Word>>>() {}.type
+            val json = readJSON(activity, file)
+            val type = object : TypeToken<Map<String, List<Word>>>() {}.type
             return if (json != "") gson.fromJson(json, type) else mutableMapOf()
         }
 

@@ -11,7 +11,6 @@ import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
-import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStats
@@ -36,7 +35,6 @@ class DataUtility {
         private val auth = Firebase.auth
 
         val scope = CoroutineScope(Job() + Dispatchers.Main)
-
 
         //SORT BY ADD,GET,ETC????
         /****************************************_ADD_*************************************************/
@@ -724,8 +722,8 @@ class DataUtility {
                 Log.d(TAG, "appVersion: $appVersion")
                 if (user.currentVersion < appVersion) {
 
-                    TempListUtility.practicedWords.clear()
-                    TempListUtility.viewedLessons.clear()
+                  //  TempListUtility.practicedWords.clear()
+                   // TempListUtility.viewedLessons.clear()
                     user.currentVersion = appVersion
                     val userScope = CoroutineScope(Job() + Dispatchers.Main)
                     userScope.launch {
@@ -784,7 +782,8 @@ class DataUtility {
         ) {
 
             Log.d(TAG, "POPULATING TEMP")
-            TempListUtility.setList(listType, list)
+
+           // TempListUtility.setList(listType, list)
 
             if (rewriteJSON) {
                 Log.d(TAG, " AND (RE)POPULATING JSON")

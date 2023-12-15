@@ -11,9 +11,10 @@ class LessonViewModel : ViewModel() {
     private val mutableLesson = MutableLiveData<Lesson>()
     val currentLesson: LiveData<Lesson> get() = mutableLesson
 
-
     private val mutableWordList = MutableLiveData<List<Word>>()
     val currentWordList: LiveData<List<Word>> get() = mutableWordList
+
+    val listSize: Int get() = mutableWordList.value!!.size
 
     fun updateLesson(l: Lesson) {
         mutableLesson.value = l
@@ -22,25 +23,5 @@ class LessonViewModel : ViewModel() {
     fun updateWordList(list: List<Word>) {
         mutableWordList.value = list
     }
-
-//    fun updateLesson(l: Lesson) {
-//        lesson.value = l
-//    }
-//
-//    fun getLesson() {
-//        return lesson.value
-//    }
-
-//    private val wordList = MutableLiveData<List<Word>>()
-
-
-//    fun updateWordList(list: List<Word>) {
-//        wordList.value = list
-//    }
-//
-//    fun getWordList(item: Item) {
-//        return wordList.value
-//    }
-
 
 }

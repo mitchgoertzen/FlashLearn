@@ -14,15 +14,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
-import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
@@ -30,21 +29,21 @@ import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
+import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import javax.inject.Inject
 
-//masterList: MutableList<Word>, private var currentLesson: Lesson
 @AndroidEntryPoint
-class TestFragment() :
-    Fragment(R.layout.fragment_test) {
+class TestFragment : Fragment(R.layout.fragment_test) {
 
     private lateinit var testWordAdapter: TestWordAdapter
     private lateinit var answeredAdapter: TestWordAdapter
 
     private val viewModel: LessonViewModel by activityViewModels()
+    private val savedDataModel: SavedDataViewModel by activityViewModels()
 
     //private val viewModel: MainViewModel by viewModels()
 
@@ -60,7 +59,7 @@ class TestFragment() :
     private var answered: Boolean = false
     private var skipped: Boolean = false
     private var engFirst: Boolean = false
-    private lateinit var masterWordList: MutableList<Word>
+    //private lateinit var masterWordList: MutableList<Word>
 
     // private var currentWordList: MutableList<Word> = mutableListOf()
     private var wordsCorrect: Int = 0
@@ -68,12 +67,10 @@ class TestFragment() :
     private var i = 1
     private lateinit var textLine: String
 
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.R)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private var listSize = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, true)
@@ -83,7 +80,22 @@ class TestFragment() :
 
         answeredAdapter = TestWordAdapter(mutableListOf())
 
-        val view = inflater.inflate(R.layout.fragment_test, container, false)
+    }
+
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_test, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        listSize = viewModel.listSize
+
         val rvTodoList: RecyclerView = view.findViewById(R.id.rvTodoList)
         val tvCurrentWord: TextView = view.findViewById(R.id.tvCurrentWord)
         val etTodoTitle: EditText = view.findViewById(R.id.etTodoTitle)
@@ -107,7 +119,7 @@ class TestFragment() :
             val index: TextView = view.findViewById(R.id.tvIndex)
 
             //TODO: list size in adapter
-            index.text = (i++).toString() + "/" + masterWordList.size.toString()
+            index.text = "${i++}/$listSize"
 
             etTodoTitle.doOnTextChanged { _, _, _, _ ->
                 val toDoTitle = etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
@@ -119,7 +131,6 @@ class TestFragment() :
             setWordType(wordType)
 
             btnEnter.isEnabled = false
-
 
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
@@ -133,7 +144,7 @@ class TestFragment() :
                     } else
                     //go to next word
                     {
-                        index.text = (i++).toString() + "/" + masterWordList.size.toString()
+                        index.text = "${i++}/$listSize"
                         testWordAdapter.deleteTestWords()
                         btnEnter.text = "Enter"
                         btnEnter.isEnabled = false
@@ -177,7 +188,7 @@ class TestFragment() :
                                 correctAnswer = false
                                 currentWord = currentWordList.random()
                                 tvCurrentWord.text = getCurrentWord(engFirst)
-                                index.text = (i++).toString() + "/" + masterWordList.size.toString()
+                                index.text = "${i++}/$listSize"
                             }
                         } else {
                             answerWord(true)
@@ -205,7 +216,7 @@ class TestFragment() :
                 btnEnter.isEnabled = false
                 if (!skipped) {
                     currentWord.id.let {
-//TODO:premium                    DataUtility.skipWord(it)
+                        //TODO - stats: DataUtility.skipWord(it)
                         // viewModel.skipWord(it)
                     }
                     answerWord(false)
@@ -241,9 +252,6 @@ class TestFragment() :
         }
 
 
-
-
-        return view
     }
 
     private fun setWordType(wordType: TextView) {
@@ -294,54 +302,47 @@ class TestFragment() :
     }
 
     private fun goToResults() {
-        viewModel.currentLesson.observe(viewLifecycleOwner, Observer { lesson ->
+        viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
             if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
                 val id = lesson.id
-                if (!TempListUtility.passedLessons.contains(id)) {
 
-                    val nextLevel = lesson.level + 1
-                    val nextId = lesson.category + "_" + nextLevel
-                    for (l in JsonUtility.getSavedLessons(requireActivity(), "savedLessons.json")) {
-                        if (l.id == nextId) {
-
-                            if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
-                                DataUtility.addUnlockedLesson(nextId)
+                savedDataModel.passedLessons.observe(viewLifecycleOwner) { lessons ->
+                    if (lessons.contains(id)) {
+                        val nextLevel = lesson.level + 1
+                        val nextId = lesson.category + "_" + nextLevel
+                        for (l in JsonUtility.getSavedLessons(
+                            requireActivity(),
+                            "savedLessons.json"
+                        )) {
+                            if (l.id == nextId) {
+                                if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                                    DataUtility.addUnlockedLesson(nextId)
+                                }
+                                savedDataModel.updateUnlockedList(requireActivity(), nextId)
                             }
-                            TempListUtility.unlockedLessons.add(nextId)
-                            JsonUtility.writeJSON(
-                                requireActivity(),
-                                "unlockedLessons.json",
-                                TempListUtility.unlockedLessons
-                            )
                         }
+
+                        if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                            DataUtility.addPassedLesson(id)
+                        }
+                        savedDataModel.updatePassedList(requireActivity(), nextId)
                     }
-
-                    if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
-                        DataUtility.addPassedLesson(id)
-                    }
-
-
-                    TempListUtility.passedLessons.add(id)
-                    JsonUtility.writeJSON(
-                        requireActivity(), "passedLessons.json", TempListUtility.passedLessons
-                    )
                 }
-
-//TODO:            DataUtility.unlockNextLesson(currentLesson.category, currentLesson.level)
-                //DataUtility.passTest(currentLesson.id)
-                //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
-                // viewModel.passTest(currentLesson.id)
             }
 
             sharedPref.edit()
                 .putBoolean(Constants.KEY_IN_TEST, false)
                 .apply()
-            val fragment = TestResultsFragment(lesson, wordsCorrect, answeredAdapter)
+            val bundle = bundleOf("words_correct" to wordsCorrect)
+
+            val fragment = TestResultsFragment()
+            fragment.arguments = bundle
             val transaction = activity?.supportFragmentManager?.beginTransaction()
+
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("results")
                 ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
-        })
+        }
 
     }
 

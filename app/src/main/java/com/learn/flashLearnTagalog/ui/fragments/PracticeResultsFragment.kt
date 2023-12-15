@@ -7,25 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
-import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
+import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+//private var wordList: MutableList<Word>
+//private var currentLesson: Lesson
 @AndroidEntryPoint
-class PracticeResultsFragment(
-    private var wordList: MutableList<Word>,
-    private var currentLesson: Lesson
-) : Fragment(R.layout.fragment_practice_results) {
+class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    private val viewModel: LessonViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +40,12 @@ class PracticeResultsFragment(
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
         val statsButton: Button = view.findViewById(R.id.btnStats)
 
-        val adapter = DictionaryAdapter(wordList)
+        viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
+            val adapter = DictionaryAdapter(list.toMutableList())
+            rvTranslationList.adapter = adapter
+            rvTranslationList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+        }
 
-        rvTranslationList.adapter = adapter
-        rvTranslationList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         testButton.setOnClickListener {
             leaveResults()

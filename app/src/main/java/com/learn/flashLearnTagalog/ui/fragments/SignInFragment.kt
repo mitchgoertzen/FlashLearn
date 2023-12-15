@@ -21,52 +21,39 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
+import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
+import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import java.io.Serializable
 import javax.inject.Inject
-import kotlin.reflect.KFunction0
 
 @AndroidEntryPoint
 class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
-    private val ON_CLOSE = "ON_CLOSE"
-    private val IN_PROFILE = "IN_PROFILE"
 
     private var inProfile: Boolean = false
-    private var onClose: KFunction0<Unit>? = null
 
-    //TODO: no --> signin viewmodel
-    companion object {
-        fun newInstance(inProfile: Boolean, onClose: KFunction0<Unit>? = null): SignInFragment {
-            val args = Bundle()
-            args.putSerializable("ON_CLOSE", onClose as Serializable)
-            args.putSerializable("IN_PROFILE", inProfile as Serializable)
-            val fragment = SignInFragment()
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-    private val viewModel: MainViewModel by viewModels()
+    private val roomViewModel: MainViewModel by activityViewModels()
+    private val savedDataModel: SavedDataViewModel by activityViewModels()
+    private val viewModel: SignInViewModel by activityViewModels()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -100,6 +87,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,76 +99,62 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
         auth = Firebase.auth
 
-        onClose = arguments?.getSerializable(ON_CLOSE) as KFunction0<Unit>?
-        inProfile = arguments?.getSerializable(IN_PROFILE) as Boolean
-
         if (!inProfile) {
-//
-//            val newLesson1 = RoomLesson(1, "test", 1, 1, 1, 1, 1)
-//            newLesson1.locked = false
-//            val newLesson2 = RoomLesson(2, "test", 1, 1, 1, 1, 1)
-//            newLesson2.locked = false
-//            val newLesson3 = RoomLesson(3, "test", 1, 1, 1, 1, 1)
-//            newLesson3.locked = false
-//
-//            viewModel.insertLesson(newLesson1)
-//            viewModel.completePractice(1)
-//            viewModel.passTest(1)
-//            viewModel.insertLesson(newLesson2)
-//            viewModel.completePractice(2)
-//            viewModel.insertLesson(newLesson3)
-//            viewModel.completePractice(3)
-
             if (auth.currentUser == null) {
-
-          //      Log.d(TAG, "USER NULL")
                 val roomScope = CoroutineScope(Job() + Dispatchers.Main)
                 roomScope.launch {
 
-                   // Log.d(TAG, " LESSON: ${viewModel.getLessonCount()}")
-                    if (viewModel.getLessonCount() > 0) {
+                    // Log.d(TAG, " LESSON: ${viewModel.getLessonCount()}")
+                    if (roomViewModel.getLessonCount() > 0) {
 //
 //                        Log.d(TAG, "HAS LESSONS")
                         val unlocked = mutableListOf<String>()
                         val practiced = mutableListOf<String>()
                         val passed = mutableListOf<String>()
 
-                        viewModel.getAllLessons().observe(viewLifecycleOwner) {
+                        roomViewModel.getAllLessons().observe(viewLifecycleOwner) {
 
-                         //   Log.d(TAG, "IN HERE")
+                            //   Log.d(TAG, "IN HERE")
                             val lessons = it.toMutableList()
 
-                          //  Log.d(TAG, "${lessons.size} lessons...")
+                            //  Log.d(TAG, "${lessons.size} lessons...")
                             for (l in lessons) {
 
                                 val id = "${l.category}_${l.level}"
 
-                            //    Log.d(TAG, "id: $id")
+                                //    Log.d(TAG, "id: $id")
                                 if (!l.locked) {
-                                //    Log.d(TAG, "$id is not locked")
+                                    //    Log.d(TAG, "$id is not locked")
                                     unlocked.add(id)
                                 }
 
                                 if (l.practiceCompleted) {
-                                  //  Log.d(TAG, "$id is practiced")
+                                    //  Log.d(TAG, "$id is practiced")
                                     practiced.add(id)
                                 }
 
                                 if (l.testPassed) {
-                                   // Log.d(TAG, "$id is passed")
+                                    // Log.d(TAG, "$id is passed")
                                     passed.add(id)
                                 }
 
                             }
 
-                            JsonUtility.writeJSON(requireActivity(), "unlockedLessons.json", unlocked)
-                            JsonUtility.writeJSON(requireActivity(), "practicedLessons.json", practiced)
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                "unlockedLessons.json",
+                                unlocked
+                            )
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                "practicedLessons.json",
+                                practiced
+                            )
                             JsonUtility.writeJSON(requireActivity(), "passedLessons.json", passed)
 
-                            viewModel.nukeLessons()
-                            viewModel.nukeTable()
+                            roomViewModel.nukeLessons()
+                            roomViewModel.nukeTable()
                         }
-
 
 
                     }
@@ -279,23 +253,22 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                     loadLessonsScope.launch {
 
                                         val newUser = User(email)
-                                        if (TempListUtility.unlockedLessons.isEmpty()) {
 
-                                            val lessons =
-                                                async { DataUtility.getLessonIDsByLevel(1) }.await()
+                                        savedDataModel.unlockedLessons.observe(viewLifecycleOwner) { lessons ->
+                                            if (lessons.isEmpty()) {
+                                                val dbLessons =
+                                                    async { DataUtility.getLessonIDsByLevel(1) }
 
-
-                                            for (l in lessons) {
-                                                if (l.level == 1)
-                                                    TempListUtility.unlockedLessons.add(l.id)
+                                                for (l in dbLessons.getCompleted()) {
+                                                    if (l.level == 1)
+                                                        lessons.add(l.id)
+                                                    savedDataModel.addToUnlockedList(l.id)
+                                                }
+                                                savedDataModel.setUnlockedList(
+                                                    requireActivity(),
+                                                    lessons
+                                                )
                                             }
-                                            // TempListUtility.unlockedLessons.add("Custom\nLesson_0")
-
-                                            JsonUtility.writeJSON(
-                                                mContext,
-                                                "unlockedLessons.json",
-                                                TempListUtility.unlockedLessons
-                                            )
                                         }
 
                                         async {
@@ -310,7 +283,6 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                             signUp = true,
                                             rewriteJSON = false
                                         )
-
 
                                         if (inProfile) {
                                             close()
@@ -375,8 +347,15 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        inProfile = arguments?.getBoolean("in_profile") ?: false
+    }
+
     private fun close() {
-        onClose!!.invoke()
+
+        viewModel.currentCallback.value!!.invoke()
+        // onClose!!.invoke()
         dialog?.dismiss()
     }
 

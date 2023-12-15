@@ -1,7 +1,6 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,22 +9,29 @@ import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
+import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+//(private var newActivity: Activity)
 @AndroidEntryPoint
-class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment() {
+class ProfilePopupFragment : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    private val viewModel: SignInViewModel by activityViewModels()
+    private val savedDataModel: SavedDataViewModel by activityViewModels()
+
     private var userSignedIn = false
     private lateinit var auth: FirebaseAuth
     lateinit var group: ViewGroup
@@ -46,8 +52,14 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile_popup, container, false)
 
+
+        return inflater.inflate(R.layout.fragment_profile_popup, container, false)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         group = view.findViewById(R.id.clProfileBackground)
         auth = Firebase.auth
         userSignedIn = (auth.currentUser != null)
@@ -72,17 +84,29 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
         val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
         var words = 0
-        for (wordList in TempListUtility.practicedWords.values) {
-            words += wordList.size
+
+        savedDataModel.practicedWords.observe(viewLifecycleOwner) { wordLists ->
+            for (list in wordLists.values) {
+                words += list.size
+            }
+
         }
+
 
         val test: TextView = view.findViewById(R.id.tvPassed)
         //val testScore: TextView = view.findViewById(R.id.tvScore)
 
-        "Lessons Unlocked:${TempListUtility.unlockedLessons.size}".also { unlock.text = it }
-        "Lessons Practiced: ${TempListUtility.practicedLessons.size}".also { prac.text = it }
+        savedDataModel.unlockedLessons.observe(viewLifecycleOwner) { lessons ->
+            "Lessons Unlocked:${lessons.size}".also { unlock.text = it }
+        }
+        savedDataModel.practicedLessons.observe(viewLifecycleOwner) { lessons ->
+            "Lessons Practiced: ${lessons.size}".also { prac.text = it }
+        }
+        savedDataModel.passedLessons.observe(viewLifecycleOwner) { lessons ->
+            "Lesson Tests Passed: ${lessons.size}".also { test.text = it }
+        }
+
         "Words Practiced: $words".also { pracWords.text = it }
-        "Lesson Tests Passed: ${TempListUtility.passedLessons.size}".also { test.text = it }
         //"Average Test Score:${TempListUtility.unlockedLessons.size}".also { testScore.text = it }
 
 
@@ -96,19 +120,18 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
         }
 
         signInButton.setOnClickListener {
+            //sign out
             if (userSignedIn) {
-
+                //TODO: reset lists to shared user data
                 sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false).apply()
                 auth.signOut()
                 userSignedIn = false
-
-                //TODO: reload dialog
-                dialog?.dismiss()
+                reloadCallback()
             } else {
-                val signInDialog = SignInFragment.newInstance(true, this::reloadCallback)
-//                val signInDialog: DialogFragment =
-//                    SignInFragment(true, this::reloadCallback)
-
+                viewModel.updateCallback { reloadCallback() }
+                val signInDialog = SignInFragment()
+                val bundle = bundleOf("in_profile" to true)
+                signInDialog.arguments = bundle
                 signInDialog.isCancelable = true
                 signInDialog.show(parentFragmentManager, "user sign-in")
 
@@ -132,13 +155,12 @@ class ProfilePopupFragment(private var newActivity: Activity) : DialogFragment()
 //
 //        }
 
-        return view
     }
 
     private fun reloadCallback() {
+        val newDialog: DialogFragment = ProfilePopupFragment()
+        newDialog.isCancelable = true
         dialog?.dismiss()
-        val dialog: DialogFragment = ProfilePopupFragment(newActivity)
-        dialog.isCancelable = true
-        dialog.show(parentFragmentManager, "profile popup")
+        newDialog.show(parentFragmentManager, "profile popup")
     }
 }

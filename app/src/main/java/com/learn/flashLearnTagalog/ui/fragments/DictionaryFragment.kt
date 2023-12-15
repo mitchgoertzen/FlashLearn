@@ -2,24 +2,18 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.toObject
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
-import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
-import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -29,7 +23,6 @@ import javax.inject.Inject
 class DictionaryFragment : Fragment() {
 
     private lateinit var dictionaryAdapter: DictionaryAdapter
-
 
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -64,6 +57,7 @@ class DictionaryFragment : Fragment() {
         val lastPage: ImageButton = view.findViewById(R.id.ibLastPage)
         val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
         val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
+
 
 
         for (wordList in TempListUtility.practicedWords) {
