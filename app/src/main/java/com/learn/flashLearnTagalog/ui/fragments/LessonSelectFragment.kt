@@ -1,7 +1,9 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +14,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
+import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
@@ -35,7 +39,7 @@ import javax.inject.Inject
 class LessonSelectFragment : Fragment() {
 
     private lateinit var lessonAdapter: LessonAdapter
-
+    private val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
     private val viewModel: LessonViewModel by activityViewModels()
 
     //TODO: replace with persistent data list
@@ -52,8 +56,9 @@ class LessonSelectFragment : Fragment() {
     ): View? {
 
         lessonAdapter = LessonAdapter(viewModel, mutableListOf())
-
+        sharedPref.edit().putBoolean(KEY_IN_LESSONS, true).apply()
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
+
 
         val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
 
@@ -73,25 +78,46 @@ class LessonSelectFragment : Fragment() {
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
 
-        val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
+
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()
 
-        //TODO: dbLessons = get from static class
+        dbLessons = JsonUtility.getSavedLessons(requireActivity())
 
-        val lessonJSON = "savedLessons.json"
-        dbLessons = JsonUtility.getSavedLessons(requireActivity(), lessonJSON)
+        val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshList()
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
-
         return view
+    }
+
+     fun refreshList() {
+        lessonAdapter.deleteLessons()
+        val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
+        refreshScope.launch {
+            async {
+                createLessonList(
+                    sharedPref.getStringSet(
+                        KEY_LESSON_DIFFICULTY,
+                        newDifficulties
+                    )!!
+                )
+            }.await()
+            refreshScope.cancel()
+        }
     }
 
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
+
         var add: Boolean
         //after database access is complete, add lessons to adapter
+
         for (lesson in dbLessons) {
             val lessonStats = LessonStats()
 
@@ -124,6 +150,7 @@ class LessonSelectFragment : Fragment() {
                         if (!TempListUtility.unlockedLessons.contains(lesson.id)) {
                             add = false
                         }
+
                 } else {
                     add = false
                 }
@@ -135,5 +162,14 @@ class LessonSelectFragment : Fragment() {
 
         //TODO: used saved variable, not hardcoded
         lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
+    }
+
+    fun test(){
+        Log.d(TAG, "test 123")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }

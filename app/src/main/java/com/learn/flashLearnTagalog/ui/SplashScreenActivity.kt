@@ -12,12 +12,10 @@ import androidx.core.os.bundleOf
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
-import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_JSON_EXISTS
 import com.learn.flashLearnTagalog.ui.fragments.SignInFragment
-import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
@@ -31,7 +29,6 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
 
     private val viewModel: SignInViewModel by viewModels()
-    private val savedDataModel: SavedDataViewModel by viewModels()
 
     private lateinit var auth: FirebaseAuth
 
@@ -39,48 +36,86 @@ class SplashScreenActivity : AppCompatActivity() {
     private val savedLessonJSON = "savedLessons.json"
     private val viewedLessonJSON = "viewedLessons.json"
     private val unlockedLessonJSON = "unlockedLessons.json"
-
-    private lateinit var unlockedList: MutableList<String>
+    private val practicedLessonJSON = "practicedLessons.json"
+    private val passedLessonJSON = "passedLessons.json"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         auth = Firebase.auth
 
+        val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
+        lessonScope.launch {
 
-        //if the user has not saved a lessons list to internal storage
-        if (!sharedPref.getBoolean(KEY_LESSON_JSON_EXISTS, false)) {
-            Log.d(TAG, "FIRST TIME, NO INTERNAL STORAGE")
+            val unlocked =
+                JsonUtility.getUserDataList(this@SplashScreenActivity, unlockedLessonJSON)
+            if (unlocked.isNotEmpty()) {
+                TempListUtility.unlockedLessons = unlocked
+            } else {
+                val lessons =
+                    async { DataUtility.getLessonIDsByLevel(1) }.await()
+                val unlock = mutableListOf<String>()
 
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_JSON_EXISTS, true)
-                .apply()
-
-            savedDataModel.unlockedLessons.observe(this@SplashScreenActivity) { lessons ->
-                if (lessons.isEmpty()) {
-                    populateUnlockedLessons(lessons)
+                for (l in lessons) {
+                    if (l.level == 1)
+                        unlock.add(l.id)
                 }
+
+                TempListUtility.unlockedLessons = unlock
+                JsonUtility.writeJSON(this@SplashScreenActivity, unlockedLessonJSON, unlock, true)
             }
 
-        } else {
-            //locally saved data from, not tied to user account
-            savedDataModel.setPracticedWords(
-                JsonUtility.getPracticedWords(
-                    this@SplashScreenActivity,
-                    "savedWords.json"
-                )
-            )
-            savedDataModel.setViewedLessons(
-                JsonUtility.getStringList(
-                    this@SplashScreenActivity,
-                    viewedLessonJSON
-                )
-            )
+            TempListUtility.practicedLessons =
+                JsonUtility.getUserDataList(this@SplashScreenActivity, practicedLessonJSON)
+            TempListUtility.passedLessons =
+                JsonUtility.getUserDataList(this@SplashScreenActivity, passedLessonJSON)
+            TempListUtility.viewedWords = JsonUtility.getViewedWords(this@SplashScreenActivity)
+            TempListUtility.viewedLessons = JsonUtility.getViewedLessons(this@SplashScreenActivity)
         }
 
 
+        //sharedPref.edit().putBoolean(KEY_LESSON_JSON_EXISTS, false).apply()
+//        val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
+//        lessonScope.launch {
+//
+//
+//            //if the user has not saved a lessons list to internal storage
+//            if (JsonUtility.getSavedLessons(this@SplashScreenActivity).isEmpty()) {
+//                val lessons = DataUtility.getAllLessons().toMutableList()
+//
+//                //   TempListUtility.unlockedLessons.add("Custom\nLesson_0")
+//                for (l in lessons) {
+//                    if (l.level == 1)
+//                        TempListUtility.unlockedLessons.add(l.id)
+//                }
+//                JsonUtility.writeJSON(
+//                    this@SplashScreenActivity,
+//                    unlockedLessonJSON,
+//                    TempListUtility.unlockedLessons
+//                )
+//                JsonUtility.writeJSON(this@SplashScreenActivity, savedLessonJSON, lessons)
+//
+//                sharedPref.edit()
+//                    .putBoolean(KEY_LESSON_JSON_EXISTS, true)
+//                    .apply()
+//            } else {
+//                //locally saved data from, not tied to user account
+//                TempListUtility.practicedWords =
+//                    JsonUtility.getPracticedWords(this@SplashScreenActivity, "savedWords.json")
+//                TempListUtility.viewedLessons =
+//                    JsonUtility.getStringList(this@SplashScreenActivity, viewedLessonJSON)
+//            }
+//
+//            lessonScope.cancel()
+//        }
+
+        Log.d(TAG, "WE ARE HERE")
+
         //TODO: for deleting account auth.currentUser!!.delete()
         if (auth.currentUser == null) {
+
+            Log.d(TAG, "NO USER")
+            Log.d(TAG, "no user")
             val dialog = SignInFragment()
 
             val bundle = bundleOf("in_profile" to false)
@@ -88,10 +123,12 @@ class SplashScreenActivity : AppCompatActivity() {
 
             viewModel.updateCallback { goToHomeActivity() }
 
-
+//            val dialog: DialogFragment = SignInFragment.new
+//                SignInFragment(false, this::goToHomeActivity)
             dialog.isCancelable = true
             dialog.show(this@SplashScreenActivity.supportFragmentManager, "user sign-in")
         } else {
+            Log.d(TAG, " USER EXISTS")
             val userScope = CoroutineScope(Job() + Dispatchers.Main)
             userScope.launch {
                 DataUtility.updateLocalData(
@@ -110,24 +147,6 @@ class SplashScreenActivity : AppCompatActivity() {
         startActivity(Intent(this, HomeActivity::class.java))
         //TODO: finish from next activity
         finish()
-    }
-
-    private fun populateUnlockedLessons(lessons: MutableList<String>) {
-
-        val lessonScope = CoroutineScope(Job() + Dispatchers.Main)
-        lessonScope.launch {
-
-            val dbLessons = async { DataUtility.getLessonIDsByLevel(1) }.await()
-            for (l in dbLessons) {
-                if (l.level == 1)
-                    lessons.add(l.id)
-                savedDataModel.addToUnlockedList(l.id)
-            }
-            savedDataModel.setUnlockedList(
-                this@SplashScreenActivity,
-                lessons
-            )
-        }
     }
 }
 

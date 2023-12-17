@@ -2,6 +2,7 @@ package com.learn.flashLearnTagalog.db
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -20,62 +21,89 @@ class JsonUtility {
         private val gson = Gson()
         private val auth = Firebase.auth
 
-        fun writeJSON(activity: Activity, file: String, data: Any) {
+        private const val savedLessons = "savedLessons.json"
+        private const val viewedWords = "viewedWords.json"
+        private const val viewedLessons = "viewedLessons.json"
+
+        fun writeJSON(activity: Activity, file: String, data: Any, userData: Boolean) {
 
             Log.d(TAG, "writeJSON")
             val jsonString = gson.toJson(data)
 
             try {
-                val outputFile = File(getDirectory(activity), file)
-                val fOut = FileOutputStream(outputFile)
+                val fOut = if (userData) {
+                    val outputFile = File(getDirectory(activity), file)
+                    Log.d(TAG, "JSON WRITTEN TO $outputFile")
+                    FileOutputStream(outputFile)
+
+                } else {
+                    Log.d(TAG, "JSON WRITTEN TO $file")
+                    activity.openFileOutput(file, Context.MODE_PRIVATE)
+                }
 
                 fOut.flush()
 
                 fOut.write(jsonString.toByteArray())
 
                 fOut.close()
-                Log.d(TAG, "JSON WRITTEN TO $outputFile")
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
 
-        fun getPracticedWords(
-            activity: Activity,
-            file: String
-        ): MutableMap<String, List<Word>> {
 
-            val json = readJSON(activity, file)
-            val type = object : TypeToken<Map<String, List<Word>>>() {}.type
-            return if (json != "") gson.fromJson(json, type) else mutableMapOf()
-        }
-
-        fun getStringList(activity: Activity, file: String): MutableList<String> {
-            val json = readJSON(activity, file)
+        fun getUserDataList(activity: Activity, file: String): MutableList<String> {
+            val json = readJSON(activity, file, true)
             return if (json != "") gson.fromJson(json, Array<String>::class.java)
                 .toMutableList() else mutableListOf()
         }
 
-        fun getSavedLessons(activity: Activity, file: String): MutableList<Lesson> {
-            Log.d(TAG, getLocalPath().toString())
-            Log.d(TAG, getLocalPath().path)
-            Log.d(TAG, "${getLocalPath()}/$file")
-            return gson.fromJson(
-                readJSON(activity, file),
-                Array<Lesson>::class.java
-            )
-                .toMutableList()
+        //TODO: make global, not to specific user. same with saved words
+        fun getSavedLessons(activity: Activity): MutableList<Lesson> {
+            val json: MutableList<Lesson>
+            try {
+                json = gson.fromJson(
+                    readJSON(activity, savedLessons, false),
+                    Array<Lesson>::class.java
+                )
+                    .toMutableList()
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+                return mutableListOf()
+            }
+
+            return json
         }
 
-        private fun readJSON(activity: Activity, file: String): String? {
+        fun getViewedWords(
+            activity: Activity
+        ): MutableMap<String, List<Word>> {
+
+            val json = readJSON(activity, viewedWords, false)
+            val type = object : TypeToken<Map<String, List<Word>>>() {}.type
+            return if (json != "") gson.fromJson(json, type) else mutableMapOf()
+        }
+
+        fun getViewedLessons(
+            activity: Activity
+        ): MutableList<String> {
+            val json = readJSON(activity, viewedLessons, false)
+            return if (json != "") gson.fromJson(json, Array<String>::class.java)
+                .toMutableList() else mutableListOf()
+        }
+
+        private fun readJSON(activity: Activity, file: String, userData: Boolean): String? {
             val json: String?
             try {
 
-
-                val inputFile = File(getDirectory(activity), file)
-                val fileIn = FileInputStream(inputFile)
-                //  activity.openFileInput(getDirectory(file))
+                val fileIn = if (userData) {
+                    val inputFile =
+                        File(getDirectory(activity), file)
+                    FileInputStream(inputFile)
+                } else {
+                    activity.openFileInput(file)
+                }
 
                 json = fileIn.bufferedReader().use { it.readText() }
                 fileIn.close()

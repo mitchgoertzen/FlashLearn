@@ -2,6 +2,7 @@ package com.learn.flashLearnTagalog.db
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -11,9 +12,11 @@ import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStats
+import com.learn.flashLearnTagalog.other.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -22,7 +25,9 @@ import kotlinx.coroutines.launch
 
 class DataUtility {
 
+
     companion object {
+
         const val ADMIN_COLLECTION = "admin"
         const val USER_COLLECTION = "users"
         const val WORD_COLLECTION = "words"
@@ -406,11 +411,12 @@ class DataUtility {
         /*************************************_LESSONS_********************************************/
 
         suspend fun getAllLessons(): List<Lesson> {
-            return firestore.getSelectDocuments(
+            val lessons = firestore.getSelectDocuments(
                 LESSON_COLLECTION,
                 order = "level",
                 direction = Query.Direction.ASCENDING
-            ).toObjects()
+            )
+            return lessons.toObjects()
         }
 
         //  @Query("SELECT COUNT(*) FROM lesson_table")
@@ -679,20 +685,49 @@ class DataUtility {
             activity: Activity, signUp: Boolean, rewriteJSON: Boolean
         ) {
 
+            var checkForLessons = true
+
+//            val lessonJSON = "savedLessons.json"
+//            val dbLessons = JsonUtility.getSavedLessons(activity)
+
+//            if (dbLessons.isEmpty()) {
+//                Log.d(TAG, "EMPTY")
+//                val scope = CoroutineScope(Job() + Dispatchers.Main)
+//                scope.launch {
+//                    val lessons = async { getAllLessons() }.await()
+//                    JsonUtility.writeJSON(activity, lessonJSON, lessons)
+//                }
+//            }
+
             Log.d(TAG, "UPDATING LOCAL DATA")
+
+//            val test = CoroutineScope(Job() + Dispatchers.Main)
+//            test.launch {
+//
+//                Log.d(TAG, "GET ONE")
+//                activity.getPreferences(MODE_PRIVATE).edit()
+//                    .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
+//
+//                getAllLessons().toMutableList()
+//
+//                activity.getPreferences(MODE_PRIVATE).edit()
+//                    .putBoolean(Constants.KEY_GATHERING_LESSONS, true).apply()
+//
+//                Log.d(TAG, "GET ONE")
+//
+//                test.cancel()
+//            }
 
             val unlockedJSON = "unlockedLessons.json"
             val practicedJSON = "practicedLessons.json"
             val passedJSON = "passedLessons.json"
 
-            var currentUnlocked =
-                JsonUtility.getStringList(activity, unlockedJSON)
 
-            var currentPracticed =
-                JsonUtility.getStringList(activity, practicedJSON)
-
-            var currentPassed =
-                JsonUtility.getStringList(activity, passedJSON)
+            //if user is signed in, local data will be from user
+            //otherwise, local data will be from shared folder
+            var currentUnlocked = TempListUtility.unlockedLessons
+            var currentPracticed = TempListUtility.practicedLessons
+            var currentPassed = TempListUtility.passedLessons
 
             val user = getCurrentUser()
             if (user != null) {
@@ -721,22 +756,52 @@ class DataUtility {
                 val appVersion = getAppVersion().toInt()
                 Log.d(TAG, "appVersion: $appVersion")
                 if (user.currentVersion < appVersion) {
-
-                  //  TempListUtility.practicedWords.clear()
-                   // TempListUtility.viewedLessons.clear()
+                    checkForLessons = false
+                    TempListUtility.viewedWords.clear()
+                    TempListUtility.viewedLessons.clear()
                     user.currentVersion = appVersion
                     val userScope = CoroutineScope(Job() + Dispatchers.Main)
                     userScope.launch {
                         val lessons = getAllLessons().toMutableList()
-                        JsonUtility.writeJSON(activity, "savedLessons.json", lessons)
-                        updateUserData(user)
+                        JsonUtility.writeJSON(activity, "savedLessons.json", lessons, true)
+                        Log.d(TAG, "GET ONE")
                         userScope.cancel()
                     }
-
-                } else {
-                    updateUserData(user)
                 }
 
+                updateUserData(user)
+            } else {
+                Log.d(TAG, "THERE IS NOT A USER")
+            }
+
+            //no sign-in or user does not need to update lessons
+            if (checkForLessons) {
+
+                Log.d(TAG, "NEED TO CHECK FOR LESSONS")
+
+                if (JsonUtility.getSavedLessons(activity).isEmpty()) {
+                    Log.d(TAG, "EMPTY LESSONS")
+                    val test = CoroutineScope(Job() + Dispatchers.Main)
+                    test.launch {
+
+                        Log.d(TAG, "GET ONE")
+                        activity.getPreferences(Context.MODE_PRIVATE).edit()
+                            .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
+                        val lessons = getAllLessons()
+                        Log.d(TAG, "LESSONS GOT")
+                        JsonUtility.writeJSON(activity, "savedLessons.json", lessons, false)
+
+                        Log.d(TAG, "WROTE")
+                        activity.getPreferences(Context.MODE_PRIVATE).edit()
+                            .putBoolean(Constants.KEY_GATHERING_LESSONS, true).apply()
+
+                        Log.d(TAG, "GET TWO")
+
+                        test.cancel()
+                    }
+                } else {
+                    Log.d(TAG, "NON-EMPTY LESSONS")
+                }
 
             }
 
@@ -783,14 +848,15 @@ class DataUtility {
 
             Log.d(TAG, "POPULATING TEMP")
 
-           // TempListUtility.setList(listType, list)
+            TempListUtility.setList(listType, list)
 
             if (rewriteJSON) {
                 Log.d(TAG, " AND (RE)POPULATING JSON")
                 JsonUtility.writeJSON(
                     activity,
                     jsonFile,
-                    list
+                    list,
+                    true
                 )
             }
 

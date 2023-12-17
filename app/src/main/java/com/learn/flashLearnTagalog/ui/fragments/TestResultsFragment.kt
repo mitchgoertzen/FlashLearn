@@ -15,13 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
-import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,6 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
     lateinit var sharedPref: SharedPreferences
 
     private val viewModel: LessonViewModel by activityViewModels()
-    private val savedDataModel: SavedDataViewModel by activityViewModels()
     private lateinit var textLine: String
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,9 +74,11 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         val nextButton: Button = view.findViewById(R.id.btnNextLesson)
         //  val statsButton: Button = view.findViewById(R.id.btnStats)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
-        //  var adapter = TestWordAdapter(mutableListOf())
-        //  rvTodoList.adapter = adapter
-        rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+
+        viewModel.currentAdapter.observe(viewLifecycleOwner) { adapter ->
+            rvTodoList.adapter = adapter
+            rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
+        }
 
         val guideline: Guideline = view.findViewById(R.id.glRight)
 
@@ -93,10 +94,10 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
 
                 //TODO: better solution
                 val lessonJSON = "savedLessons.json"
-                val savedLessons = JsonUtility.getSavedLessons(requireActivity(), lessonJSON)
+                val savedLessons = JsonUtility.getSavedLessons(requireActivity())
                 var nextLesson: Lesson? = null
 
-                var nextLessonWordList: List<Word> = listOf()
+                var nextLessonWordList: List<Word> = mutableListOf()
 
                 for (l in savedLessons) {
                     if (l.id == nextId) {
@@ -111,32 +112,35 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
                     val scope = CoroutineScope(Job() + Dispatchers.Main)
                     scope.launch {
 
-                        savedDataModel.viewedLessons.observe(viewLifecycleOwner) { lessons ->
-                            if (lessons.contains(nextId)) {
-                                savedDataModel.practicedWords.observe(viewLifecycleOwner) { words ->
-                                    nextLessonWordList = words[nextId]!!
-                                }
-                            } else {
-                                suspend {
-                                    DataUtility.getAllWordsForLesson(
-                                        nextLesson.category.lowercase(),
-                                        nextLesson.minLength,
-                                        nextLesson.wordCount.toLong()
-                                    ).toMutableList()
-                                }
-                            }
-                            scope.cancel()
+                        nextLessonWordList = if (TempListUtility.viewedLessons.contains(nextId)) {
+                            TempListUtility.viewedWords[nextId]!!
+                        } else {
+                            DataUtility.getAllWordsForLesson(
+                                nextLesson.category.lowercase(),
+                                nextLesson.minLength,
+                                nextLesson.wordCount.toLong()
+                            ).toMutableList()
                         }
+                        scope.cancel()
                     }
-
                     nextButton.setOnClickListener {
-                        savedDataModel.updatePracticedWords(
-                            requireActivity(),
-                            nextId,
-                            nextLessonWordList
-                        )
-                        savedDataModel.updateViewedList(requireActivity(), nextId)
+                        TempListUtility.viewedWords[nextId] = nextLessonWordList
+                        TempListUtility.viewedLessons.add(nextId)
 
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "viewedLessons.json",
+                            TempListUtility.viewedLessons,
+                            false
+                        )
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "savedWords.json",
+                            TempListUtility.viewedWords,
+                            false
+                        )
                         viewModel.updateLesson(nextLesson)
                         val fragment = PracticeFragment()
                         val transaction = fragmentManager?.beginTransaction()

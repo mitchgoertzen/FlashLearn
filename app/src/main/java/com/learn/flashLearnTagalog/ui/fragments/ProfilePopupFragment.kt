@@ -1,14 +1,16 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -16,8 +18,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,7 +33,6 @@ class ProfilePopupFragment : DialogFragment() {
     lateinit var sharedPref: SharedPreferences
 
     private val viewModel: SignInViewModel by activityViewModels()
-    private val savedDataModel: SavedDataViewModel by activityViewModels()
 
     private var userSignedIn = false
     private lateinit var auth: FirebaseAuth
@@ -53,6 +55,8 @@ class ProfilePopupFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         return inflater.inflate(R.layout.fragment_profile_popup, container, false)
     }
@@ -63,17 +67,14 @@ class ProfilePopupFragment : DialogFragment() {
         group = view.findViewById(R.id.clProfileBackground)
         auth = Firebase.auth
         userSignedIn = (auth.currentUser != null)
-
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        val window: ConstraintLayout = group as ConstraintLayout
-        window.setOnTouchListener { v, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-            }
-            v?.onTouchEvent(event) ?: true
-        }
+//
+//        val window: ConstraintLayout = group as ConstraintLayout
+//        window.setOnTouchListener { v, event ->
+//            when (event?.action) {
+//                MotionEvent.ACTION_DOWN ->
+//            }
+//            v?.onTouchEvent(event) ?: true
+//        }
 
         val stats: Button = view.findViewById(R.id.btnStats)
         val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
@@ -85,26 +86,20 @@ class ProfilePopupFragment : DialogFragment() {
         val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
         var words = 0
 
-        savedDataModel.practicedWords.observe(viewLifecycleOwner) { wordLists ->
-            for (list in wordLists.values) {
-                words += list.size
-            }
-
+        for (list in TempListUtility.viewedWords) {
+            words += list.value.size
         }
 
 
         val test: TextView = view.findViewById(R.id.tvPassed)
         //val testScore: TextView = view.findViewById(R.id.tvScore)
 
-        savedDataModel.unlockedLessons.observe(viewLifecycleOwner) { lessons ->
-            "Lessons Unlocked:${lessons.size}".also { unlock.text = it }
-        }
-        savedDataModel.practicedLessons.observe(viewLifecycleOwner) { lessons ->
-            "Lessons Practiced: ${lessons.size}".also { prac.text = it }
-        }
-        savedDataModel.passedLessons.observe(viewLifecycleOwner) { lessons ->
-            "Lesson Tests Passed: ${lessons.size}".also { test.text = it }
-        }
+        "Lessons Unlocked:${TempListUtility.unlockedLessons.size}".also { unlock.text = it }
+
+        "Lessons Practiced: ${TempListUtility.practicedLessons.size}".also { prac.text = it }
+
+        "Lesson Tests Passed: ${TempListUtility.passedLessons.size}".also { test.text = it }
+
 
         "Words Practiced: $words".also { pracWords.text = it }
         //"Average Test Score:${TempListUtility.unlockedLessons.size}".also { testScore.text = it }
@@ -119,13 +114,22 @@ class ProfilePopupFragment : DialogFragment() {
             signInButton.text = "Sign In"
         }
 
+        if (sharedPref.getBoolean(Constants.KEY_IN_TEST, false)) {
+            signInButton.isEnabled = false
+        }
+
         signInButton.setOnClickListener {
             //sign out
             if (userSignedIn) {
-                //TODO: reset lists to shared user data
                 sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false).apply()
                 auth.signOut()
                 userSignedIn = false
+                TempListUtility.unlockedLessons =
+                    JsonUtility.getUserDataList(requireActivity(), "unlockedLessons.json")
+                TempListUtility.practicedLessons =
+                    JsonUtility.getUserDataList(requireActivity(), "practicedLessons.json")
+                TempListUtility.passedLessons =
+                    JsonUtility.getUserDataList(requireActivity(), "passedLessons.json")
                 reloadCallback()
             } else {
                 viewModel.updateCallback { reloadCallback() }
@@ -137,6 +141,10 @@ class ProfilePopupFragment : DialogFragment() {
 
                 dialog?.hide()
             }
+
+
+            TempListUtility.viewedWords = JsonUtility.getViewedWords(requireActivity())
+            TempListUtility.viewedLessons = JsonUtility.getViewedLessons(requireActivity())
         }
 
 //        stats.setOnClickListener {
@@ -154,6 +162,20 @@ class ProfilePopupFragment : DialogFragment() {
 //            }
 //
 //        }
+
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        Log.d(TAG, "activity: ${requireActivity()}")
+        super.onCancel(dialog)
+        viewModel.isRefreshActive.observe(viewLifecycleOwner){ active->
+            Log.d(TAG, "ACTIVE: $active")
+            if (active) {
+                viewModel.currentRefreshCallback.value!!.invoke()
+                viewModel.updateRefreshActive(false)
+            }
+        }
+
 
     }
 

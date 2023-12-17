@@ -60,7 +60,7 @@ class DictionaryFragment : Fragment() {
 
 
 
-        for (wordList in TempListUtility.practicedWords) {
+        for (wordList in TempListUtility.viewedWords) {
             wordCount += wordList.value.size
             masterWordList.addAll(wordList.value)
         }

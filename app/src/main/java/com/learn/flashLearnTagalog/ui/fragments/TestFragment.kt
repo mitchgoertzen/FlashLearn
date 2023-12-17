@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
+import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
@@ -29,7 +30,6 @@ import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
-import com.learn.flashLearnTagalog.ui.viewmodels.SavedDataViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +43,6 @@ class TestFragment : Fragment(R.layout.fragment_test) {
     private lateinit var answeredAdapter: TestWordAdapter
 
     private val viewModel: LessonViewModel by activityViewModels()
-    private val savedDataModel: SavedDataViewModel by activityViewModels()
 
     //private val viewModel: MainViewModel by viewModels()
 
@@ -76,9 +75,6 @@ class TestFragment : Fragment(R.layout.fragment_test) {
             .putBoolean(Constants.KEY_IN_TEST, true)
             .apply()
 
-        testWordAdapter = TestWordAdapter(mutableListOf())
-
-        answeredAdapter = TestWordAdapter(mutableListOf())
 
     }
 
@@ -88,6 +84,11 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        testWordAdapter = TestWordAdapter(mutableListOf())
+
+        answeredAdapter = TestWordAdapter(mutableListOf())
+
         return inflater.inflate(R.layout.fragment_test, container, false)
     }
 
@@ -305,35 +306,49 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
             if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
                 val id = lesson.id
+                if (!TempListUtility.passedLessons.contains(id)) {
 
-                savedDataModel.passedLessons.observe(viewLifecycleOwner) { lessons ->
-                    if (lessons.contains(id)) {
-                        val nextLevel = lesson.level + 1
-                        val nextId = lesson.category + "_" + nextLevel
-                        for (l in JsonUtility.getSavedLessons(
-                            requireActivity(),
-                            "savedLessons.json"
-                        )) {
-                            if (l.id == nextId) {
-                                if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
-                                    DataUtility.addUnlockedLesson(nextId)
-                                }
-                                savedDataModel.updateUnlockedList(requireActivity(), nextId)
+                    val nextLevel = lesson.level + 1
+                    val nextId = lesson.category + "_" + nextLevel
+                    for (l in JsonUtility.getSavedLessons(requireActivity())) {
+                        if (l.id == nextId) {
+
+                            if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                                DataUtility.addUnlockedLesson(nextId)
                             }
+                            TempListUtility.unlockedLessons.add(nextId)
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                "unlockedLessons.json",
+                                TempListUtility.unlockedLessons,
+                                true
+                            )
                         }
-
-                        if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
-                            DataUtility.addPassedLesson(id)
-                        }
-                        savedDataModel.updatePassedList(requireActivity(), nextId)
                     }
+
+                    if (sharedPref.getBoolean(Constants.KEY_USER_SIGNED_IN, false)) {
+                        DataUtility.addPassedLesson(id)
+                    }
+
+
+                    TempListUtility.passedLessons.add(id)
+                    JsonUtility.writeJSON(
+                        requireActivity(), "passedLessons.json", TempListUtility.passedLessons,
+                        true
+                    )
                 }
+
+                //DataUtility.passTest(currentLesson.id)
+                //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
+                // viewModel.passTest(currentLesson.id)
             }
 
             sharedPref.edit()
                 .putBoolean(Constants.KEY_IN_TEST, false)
                 .apply()
             val bundle = bundleOf("words_correct" to wordsCorrect)
+
+            viewModel.updateAdapter(answeredAdapter)
 
             val fragment = TestResultsFragment()
             fragment.arguments = bundle

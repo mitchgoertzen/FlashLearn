@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.appcompat.widget.SwitchCompat
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.learn.flashLearnTagalog.R
@@ -41,8 +40,8 @@ class LessonTypeDialogueFragment : DialogFragment() {
     // private lateinit var wordList: MutableList<Word>
     //private lateinit var currentLesson: Lesson
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onStart() {
+        super.onStart()
         val dialog = dialog
         if (dialog != null) {
             dialog.window!!.setLayout(
@@ -50,32 +49,37 @@ class LessonTypeDialogueFragment : DialogFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
-
-
-        //      wordList = mutableListOf()
     }
 
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_lesson_type_dialogue, container, false)
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return view
-    }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        // var currentTitle = currentLesson.category
+//        //popup window
+//        val window: ConstraintLayout = view.findViewById(R.id.clMain)
+//
+//        //when popup is touched, but no buttons are, popup will close
+//        window.setOnTouchListener { v, event ->
+//            when (event?.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    dialog?.dismiss()
+//                }
+//            }
+//            v?.onTouchEvent(event) ?: true
+//        }
+
 
         val scope = CoroutineScope(Job() + Dispatchers.Main)
         //popup window
-        val window: ConstraintLayout = view.findViewById(R.id.clMain)
+        // val window: ConstraintLayout = view.findViewById(R.id.clMain)
 
 
         val testButton: Button = view.findViewById(R.id.btnTest)
@@ -87,18 +91,18 @@ class LessonTypeDialogueFragment : DialogFragment() {
         disableButton(practiceButton)
 
         //when popup is touched, but no buttons are, popup will close
-        window.setOnTouchListener { v, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    scope.cancel()
-                    dialog?.dismiss()
-                }
-            }
-            v?.onTouchEvent(event) ?: true
-        }
+//        window.setOnTouchListener { v, event ->
+//            when (event?.action) {
+//                MotionEvent.ACTION_DOWN -> {
+//                    scope.cancel()
+//                    dialog?.dismiss()
+//                }
+//            }
+//            v?.onTouchEvent(event) ?: true
+//        }
 
         scope.launch {
-            var wordList: MutableList<Word>
+            var wordList: List<Word>
             var currentLesson = Lesson()
 
             async {
@@ -111,7 +115,7 @@ class LessonTypeDialogueFragment : DialogFragment() {
             if (currentLesson.wordCount > 0) {
                 val id = currentLesson.id
                 if (TempListUtility.viewedLessons.contains(id)) {
-                    wordList = TempListUtility.practicedWords[id]!!
+                    wordList = TempListUtility.viewedWords[id]!!
                 } else {
                     wordList = DataUtility.getAllWordsForLesson(
                         currentLesson.category.lowercase(),
@@ -119,19 +123,21 @@ class LessonTypeDialogueFragment : DialogFragment() {
                         currentLesson.wordCount.toLong()
                     ).toMutableList()
                     // Log.d(TAG, "reads used: ${wordList.size}")
-                    TempListUtility.practicedWords[id] = wordList
+                    TempListUtility.viewedWords[id] = wordList
                     TempListUtility.viewedLessons.add(id)
                     JsonUtility.writeJSON(
                         requireActivity(),
                         //TODO: save as shared pref
                         "viewedLessons.json",
-                        TempListUtility.viewedLessons
+                        TempListUtility.viewedLessons,
+                        false
                     )
                     JsonUtility.writeJSON(
                         requireActivity(),
                         //TODO: save as shared pref
-                        "savedWords.json",
-                        TempListUtility.practicedWords
+                        "viewedWords.json",
+                        TempListUtility.viewedWords,
+                        false
                     )
                 }
 
@@ -178,7 +184,10 @@ class LessonTypeDialogueFragment : DialogFragment() {
                 .putBoolean(Constants.KEY_ENG_FIRST, showEngFirst)
                 .apply()
         }
+
+        return view
     }
+
 
     private fun disableButton(btn: Button) {
         btn.isEnabled = false

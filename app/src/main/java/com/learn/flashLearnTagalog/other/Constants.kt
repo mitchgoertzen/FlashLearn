@@ -9,7 +9,10 @@ object Constants {
     //    const val KEY_WORD_UPDATE = "KEY_WORD_UPDATE"
     //    const val KEY_LESSON_UPDATE = "KEY_LESSON_UPDATE"
     const val KEY_IN_TEST = "KEY_IN_TEST"
+    const val KEY_IN_PRACTICE = "KEY_IN_PRACTICE"
     const val KEY_IN_RESULTS = "KEY_IN_RESULTS"
+    const val KEY_IN_LESSONS = "KEY_IN_LESSONS"
+    const val KEY_GATHERING_LESSONS = "KEY_GATHERING_LESSONS"
     const val KEY_VERSION = "KEY_VERSION"
 
     const val KEY_SHOW_WORD = "KEY_SHOW_WORD"

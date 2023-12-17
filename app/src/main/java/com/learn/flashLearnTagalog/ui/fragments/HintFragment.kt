@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import com.learn.flashLearnTagalog.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,13 +40,13 @@ class HintFragment(private var text: String) : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val window: ConstraintLayout = view.findViewById(R.id.clHintBackground)
-        window.setOnTouchListener { v, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-            }
-            v?.onTouchEvent(event) ?: true
-        }
+//        val window: ConstraintLayout = view.findViewById(R.id.clHintBackground)
+//        window.setOnTouchListener { v, event ->
+//            when (event?.action) {
+//                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
+//            }
+//            v?.onTouchEvent(event) ?: true
+//        }
 
         val hint: TextView = view.findViewById(R.id.tvHint)
         hint.text = text

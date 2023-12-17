@@ -75,7 +75,8 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
                         JsonUtility.writeJSON(
                             requireActivity(),
                             "practicedLessons.json",
-                            TempListUtility.practicedLessons
+                            TempListUtility.practicedLessons,
+                            true
                         )
                     }
                     //viewModel.completePractice(currentLesson.id)
