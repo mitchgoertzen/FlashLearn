@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -62,19 +63,12 @@ class LessonTypeDialogueFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        val close : ImageButton = view.findViewById(R.id.ibClose)
 
-//        //popup window
-//        val window: ConstraintLayout = view.findViewById(R.id.clMain)
-//
-//        //when popup is touched, but no buttons are, popup will close
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//                    dialog?.dismiss()
-//                }
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
+        close.setOnClickListener{
+            dialog?.dismiss()
+        }
+
 
 
         val scope = CoroutineScope(Job() + Dispatchers.Main)
@@ -155,7 +149,7 @@ class LessonTypeDialogueFragment : DialogFragment() {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
             //TODO: make fragment transition universal fun?
             val fragment = TestFragment()
-            val transaction = fragmentManager?.beginTransaction()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")
                 ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
@@ -164,10 +158,8 @@ class LessonTypeDialogueFragment : DialogFragment() {
 
         practiceButton.setOnClickListener {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
-
-
             val fragment = PracticeFragment()
-            val transaction = fragmentManager?.beginTransaction()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")
                 ?.commit()
             (activity as LearningActivity?)?.transitionFragment()

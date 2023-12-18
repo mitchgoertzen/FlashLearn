@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -75,6 +76,14 @@ class ProfilePopupFragment : DialogFragment() {
 //            }
 //            v?.onTouchEvent(event) ?: true
 //        }
+
+
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+
+        close.setOnClickListener {
+            dialog?.dismiss()
+            close()
+        }
 
         val stats: Button = view.findViewById(R.id.btnStats)
         val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
@@ -165,24 +174,32 @@ class ProfilePopupFragment : DialogFragment() {
 
     }
 
-    override fun onCancel(dialog: DialogInterface) {
-        Log.d(TAG, "activity: ${requireActivity()}")
-        super.onCancel(dialog)
-        viewModel.isRefreshActive.observe(viewLifecycleOwner){ active->
+    private fun close() {
+        viewModel.isRefreshActive.observe(viewLifecycleOwner) { active ->
             Log.d(TAG, "ACTIVE: $active")
             if (active) {
                 viewModel.currentRefreshCallback.value!!.invoke()
                 viewModel.updateRefreshActive(false)
             }
         }
+    }
 
-
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        close()
     }
 
     private fun reloadCallback() {
+
+        Log.d(TAG, "ACTIVITY: $activity")
         val newDialog: DialogFragment = ProfilePopupFragment()
         newDialog.isCancelable = true
         dialog?.dismiss()
-        newDialog.show(parentFragmentManager, "profile popup")
+        activity?.let {
+            newDialog.show(
+                it.supportFragmentManager, "profile popup"
+            )
+        }
+        //newDialog.show(, "profile popup")
     }
 }

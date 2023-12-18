@@ -100,8 +100,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-5dp"
                     android:ems="10"
-                    android:textColor="#0038A8"
                     android:inputType="textEmailAddress"
+                    android:textColor="#0038A8"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -127,8 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-5dp"
                     android:ems="10"
-                    android:textColor="#0038A8"
                     android:inputType="textPassword"
+                    android:textColor="#0038A8"
                     android:textCursorDrawable="@null"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -166,10 +166,10 @@
             android:id="@+id/tvInputError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Passwords do not match"
-            android:textSize="10sp"
-            android:textColor="@color/red"
             android:paddingBottom="5dp"
+            android:text="Passwords do not match"
+            android:textColor="@color/red"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivFormBackground"
             app:layout_constraintStart_toStartOf="@+id/oadasd" />
 
@@ -199,11 +199,12 @@
         android:id="@+id/tvContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="15dp"
         android:text="Or continue without an account..."
         android:textColor="@color/white"
         android:textSize="11sp"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -225,8 +226,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Don't have an account?"
             android:paddingEnd="5dp"
+            android:text="Don't have an account?"
             android:textColor="@color/white"
             android:textSize="11sp" />
 
@@ -239,6 +240,34 @@
             android:textColor="@color/white"
             android:textSize="11sp" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00FFFFFF"
+        android:foregroundGravity="top"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cross"
+        app:layout_constraintBottom_toTopOf="@+id/guideline52"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline55"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline52"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline55"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

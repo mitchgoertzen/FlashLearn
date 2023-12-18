@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -150,7 +151,12 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                 practiced,
                                 true
                             )
-                            JsonUtility.writeJSON(requireActivity(), "passedLessons.json", passed,true)
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                "passedLessons.json",
+                                passed,
+                                true
+                            )
 
                             roomViewModel.nukeLessons()
                             roomViewModel.nukeTable()
@@ -161,6 +167,18 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                     roomScope.cancel()
                 }
             }
+        }
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+
+        if (inProfile) {
+
+            close.setOnClickListener {
+                dialog?.dismiss()
+                close()
+            }
+
+        } else {
+            close.visibility = View.GONE
         }
 
 
@@ -317,8 +335,6 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                         signUp = false,
                                         rewriteJSON = true
                                     )
-
-
                                     if (inProfile) {
                                         close()
                                     }

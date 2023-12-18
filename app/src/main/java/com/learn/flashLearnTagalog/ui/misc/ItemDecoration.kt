@@ -16,13 +16,13 @@ class ItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
 
         //left side
         if (parent.getChildAdapterPosition(view) % 2 == 0) {
-            outRect.left = spacing / 6
-            outRect.right = spacing / 2
+            outRect.left = spacing * 2
+            outRect.right = spacing / 4
         }
         //right side
         else {
-            outRect.left = spacing / 2
-            outRect.right = spacing / 6
+            outRect.left = spacing / 4
+            outRect.right = spacing * 2
         }
         outRect.bottom = spacing / 2
 

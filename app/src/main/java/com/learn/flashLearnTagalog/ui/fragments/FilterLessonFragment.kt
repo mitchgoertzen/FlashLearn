@@ -7,12 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import android.widget.Spinner
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
@@ -28,9 +26,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFragment() {
+class FilterLessonFragment : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -90,22 +87,29 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
         sortOptionAdapter.addOption("Difficulty: High to Low")
        // sortOptionAdapter.addOption("Unlocked")
 
-        //close dialog when touch is detected outside of its window
-        window.setOnTouchListener { v, event ->
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-            }
-            v?.onTouchEvent(event) ?: true
+
+        val close : ImageButton = view.findViewById(R.id.ibClose)
+
+        close.setOnClickListener{
+            dialog?.dismiss()
         }
 
-        val popup: LinearLayout = view.findViewById(R.id.llFilterPopup)
+//        //close dialog when touch is detected outside of its window
+//        window.setOnTouchListener { v, event ->
+//            when (event?.action) {
+//                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
+//            }
+//            v?.onTouchEvent(event) ?: true
+//        }
+//
+//        val popup: LinearLayout = view.findViewById(R.id.llFilterPopup)
+//
+//        //block closing of dialog when its own window is touched
+//        popup.setOnTouchListener { _, _ ->
+//            true
+//        }
 
-        //block closing of dialog when its own window is touched
-        popup.setOnTouchListener { _, _ ->
-            true
-        }
-
-        popup.setBackgroundResource(R.drawable.filter_lesson_popup)
+       // popup.setBackgroundResource(R.drawable.filter_lesson_popup)
 
         val languages = resources.getStringArray(R.array.Sorting)
 
@@ -166,7 +170,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
-           // lessonAdapter.sortList(sortOptionAdapter.getSelected())
 
             sharedPref.edit()
                 .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
@@ -194,7 +197,6 @@ class FilterLessonFragment(private var lessonAdapter: LessonAdapter) : DialogFra
 
 
 
-            lessonAdapter.deleteLessons()
 
             dialog?.dismiss()
 

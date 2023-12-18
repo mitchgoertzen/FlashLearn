@@ -59,4 +59,25 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
 
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00FFFFFF"
+        android:foregroundGravity="top"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cross"
+        app:layout_constraintBottom_toTopOf="@+id/guideline37"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline21"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05052879" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,18 +6,21 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
-class HintFragment(private var text: String) : DialogFragment() {
+class HintFragment : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private val viewModel: DialogViewModel by activityViewModels()
 
     override fun onStart() {
         super.onStart()
@@ -40,16 +43,16 @@ class HintFragment(private var text: String) : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-//        val window: ConstraintLayout = view.findViewById(R.id.clHintBackground)
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
+        val close : ImageButton = view.findViewById(R.id.ibClose)
+
+        close.setOnClickListener{
+            dialog?.dismiss()
+        }
 
         val hint: TextView = view.findViewById(R.id.tvHint)
-        hint.text = text
+        viewModel.currentText.observe(viewLifecycleOwner) { text ->
+            hint.text = text
+        }
 
         return view
     }

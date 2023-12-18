@@ -31,6 +31,10 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
     private val viewModel: LessonViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +44,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             currentWordList = list.toMutableList()
+
             val index: TextView = view.findViewById(R.id.tvIndex)
             // val id = currentLesson.id
 
@@ -125,14 +130,25 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
         return view
     }
+//
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)    super.onSaveInstanceState(outState);
+//        // Save our own state now
+//        outState.putInt(STATE_COUNTER, mCounter);
+//    }
+////
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        this = activity?.supportFragmentManager?.getFragment(this, "practice");
+//    }
 
     private fun changeCard(index: TextView) {
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
 
         //TODO - Stats: DataUtility.updatePractice(currentWord.id, true)
-
-        val fragment = Card(currentWord)
+        viewModel.updateWord(currentWord)
+        val fragment = Card()
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.replace(R.id.fcCard, fragment)?.commit()
     }

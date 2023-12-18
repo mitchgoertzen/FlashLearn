@@ -63,17 +63,17 @@ class LessonSelectFragment : Fragment() {
         val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
 
         btnFilter.setOnClickListener {
-            val dialog: DialogFragment = FilterLessonFragment(lessonAdapter)
+            val dialog: DialogFragment = FilterLessonFragment()
 
             dialog.isCancelable = true
             dialog.show(childFragmentManager, "test")
         }
 
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
-
+val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         rvLessonList.adapter = lessonAdapter
-        rvLessonList.layoutManager =
-            GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        rvLessonList.layoutManager =grid
+
 
         val decorator = ItemDecoration(25)
         rvLessonList.addItemDecoration(decorator)
@@ -97,7 +97,6 @@ class LessonSelectFragment : Fragment() {
     }
 
      fun refreshList() {
-        lessonAdapter.deleteLessons()
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
         refreshScope.launch {
             async {
@@ -115,6 +114,7 @@ class LessonSelectFragment : Fragment() {
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
 
+        lessonAdapter.deleteLessons()
         var add: Boolean
         //after database access is complete, add lessons to adapter
 

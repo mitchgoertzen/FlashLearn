@@ -104,12 +104,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.95" />
 
+<!--    android:layout_marginStart="12dp"-->
+<!--    android:layout_marginEnd="5dp"-->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="5dp"
+        android:layout_gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +121,8 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:contentDescription="@string/a"
+            android:gravity="center"
+            android:layout_gravity="center"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
 
@@ -177,6 +180,19 @@
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00FFFFFF"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline49"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cross" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

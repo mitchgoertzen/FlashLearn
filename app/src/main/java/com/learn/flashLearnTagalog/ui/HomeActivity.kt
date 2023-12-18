@@ -3,6 +3,7 @@ package com.learn.flashLearnTagalog.ui
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
@@ -11,6 +12,7 @@ import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.db.WordDAO
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
+import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -25,6 +27,8 @@ class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    private val viewModel: DialogViewModel by viewModels()
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -159,9 +163,11 @@ class HomeActivity : AppCompatActivity() {
                         "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
                         "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
                         "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
-                        "2022, mitch goertzen"
+                        "2023, mitch goertzen"
 
-            val dialog: DialogFragment = HintFragment(infoText)
+            viewModel.updateText(infoText)
+
+            val dialog: DialogFragment = HintFragment()
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "info popup")
