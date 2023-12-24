@@ -116,22 +116,13 @@ class JsonUtility {
             return json
         }
 
-        private fun getLocalPath(): File {
-            val usersDir = File("users/")
-            return if (auth.currentUser != null) {
-                File(usersDir, "${auth.currentUser!!.uid}/")
-            } else {
-                File(usersDir, "shared/")
-            }
-        }
-
         private fun getDirectory(activity: Activity): File {
             val usersDir = File(activity.filesDir.path, "users/")
             if (!usersDir.exists()) {
                 usersDir.mkdirs()
             }
             val dir = if (auth.currentUser != null) {
-                File(usersDir, "${auth.currentUser!!.uid}/")
+                File(usersDir, "${auth.currentUser!!.email.hashCode()}/")
             } else {
                 File(usersDir, "shared/")
             }
