@@ -26,21 +26,24 @@ private var type: Int = -1
 @AndroidEntryPoint
 class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private var inSettings: Boolean = true
+    private val viewModel: SignInViewModel by viewModels()
+    private val select = LessonSelectFragment()
+
     private lateinit var binding: ActivityMainBinding
+    private var inSettings: Boolean = true
 
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    private val viewModel: SignInViewModel by viewModels()
-
-    val select = LessonSelectFragment()
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+        val dialog: DialogFragment = ProfilePopupFragment()
+        val count: Int = supportFragmentManager.backStackEntryCount
+        val intent = Intent(this, HomeActivity::class.java)
+
         setContentView(view)
 
         MobileAds.initialize(this) {}
@@ -66,12 +69,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             //clear fragment stack
-            val count: Int = supportFragmentManager.backStackEntryCount
             for (i in 0 until count) {
                 supportFragmentManager.popBackStack()
             }
-
-            val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
         }
 
@@ -82,8 +82,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 viewModel.updateRefreshActive(sharedPref.getBoolean(KEY_IN_LESSONS, false))
                 viewModel.updateRefreshCallback { select.refreshList() }
             }
-
-            val dialog: DialogFragment = ProfilePopupFragment()
 
             dialog.isCancelable = true
             dialog.show(this.supportFragmentManager, "profile popup")

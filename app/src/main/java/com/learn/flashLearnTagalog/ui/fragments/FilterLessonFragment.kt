@@ -29,16 +29,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FilterLessonFragment : DialogFragment() {
 
-    @Inject
-    lateinit var sharedPref: SharedPreferences
-
-    private lateinit var sortOptionAdapter: SortOptionAdapter
-
-    private var difficulties: MutableSet<String> = mutableSetOf()
-    private var selectCategory: String = "All"
     private var selectPracticeCompleted: Boolean = false
     private var selectTestPassed: Boolean = false
     private var selectUnlocked: Boolean = false
+    private var difficulties: MutableSet<String> = mutableSetOf()
+    private var selectCategory: String = "All"
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+    private lateinit var sortOptionAdapter: SortOptionAdapter
 
     override fun onStart() {
         super.onStart()
@@ -51,13 +50,33 @@ class FilterLessonFragment : DialogFragment() {
         }
     }
 
-
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+
+        val languages = resources.getStringArray(R.array.Sorting)
+
+        val apply: Button = view.findViewById(R.id.btnApplyFilters)
+        val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
+        val difficulty2: CheckBox = view.findViewById(R.id.cbLevel2)
+        val difficulty3: CheckBox = view.findViewById(R.id.cbLevel3)
+        val difficulty4: CheckBox = view.findViewById(R.id.cbLevel4)
+        val difficulty5: CheckBox = view.findViewById(R.id.cbLevel5)
+        val difficulty6: CheckBox = view.findViewById(R.id.cbLevel6)
+        val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
+        val testPassed: CheckBox = view.findViewById(R.id.cbTest)
+        val unlocked: CheckBox = view.findViewById(R.id.cbUnlock)
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+        val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+        val spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item, languages
+        )
 
         //populate difficulties from user's saved selection of lesson difficulties to include
         sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
@@ -71,12 +90,8 @@ class FilterLessonFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val window: FrameLayout = view.findViewById(R.id.clHintBackground)
-
         sortOptionAdapter =
             SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 1))
-
-        val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
 
         rvSortOptions.adapter = sortOptionAdapter
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
@@ -85,42 +100,16 @@ class FilterLessonFragment : DialogFragment() {
         sortOptionAdapter.addOption("Lesson Level")
         sortOptionAdapter.addOption("Difficulty: Low to High")
         sortOptionAdapter.addOption("Difficulty: High to Low")
-       // sortOptionAdapter.addOption("Unlocked")
+        // sortOptionAdapter.addOption("Unlocked")
 
-
-        val close : ImageButton = view.findViewById(R.id.ibClose)
-
-        close.setOnClickListener{
+        close.setOnClickListener {
             dialog?.dismiss()
         }
 
-//        //close dialog when touch is detected outside of its window
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN -> dialog?.dismiss()
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
-//
-//        val popup: LinearLayout = view.findViewById(R.id.llFilterPopup)
-//
-//        //block closing of dialog when its own window is touched
-//        popup.setOnTouchListener { _, _ ->
-//            true
-//        }
-
-       // popup.setBackgroundResource(R.drawable.filter_lesson_popup)
-
-        val languages = resources.getStringArray(R.array.Sorting)
-
-        val spinner: Spinner = view.findViewById(R.id.spinner)
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item, languages
-        )
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
         spinner.setSelection(spinnerAdapter.getPosition(selectCategory))
+
         //when an item is selected from the category spinner, that category will be used upon applying filter settings
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
@@ -130,43 +119,27 @@ class FilterLessonFragment : DialogFragment() {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
         setDifficultyCheckBox("1", difficulty1)
-
-        val difficulty2: CheckBox = view.findViewById(R.id.cbLevel2)
         setDifficultyCheckBox("2", difficulty2)
-
-        val difficulty3: CheckBox = view.findViewById(R.id.cbLevel3)
         setDifficultyCheckBox("3", difficulty3)
-
-        val difficulty4: CheckBox = view.findViewById(R.id.cbLevel4)
         setDifficultyCheckBox("4", difficulty4)
-
-        val difficulty5: CheckBox = view.findViewById(R.id.cbLevel5)
         setDifficultyCheckBox("5", difficulty5)
-
-        val difficulty6: CheckBox = view.findViewById(R.id.cbLevel6)
         setDifficultyCheckBox("6", difficulty6)
 
-        val practiceCompleted: CheckBox = view.findViewById(R.id.cbPrac)
         practiceCompleted.isChecked = selectPracticeCompleted
         practiceCompleted.setOnClickListener {
             selectPracticeCompleted = practiceCompleted.isChecked
         }
 
-        val testPassed: CheckBox = view.findViewById(R.id.cbTest)
         testPassed.isChecked = selectTestPassed
         testPassed.setOnClickListener {
             selectTestPassed = testPassed.isChecked
         }
 
-        val unlocked: CheckBox = view.findViewById(R.id.cbUnlock)
         unlocked.isChecked = selectUnlocked
         unlocked.setOnClickListener {
             selectUnlocked = unlocked.isChecked
         }
-
-        val apply: Button = view.findViewById(R.id.btnApplyFilters)
 
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
@@ -195,12 +168,7 @@ class FilterLessonFragment : DialogFragment() {
                 .putBoolean(KEY_LESSON_UNLOCKED, selectUnlocked)
                 .apply()
 
-
-
-
             dialog?.dismiss()
-
-            val scope = CoroutineScope(Job() + Dispatchers.Main)
 
             scope.launch {
                 //TODO: flicker on filter comes from having to delete words then recreate the list
@@ -211,7 +179,7 @@ class FilterLessonFragment : DialogFragment() {
         return view
     }
 
-    private fun setDifficultyCheckBox(difficulty : String, checkBox : CheckBox){
+    private fun setDifficultyCheckBox(difficulty: String, checkBox: CheckBox) {
         //if this checkBoxes level is included in difficulties
         //set box to checked
         if (difficulties.contains(difficulty))

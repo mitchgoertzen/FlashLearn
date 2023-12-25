@@ -19,27 +19,24 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class Card : Fragment() {
 
-    @Inject
-    lateinit var sharedPref: SharedPreferences
     private val viewModel: LessonViewModel by activityViewModels()
 
-    // private val viewModel: MainViewModel by viewModels()
-
-    var shownWord: String = ""
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+    private var front = true
+    private var engFirst: Boolean = true
+    private var shownWord: String = ""
     private lateinit var tvCurrWord: TextView
     private lateinit var card: ImageView
-    var front = true
-    private var engFirst: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_card, container, false)
-
+        val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
 
         engFirst = sharedPref.getBoolean(KEY_ENG_FIRST, true)
         viewModel.currentWord.observe(viewLifecycleOwner) { word ->
@@ -112,13 +109,12 @@ class Card : Fragment() {
 
             tvCurrWord.text = shownWord
 
-            val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
             //flip card to reverse side on button press
             imFlipCard.setOnClickListener {
-                word.id.let { it1 ->
-//TODO:                DataUtility.flipWord(it1)
-                    //viewModel.flipWord(it1)
-                }
+//                TODO: word.id.let { it1 ->
+//                DataUtility.flipWord(it1)
+//                }
+
                 //display translation of word that is currently shown
                 //adjust max lines of text as done previously
                 if (shownWord == word.english) {
@@ -142,8 +138,6 @@ class Card : Fragment() {
             }
 
         }
-
-
 
         return view
     }

@@ -75,6 +75,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
     override fun onStart() {
         super.onStart()
+
         val dialog = dialog
         if (dialog != null) {
             dialog.window!!.setLayout(
@@ -95,45 +96,36 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
         auth = Firebase.auth
 
-//        onClose = arguments?.getSerializable(ON_CLOSE) as KFunction0<Unit>?
-//        inProfile = arguments?.getSerializable(IN_PROFILE) as Boolean
+        inProfile = arguments?.getBoolean("in_profile") ?: false
 
+        Log.d(TAG, "profile: ${arguments?.getBoolean("in_profile")}")
         if (!inProfile) {
             if (auth.currentUser == null) {
                 val roomScope = CoroutineScope(Job() + Dispatchers.Main)
                 roomScope.launch {
 
-                    // Log.d(TAG, " LESSON: ${viewModel.getLessonCount()}")
                     if (roomViewModel.getLessonCount() > 0) {
-//
-//                        Log.d(TAG, "HAS LESSONS")
                         val unlocked = mutableListOf<String>()
                         val practiced = mutableListOf<String>()
                         val passed = mutableListOf<String>()
 
                         roomViewModel.getAllLessons().observe(viewLifecycleOwner) {
 
-                            //   Log.d(TAG, "IN HERE")
                             val lessons = it.toMutableList()
 
-                            //  Log.d(TAG, "${lessons.size} lessons...")
                             for (l in lessons) {
 
                                 val id = "${l.category}_${l.level}"
 
-                                //    Log.d(TAG, "id: $id")
                                 if (!l.locked) {
-                                    //    Log.d(TAG, "$id is not locked")
                                     unlocked.add(id)
                                 }
 
                                 if (l.practiceCompleted) {
-                                    //  Log.d(TAG, "$id is practiced")
                                     practiced.add(id)
                                 }
 
                                 if (l.testPassed) {
-                                    // Log.d(TAG, "$id is passed")
                                     passed.add(id)
                                 }
 
@@ -170,30 +162,8 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         }
         val close: ImageButton = view.findViewById(R.id.ibClose)
 
-        if (inProfile) {
-
-            close.setOnClickListener {
-                dialog?.dismiss()
-                close()
-            }
-
-        } else {
-            close.visibility = View.GONE
-        }
-
 
         val mContext = FragmentComponentManager.findActivity(context) as Activity
-
-//        val window: ConstraintLayout = view.findViewById(R.id.clBackground)
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//
-//                }
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
-//        val tapBlocker: ConstraintLayout = view.findViewById(R.id.clTapBlock)
 
         val form: ImageView = view.findViewById(R.id.ivFormBackground)
         form.setImageResource(R.drawable.sign_in_box)
@@ -237,11 +207,19 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
             }
         }
 
-
         if (inProfile) {
-            continueWithoutAccount.visibility = View.GONE
-        }
 
+            continueWithoutAccount.visibility = View.GONE
+            close.visibility = View.VISIBLE
+            close.setOnClickListener {
+                dialog?.dismiss()
+                close()
+            }
+
+        } else {
+            close.visibility = View.GONE
+            continueWithoutAccount.visibility = View.VISIBLE
+        }
 
         confirmButton.setOnClickListener {
             email = emailText.text.toString()
@@ -265,31 +243,6 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                     loadLessonsScope.launch {
 
                                         val newUser = User(email, currentVersion = 1)
-//                                        if (JsonUtility.getUserDataList(
-//                                                requireActivity(),
-//                                                "unlockedLessons.json"
-//                                            ).isEmpty()
-//                                        ) {
-//
-//                                            val lessons =
-//                                                async { DataUtility.getLessonIDsByLevel(1) }.await()
-//                                            val unlock = mutableListOf<String>()
-//
-//                                            for (l in lessons) {
-//                                                if (l.level == 1)
-//                                                    unlock.add(l.id)
-//                                            }
-//
-//                                            TempListUtility.unlockedLessons = unlock
-//
-//                                            JsonUtility.writeJSON(
-//                                                mContext,
-//                                                "unlockedLessons.json",
-//                                                TempListUtility.unlockedLessons,
-//                                                true
-//                                            )
-//
-//                                        }
 
                                         async {
                                             DataUtility.addUser(
@@ -373,11 +326,6 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         }
 
         return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        inProfile = arguments?.getBoolean("in_profile") ?: false
     }
 
     override fun onCancel(dialog: DialogInterface) {

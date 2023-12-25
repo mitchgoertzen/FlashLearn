@@ -76,15 +76,6 @@ class ProfilePopupFragment : DialogFragment() {
         userSignedIn = (auth.currentUser != null)
 
         Log.d(TAG, "user: ${auth.currentUser}")
-//
-//        val window: ConstraintLayout = group as ConstraintLayout
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN ->
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
-
 
         val close: ImageButton = view.findViewById(R.id.ibClose)
 

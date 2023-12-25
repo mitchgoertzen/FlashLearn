@@ -24,14 +24,10 @@ class DictionaryFragment : Fragment() {
 
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
-    val scope = CoroutineScope(Job() + Dispatchers.Main)
-
-    // private val viewModel: MainViewModel by viewModels()
     private var masterWordList: MutableList<Word> = mutableListOf()
     private var wordsPerPage = 200
     private var numPages = 1
     private var currentPage = 0
-
     private var wordCount = 0
 
     @Inject
@@ -44,21 +40,15 @@ class DictionaryFragment : Fragment() {
 
         dictionaryAdapter = DictionaryAdapter(mutableListOf())
 
-        //initialize view, give reference to proper fragment
         val view = inflater.inflate(R.layout.fragment_dictionary, container, false)
-
-        //connect local variables to elements in fragment
-        val rvDictionary: RecyclerView = view.findViewById(R.id.rvDictionary)
-
-        val currPage: TextView = view.findViewById(R.id.tvCurrPage)
-        val totalPages: TextView = view.findViewById(R.id.tvTotalPages)
 
         val firstPage: ImageButton = view.findViewById(R.id.ibFirstPage)
         val lastPage: ImageButton = view.findViewById(R.id.ibLastPage)
         val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
         val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
-
-
+        val rvDictionary: RecyclerView = view.findViewById(R.id.rvDictionary)
+        val currPage: TextView = view.findViewById(R.id.tvCurrPage)
+        val totalPages: TextView = view.findViewById(R.id.tvTotalPages)
 
         for (wordList in TempListUtility.viewedWords) {
             wordCount += wordList.value.size
@@ -78,18 +68,6 @@ class DictionaryFragment : Fragment() {
         currPage.text = "$currentPage"
         totalPages.text = numPages.toString()
 
-//        scope.launch{
-//            val wordCount = DataUtility.getWordCount()
-//            println("WORD COUNT: $wordCount")
-//
-//            numPages = wordCount / wordsPerPage.toInt()
-//
-//            if (wordCount % wordsPerPage > 0)
-//                numPages++
-//
-//            totalPages.text = numPages.toString()
-//        }
-
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
 
@@ -106,10 +84,7 @@ class DictionaryFragment : Fragment() {
             activateSwitch(lastPage)
             currentPage = 1
             currPage.text = "1"
-
             gatherWords()
-
-
         }
 
         //when lastPage button is pressed, (de)/activate this and corresponding buttons
@@ -120,9 +95,7 @@ class DictionaryFragment : Fragment() {
             activateSwitch(prevPage)
             currentPage = numPages
             currPage.text = "$numPages"
-
             gatherWords()
-
         }
 
         //on nextPage button press
@@ -137,9 +110,7 @@ class DictionaryFragment : Fragment() {
                 deactivateSwitch(lastPage)
             }
             currPage.text = currentPage.toString()
-
             gatherWords()
-
         }
 
         //on prevPage button press
@@ -154,66 +125,16 @@ class DictionaryFragment : Fragment() {
                 deactivateSwitch(firstPage)
             }
             currPage.text = currentPage.toString()
-
             gatherWords()
-
         }
 
         //set adapter to be used for displaying dictionary words
         rvDictionary.adapter = dictionaryAdapter
         //set layout manager used for displaying dictionary (Linear)
         rvDictionary.layoutManager = LinearLayoutManager((activity as LearningActivity?))
-
         gatherWords()
 
         return view
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun gatherWords() {
-
-        dictionaryAdapter.deleteDictionaryWords()
-
-        if (masterWordList.isNotEmpty()) {
-            val start = (currentPage - 1) * wordsPerPage
-
-            for (i in start..(start + wordsPerPage)) {
-                if (i < wordCount) {
-                    dictionaryAdapter.addDictionaryWord(masterWordList[i])
-                }
-            }
-            dictionaryAdapter.sort()
-        }
-
-//        scope.launch {
-//            //clear currently displayed words from the screen
-//            dictionaryAdapter.deleteDictionaryWords()
-//
-//            //TODO: need to use for start at: ((currentPage - 1) * wordsPerPage.toInt())
-//            println("1")
-//            //  wordList = DataUtility.getDictionaryWords("english", wordsPerPage).toMutableList()
-//            //gather next set of words, confined by current page and number of words per page
-//
-//            println("3")
-////                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage), wordsPerPage)
-////                    .observe(viewLifecycleOwner) {
-////                        wordList = it.toMutableList()
-////                    }
-//            Handler(Looper.getMainLooper()).postDelayed({
-//
-//                println("4")
-//                for (word in wordList) {
-//                    dictionaryAdapter.addDictionaryWord(word)
-//                }
-//            }, 1000)
-//        }
-
-
-//        GlobalScope.launch(Dispatchers.Main) {
-//            suspend {
-//
-//            }.invoke()
-//        }
     }
 
     private fun activateSwitch(switch: ImageButton) {
@@ -230,4 +151,18 @@ class DictionaryFragment : Fragment() {
         switch.alpha = .8f
     }
 
+    private fun gatherWords() {
+
+        dictionaryAdapter.deleteDictionaryWords()
+        if (masterWordList.isNotEmpty()) {
+            val start = (currentPage - 1) * wordsPerPage
+
+            for (i in start..(start + wordsPerPage)) {
+                if (i < wordCount) {
+                    dictionaryAdapter.addDictionaryWord(masterWordList[i])
+                }
+            }
+            dictionaryAdapter.sort()
+        }
+    }
 }
