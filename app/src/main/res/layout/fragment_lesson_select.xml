@@ -114,15 +114,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/glHorizontal2">
+        app:layout_constraintTop_toBottomOf="@+id/tvNetworkError">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLessons"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/a"
             android:gravity="center"
-            android:layout_gravity="center"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
 
@@ -181,18 +181,17 @@
             app:autoSizeTextType="uniform" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ibClose"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#00FFFFFF"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+    <TextView
+        android:id="@+id/tvNetworkError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:text="Couldn't load lesson. Check network connection"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline49"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/cross" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

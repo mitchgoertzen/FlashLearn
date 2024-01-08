@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -60,6 +61,7 @@ class LessonSelectFragment : Fragment() {
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, true).apply()
         val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
 
+        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
 
         val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
 
@@ -89,15 +91,22 @@ class LessonSelectFragment : Fragment() {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
 
         swipeRefreshLayout.setOnRefreshListener {
-            refreshList()
+            refreshList(networkErrorText)
             swipeRefreshLayout.isRefreshing = false
         }
 
-        createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+        if (dbLessons.isNotEmpty()) {
+            networkErrorText.visibility = View.GONE
+            createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+        } else {
+            networkErrorText.visibility = View.VISIBLE
+        }
+
         return view
     }
 
-    fun refreshList() {
+    //TODO: return bool if list not loaded, use this to set text rather than accept null
+    fun refreshList(networkErrorText: TextView?) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
         refreshScope.launch {
             async {
@@ -114,15 +123,34 @@ class LessonSelectFragment : Fragment() {
 
                     Log.d(ContentValues.TAG, "3")
                     dbLessons = JsonUtility.getSavedLessons(requireActivity())
+
+                    if (dbLessons.isEmpty()) {
+                        if (networkErrorText != null)
+                            networkErrorText.visibility = View.VISIBLE
+                    } else {
+                        if (networkErrorText != null)
+                            networkErrorText.visibility = View.GONE
+                        createLessonList(
+                            sharedPref.getStringSet(
+                                KEY_LESSON_DIFFICULTY,
+                                newDifficulties
+                            )!!
+                        )
+                    }
+                } else {
+
+                    if (networkErrorText != null)
+                        networkErrorText.visibility = View.GONE
+                    createLessonList(
+                        sharedPref.getStringSet(
+                            KEY_LESSON_DIFFICULTY,
+                            newDifficulties
+                        )!!
+                    )
                 }
 
                 Log.d(ContentValues.TAG, "4")
-                createLessonList(
-                    sharedPref.getStringSet(
-                        KEY_LESSON_DIFFICULTY,
-                        newDifficulties
-                    )!!
-                )
+
             }.await()
 
             Log.d(ContentValues.TAG, "5")

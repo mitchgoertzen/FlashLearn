@@ -80,7 +80,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             Log.d(TAG, "IN LESSONS: ${sharedPref.getBoolean(KEY_IN_LESSONS, false)}")
             if (sharedPref.getBoolean(KEY_IN_LESSONS, false)) {
                 viewModel.updateRefreshActive(sharedPref.getBoolean(KEY_IN_LESSONS, false))
-                viewModel.updateRefreshCallback { select.refreshList() }
+                viewModel.updateRefreshCallback { select.refreshList(null) }
             }
 
             dialog.isCancelable = true

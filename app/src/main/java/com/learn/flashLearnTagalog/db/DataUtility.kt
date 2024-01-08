@@ -740,12 +740,20 @@ class DataUtility {
                     JsonUtility.writeJSON(activity, unlockedJSON, unlock, true)
                 }
 
-                TempListUtility.practicedLessons =
+                if(TempListUtility.practicedLessons.isEmpty()){
+                    TempListUtility.practicedLessons =
                         JsonUtility.getUserDataList(activity, practicedJSON)
-                TempListUtility.passedLessons =
+                }
+                if(TempListUtility.passedLessons.isEmpty()){
+                    TempListUtility.passedLessons =
                         JsonUtility.getUserDataList(activity, passedJSON)
-                TempListUtility.viewedWords = JsonUtility.getViewedWords(activity)
-                TempListUtility.viewedLessons = JsonUtility.getViewedLessons(activity)
+                }
+                if(TempListUtility.viewedWords.isEmpty()){
+                    TempListUtility.viewedWords = JsonUtility.getViewedWords(activity)
+                }
+                if(TempListUtility.viewedLessons.isEmpty()){
+                    TempListUtility.viewedLessons = JsonUtility.getViewedLessons(activity)
+                }
 
 
 

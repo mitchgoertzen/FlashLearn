@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -80,6 +81,8 @@ class LessonTypeDialogueFragment : DialogFragment() {
         val testButton: Button = view.findViewById(R.id.btnTest)
         val practiceButton: Button = view.findViewById(R.id.btnPractice)
         val engFirst: SwitchCompat = view.findViewById(R.id.scEngFirst)
+        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
+        networkErrorText.visibility = View.GONE
 
 
         disableButton(testButton)
@@ -138,7 +141,8 @@ class LessonTypeDialogueFragment : DialogFragment() {
                             false
                         )
                         enableButton(practiceButton)
-                    }else{
+                    } else {
+                        networkErrorText.visibility = View.VISIBLE
                         //no internet connection text visible
                     }
                 }
