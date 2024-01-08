@@ -1,6 +1,6 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +20,7 @@ import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
@@ -70,9 +71,9 @@ class LessonSelectFragment : Fragment() {
         }
 
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
-val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         rvLessonList.adapter = lessonAdapter
-        rvLessonList.layoutManager =grid
+        rvLessonList.layoutManager = grid
 
 
         val decorator = ItemDecoration(25)
@@ -96,10 +97,26 @@ val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, 
         return view
     }
 
-     fun refreshList() {
+    fun refreshList() {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
         refreshScope.launch {
             async {
+
+                Log.d(ContentValues.TAG, "1")
+                if (dbLessons.isEmpty()) {
+
+                    Log.d(ContentValues.TAG, "2")
+                    DataUtility.updateLocalData(
+                        requireActivity(),
+                        signUp = false,
+                        rewriteJSON = true
+                    )
+
+                    Log.d(ContentValues.TAG, "3")
+                    dbLessons = JsonUtility.getSavedLessons(requireActivity())
+                }
+
+                Log.d(ContentValues.TAG, "4")
                 createLessonList(
                     sharedPref.getStringSet(
                         KEY_LESSON_DIFFICULTY,
@@ -107,6 +124,8 @@ val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, 
                     )!!
                 )
             }.await()
+
+            Log.d(ContentValues.TAG, "5")
             refreshScope.cancel()
         }
     }
@@ -117,6 +136,7 @@ val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, 
         lessonAdapter.deleteLessons()
         var add: Boolean
         //after database access is complete, add lessons to adapter
+
 
         for (lesson in dbLessons) {
             val lessonStats = LessonStats()
@@ -162,10 +182,6 @@ val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, 
 
         //TODO: used saved variable, not hardcoded
         lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
-    }
-
-    fun test(){
-        Log.d(TAG, "test 123")
     }
 
     override fun onDestroyView() {

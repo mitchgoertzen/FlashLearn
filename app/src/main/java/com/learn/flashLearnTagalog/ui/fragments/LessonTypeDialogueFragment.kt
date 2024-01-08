@@ -1,10 +1,12 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageButton
@@ -63,12 +65,11 @@ class LessonTypeDialogueFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val close : ImageButton = view.findViewById(R.id.ibClose)
+        val close: ImageButton = view.findViewById(R.id.ibClose)
 
-        close.setOnClickListener{
+        close.setOnClickListener {
             dialog?.dismiss()
         }
-
 
 
         val scope = CoroutineScope(Job() + Dispatchers.Main)
@@ -110,34 +111,40 @@ class LessonTypeDialogueFragment : DialogFragment() {
                 val id = currentLesson.id
                 if (TempListUtility.viewedLessons.contains(id)) {
                     wordList = TempListUtility.viewedWords[id]!!
+                    enableButton(practiceButton)
                 } else {
                     wordList = DataUtility.getAllWordsForLesson(
                         currentLesson.category.lowercase(),
                         currentLesson.minLength,
                         currentLesson.wordCount.toLong()
                     ).toMutableList()
-                    // Log.d(TAG, "reads used: ${wordList.size}")
-                    TempListUtility.viewedWords[id] = wordList
-                    TempListUtility.viewedLessons.add(id)
-                    JsonUtility.writeJSON(
-                        requireActivity(),
-                        //TODO: save as shared pref
-                        "viewedLessons.json",
-                        TempListUtility.viewedLessons,
-                        false
-                    )
-                    JsonUtility.writeJSON(
-                        requireActivity(),
-                        //TODO: save as shared pref
-                        "viewedWords.json",
-                        TempListUtility.viewedWords,
-                        false
-                    )
+
+                    Log.d(TAG, "SIZE: ${wordList.size}")
+                    if (wordList.isNotEmpty()) {
+                        TempListUtility.viewedWords[id] = wordList
+                        TempListUtility.viewedLessons.add(id)
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "viewedLessons.json",
+                            TempListUtility.viewedLessons,
+                            false
+                        )
+                        JsonUtility.writeJSON(
+                            requireActivity(),
+                            //TODO: save as shared pref
+                            "viewedWords.json",
+                            TempListUtility.viewedWords,
+                            false
+                        )
+                        enableButton(practiceButton)
+                    }else{
+                        //no internet connection text visible
+                    }
                 }
 
                 viewModel.updateWordList(wordList)
 
-                enableButton(practiceButton)
                 if (TempListUtility.practicedLessons.contains(id)) {
                     enableButton(testButton)
                 }

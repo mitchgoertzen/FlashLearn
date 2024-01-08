@@ -59,7 +59,8 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         "The email address is badly formatted." to "Invalid email format",
         "The supplied auth credential is incorrect, malformed or has expired." to "No account with this Email/password",
         "The given password is invalid. [ Password should be at least 6 characters ]" to "Password must be at least 6 characters",
-        "The email address is already in use by another account." to "Email already in use"
+        "The email address is already in use by another account." to "Email already in use",
+        "A network error (such as timeout, interrupted connection or unreachable host) has occurred." to "No Network Connection"
     )
 
     private lateinit var mContext: Activity
