@@ -62,12 +62,12 @@
             android:textAlignment="textStart"
             android:textColor="#0038A8"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/oadasd"
-            app:layout_constraintStart_toStartOf="@+id/oadasd"
+            app:layout_constraintBottom_toTopOf="@+id/llPasswordBox"
+            app:layout_constraintStart_toStartOf="@+id/llPasswordBox"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/oadasd"
+            android:id="@+id/llPasswordBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -163,7 +163,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvInputError"
+            android:id="@+id/tvSignInInputError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="5dp"
@@ -171,7 +171,7 @@
             android:textColor="@color/red"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/ivFormBackground"
-            app:layout_constraintStart_toStartOf="@+id/oadasd" />
+            app:layout_constraintStart_toStartOf="@+id/llPasswordBox" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

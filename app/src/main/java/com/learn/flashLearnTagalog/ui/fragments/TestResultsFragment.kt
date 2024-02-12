@@ -112,7 +112,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
                     val scope = CoroutineScope(Job() + Dispatchers.Main)
                     scope.launch {
 
-                        nextLessonWordList = if (TempListUtility.viewedLessons.contains(nextId)) {
+                        nextLessonWordList = if (TempListUtility.viewedLessons.contains(nextId) && TempListUtility.viewedWords[nextId] != null) {
                             TempListUtility.viewedWords[nextId]!!
                         } else {
                             DataUtility.getAllWordsForLesson(

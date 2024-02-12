@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.fragments.HintFragment
 import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
@@ -29,6 +30,7 @@ class HomeActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         val binding: ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         val infoDialog: DialogFragment = HintFragment()
         val profileDialog: DialogFragment = ProfilePopupFragment()
@@ -75,8 +77,11 @@ class HomeActivity : AppCompatActivity() {
 
         //go to user profile
         binding.ibProfile.setOnClickListener {
-            profileDialog.isCancelable = true
-            profileDialog.show(this.supportFragmentManager, "profile popup")
+
+            if (!profileDialog.isAdded) {
+                profileDialog.isCancelable = true
+                profileDialog.show(this.supportFragmentManager, "profile popup")
+            }
         }
     }
 

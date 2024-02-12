@@ -1,6 +1,6 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.SharedPreferences
@@ -8,7 +8,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -29,8 +33,6 @@ import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
-//(private var newActivity: Activity)
 @AndroidEntryPoint
 class ProfilePopupFragment : DialogFragment() {
 
@@ -56,7 +58,6 @@ class ProfilePopupFragment : DialogFragment() {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,12 +69,12 @@ class ProfilePopupFragment : DialogFragment() {
         return inflater.inflate(R.layout.fragment_profile_popup, container, false)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         group = view.findViewById(R.id.clProfileBackground)
         auth = Firebase.auth
         userSignedIn = (auth.currentUser != null)
+        deletingAccount = false
 
         Log.d(TAG, "user: ${auth.currentUser}")
 
@@ -90,8 +91,8 @@ class ProfilePopupFragment : DialogFragment() {
 
         val deleteAccountText: TextView = view.findViewById(R.id.tvDeleteAccount)
         confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
-        val passwordText: EditText = view.findViewById(R.id.etPassword)
-        val inputError: TextView = view.findViewById(R.id.tvInputError)
+        val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
+        val inputError: TextView = view.findViewById(R.id.tvDeleteAccountInputError)
         val confirmDeleteButton: Button = view.findViewById(R.id.btnConfirmAccountDelete)
         val endDeletionText: TextView = view.findViewById(R.id.tvContinue2)
 
@@ -138,6 +139,10 @@ class ProfilePopupFragment : DialogFragment() {
                 confirmDeletePrompt.setOnClickListener { _ ->
                 }
                 endDeletionText.setOnClickListener {
+
+                    val inputMethodManager =
+                        context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
                     deletingAccount = false
                     confirmDeletePrompt.visibility = View.GONE
                 }
@@ -220,18 +225,18 @@ class ProfilePopupFragment : DialogFragment() {
             TempListUtility.viewedLessons = JsonUtility.getViewedLessons(requireActivity())
         }
 
-        dialog!!.setOnKeyListener { _, keyCode, event ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-                if(deletingAccount){
-                    deletingAccount = false
-                    confirmDeletePrompt.visibility = View.GONE
-                }else{
-                    dialog?.dismiss()
-                    close()
-                }
-            }
-            true
-        }
+//        dialog!!.setOnKeyListener { _, keyCode, event ->
+//            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+//                if (deletingAccount) {
+//                    deletingAccount = false
+//                    confirmDeletePrompt.visibility = View.GONE
+//                } else {
+//                    dialog?.dismiss()
+//                    close()
+//                }
+//            }
+//            true
+//        }
 
 //        stats.setOnClickListener {
 //            dialog?.dismiss()
@@ -253,7 +258,6 @@ class ProfilePopupFragment : DialogFragment() {
 
     private fun close() {
         viewModel.isRefreshActive.observe(viewLifecycleOwner) { active ->
-            Log.d(TAG, "ACTIVE: $active")
             if (active) {
                 viewModel.currentRefreshCallback.value!!.invoke()
                 viewModel.updateRefreshActive(false)

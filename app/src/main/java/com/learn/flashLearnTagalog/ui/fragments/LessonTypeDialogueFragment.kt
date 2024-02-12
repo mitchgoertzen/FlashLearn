@@ -112,7 +112,9 @@ class LessonTypeDialogueFragment : DialogFragment() {
 
             if (currentLesson.wordCount > 0) {
                 val id = currentLesson.id
-                if (TempListUtility.viewedLessons.contains(id)) {
+                if (TempListUtility.viewedLessons.contains(id) && TempListUtility.viewedWords[id] != null) {
+                    //nullpointer bug here, how can it happen?
+                    //temp fix with null check on 115
                     wordList = TempListUtility.viewedWords[id]!!
                     enableButton(practiceButton)
                 } else {

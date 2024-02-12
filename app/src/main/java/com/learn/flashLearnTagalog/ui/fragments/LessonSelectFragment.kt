@@ -1,14 +1,14 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.content.ContentValues
+import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,10 +19,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.LessonAdapter
 import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.LessonStats
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
@@ -45,7 +45,7 @@ class LessonSelectFragment : Fragment() {
     private val viewModel: LessonViewModel by activityViewModels()
 
     //TODO: replace with persistent data list
-    private lateinit var dbLessons: MutableList<Lesson>
+    private var dbLessons = mutableListOf<Lesson>()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -91,7 +91,7 @@ class LessonSelectFragment : Fragment() {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
 
         swipeRefreshLayout.setOnRefreshListener {
-            refreshList(networkErrorText)
+            refreshList(networkErrorText, requireActivity())
             swipeRefreshLayout.isRefreshing = false
         }
 
@@ -106,23 +106,26 @@ class LessonSelectFragment : Fragment() {
     }
 
     //TODO: return bool if list not loaded, use this to set text rather than accept null
-    fun refreshList(networkErrorText: TextView?) {
+    @OptIn(DelicateCoroutinesApi::class)
+    fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
+
+        sharedPref = activity.getSharedPreferences(
+            Constants.SHARED_PREFERENCES_NAME,
+            AppCompatActivity.MODE_PRIVATE
+        )
+
         refreshScope.launch {
             async {
-
-                Log.d(ContentValues.TAG, "1")
                 if (dbLessons.isEmpty()) {
 
-                    Log.d(ContentValues.TAG, "2")
                     DataUtility.updateLocalData(
-                        requireActivity(),
+                        activity,
                         signUp = false,
                         rewriteJSON = true
                     )
 
-                    Log.d(ContentValues.TAG, "3")
-                    dbLessons = JsonUtility.getSavedLessons(requireActivity())
+                    dbLessons = JsonUtility.getSavedLessons(activity)
 
                     if (dbLessons.isEmpty()) {
                         if (networkErrorText != null)
@@ -148,12 +151,7 @@ class LessonSelectFragment : Fragment() {
                         )!!
                     )
                 }
-
-                Log.d(ContentValues.TAG, "4")
-
             }.await()
-
-            Log.d(ContentValues.TAG, "5")
             refreshScope.cancel()
         }
     }
@@ -166,36 +164,40 @@ class LessonSelectFragment : Fragment() {
         //after database access is complete, add lessons to adapter
 
 
+        // Log.d(TAG, "lessons: ${dbLessons.size}")
         for (lesson in dbLessons) {
-            val lessonStats = LessonStats()
-
+            val id = lesson.id
             add = true
             //only add lessons that fit within the selected filter requirements
             if (lesson.level > 0) {
+
+                //Log.d(TAG, "lessons level: ${lesson.level}")
                 //TODO: replace with difficulty, set names for 1-5
                 if (difficulties.contains((lesson.level).toString())) {
 
-                    //  Log.d(TAG, "CONTAINS difficulty")
+                    //Log.d(TAG, "CONTAINS difficulty")
                     val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
                     if (!category.equals("All")) {
+
+                        //  Log.d(TAG, "lessons cat: ${lesson.category}")
                         if (lesson.category != category) {
                             add = false
                         }
                     }
 
                     if (sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false))
-                        if (!lessonStats.practiceCompleted) {
+                        if (!TempListUtility.practicedLessons.contains(id)) {
                             add = false
                         }
 
                     if (sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false))
-                        if (!lessonStats.testPassed) {
+                        if (!TempListUtility.passedLessons.contains(id)) {
                             add = false
                         }
 
                     if (sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false))
-                        if (!TempListUtility.unlockedLessons.contains(lesson.id)) {
+                        if (!TempListUtility.unlockedLessons.contains(id)) {
                             add = false
                         }
 

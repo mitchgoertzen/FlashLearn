@@ -6,8 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D9000000"
-    android:clickable="true"
-    android:focusable="true"
     tools:context=".ui.fragments.ProfilePopupFragment">
 
 
@@ -185,7 +183,7 @@
         android:background="#D9000000"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -244,9 +242,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/oadasd"
-                app:layout_constraintEnd_toEndOf="@+id/oadasd"
-                app:layout_constraintStart_toStartOf="@+id/oadasd"
+                app:layout_constraintBottom_toTopOf="@+id/llPasswordBox"
+                app:layout_constraintEnd_toEndOf="@+id/llPasswordBox"
+                app:layout_constraintStart_toStartOf="@+id/llPasswordBox"
                 app:layout_constraintTop_toTopOf="@+id/ivFormBackground">
 
                 <TextView
@@ -272,7 +270,7 @@
 
 
             <LinearLayout
-                android:id="@+id/oadasd"
+                android:id="@+id/llPasswordBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -283,13 +281,13 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <LinearLayout
-                    android:id="@+id/llPassword"
+                    android:id="@+id/llDeleteAccountPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/tvPasswordText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -298,7 +296,7 @@
                         android:textSize="12sp" />
 
                     <EditText
-                        android:id="@+id/etPassword"
+                        android:id="@+id/etDeleteAccountPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-5dp"
@@ -309,37 +307,37 @@
                         android:textSize="12sp" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llConfirmPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">>
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/llConfirmPassword"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="vertical"-->
+                <!--                    android:visibility="gone">>-->
 
-                    <TextView
-                        android:id="@+id/tvConfirmPassword"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Confirm Password:"
-                        android:textColor="#0038A8"
-                        android:textSize="12sp" />
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/tvConfirmPassword"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_weight="1"-->
+                <!--                        android:text="Confirm Password:"-->
+                <!--                        android:textColor="#0038A8"-->
+                <!--                        android:textSize="12sp" />-->
 
-                    <EditText
-                        android:id="@+id/etConfirmPassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="-5dp"
-                        android:ems="10"
-                        android:inputType="textPassword"
-                        android:textColor="#0038A8"
-                        android:textCursorDrawable="@null"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                <!--                    <EditText-->
+                <!--                        android:id="@+id/etConfirmPassword"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginTop="-5dp"-->
+                <!--                        android:ems="10"-->
+                <!--                        android:inputType="textPassword"-->
+                <!--                        android:textColor="#0038A8"-->
+                <!--                        android:textCursorDrawable="@null"-->
+                <!--                        android:textSize="12sp" />-->
+                <!--                </LinearLayout>-->
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvInputError"
+                android:id="@+id/tvDeleteAccountInputError"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
@@ -347,8 +345,8 @@
                 android:textColor="@color/red"
                 android:textSize="10sp"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/oadasd"
-                app:layout_constraintTop_toBottomOf="@+id/oadasd" />
+                app:layout_constraintStart_toStartOf="@+id/llPasswordBox"
+                app:layout_constraintTop_toBottomOf="@+id/llPasswordBox" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -373,5 +371,6 @@
             app:strokeWidth="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

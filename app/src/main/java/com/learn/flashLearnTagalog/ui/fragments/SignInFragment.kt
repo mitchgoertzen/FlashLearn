@@ -170,7 +170,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         form.setImageResource(R.drawable.sign_in_box)
 
         val header: TextView = view.findViewById(R.id.tvHeader)
-        val inputError: TextView = view.findViewById(R.id.tvInputError)
+        val inputError: TextView = view.findViewById(R.id.tvSignInInputError)
 
         val continueWithoutAccount: TextView = view.findViewById(R.id.tvContinue)
         inputError.text = ""

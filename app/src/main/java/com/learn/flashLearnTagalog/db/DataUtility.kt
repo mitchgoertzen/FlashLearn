@@ -685,7 +685,6 @@ class DataUtility {
                 activity: Activity, signUp: Boolean, rewriteJSON: Boolean
         ) {
 
-
             Log.d(TAG, "UPDATING LOCAL DATA")
 
             var updateLessons = true
@@ -697,24 +696,16 @@ class DataUtility {
 
             if (JsonUtility.getSavedLessons(activity).isEmpty()) {
                 updateLessons = false
-                Log.d(TAG, "EMPTY LESSONS")
-
-                Log.d(TAG, "GET ONE")
                 activity.getPreferences(Context.MODE_PRIVATE).edit()
                         .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
                 val lessons = getAllLessons()
 
                 lessonsEmpty = lessons.isEmpty()
 
-                Log.d(TAG, "LESSONS GOT")
                 JsonUtility.writeJSON(activity, "savedLessons.json", lessons, false)
 
-                Log.d(TAG, "WROTE")
                 activity.getPreferences(Context.MODE_PRIVATE).edit()
                         .putBoolean(Constants.KEY_GATHERING_LESSONS, true).apply()
-
-                Log.d(TAG, "GET TWO")
-
 
             } else {
                 Log.d(TAG, "NON-EMPTY LESSONS")

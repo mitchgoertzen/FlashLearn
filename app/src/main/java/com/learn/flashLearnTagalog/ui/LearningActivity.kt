@@ -37,7 +37,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         val dialog: DialogFragment = ProfilePopupFragment()
@@ -80,11 +80,13 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             Log.d(TAG, "IN LESSONS: ${sharedPref.getBoolean(KEY_IN_LESSONS, false)}")
             if (sharedPref.getBoolean(KEY_IN_LESSONS, false)) {
                 viewModel.updateRefreshActive(sharedPref.getBoolean(KEY_IN_LESSONS, false))
-                viewModel.updateRefreshCallback { select.refreshList(null) }
+                viewModel.updateRefreshCallback { select.refreshList(null, this) }
             }
 
-            dialog.isCancelable = true
-            dialog.show(this.supportFragmentManager, "profile popup")
+            if(!dialog.isAdded){
+                dialog.isCancelable = true
+                dialog.show(this.supportFragmentManager, "profile popup")
+            }
         }
 
         //show appropriate fragment, based on type set
