@@ -10,8 +10,8 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.ui.fragments.HintFragment
-import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
+import com.learn.flashLearnTagalog.ui.dialog_fragments.HintDialogFragment
+import com.learn.flashLearnTagalog.ui.dialog_fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
 
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         val binding: ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
-        val infoDialog: DialogFragment = HintFragment()
+        val infoDialog: DialogFragment = HintDialogFragment()
         val profileDialog: DialogFragment = ProfilePopupFragment()
         val learning = LearningActivity()
         val infoText =

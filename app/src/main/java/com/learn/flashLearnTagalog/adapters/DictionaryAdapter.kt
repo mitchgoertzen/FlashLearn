@@ -12,6 +12,7 @@ import javax.inject.Singleton
 class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>) :
     RecyclerView.Adapter<DictionaryAdapter.DictionaryViewHolder>() {
 
+    //TODO: init check
     private lateinit var currentList: List<Word>
 
     class DictionaryViewHolder(val binding: DictionaryWordBinding) :

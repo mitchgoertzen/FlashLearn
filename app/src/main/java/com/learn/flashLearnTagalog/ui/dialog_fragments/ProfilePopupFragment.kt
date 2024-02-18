@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog.ui.fragments
+package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -23,7 +23,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
@@ -38,13 +37,13 @@ class ProfilePopupFragment : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private lateinit var confirmDeletePrompt: ConstraintLayout
+    private var auth = Firebase.auth
 
     private val viewModel: SignInViewModel by activityViewModels()
 
     private var deletingAccount = false
-    private var userSignedIn = false
-    private lateinit var confirmDeletePrompt: ConstraintLayout
-    private lateinit var auth: FirebaseAuth
+    private var userSignedIn = (auth.currentUser != null)
     lateinit var group: ViewGroup
 
     override fun onStart() {
@@ -56,6 +55,12 @@ class ProfilePopupFragment : DialogFragment() {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Log.d(TAG, "user: ${auth.currentUser}")
     }
 
     override fun onCreateView(
@@ -71,56 +76,42 @@ class ProfilePopupFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        group = view.findViewById(R.id.clProfileBackground)
-        auth = Firebase.auth
-        userSignedIn = (auth.currentUser != null)
-        deletingAccount = false
-
-        Log.d(TAG, "user: ${auth.currentUser}")
 
         val close: ImageButton = view.findViewById(R.id.ibClose)
+        val stats: Button = view.findViewById(R.id.btnStats)
+        val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
+        val email: TextView = view.findViewById(R.id.tvAccountEmail)
+        val deleteAccountText: TextView = view.findViewById(R.id.tvDeleteAccount)
+        val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
+        val inputError: TextView = view.findViewById(R.id.tvDeleteAccountInputError)
+        val confirmDeleteButton: Button = view.findViewById(R.id.btnConfirmAccountDelete)
+        val endDeletionText: TextView = view.findViewById(R.id.tvContinue2)
+        val unlock: TextView = view.findViewById(R.id.tvUnlocked)
+        val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
+        val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
+        val test: TextView = view.findViewById(R.id.tvPassed)
+
+        var words = 0
+
+        confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
+        group = view.findViewById(R.id.clProfileBackground)
 
         close.setOnClickListener {
             dialog?.dismiss()
             close()
         }
 
-        val stats: Button = view.findViewById(R.id.btnStats)
-        val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
-        val email: TextView = view.findViewById(R.id.tvAccountEmail)
-
-        val deleteAccountText: TextView = view.findViewById(R.id.tvDeleteAccount)
-        confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
-        val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
-        val inputError: TextView = view.findViewById(R.id.tvDeleteAccountInputError)
-        val confirmDeleteButton: Button = view.findViewById(R.id.btnConfirmAccountDelete)
-        val endDeletionText: TextView = view.findViewById(R.id.tvContinue2)
-
         confirmDeletePrompt.visibility = View.GONE
-
-        val unlock: TextView = view.findViewById(R.id.tvUnlocked)
-        val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
-        val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
-        var words = 0
 
         for (list in TempListUtility.viewedWords) {
             words += list.value.size
         }
 
-
-        val test: TextView = view.findViewById(R.id.tvPassed)
-        //val testScore: TextView = view.findViewById(R.id.tvScore)
-
         "Lessons Unlocked:${TempListUtility.unlockedLessons.size}".also { unlock.text = it }
-
         "Lessons Practiced: ${TempListUtility.practicedLessons.size}".also { prac.text = it }
-
         "Lesson Tests Passed: ${TempListUtility.passedLessons.size}".also { test.text = it }
-
-
         "Words Practiced: $words".also { pracWords.text = it }
         //"Average Test Score:${TempListUtility.unlockedLessons.size}".also { testScore.text = it }
-
 
         stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
 
@@ -225,19 +216,6 @@ class ProfilePopupFragment : DialogFragment() {
             TempListUtility.viewedLessons = JsonUtility.getViewedLessons(requireActivity())
         }
 
-//        dialog!!.setOnKeyListener { _, keyCode, event ->
-//            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-//                if (deletingAccount) {
-//                    deletingAccount = false
-//                    confirmDeletePrompt.visibility = View.GONE
-//                } else {
-//                    dialog?.dismiss()
-//                    close()
-//                }
-//            }
-//            true
-//        }
-
 //        stats.setOnClickListener {
 //            dialog?.dismiss()
 //            if (newActivity is HomeActivity) {
@@ -253,7 +231,6 @@ class ProfilePopupFragment : DialogFragment() {
 //            }
 //
 //        }
-
     }
 
     private fun close() {

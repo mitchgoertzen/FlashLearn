@@ -30,6 +30,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
+import com.learn.flashLearnTagalog.ui.dialog_fragments.FilterLessonDialogFragment
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,7 +39,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LessonSelectFragment : Fragment() {
+class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
     private lateinit var lessonAdapter: LessonAdapter
     private val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
@@ -50,45 +51,46 @@ class LessonSelectFragment : Fragment() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
-    @OptIn(DelicateCoroutinesApi::class)
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         lessonAdapter = LessonAdapter(viewModel, mutableListOf())
-        sharedPref.edit().putBoolean(KEY_IN_LESSONS, true).apply()
-        val view = inflater.inflate(R.layout.fragment_lesson_select, container, false)
-
-        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
-
-        val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
-
-        btnFilter.setOnClickListener {
-            val dialog: DialogFragment = FilterLessonFragment()
-
-            dialog.isCancelable = true
-            dialog.show(childFragmentManager, "test")
-        }
-
-        val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
-        val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
-        rvLessonList.adapter = lessonAdapter
-        rvLessonList.layoutManager = grid
-
-
-        val decorator = ItemDecoration(25)
-        rvLessonList.addItemDecoration(decorator)
-
-
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
             .apply()
 
         dbLessons = JsonUtility.getSavedLessons(requireActivity())
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_lesson_select, container, false)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
+        val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
+        val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
+        val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+        val decorator = ItemDecoration(25)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+
+        btnFilter.setOnClickListener {
+            val dialog: DialogFragment = FilterLessonDialogFragment()
+
+            dialog.isCancelable = true
+            dialog.show(childFragmentManager, "test")
+        }
+
+        rvLessonList.adapter = lessonAdapter
+        rvLessonList.layoutManager = grid
+
+        rvLessonList.addItemDecoration(decorator)
 
         swipeRefreshLayout.setOnRefreshListener {
             refreshList(networkErrorText, requireActivity())
@@ -101,8 +103,6 @@ class LessonSelectFragment : Fragment() {
         } else {
             networkErrorText.visibility = View.VISIBLE
         }
-
-        return view
     }
 
     //TODO: return bool if list not loaded, use this to set text rather than accept null
@@ -110,10 +110,12 @@ class LessonSelectFragment : Fragment() {
     fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
 
-        sharedPref = activity.getSharedPreferences(
-            Constants.SHARED_PREFERENCES_NAME,
-            AppCompatActivity.MODE_PRIVATE
-        )
+        if (!this::sharedPref.isInitialized) {
+            sharedPref = activity.getSharedPreferences(
+                Constants.SHARED_PREFERENCES_NAME,
+                AppCompatActivity.MODE_PRIVATE
+            )
+        }
 
         refreshScope.launch {
             async {
@@ -158,6 +160,10 @@ class LessonSelectFragment : Fragment() {
 
     @DelicateCoroutinesApi
     fun createLessonList(difficulties: MutableSet<String>) {
+
+        if (!this::lessonAdapter.isInitialized) {
+            lessonAdapter = LessonAdapter(viewModel, mutableListOf())
+        }
 
         lessonAdapter.deleteLessons()
         var add: Boolean
@@ -214,8 +220,12 @@ class LessonSelectFragment : Fragment() {
         lessonAdapter.sortList(sharedPref.getInt(KEY_LESSON_SORTING, 1))
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStart() {
+        super.onStart()
+        sharedPref.edit().putBoolean(KEY_IN_LESSONS, true).apply()
+    }
+    override fun onStop() {
+        super.onStop()
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }

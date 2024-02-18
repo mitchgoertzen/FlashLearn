@@ -15,9 +15,12 @@ class SortOptionAdapter @Inject constructor(
     savedSortPosition: Int
 ) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
 
+    //TODO: init check
     lateinit var optionsList: ArrayList<String>
 
     var currentSelection: Int = savedSortPosition
+
+    //TODO: init check
     lateinit var currentSelect: TextView
 
     class SortOptionViewHolder(val binding: SortOptionBinding) :

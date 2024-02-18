@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog.ui.fragments
+package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -30,7 +30,7 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
-import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,15 +46,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
 
-
-    private var inProfile: Boolean = false
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+    private lateinit var auth: FirebaseAuth
 
     private val roomViewModel: MainViewModel by activityViewModels()
     private val viewModel: SignInViewModel by activityViewModels()
-
-    @Inject
-    lateinit var sharedPref: SharedPreferences
-
     private val errors = mapOf(
         "The email address is badly formatted." to "Invalid email format",
         "The supplied auth credential is incorrect, malformed or has expired." to "No account with this Email/password",
@@ -63,16 +60,12 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         "A network error (such as timeout, interrupted connection or unreachable host) has occurred." to "No Network Connection"
     )
 
-    private lateinit var mContext: Activity
-
-    private lateinit var auth: FirebaseAuth
     private var email = ""
     private var password = ""
     private var confirmPassword = ""
     private var signUp = false
     private val pattern = Patterns.EMAIL_ADDRESS
-
-//    private val manager = parentFragmentManager
+    private var inProfile: Boolean = false
 
     override fun onStart() {
         super.onStart()
@@ -86,20 +79,44 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+        inProfile = arguments?.getBoolean("in_profile") ?: false
+        Log.d(TAG, "profile: ${arguments?.getBoolean("in_profile")}")
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
+
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        auth = Firebase.auth
+        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+    }
 
-        inProfile = arguments?.getBoolean("in_profile") ?: false
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        Log.d(TAG, "profile: ${arguments?.getBoolean("in_profile")}")
+
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+        val mContext = FragmentComponentManager.findActivity(context) as Activity
+        val header: TextView = view.findViewById(R.id.tvHeader)
+        val inputError: TextView = view.findViewById(R.id.tvSignInInputError)
+        val continueWithoutAccount: TextView = view.findViewById(R.id.tvContinue)
+        val confirmPasswordBox: LinearLayout = view.findViewById(R.id.llConfirmPassword)
+        val emailText: EditText = view.findViewById(R.id.etEmail)
+        val passwordText: EditText = view.findViewById(R.id.etPassword)
+        val confirmPasswordText: EditText = view.findViewById(R.id.etConfirmPassword)
+        val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
+        val signUpText: TextView = view.findViewById(R.id.tvSignUpPrompt)
+        val confirmButton: Button = view.findViewById(R.id.btnConfirm)
+        val form: ImageView = view.findViewById(R.id.ivFormBackground)
+        val noAccount: TextView = view.findViewById(R.id.tvContinue)
+
         if (!inProfile) {
             if (auth.currentUser == null) {
                 val roomScope = CoroutineScope(Job() + Dispatchers.Main)
@@ -161,37 +178,11 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                 }
             }
         }
-        val close: ImageButton = view.findViewById(R.id.ibClose)
 
-
-        val mContext = FragmentComponentManager.findActivity(context) as Activity
-
-        val form: ImageView = view.findViewById(R.id.ivFormBackground)
         form.setImageResource(R.drawable.sign_in_box)
 
-        val header: TextView = view.findViewById(R.id.tvHeader)
-        val inputError: TextView = view.findViewById(R.id.tvSignInInputError)
-
-        val continueWithoutAccount: TextView = view.findViewById(R.id.tvContinue)
         inputError.text = ""
-
-        val confirmPasswordBox: LinearLayout = view.findViewById(R.id.llConfirmPassword)
         confirmPasswordBox.visibility = View.GONE
-
-
-        val emailText: EditText = view.findViewById(R.id.etEmail)
-        val passwordText: EditText = view.findViewById(R.id.etPassword)
-        val confirmPasswordText: EditText = view.findViewById(R.id.etConfirmPassword)
-
-        val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
-        val signUpText: TextView = view.findViewById(R.id.tvSignUpPrompt)
-
-        val confirmButton: Button = view.findViewById(R.id.btnConfirm)
-
-        //block closing of dialog when its own window is touched
-//        tapBlocker.setOnTouchListener { _, _ ->
-//            true
-//        }
 
         signUpText.setOnClickListener {
             header.text = "Sign Up"
@@ -216,7 +207,6 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                 dialog?.dismiss()
                 close()
             }
-
         } else {
             close.visibility = View.GONE
             continueWithoutAccount.visibility = View.VISIBLE
@@ -299,7 +289,8 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                     close()
                                 }
 
-                                sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, true).apply()
+                                sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, true)
+                                    .apply()
                                 Log.d(TAG, "signInWithEmail:success")
                             } else {
                                 val code: FirebaseException = task.exception as FirebaseException
@@ -315,9 +306,8 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
             }
         }
 
-        val noAccount: TextView = view.findViewById(R.id.tvContinue)
         noAccount.setOnClickListener {
-            sharedPref.edit().putBoolean(KEY_USER_SIGNED_IN, false).apply()
+            sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false).apply()
             val listScope = CoroutineScope(Job() + Dispatchers.Main)
             listScope.launch {
                 DataUtility.updateLocalData(mContext, signUp = false, rewriteJSON = false)
@@ -326,14 +316,12 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
             close()
         }
 
-        return view
     }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
         close()
     }
-
 
     private fun close() {
 

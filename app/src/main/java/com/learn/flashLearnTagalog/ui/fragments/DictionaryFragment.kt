@@ -16,12 +16,13 @@ import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DictionaryFragment : Fragment() {
 
+    @Inject
+    lateinit var sharedPref: SharedPreferences
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
     private var masterWordList: MutableList<Word> = mutableListOf()
@@ -30,18 +31,20 @@ class DictionaryFragment : Fragment() {
     private var currentPage = 0
     private var wordCount = 0
 
-    @Inject
-    lateinit var sharedPref: SharedPreferences
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dictionaryAdapter = DictionaryAdapter(mutableListOf())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_dictionary, container, false)
+    }
 
-        dictionaryAdapter = DictionaryAdapter(mutableListOf())
-
-        val view = inflater.inflate(R.layout.fragment_dictionary, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val firstPage: ImageButton = view.findViewById(R.id.ibFirstPage)
         val lastPage: ImageButton = view.findViewById(R.id.ibLastPage)
         val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
@@ -133,8 +136,6 @@ class DictionaryFragment : Fragment() {
         //set layout manager used for displaying dictionary (Linear)
         rvDictionary.layoutManager = LinearLayoutManager((activity as LearningActivity?))
         gatherWords()
-
-        return view
     }
 
     private fun activateSwitch(switch: ImageButton) {

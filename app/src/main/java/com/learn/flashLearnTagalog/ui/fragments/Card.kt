@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -19,28 +19,33 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class Card : Fragment() {
 
-    private val viewModel: LessonViewModel by activityViewModels()
-
     @Inject
     lateinit var sharedPref: SharedPreferences
+
+    private val viewModel: LessonViewModel by activityViewModels()
+
     private var front = true
     private var engFirst: Boolean = true
     private var shownWord: String = ""
-    private lateinit var tvCurrWord: TextView
-    private lateinit var card: ImageView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_card, container, false)
+    }
 
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_card, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val imFlipCard: ImageButton = view.findViewById(R.id.imFlipCard)
+        val card: ImageView = view.findViewById(R.id.card)
+        val tvCurrWord: TextView = view.findViewById(R.id.tvCurrWord)
+        val wordType: TextView = view.findViewById(R.id.tvType)
 
-        engFirst = sharedPref.getBoolean(KEY_ENG_FIRST, true)
+        engFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
         viewModel.currentWord.observe(viewLifecycleOwner) { word ->
-            val wordType: TextView = view.findViewById(R.id.tvType)
 
             val words = if (engFirst)
                 word.english
@@ -49,9 +54,7 @@ class Card : Fragment() {
 
             val numberOfEnglishWords = words.split("\\s+".toRegex()).size
 
-            card = view.findViewById(R.id.card)
             card.setImageResource(R.drawable.card_front_new)
-            tvCurrWord = view.findViewById(R.id.tvCurrWord)
 
             //display current word's type
             wordType.text = when (word.type) {
@@ -139,6 +142,5 @@ class Card : Fragment() {
 
         }
 
-        return view
     }
 }

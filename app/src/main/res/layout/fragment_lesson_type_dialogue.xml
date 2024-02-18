@@ -8,7 +8,7 @@
     android:background="#B3000000"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".ui.fragments.LessonTypeDialogueFragment">
+    tools:context=".ui.dialog_fragments.LessonTypeDialogueFragment">
 
     <TextView
         android:id="@+id/textView14"

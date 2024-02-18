@@ -26,6 +26,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
     @Inject
     lateinit var sharedPref: SharedPreferences
     private lateinit var currentWord: Word
+
     private var currentWordList: MutableList<Word> = mutableListOf()
     private var i = 0
 
@@ -33,14 +34,24 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        currentWord = Word()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_practice, container, false)
+    }
 
-        val view = inflater.inflate(R.layout.fragment_practice, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val prevButton: Button = view.findViewById(R.id.btPreviousWord)
+        val prevWidth = prevButton.layoutParams.width
+        val nextButton: Button = view.findViewById(R.id.btNextWord)
+        val params: ViewGroup.LayoutParams = nextButton.layoutParams
+        val finishButton: Button = view.findViewById(R.id.btFinish)
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             currentWordList = list.toMutableList()
@@ -50,14 +61,9 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
             changeCard(index)
 
-            val prevButton: Button = view.findViewById(R.id.btPreviousWord)
-            val prevWidth = prevButton.layoutParams.width
-            val nextButton: Button = view.findViewById(R.id.btNextWord)
-            val params: ViewGroup.LayoutParams = nextButton.layoutParams
             params.width = prevWidth
             nextButton.layoutParams = params
 
-            val finishButton: Button = view.findViewById(R.id.btFinish)
 
             prevButton.isEnabled = false
 
@@ -127,20 +133,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
                 changeCard(index)
             }
         }
-
-        return view
     }
-//
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)    super.onSaveInstanceState(outState);
-//        // Save our own state now
-//        outState.putInt(STATE_COUNTER, mCounter);
-//    }
-////
-//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-//        super.onViewStateRestored(savedInstanceState)
-//        this = activity?.supportFragmentManager?.getFragment(this, "practice");
-//    }
 
     private fun changeCard(index: TextView) {
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()

@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.ui.fragments.SignInFragment
+import com.learn.flashLearnTagalog.ui.dialog_fragments.SignInFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*

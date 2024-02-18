@@ -14,9 +14,9 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
+import com.learn.flashLearnTagalog.ui.dialog_fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.fragments.DictionaryFragment
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
-import com.learn.flashLearnTagalog.ui.fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -29,11 +29,12 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     private val viewModel: SignInViewModel by viewModels()
     private val select = LessonSelectFragment()
 
-    private lateinit var binding: ActivityMainBinding
-    private var inSettings: Boolean = true
-
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private lateinit var binding: ActivityMainBinding
+
+    private var inSettings: Boolean = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

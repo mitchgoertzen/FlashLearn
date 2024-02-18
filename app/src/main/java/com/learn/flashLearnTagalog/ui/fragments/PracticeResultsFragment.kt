@@ -32,8 +32,12 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_practice_results, container, false)
+        return inflater.inflate(R.layout.fragment_practice_results, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         val rvTranslationList: RecyclerView = view.findViewById(R.id.rvWordTranslations)
         val testButton: Button = view.findViewById(R.id.btnLessonTest)
@@ -80,7 +84,6 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
             .putBoolean(Constants.KEY_IN_RESULTS, true)
             .apply()
 
-        return view
     }
 
     private fun leaveResults() {

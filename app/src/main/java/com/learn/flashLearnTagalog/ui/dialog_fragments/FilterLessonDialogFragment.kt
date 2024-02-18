@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog.ui.fragments
+package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
-import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.ui.LearningActivity
+import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,17 +24,18 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class FilterLessonFragment : DialogFragment() {
+class FilterLessonDialogFragment : DialogFragment() {
+
+    @Inject
+    lateinit var sharedPref: SharedPreferences
+    private lateinit var sortOptionAdapter: SortOptionAdapter
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
 
     private var selectPracticeCompleted: Boolean = false
     private var selectTestPassed: Boolean = false
     private var selectUnlocked: Boolean = false
     private var difficulties: MutableSet<String> = mutableSetOf()
     private var selectCategory: String = "All"
-
-    @Inject
-    lateinit var sharedPref: SharedPreferences
-    private lateinit var sortOptionAdapter: SortOptionAdapter
 
     override fun onStart() {
         super.onStart()
@@ -50,14 +48,30 @@ class FilterLessonFragment : DialogFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val languages = resources.getStringArray(R.array.Sorting)
+
+        sortOptionAdapter =
+            SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 1))
+
+        spinnerAdapter = ArrayAdapter(
+            requireContext(),
+            R.layout.spinner_item, languages
+        )
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+        return inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+    }
 
-        val languages = resources.getStringArray(R.array.Sorting)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val apply: Button = view.findViewById(R.id.btnApplyFilters)
         val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
@@ -73,25 +87,20 @@ class FilterLessonFragment : DialogFragment() {
         val rvSortOptions: RecyclerView = view.findViewById(R.id.rvSortingOptions)
         val scope = CoroutineScope(Job() + Dispatchers.Main)
         val spinner: Spinner = view.findViewById(R.id.spinner)
-        val spinnerAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item, languages
-        )
+
 
         //populate difficulties from user's saved selection of lesson difficulties to include
-        sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
+        sharedPref.getStringSet(Constants.KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
         }
-        selectCategory = sharedPref.getString(KEY_LESSON_CATEGORY, "All")!!
-        selectPracticeCompleted = sharedPref.getBoolean(KEY_LESSON_PRACTICE_COMPLETED, false)
-        selectTestPassed = sharedPref.getBoolean(KEY_LESSON_TEST_PASSED, false)
-        selectUnlocked = sharedPref.getBoolean(KEY_LESSON_UNLOCKED, false)
+        selectCategory = sharedPref.getString(Constants.KEY_LESSON_CATEGORY, "All")!!
+        selectPracticeCompleted =
+            sharedPref.getBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, false)
+        selectTestPassed = sharedPref.getBoolean(Constants.KEY_LESSON_TEST_PASSED, false)
+        selectUnlocked = sharedPref.getBoolean(Constants.KEY_LESSON_UNLOCKED, false)
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        sortOptionAdapter =
-            SortOptionAdapter(mutableListOf(), sharedPref.getInt(KEY_LESSON_SORTING, 1))
 
         rvSortOptions.adapter = sortOptionAdapter
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
@@ -149,23 +158,23 @@ class FilterLessonFragment : DialogFragment() {
                 .apply()
 
             sharedPref.edit()
-                .putStringSet(KEY_LESSON_DIFFICULTY, difficulties)
+                .putStringSet(Constants.KEY_LESSON_DIFFICULTY, difficulties)
                 .apply()
 
             sharedPref.edit()
-                .putString(KEY_LESSON_CATEGORY, selectCategory)
+                .putString(Constants.KEY_LESSON_CATEGORY, selectCategory)
                 .apply()
 
             sharedPref.edit()
-                .putBoolean(KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
+                .putBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
                 .apply()
 
             sharedPref.edit()
-                .putBoolean(KEY_LESSON_TEST_PASSED, selectTestPassed)
+                .putBoolean(Constants.KEY_LESSON_TEST_PASSED, selectTestPassed)
                 .apply()
 
             sharedPref.edit()
-                .putBoolean(KEY_LESSON_UNLOCKED, selectUnlocked)
+                .putBoolean(Constants.KEY_LESSON_UNLOCKED, selectUnlocked)
                 .apply()
 
             dialog?.dismiss()
@@ -176,7 +185,6 @@ class FilterLessonFragment : DialogFragment() {
                 (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
             }
         }
-        return view
     }
 
     private fun setDifficultyCheckBox(difficulty: String, checkBox: CheckBox) {

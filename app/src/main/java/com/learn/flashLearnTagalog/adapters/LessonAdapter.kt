@@ -9,7 +9,7 @@ import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.databinding.LessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
-import com.learn.flashLearnTagalog.ui.fragments.LessonTypeDialogueFragment
+import com.learn.flashLearnTagalog.ui.dialog_fragments.LessonTypeDialogueFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.internal.managers.FragmentComponentManager
 import javax.inject.Inject

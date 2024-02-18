@@ -39,37 +39,32 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class TestFragment : Fragment(R.layout.fragment_test) {
 
-    private lateinit var testWordAdapter: TestWordAdapter
-    private lateinit var answeredAdapter: TestWordAdapter
-
     private val viewModel: LessonViewModel by activityViewModels()
-
-    //private val viewModel: MainViewModel by viewModels()
-
+    private val correctMessage = "CORRECT!"
+    private val incorrectMessage = "INCORRECT"
+    private val hintMessage = "ENTER TRANSLATION"
     val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private lateinit var testWordAdapter: TestWordAdapter
+    private lateinit var answeredAdapter: TestWordAdapter
 
-    var correctAnswer: Boolean = false
-    private val correctMessage = "CORRECT!"
-    private val incorrectMessage = "INCORRECT"
-    private val hintMessage = "ENTER TRANSLATION"
+    private var correctAnswer: Boolean = false
     private var answered: Boolean = false
     private var skipped: Boolean = false
     private var engFirst: Boolean = false
-    //private lateinit var masterWordList: MutableList<Word>
-
-    // private var currentWordList: MutableList<Word> = mutableListOf()
     private var wordsCorrect: Int = 0
-    private lateinit var currentWord: Word
     private var i = 1
-    private lateinit var textLine: String
-
+    private var currentWord = Word()
+    private var textLine = ""
     private var listSize = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        testWordAdapter = TestWordAdapter(mutableListOf())
+        answeredAdapter = TestWordAdapter(mutableListOf())
 
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, true)
@@ -84,11 +79,6 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        testWordAdapter = TestWordAdapter(mutableListOf())
-
-        answeredAdapter = TestWordAdapter(mutableListOf())
-
         return inflater.inflate(R.layout.fragment_test, container, false)
     }
 

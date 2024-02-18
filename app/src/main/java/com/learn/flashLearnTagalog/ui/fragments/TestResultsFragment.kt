@@ -39,53 +39,44 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
     lateinit var sharedPref: SharedPreferences
 
     private val viewModel: LessonViewModel by activityViewModels()
-    private lateinit var textLine: String
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_IN_RESULTS, true)
+            .apply()
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_test_results, container, false)
-
-        sharedPref.edit()
-            .putBoolean(Constants.KEY_IN_RESULTS, true)
-            .apply()
-
-        return view
+        return inflater.inflate(R.layout.fragment_test_results, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val score = requireArguments().getInt("words_correct")
-
         val rvTodoList: RecyclerView = view.findViewById(R.id.rvWordResults)
         val scoreText: TextView = view.findViewById(R.id.tvScore)
         val totalText: TextView = view.findViewById(R.id.tvTotal)
         val percentageText: TextView = view.findViewById(R.id.tvPercentage)
-
         val retryButton: Button = view.findViewById(R.id.btnRetry)
         val nextButton: Button = view.findViewById(R.id.btnNextLesson)
         //  val statsButton: Button = view.findViewById(R.id.btnStats)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
+        val guideline: Guideline = view.findViewById(R.id.glRight)
+        val listSize = viewModel.listSize
 
         viewModel.currentAdapter.observe(viewLifecycleOwner) { adapter ->
             rvTodoList.adapter = adapter
             rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
         }
 
-        val guideline: Guideline = view.findViewById(R.id.glRight)
-
         guideline.setGuidelinePercent(1f)
         nextButton.visibility = View.GONE
-
-        val listSize = viewModel.listSize
 
         if ((100 * score / listSize) >= 50) {
 
@@ -112,15 +103,19 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
                     val scope = CoroutineScope(Job() + Dispatchers.Main)
                     scope.launch {
 
-                        nextLessonWordList = if (TempListUtility.viewedLessons.contains(nextId) && TempListUtility.viewedWords[nextId] != null) {
-                            TempListUtility.viewedWords[nextId]!!
-                        } else {
-                            DataUtility.getAllWordsForLesson(
-                                nextLesson.category.lowercase(),
-                                nextLesson.minLength,
-                                nextLesson.wordCount.toLong()
-                            ).toMutableList()
-                        }
+                        nextLessonWordList =
+                            if (TempListUtility.viewedLessons.contains(nextId) && TempListUtility.viewedWords.contains(
+                                    nextId
+                                )
+                            ) {
+                                TempListUtility.viewedWords[nextId]!!
+                            } else {
+                                DataUtility.getAllWordsForLesson(
+                                    nextLesson.category.lowercase(),
+                                    nextLesson.minLength,
+                                    nextLesson.wordCount.toLong()
+                                ).toMutableList()
+                            }
                         scope.cancel()
                     }
                     nextButton.setOnClickListener {
@@ -180,7 +175,6 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
 //                ?.commit()
 //            (activity as LearningActivity?)?.transitionFragment()
 //        }
-
 
         lessonSelectButton.setOnClickListener {
             sharedPref.edit()

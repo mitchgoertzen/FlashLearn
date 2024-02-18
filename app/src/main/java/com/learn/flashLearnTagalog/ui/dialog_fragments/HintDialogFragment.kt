@@ -1,4 +1,4 @@
-package com.learn.flashLearnTagalog.ui.fragments
+package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
@@ -16,10 +16,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HintFragment : DialogFragment() {
+class HintDialogFragment : DialogFragment() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+
     private val viewModel: DialogViewModel by activityViewModels()
 
     override fun onStart() {
@@ -38,22 +39,25 @@ class HintFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_hint, container, false)
 
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val close : ImageButton = view.findViewById(R.id.ibClose)
+        return inflater.inflate(R.layout.fragment_hint, container, false)
+    }
 
-        close.setOnClickListener{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+        val hint: TextView = view.findViewById(R.id.tvHint)
+
+        close.setOnClickListener {
             dialog?.dismiss()
         }
 
-        val hint: TextView = view.findViewById(R.id.tvHint)
         viewModel.currentText.observe(viewLifecycleOwner) { text ->
             hint.text = text
         }
-
-        return view
     }
 }

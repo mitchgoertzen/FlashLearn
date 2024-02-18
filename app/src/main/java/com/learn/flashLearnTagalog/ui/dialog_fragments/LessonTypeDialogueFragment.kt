@@ -1,7 +1,7 @@
-package com.learn.flashLearnTagalog.ui.fragments
+package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -22,6 +22,8 @@ import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
+import com.learn.flashLearnTagalog.ui.fragments.PracticeFragment
+import com.learn.flashLearnTagalog.ui.fragments.TestFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -40,10 +42,6 @@ class LessonTypeDialogueFragment : DialogFragment() {
     lateinit var sharedPref: SharedPreferences
     private val viewModel: LessonViewModel by activityViewModels()
 
-    //private val viewModel: MainViewModel by viewModels()
-    // private lateinit var wordList: MutableList<Word>
-    //private lateinit var currentLesson: Lesson
-
     override fun onStart() {
         super.onStart()
         val dialog = dialog
@@ -61,46 +59,35 @@ class LessonTypeDialogueFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_lesson_type_dialogue, container, false)
-
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        return inflater.inflate(R.layout.fragment_lesson_type_dialogue, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val close: ImageButton = view.findViewById(R.id.ibClose)
+        val scope = CoroutineScope(Job() + Dispatchers.Main)
+        val testButton: Button = view.findViewById(R.id.btnTest)
+        val practiceButton: Button = view.findViewById(R.id.btnPractice)
+        val engFirst: SwitchCompat = view.findViewById(R.id.scEngFirst)
+        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
+        var showEngFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
+
 
         close.setOnClickListener {
             dialog?.dismiss()
         }
 
-
-        val scope = CoroutineScope(Job() + Dispatchers.Main)
-        //popup window
-        // val window: ConstraintLayout = view.findViewById(R.id.clMain)
-
-
-        val testButton: Button = view.findViewById(R.id.btnTest)
-        val practiceButton: Button = view.findViewById(R.id.btnPractice)
-        val engFirst: SwitchCompat = view.findViewById(R.id.scEngFirst)
-        val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
         networkErrorText.visibility = View.GONE
-
 
         disableButton(testButton)
         disableButton(practiceButton)
 
-        //when popup is touched, but no buttons are, popup will close
-//        window.setOnTouchListener { v, event ->
-//            when (event?.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//                    scope.cancel()
-//                    dialog?.dismiss()
-//                }
-//            }
-//            v?.onTouchEvent(event) ?: true
-//        }
-
         scope.launch {
-            var wordList: List<Word>
+            val wordList: List<Word>
             var currentLesson = Lesson()
 
             async {
@@ -112,9 +99,12 @@ class LessonTypeDialogueFragment : DialogFragment() {
 
             if (currentLesson.wordCount > 0) {
                 val id = currentLesson.id
-                if (TempListUtility.viewedLessons.contains(id) && TempListUtility.viewedWords[id] != null) {
+                if (TempListUtility.viewedLessons.contains(id) && TempListUtility.viewedWords.contains(
+                        id
+                    )
+                ) {
                     //nullpointer bug here, how can it happen?
-                    //temp fix with null check on 115
+                    //temp fix with null check on 104
                     wordList = TempListUtility.viewedWords[id]!!
                     enableButton(practiceButton)
                 } else {
@@ -124,7 +114,7 @@ class LessonTypeDialogueFragment : DialogFragment() {
                         currentLesson.wordCount.toLong()
                     ).toMutableList()
 
-                    Log.d(TAG, "SIZE: ${wordList.size}")
+                    Log.d(ContentValues.TAG, "SIZE: ${wordList.size}")
                     if (wordList.isNotEmpty()) {
                         TempListUtility.viewedWords[id] = wordList
                         TempListUtility.viewedLessons.add(id)
@@ -180,7 +170,6 @@ class LessonTypeDialogueFragment : DialogFragment() {
         }
 
         //selection will be saved for future use
-        var showEngFirst = sharedPref.getBoolean(Constants.KEY_ENG_FIRST, true)
         engFirst.isChecked = showEngFirst
         println("eng: $showEngFirst")
         engFirst.setOnClickListener {
@@ -189,10 +178,7 @@ class LessonTypeDialogueFragment : DialogFragment() {
                 .putBoolean(Constants.KEY_ENG_FIRST, showEngFirst)
                 .apply()
         }
-
-        return view
     }
-
 
     private fun disableButton(btn: Button) {
         btn.isEnabled = false

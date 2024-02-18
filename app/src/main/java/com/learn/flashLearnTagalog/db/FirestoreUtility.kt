@@ -46,7 +46,6 @@ class FirestoreUtility {
     }
 
     suspend fun getAllDocuments(collectionId: String): QuerySnapshot? {
-        lateinit var query: QuerySnapshot
         return db.collection(collectionId).get().await()
     }
 
