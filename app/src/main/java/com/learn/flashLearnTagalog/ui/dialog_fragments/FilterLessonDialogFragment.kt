@@ -67,6 +67,10 @@ class FilterLessonDialogFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         return inflater.inflate(R.layout.fragment_filter_lesson, container, false)
     }
 
@@ -98,10 +102,6 @@ class FilterLessonDialogFragment : DialogFragment() {
             sharedPref.getBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, false)
         selectTestPassed = sharedPref.getBoolean(Constants.KEY_LESSON_TEST_PASSED, false)
         selectUnlocked = sharedPref.getBoolean(Constants.KEY_LESSON_UNLOCKED, false)
-
-        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         rvSortOptions.adapter = sortOptionAdapter
         rvSortOptions.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
