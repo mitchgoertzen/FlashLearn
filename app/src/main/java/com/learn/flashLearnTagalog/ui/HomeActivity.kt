@@ -70,9 +70,11 @@ class HomeActivity : AppCompatActivity() {
 
         //display app info in popup dialog
         binding.ibInfo.setOnClickListener {
-            viewModel.updateText(infoText)
-            infoDialog.isCancelable = true
-            infoDialog.show(this.supportFragmentManager, "info popup")
+            if (!infoDialog.isAdded) {
+                viewModel.updateText(infoText)
+                infoDialog.isCancelable = true
+                infoDialog.show(this.supportFragmentManager, "info popup")
+            }
         }
 
         //go to user profile

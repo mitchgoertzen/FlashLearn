@@ -90,6 +90,7 @@ class ProfilePopupFragment : DialogFragment() {
         val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
         val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
         val test: TextView = view.findViewById(R.id.tvPassed)
+        val signInDialog = SignInFragment()
 
         var words = 0
 
@@ -202,13 +203,15 @@ class ProfilePopupFragment : DialogFragment() {
                 reloadCallback()
             } else {
                 viewModel.updateCallback { reloadCallback() }
-                val signInDialog = SignInFragment()
-                val bundle = bundleOf("in_profile" to true)
-                signInDialog.arguments = bundle
-                signInDialog.isCancelable = true
-                signInDialog.show(parentFragmentManager, "user sign-in")
+                if (!signInDialog.isAdded) {
+                    val bundle = bundleOf("in_profile" to true)
+                    signInDialog.arguments = bundle
+                    signInDialog.isCancelable = true
+                    signInDialog.show(parentFragmentManager, "user sign-in")
 
-                dialog?.hide()
+                    dialog?.hide()
+                }
+
             }
 
 
@@ -248,15 +251,18 @@ class ProfilePopupFragment : DialogFragment() {
     }
 
     private fun reloadCallback() {
-        Log.d(TAG, "ACTIVITY: $activity")
         val newDialog: DialogFragment = ProfilePopupFragment()
-        newDialog.isCancelable = true
-        dialog?.dismiss()
-        activity?.let {
-            newDialog.show(
-                it.supportFragmentManager, "profile popup"
-            )
+        Log.d(TAG, "ACTIVITY: $activity")
+        if (!newDialog.isAdded) {
+            newDialog.isCancelable = true
+            dialog?.dismiss()
+            activity?.let {
+                newDialog.show(
+                    it.supportFragmentManager, "profile popup"
+                )
+            }
         }
+
     }
 }
 

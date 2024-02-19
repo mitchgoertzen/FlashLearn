@@ -1,8 +1,10 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.app.Activity
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,12 +81,17 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         val decorator = ItemDecoration(25)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        val dialog: DialogFragment = FilterLessonDialogFragment()
 
         btnFilter.setOnClickListener {
-            val dialog: DialogFragment = FilterLessonDialogFragment()
+            Log.d(TAG, "click")
+            if (!dialog.isAdded) {
+                dialog.isCancelable = true
+                dialog.show(childFragmentManager, "test")
+            } else {
 
-            dialog.isCancelable = true
-            dialog.show(childFragmentManager, "test")
+                Log.d(TAG, "dont add")
+            }
         }
 
         rvLessonList.adapter = lessonAdapter
@@ -99,7 +106,9 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
         if (dbLessons.isNotEmpty()) {
             networkErrorText.visibility = View.GONE
-            createLessonList(sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!)
+            createLessonList(
+                sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)!!
+            )
         } else {
             networkErrorText.visibility = View.VISIBLE
         }
@@ -224,6 +233,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         super.onStart()
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, true).apply()
     }
+
     override fun onStop() {
         super.onStop()
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()

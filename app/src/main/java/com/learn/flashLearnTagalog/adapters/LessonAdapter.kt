@@ -35,6 +35,7 @@ class LessonAdapter @Inject constructor(
 
         val currentLesson = lessons[position]
         val lessonId = currentLesson.id
+        val dialog = LessonTypeDialogueFragment()
 
         holder.itemView.apply {
             val mContext = FragmentComponentManager.findActivity(context) as Activity
@@ -106,24 +107,15 @@ class LessonAdapter @Inject constructor(
             // Log.d(TAG, "9")
 
             holderBinding.ibLesson.setOnClickListener {
-
-                //  Log.d(TAG, "10")
                 if (mContext is LearningActivity) {
-                    //    Log.d(TAG, "11")
-//                    val settingsFragment = SettingsFragment(currentLesson)
-//                    val transaction = mContext.supportFragmentManager.beginTransaction()
-//                    if (currentLesson.category == "Custom\nLesson") {
-//                        transaction.replace(R.id.main_nav_container, settingsFragment)
-//                            .addToBackStack("settings").commit()
-//                    } else {
-                    viewModel.updateLesson(currentLesson)
-                    val dialog = LessonTypeDialogueFragment()
-                    dialog.isCancelable = true
-                    dialog.show(
-                        mContext.supportFragmentManager, "lesson popup"
-                    )
-                    //   }
-                    (mContext as LearningActivity?)?.transitionFragment()
+                    if (!dialog.isAdded) {
+                        viewModel.updateLesson(currentLesson)
+                        dialog.isCancelable = true
+                        dialog.show(
+                            mContext.supportFragmentManager, "lesson popup"
+                        )
+                        (mContext as LearningActivity?)?.transitionFragment()
+                    }
                 }
             }
         }
