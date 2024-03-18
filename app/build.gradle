@@ -20,8 +20,8 @@ android {
         minSdk 21
         //noinspection EditedTargetSdkVersion
         targetSdk 34
-        versionCode 28
-        versionName "1.12"
+        versionCode 34
+        versionName "1.14"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,7 +60,7 @@ dependencies {
 
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
-    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation 'com.google.android.gms:play-services-ads:22.6.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
 
     implementation 'androidx.navigation:navigation-fragment-ktx:2.7.5'

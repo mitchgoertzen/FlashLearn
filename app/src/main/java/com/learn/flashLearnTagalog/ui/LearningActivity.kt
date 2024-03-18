@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.other.Constants
@@ -47,7 +46,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         setContentView(view)
 
-        MobileAds.initialize(this) {}
         val adRequest = AdRequest.Builder().build()
         binding.adViewLearning.loadAd(adRequest)
 

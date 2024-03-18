@@ -161,6 +161,8 @@ class ProfilePopupFragment : DialogFragment() {
                                 authUser.delete()
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
+                                            sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false)
+                                                .apply()
                                             Log.d(TAG, "User account deleted.")
                                             reloadCallback()
                                         }

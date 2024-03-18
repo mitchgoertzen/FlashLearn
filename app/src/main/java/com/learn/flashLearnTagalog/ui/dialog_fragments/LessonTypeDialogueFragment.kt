@@ -2,6 +2,7 @@ package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,7 +14,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
@@ -41,6 +44,12 @@ class LessonTypeDialogueFragment : DialogFragment() {
     @Inject
     lateinit var sharedPref: SharedPreferences
     private val viewModel: LessonViewModel by activityViewModels()
+    private lateinit var mActivity: FragmentActivity
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as FragmentActivity
+    }
 
     override fun onStart() {
         super.onStart()
@@ -103,10 +112,15 @@ class LessonTypeDialogueFragment : DialogFragment() {
                         id
                     )
                 ) {
+
+
+                    FirebaseCrashlytics.getInstance().log("id: $id")
+                    FirebaseCrashlytics.getInstance().log("temp viewed lessons & words contains id")
                     //nullpointer bug here, how can it happen?
                     //temp fix with null check on 104
                     wordList = TempListUtility.viewedWords[id]!!
-                    enableButton(practiceButton)
+                    FirebaseCrashlytics.getInstance().log("${wordList.size}")
+                    enableButton(practiceButton, wordList)
                 } else {
                     wordList = DataUtility.getAllWordsForLesson(
                         currentLesson.category.lowercase(),
@@ -119,30 +133,29 @@ class LessonTypeDialogueFragment : DialogFragment() {
                         TempListUtility.viewedWords[id] = wordList
                         TempListUtility.viewedLessons.add(id)
                         JsonUtility.writeJSON(
-                            requireActivity(),
+                            mActivity,
                             //TODO: save as shared pref
                             "viewedLessons.json",
                             TempListUtility.viewedLessons,
                             false
                         )
                         JsonUtility.writeJSON(
-                            requireActivity(),
+                            mActivity,
                             //TODO: save as shared pref
                             "viewedWords.json",
                             TempListUtility.viewedWords,
                             false
                         )
-                        enableButton(practiceButton)
+                        enableButton(practiceButton, wordList)
                     } else {
                         networkErrorText.visibility = View.VISIBLE
                         //no internet connection text visible
                     }
                 }
 
-                viewModel.updateWordList(wordList)
 
                 if (TempListUtility.practicedLessons.contains(id)) {
-                    enableButton(testButton)
+                    enableButton(testButton, wordList)
                 }
             }
             scope.cancel()
@@ -152,20 +165,20 @@ class LessonTypeDialogueFragment : DialogFragment() {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
             //TODO: make fragment transition universal fun?
             val fragment = TestFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            val transaction = mActivity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")
                 ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
+            (mActivity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 
         practiceButton.setOnClickListener {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
             val fragment = PracticeFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            val transaction = mActivity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")
                 ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
+            (mActivity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 
@@ -185,8 +198,11 @@ class LessonTypeDialogueFragment : DialogFragment() {
         btn.alpha = .5f
     }
 
-    private fun enableButton(btn: Button) {
-        btn.isEnabled = true
-        btn.alpha = 1f
+    private fun enableButton(btn: Button, wordList: List<Word>) {
+        if (wordList.isNotEmpty()) {
+            viewModel.updateWordList(wordList)
+            btn.isEnabled = true
+            btn.alpha = 1f
+        }
     }
 }

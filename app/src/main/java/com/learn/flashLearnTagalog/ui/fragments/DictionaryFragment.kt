@@ -26,7 +26,7 @@ class DictionaryFragment : Fragment() {
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
     private var masterWordList: MutableList<Word> = mutableListOf()
-    private var wordsPerPage = 200
+    private var wordsPerPage = 50
     private var numPages = 1
     private var currentPage = 0
     private var wordCount = 0

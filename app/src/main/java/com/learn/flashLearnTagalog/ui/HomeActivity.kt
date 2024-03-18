@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.dialog_fragments.HintDialogFragment
@@ -49,7 +50,19 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
         if (launch) {
+
             MobileAds.initialize(this) {}
+
+            val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
+
+            configurationBuilder.setTagForChildDirectedTreatment(
+                RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+            )
+            configurationBuilder.setMaxAdContentRating(
+                RequestConfiguration.MAX_AD_CONTENT_RATING_G
+            )
+
+            MobileAds.setRequestConfiguration(configurationBuilder.build());
             val adRequest = AdRequest.Builder().build()
             binding.adViewHome.loadAd(adRequest)
             launch = false

@@ -289,8 +289,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                     close()
                                 }
 
-                                sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, true)
-                                    .apply()
+
                                 Log.d(TAG, "signInWithEmail:success")
                             } else {
                                 val code: FirebaseException = task.exception as FirebaseException

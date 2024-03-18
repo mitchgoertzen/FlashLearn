@@ -18,9 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/phillipines_flag"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-40dp" />
+        app:srcCompat="@drawable/flag"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="360dp"
+        android:layout_height="241dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintHorizontal_bias="0.446"
+        app:layout_constraintStart_toStartOf="@+id/guideline29"
+        app:layout_constraintTop_toTopOf="@+id/ivGrey"
+        app:srcCompat="@drawable/flashlearnlogo" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewHome"
@@ -29,9 +42,9 @@
         android:scrollbars="none"
         app:adSize="BANNER"
         app:adUnitId="ca-app-pub-7133464705699933/5992646757"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivGrey"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline29" />
 
     <Button
         android:id="@+id/btnLesson"
@@ -90,9 +103,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#00FFFF00"
-            android:scaleType="fitCenter"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline42"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,10 +118,11 @@
             android:id="@+id/ibProfile"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="4dp"
             android:background="#00FFFF00"
-            android:scaleType="fitCenter"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline43"
@@ -133,91 +147,91 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/tvLearnOutline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="1"
-        android:shadowColor="#FFFFFF"
-        android:shadowDx="3"
-        android:shadowDy="2"
-        android:shadowRadius="2"
-        android:text="Flash Learn"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_43sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvLearn" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvLearnOutline"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:alpha="1"-->
+<!--        android:shadowColor="#FFFFFF"-->
+<!--        android:shadowDx="3"-->
+<!--        android:shadowDy="2"-->
+<!--        android:shadowRadius="2"-->
+<!--        android:text="Flash Learn"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="@dimen/_43sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tvLearn" />-->
 
-    <TextView
-        android:id="@+id/tvLearn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="1"
-        android:text="Flash Learn"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_42sdp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline33"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline32" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvLearn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:alpha="1"-->
+<!--        android:text="Flash Learn"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/_42sdp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guideline33"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/guideline32" />-->
 
 
-    <TextView
-        android:id="@+id/tvTagalogOutline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="1"
-        android:shadowColor="#FFFFFF"
-        android:shadowDx="3"
-        android:shadowDy="2"
-        android:shadowRadius="2"
-        android:text="Tagalog"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/_32sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTagalog" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvTagalogOutline"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:alpha="1"-->
+<!--        android:shadowColor="#FFFFFF"-->
+<!--        android:shadowDx="3"-->
+<!--        android:shadowDy="2"-->
+<!--        android:shadowRadius="2"-->
+<!--        android:text="Tagalog"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAllCaps="true"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:textSize="@dimen/_32sdp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/tvTagalog" />-->
 
-    <TextView
-        android:id="@+id/tvTagalog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:alpha="1"
-        android:text="Tagalog"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_31sdp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline33"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLearn" />
+<!--    <TextView-->
+<!--        android:id="@+id/tvTagalog"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:alpha="1"-->
+<!--        android:text="Tagalog"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Large"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/_31sdp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/guideline33"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvLearn" />-->
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="version 1.1"
-        android:textColor="@color/black"
-        android:textSize="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTagalogOutline" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="version 1.1"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvTagalogOutline" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline32"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.0" />
+        app:layout_constraintGuide_begin="0dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline33"

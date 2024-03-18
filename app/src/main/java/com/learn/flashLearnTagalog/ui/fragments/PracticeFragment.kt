@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
@@ -55,6 +56,10 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             currentWordList = list.toMutableList()
+
+
+            FirebaseCrashlytics.getInstance().log("${list.size}")
+            FirebaseCrashlytics.getInstance().log("${currentWordList.size}")
 
             val index: TextView = view.findViewById(R.id.tvIndex)
             // val id = currentLesson.id
@@ -138,7 +143,6 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
     private fun changeCard(index: TextView) {
         index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
         currentWord = currentWordList[i]
-
         //TODO - Stats: DataUtility.updatePractice(currentWord.id, true)
         viewModel.updateWord(currentWord)
         val fragment = Card()
