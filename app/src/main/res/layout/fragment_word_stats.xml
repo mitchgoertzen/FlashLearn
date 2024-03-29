@@ -12,6 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="Word Stats"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -19,8 +21,6 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -204,25 +204,25 @@
                 </LinearLayout>
 
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+                <!--                <LinearLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:orientation="vertical">-->
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView11"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Most Time Spent On"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textColor="@color/white"-->
-<!--                        android:textSize="18sp" />-->
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/textView11"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:text="Most Time Spent On"-->
+                <!--                        android:textAlignment="center"-->
+                <!--                        android:textColor="@color/white"-->
+                <!--                        android:textSize="18sp" />-->
 
-<!--                    <androidx.recyclerview.widget.RecyclerView-->
-<!--                        android:id="@+id/rvTime"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content" />-->
-<!--                </LinearLayout>-->
+                <!--                    <androidx.recyclerview.widget.RecyclerView-->
+                <!--                        android:id="@+id/rvTime"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content" />-->
+                <!--                </LinearLayout>-->
 
 
             </LinearLayout>

@@ -21,13 +21,13 @@
         app:autoSizeTextType="uniform"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/llStats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/llStats"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="@drawable/empty_tall_divider"
@@ -35,7 +35,7 @@
         android:orientation="vertical"
         android:showDividers="middle"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8">
+        app:layout_constraintTop_toTopOf="@+id/glTitle">
 
         <Button
             android:id="@+id/btnLessons"
@@ -65,7 +65,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
+        android:id="@+id/glTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

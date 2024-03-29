@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/inside"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/clContainer"
+        android:layout_width="169dp"
+        android:layout_height="169dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_gravity="center"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/lesson_background" />
+            tools:src="@drawable/lesson_background_tested"
+            />
 
         <ImageView
             android:id="@+id/ivPreview"
@@ -42,49 +43,70 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="#000000" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline29"
+        <TextView
+            android:id="@+id/tvDifficulty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="7.5dp"
+            android:text="Difficulty: 1"
+            android:textColor="@color/blue"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="5sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ibLesson"
+            app:layout_constraintStart_toStartOf="@+id/ibLesson" />
+
+        <TextView
+            android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.8" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:gravity="center"
             android:maxLines="1"
-            android:text="geography"
-            android:textColor="@color/blue"
-            app:autoSizeMaxTextSize="40sp"
-            app:autoSizeMinTextSize="5sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
+            android:text="Geography"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ibLesson"
+            app:layout_constraintStart_toStartOf="@+id/ibLesson"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvLevel"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="TextView"
-            android:textColor="@color/blue"
-            app:autoSizeMaxTextSize="32sp"
-            app:autoSizeMinTextSize="5sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline29" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline37"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.08" />-->
+
+<!--    <androidx.constraintlayout.widget.Guideline-->
+<!--        android:id="@+id/guideline38"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        app:layout_constraintGuide_percent="0.92" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvLevel"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="I"-->
+    <!--        android:textColor="@color/blue"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/guideline38"-->
+    <!--        app:layout_constraintStart_toStartOf="@+id/guideline37"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/guideline44" />-->
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

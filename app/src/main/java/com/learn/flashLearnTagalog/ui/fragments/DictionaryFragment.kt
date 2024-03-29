@@ -2,164 +2,140 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Debug
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.learn.flashLearnTagalog.DictionaryAdapter
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.db.Word
+import com.learn.flashLearnTagalog.adapters.DictionaryAdapter
+import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.ui.LearningActivity
-import com.learn.flashLearnTagalog.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class DictionaryFragment : Fragment() {
 
+    @Inject
+    lateinit var sharedPref: SharedPreferences
     private lateinit var dictionaryAdapter: DictionaryAdapter
 
-    private val viewModel: MainViewModel by viewModels()
-    private var wordList : MutableList<Word> = mutableListOf()
-    private var wordsPerPage = 200
+    private var masterWordList: MutableList<Word> = mutableListOf()
+    private var wordsPerPage = 50
     private var numPages = 1
-    private var currentPage = 1
+    private var currentPage = 0
+    private var wordCount = 0
 
-    @Inject
-    lateinit var sharedPref : SharedPreferences
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dictionaryAdapter = DictionaryAdapter(mutableListOf())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_dictionary, container, false)
+    }
 
-        dictionaryAdapter = DictionaryAdapter(mutableListOf())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val firstPage: ImageButton = view.findViewById(R.id.ibFirstPage)
+        val lastPage: ImageButton = view.findViewById(R.id.ibLastPage)
+        val nextPage: ImageButton = view.findViewById(R.id.ibNextPage)
+        val prevPage: ImageButton = view.findViewById(R.id.ibPrevPage)
+        val rvDictionary: RecyclerView = view.findViewById(R.id.rvDictionary)
+        val currPage: TextView = view.findViewById(R.id.tvCurrPage)
+        val totalPages: TextView = view.findViewById(R.id.tvTotalPages)
 
-        //initialize view, give reference to proper fragment
-        val view = inflater.inflate(R.layout.fragment_dictionary, container, false)
+        for (wordList in TempListUtility.viewedWords) {
+            wordCount += wordList.value.size
+            masterWordList.addAll(wordList.value)
+        }
 
-        //connect local variables to elements in fragment
-        val rvDictionary : RecyclerView = view.findViewById(R.id.rvDictionary)
+        if (wordCount == 0) {
+            numPages = 0
+        } else {
+            currentPage = 1
+            numPages = wordCount / wordsPerPage
+        }
 
-        val currPage : TextView = view.findViewById(R.id.tvCurrPage)
-        val totalPages : TextView = view.findViewById(R.id.tvTotalPages)
-
-        val firstPage : ImageButton = view.findViewById(R.id.ibFirstPage)
-        val lastPage : ImageButton = view.findViewById(R.id.ibLastPage)
-        val nextPage : ImageButton = view.findViewById(R.id.ibNextPage)
-        val prevPage : ImageButton = view.findViewById(R.id.ibPrevPage)
-
-        numPages = viewModel.getSize()/wordsPerPage
-
-        if(viewModel.getSize()%wordsPerPage > 0)
+        if (wordCount % wordsPerPage > 0)
             numPages++
 
+        currPage.text = "$currentPage"
         totalPages.text = numPages.toString()
 
         deactivateSwitch(firstPage)
         deactivateSwitch(prevPage)
 
+        if (numPages < 1 || currentPage == numPages) {
+            deactivateSwitch(nextPage)
+            deactivateSwitch(lastPage)
+        }
+
         //when firstPage button is pressed, (de)/activate this and corresponding buttons
-        firstPage.setOnClickListener{
+        firstPage.setOnClickListener {
             deactivateSwitch(firstPage)
             deactivateSwitch(prevPage)
             activateSwitch(nextPage)
             activateSwitch(lastPage)
             currentPage = 1
             currPage.text = "1"
-
             gatherWords()
-
-
         }
 
         //when lastPage button is pressed, (de)/activate this and corresponding buttons
-        lastPage.setOnClickListener{
+        lastPage.setOnClickListener {
             deactivateSwitch(nextPage)
             deactivateSwitch(lastPage)
             activateSwitch(firstPage)
             activateSwitch(prevPage)
             currentPage = numPages
             currPage.text = "$numPages"
-
             gatherWords()
-
         }
 
         //on nextPage button press
-        nextPage.setOnClickListener{
-            if(!prevPage.isEnabled){
+        nextPage.setOnClickListener {
+            if (!prevPage.isEnabled) {
                 activateSwitch(prevPage)
                 activateSwitch(firstPage)
             }
             currentPage++
-            if(currentPage == numPages){
+            if (currentPage == numPages) {
                 deactivateSwitch(nextPage)
                 deactivateSwitch(lastPage)
             }
             currPage.text = currentPage.toString()
-
             gatherWords()
-
         }
 
         //on prevPage button press
-        prevPage.setOnClickListener{
-            if(!nextPage.isEnabled){
+        prevPage.setOnClickListener {
+            if (!nextPage.isEnabled) {
                 activateSwitch(nextPage)
                 activateSwitch(lastPage)
             }
             currentPage--
-            if(currentPage == 1){
+            if (currentPage == 1) {
                 deactivateSwitch(prevPage)
                 deactivateSwitch(firstPage)
             }
             currPage.text = currentPage.toString()
-
             gatherWords()
-
         }
 
         //set adapter to be used for displaying dictionary words
         rvDictionary.adapter = dictionaryAdapter
         //set layout manager used for displaying dictionary (Linear)
         rvDictionary.layoutManager = LinearLayoutManager((activity as LearningActivity?))
-
         gatherWords()
-
-        return view
-    }
-
-    //
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun gatherWords() {
-        //clear currently displayed words from the screen
-        dictionaryAdapter.deleteToDos()
-
-        GlobalScope.launch(Dispatchers.Main) {
-            suspend {
-                //gather next set of words, confined by current page and number of words per page
-                viewModel.getDictionaryWords(((currentPage - 1) * wordsPerPage),wordsPerPage).observe(viewLifecycleOwner) {
-                    wordList = it.toMutableList()
-                }
-                Handler(Looper.getMainLooper()).postDelayed({
-                    for(word in wordList){
-                        dictionaryAdapter.addToDo(word)
-                    }
-                }, 1000)
-            }.invoke()
-        }
     }
 
     private fun activateSwitch(switch: ImageButton) {
@@ -176,4 +152,18 @@ class DictionaryFragment : Fragment() {
         switch.alpha = .8f
     }
 
+    private fun gatherWords() {
+
+        dictionaryAdapter.deleteDictionaryWords()
+        if (masterWordList.isNotEmpty()) {
+            val start = (currentPage - 1) * wordsPerPage
+
+            for (i in start..(start + wordsPerPage)) {
+                if (i < wordCount) {
+                    dictionaryAdapter.addDictionaryWord(masterWordList[i])
+                }
+            }
+            dictionaryAdapter.sort()
+        }
+    }
 }

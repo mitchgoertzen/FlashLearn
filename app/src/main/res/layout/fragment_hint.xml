@@ -5,10 +5,10 @@
     android:id="@+id/clHintBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.HintFragment"
-    android:background="#B3000000"
+    android:background="#D9000000"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    tools:context=".ui.dialog_fragments.HintDialogFragment">
 
     <FrameLayout
         android:id="@+id/frameLayout12"
@@ -23,12 +23,12 @@
             android:id="@+id/tvHint"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="TextView"
-            android:textSize="16sp"
-            android:textAlignment="center"
-            android:textColor="@color/seek_bar_secondary_progress"
             android:gravity="center"
-            android:textAllCaps="false" />
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/seek_bar_secondary_progress"
+            android:textSize="16sp" />
     </FrameLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -58,5 +58,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.1" />
+
+    <ImageButton
+        android:id="@+id/ibClose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#00FFFFFF"
+        android:foregroundGravity="top"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/cross"
+        app:layout_constraintBottom_toTopOf="@+id/guideline37"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline21"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline37"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05052879" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

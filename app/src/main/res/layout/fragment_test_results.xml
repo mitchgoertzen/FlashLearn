@@ -86,33 +86,114 @@
         android:background="#1A000000"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/guideline13"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/empty_short_divider"
         android:gravity="center"
         android:orientation="vertical"
         android:showDividers="middle"
-        android:divider="@drawable/empty_short_divider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline13">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline13"
+        app:layout_constraintVertical_bias="0.496">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnRetry"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="Retry Test"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/glRight"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#FCD116"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/btnStats"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="View Stats"
+                android:visibility="gone"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/glLeft"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#FCD116"
+                app:strokeWidth="3dp" />
+
+            <Button
+                android:id="@+id/btnNextLesson"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+
+                android:text="Next Lesson"
+                android:visibility="gone"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="10sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/glLeft"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="#FCD116"
+                app:strokeWidth="3dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.6" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/glLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.40" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <Button
             android:id="@+id/btnLessonSelect"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
             android:text="lesson select"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp"/>
-
-        <Button
-            android:id="@+id/btnStats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View Stats"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
             app:strokeColor="#FCD116"
             app:strokeWidth="3dp" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

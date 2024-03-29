@@ -1,5 +1,29 @@
 <resources>
     <string name="app_name">Flash Learn — Tagalog</string>
+
+    <string name="sort_by">Sort by:</string>
+
+    <string-array name="Sorting">
+        <item>All</item>
+        <item>Animals</item>
+        <item>Around Town</item>
+        <item>Bathroom</item>
+        <item>Bedroom</item>
+        <item>Body</item>
+        <item>Colours</item>
+        <item>Countries</item>
+        <item>Date &amp; Time</item>
+        <item>Food &amp; Drinks</item>
+        <item>Geography</item>
+        <item>In The Yard</item>
+        <item>Kitchen</item>
+        <item>Living Room</item>
+        <item>Nature</item>
+        <item>Numbers</item>
+        <item>Occupations</item>
+        <item>People</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="a">a</string>

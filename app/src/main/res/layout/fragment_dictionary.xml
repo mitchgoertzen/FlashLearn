@@ -11,16 +11,16 @@
         android:id="@+id/tvStats"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
+        android:gravity="bottom"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="Dictionary"
         android:textAlignment="center"
-        android:gravity="bottom"
         android:textColor="@color/white"
         app:autoSizeMaxTextSize="86sp"
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,10 +33,24 @@
         android:layout_marginVertical="5dp"
         android:background="#1A000000"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/guideline25"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline24" />
+        app:layout_constraintTop_toTopOf="@+id/guideline24">
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Practice Lessons to see more words!"
+        android:textSize="10sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guideline25"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline24"
@@ -54,41 +68,66 @@
 
     <ImageButton
         android:id="@+id/ibPrevPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="15dp"
+        android:background="#00FFFF00"
         android:rotationY="180"
-        android:src="@android:drawable/ic_media_play"
-        android:paddingEnd="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/single_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvCurrPage"
+        app:layout_constraintEnd_toStartOf="@+id/guideline48"
+        app:layout_constraintStart_toStartOf="@+id/guideline53"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <ImageButton
         android:id="@+id/ibNextPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_media_play"
-        android:paddingStart="15dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="50dp"
+        android:background="#00FFFF00"
+        android:scaleType="fitCenter"
+        android:src="@drawable/single_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvTotalPages"
+        app:layout_constraintEnd_toStartOf="@+id/guideline50"
+        app:layout_constraintStart_toStartOf="@+id/guideline48"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <ImageButton
         android:id="@+id/ibLastPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_media_ff"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="50dp"
+        android:background="#00FFFF00"
+        android:scaleType="fitCenter"
+        android:src="@drawable/double_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ibNextPage"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <ImageButton
         android:id="@+id/ibFirstPage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_media_rew"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="5dp"
+        android:rotationY="180"
+        android:background="#00FFFF00"
+        android:scaleType="fitCenter"
+        android:src="@drawable/double_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ibPrevPage"
+        app:layout_constraintEnd_toStartOf="@+id/guideline53"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <TextView
@@ -98,8 +137,8 @@
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
         android:text=".."
-        android:textSize="16sp"
         android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,25 +146,50 @@
 
     <TextView
         android:id="@+id/tvCurrPage"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textSize="16sp"
+        android:text="0"
         android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvEllipsis"
+        app:layout_constraintStart_toEndOf="@+id/ibPrevPage"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
 
     <TextView
         android:id="@+id/tvTotalPages"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="1"
-        android:textSize="16sp"
         android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ibNextPage"
         app:layout_constraintStart_toEndOf="@+id/tvEllipsis"
         app:layout_constraintTop_toTopOf="@+id/guideline25" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline48"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline53"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.25" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

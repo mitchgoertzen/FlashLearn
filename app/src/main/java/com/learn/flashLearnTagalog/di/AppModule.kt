@@ -10,6 +10,12 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_DIFFICULTY
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENABLE_PRONUNCIATION
 import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
 import com.learn.flashLearnTagalog.other.Constants.KEY_FIRST_TIME_TOGGLE
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_UNLOCKED
 import com.learn.flashLearnTagalog.other.Constants.KEY_MODE
 import com.learn.flashLearnTagalog.other.Constants.KEY_NUM_WORDS
 import com.learn.flashLearnTagalog.other.Constants.KEY_PRACTICE_NEW_WORDS
@@ -27,7 +33,7 @@ import javax.inject.Singleton
 
 
 @Module
-@InstallIn(SingletonComponent ::class)
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
     @Singleton
@@ -38,63 +44,107 @@ object AppModule {
         app,
         WordDatabase::class.java,
         WORD_DATABASE_NAME
-        ).allowMainThreadQueries()
+    ).allowMainThreadQueries()
         .fallbackToDestructiveMigration()
-        .build()
+        .build();
+
 
     @Singleton
     @Provides
-    fun provideWordDao(db : WordDatabase) = db.getWordDao()
+    fun provideWordDao(db: WordDatabase) = db.getWordDao()
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(@ApplicationContext app : Context): SharedPreferences =
+    fun provideSharedPreferences(@ApplicationContext app: Context): SharedPreferences =
         app.getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE)
 
     @Singleton
     @Provides
-    fun providesShowWord(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_WORD,true)
+    fun providesFirstTimeToggle(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE, true)
+
+//    @Singleton
+//    @Provides
+//    fun providesWordUpdate(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_WORD_UPDATE,true)
+//
+//    @Singleton
+//    @Provides
+//    fun providesLessonUpdate(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_LESSON_UPDATE,true)
+
 
     @Singleton
     @Provides
-    fun providesShowImage(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_IMAGE,false)
+    fun providesShowWord(sharedPref: SharedPreferences) = sharedPref.getBoolean(KEY_SHOW_WORD, true)
 
     @Singleton
     @Provides
-    fun providesShowEngFirst(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_ENG_FIRST,false)
+    fun providesShowImage(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_SHOW_IMAGE, false)
 
     @Singleton
     @Provides
-    fun providesShowHints(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_SHOW_HINTS,false)
+    fun providesShowEngFirst(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_ENG_FIRST, true)
 
     @Singleton
     @Provides
-    fun providesPracticeNewWords(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_PRACTICE_NEW_WORDS,false)
+    fun providesShowHints(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_SHOW_HINTS, false)
 
     @Singleton
     @Provides
-    fun providesEnablePronunciation(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_ENABLE_PRONUNCIATION,false)
+    fun providesPracticeNewWords(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_PRACTICE_NEW_WORDS, false)
 
     @Singleton
     @Provides
-    fun providesCreateCustomLesson(sharedPref : SharedPreferences)  = sharedPref.getBoolean(
-        KEY_CUSTOM_LESSON,true)
+    fun providesEnablePronunciation(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_ENABLE_PRONUNCIATION, false)
 
     @Singleton
     @Provides
-    fun providesMode(sharedPref : SharedPreferences)  = sharedPref.getBoolean(KEY_MODE,false)
+    fun providesCreateCustomLesson(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_CUSTOM_LESSON, true)
 
     @Singleton
     @Provides
-    fun providesNumWords(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_NUM_WORDS,10)
+    fun providesMode(sharedPref: SharedPreferences) = sharedPref.getBoolean(KEY_MODE, false)
 
     @Singleton
     @Provides
-    fun providesDifficulty(sharedPref : SharedPreferences)  = sharedPref.getInt(KEY_DIFFICULTY,1)
+    fun providesNumWords(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_NUM_WORDS, 10)
 
     @Singleton
     @Provides
-    fun providesFirstTimeToggle(sharedPref : SharedPreferences) = sharedPref.getBoolean(KEY_FIRST_TIME_TOGGLE,true)
+    fun providesDifficulty(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_DIFFICULTY, 1)
+
+
+    @Singleton
+    @Provides
+    fun lessonFilterSort(sharedPref: SharedPreferences) = sharedPref.getInt(KEY_LESSON_SORTING, 1)
+
+    @Singleton
+    @Provides
+    fun lessonFilterCategory(sharedPref: SharedPreferences) =
+        sharedPref.getString(KEY_LESSON_CATEGORY, "All")
+
+    @Singleton
+    @Provides
+    fun lessonFilterDifficulty(sharedPref: SharedPreferences): MutableSet<String>? =
+        sharedPref.getStringSet(KEY_LESSON_DIFFICULTY, null)
+
+    @Singleton
+    @Provides
+    fun lessonFilterPracticeCompleted(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_PRACTICE_COMPLETED, 2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterTestPassed(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_TEST_PASSED, 2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterUnlocked(sharedPref: SharedPreferences) =
+        sharedPref.getInt(KEY_LESSON_UNLOCKED, 2)
 }

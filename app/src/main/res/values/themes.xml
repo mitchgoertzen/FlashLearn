@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Tagalog" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Tagalog" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -20,14 +22,37 @@
 
     </style>
 
-    <style name="Theme.Tagalog.NoActionBar">
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:statusBarColor">@color/white</item>
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">#0038A8</item>
+
+        <!-- Secondary brand color. -->
+        <item name="android:textColorPrimaryDisableOnly">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="colorSecondaryVariant">@color/yellow</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/futura_pt_bold</item>
+        <item name="fontFamily">@font/futura_pt_bold</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+
+    <style name="Tagalog.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Tagalog.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Tagalog.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.Tagalog.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Tagalog.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:background">#80000000</item>

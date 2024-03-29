@@ -9,8 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FCD116</color>
     <color name="blue">#0038A8</color>
+    <color name="light_grey">#808080</color>
+    <color name="grey">#454545</color>
+    <color name="dark_grey">#353535</color>
+    <color name="faded_blue">#374C75</color>
     <color name="red">#CE1126</color>
-    <color name="grey">#80333333</color>
     <color name="seek_bar_background">#80FFFFFF</color>
     <color name="seek_bar_progress">#FFFFFF</color>
     <color name="seek_bar_secondary_progress">#BFFFFFFF</color>
