@@ -140,7 +140,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:paddingEnd="10dp"
+        android:padding="10dp"
         android:paddingBottom="5dp"
         android:text="Delete Account"
         android:textAlignment="textStart"
@@ -371,6 +371,29 @@
             app:strokeWidth="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvSignInMsg"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:text="You Are Not Signed In. \n You may lose progress if this device's data is erased."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAttention"
+        app:layout_constraintTop_toTopOf="@+id/btnSignInOrOut" />
+
+    <ImageView
+        android:id="@+id/ivAttention"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/attention"
+        android:layout_marginLeft="20dp"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSignInOrOut"
+        app:layout_constraintTop_toTopOf="@+id/btnSignInOrOut" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

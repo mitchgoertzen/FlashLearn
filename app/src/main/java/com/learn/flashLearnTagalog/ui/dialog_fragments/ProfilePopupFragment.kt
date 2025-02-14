@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
@@ -77,12 +78,13 @@ class ProfilePopupFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val close: ImageButton = view.findViewById(R.id.ibClose)
         val stats: Button = view.findViewById(R.id.btnStats)
         val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
+        val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
+        val close: ImageButton = view.findViewById(R.id.ibClose)
+        val attention: ImageView = view.findViewById(R.id.ivAttention)
         val email: TextView = view.findViewById(R.id.tvAccountEmail)
         val deleteAccountText: TextView = view.findViewById(R.id.tvDeleteAccount)
-        val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
         val inputError: TextView = view.findViewById(R.id.tvDeleteAccountInputError)
         val confirmDeleteButton: Button = view.findViewById(R.id.btnConfirmAccountDelete)
         val endDeletionText: TextView = view.findViewById(R.id.tvContinue2)
@@ -90,6 +92,8 @@ class ProfilePopupFragment : DialogFragment() {
         val prac: TextView = view.findViewById(R.id.tvPracticedLessons)
         val pracWords: TextView = view.findViewById(R.id.tvPracticedWords)
         val test: TextView = view.findViewById(R.id.tvPassed)
+        val signInMsg: TextView = view.findViewById(R.id.tvSignInMsg)
+
         val signInDialog = SignInFragment()
 
         var words = 0
@@ -118,6 +122,8 @@ class ProfilePopupFragment : DialogFragment() {
 
         if (userSignedIn) {
 
+            attention.visibility = View.GONE
+            signInMsg.visibility = View.GONE
             signInButton.text = "Sign Out"
             val userEmail = auth.currentUser!!.email
             email.visibility = View.VISIBLE

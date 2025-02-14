@@ -3,9 +3,11 @@ package com.learn.flashLearnTagalog.ui
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
@@ -35,8 +37,10 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     private var inSettings: Boolean = true
 
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root

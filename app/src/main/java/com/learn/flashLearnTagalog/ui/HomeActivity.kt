@@ -2,8 +2,10 @@ package com.learn.flashLearnTagalog.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
@@ -27,10 +29,11 @@ class HomeActivity : AppCompatActivity() {
     lateinit var sharedPref: SharedPreferences
     private var launch = true
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-
+        overrideActivityTransition(OVERRIDE_TRANSITION_OPEN ,android.R.anim.linear_interpolator, android.R.anim.linear_interpolator)
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         val binding: ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         val infoDialog: DialogFragment = HintDialogFragment()
