@@ -69,7 +69,12 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
 
+        if (!profileDialog.isAdded) {
+            profileDialog.isCancelable = true
+            profileDialog.show(this.supportFragmentManager, "profile popup")
 
+
+        }
 
 
 

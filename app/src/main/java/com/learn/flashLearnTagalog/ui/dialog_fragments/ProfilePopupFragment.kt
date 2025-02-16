@@ -114,6 +114,17 @@ class ProfilePopupFragment : DialogFragment() {
         confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
         group = view.findViewById(R.id.clProfileBackground)
 
+
+        if (!signInDialog.isAdded) {
+            val bundle = bundleOf("in_profile" to true)
+            signInDialog.arguments = bundle
+            signInDialog.isCancelable = true
+            signInDialog.show(parentFragmentManager, "user sign-in")
+
+            dialog?.hide()
+        }
+
+
         close.setOnClickListener {
             dialog?.dismiss()
             close()

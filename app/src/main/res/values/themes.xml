@@ -58,4 +58,9 @@
         <item name="android:background">#80000000</item>
     </style>
 
+    <style name="EditText">
+        <item name="colorControlActivated">#dcee30</item>
+        <item name="android:textColorHighlight">#590038A8</item>
+    </style>
+
 </resources>

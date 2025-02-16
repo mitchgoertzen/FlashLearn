@@ -62,116 +62,189 @@
             android:textAlignment="textStart"
             android:textColor="#0038A8"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/llPasswordBox"
-            app:layout_constraintStart_toStartOf="@+id/llPasswordBox"
+            app:layout_constraintBottom_toTopOf="@+id/clEditTextGroup"
+            app:layout_constraintStart_toStartOf="@+id/clEditTextGroup"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/llPasswordBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/ivFormBackground"
+        <ImageView
+            android:id="@+id/ivPasswordVisible"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/not_visible"
+            app:layout_constraintBottom_toBottomOf="@+id/clEditTextGroup"
+            app:layout_constraintStart_toEndOf="@+id/clEditTextGroup" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clEditTextGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline44">
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/llEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Email:"
-                    android:textColor="#0038A8"
-                    android:textCursorDrawable="@null"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:textColor="#0038A8"
-                    android:textCursorDrawable="@null"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Password:"
-                    android:textColor="#0038A8"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:textColor="#0038A8"
-                    android:textCursorDrawable="@null"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llConfirmPassword"
+                android:id="@+id/llPasswordBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/tvConfirmPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Confirm Password:"
-                    android:textColor="#0038A8"
-                    android:textSize="12sp" />
-
-                <EditText
-                    android:id="@+id/etConfirmPassword"
+                <LinearLayout
+                    android:id="@+id/llEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:textColor="#0038A8"
-                    android:textCursorDrawable="@null"
-                    android:textSize="12sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Email:"
+                        android:textColor="#0038A8"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dip"
+                        android:background="@drawable/edittext"
+                        android:ems="10"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#0038A8"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp"
+                        android:theme="@style/EditText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPassword"
+                    android:layout_width="100pt"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Password:"
+                        android:textColor="#0038A8"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dip"
+                        android:background="@drawable/edittext"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:textColor="#0038A8"
+                        android:textStyle="bold"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp"
+                        android:letterSpacing="0.0000000001"
+                        android:theme="@style/EditText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">>
+
+                    <TextView
+                        android:id="@+id/tvConfirmPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirm Password:"
+                        android:textColor="#0038A8"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etConfirmPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dip"
+                        android:background="@drawable/edittext"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:textColor="#0038A8"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp"
+                        android:theme="@style/EditText" />
+                </LinearLayout>
+
             </LinearLayout>
-        </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llEmailConfirmationCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <LinearLayout
+                    android:layout_width="100pt"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Confirmation Code:"
+                        android:textColor="#0038A8"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/etEmailCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="2dip"
+                        android:background="@drawable/edittext"
+                        android:ems="10"
+                        android:inputType="textPassword"
+                        android:textColor="#0038A8"
+                        android:textCursorDrawable="@null"
+                        android:textSize="12sp"
+                        android:theme="@style/EditText" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tvSignInInputError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
+            android:maxWidth="200dp"
+            android:maxLines="2"
+            android:padding="5dp"
             android:text="Passwords do not match"
             android:textColor="@color/red"
             android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivFormBackground"
-            app:layout_constraintStart_toStartOf="@+id/llPasswordBox" />
+            app:layout_constraintStart_toStartOf="@+id/clEditTextGroup"
+            app:layout_constraintTop_toBottomOf="@+id/clEditTextGroup" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
