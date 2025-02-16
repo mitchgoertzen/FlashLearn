@@ -44,8 +44,20 @@ class ProfilePopupFragment : DialogFragment() {
     private val viewModel: SignInViewModel by activityViewModels()
 
     private var deletingAccount = false
-    private var userSignedIn = (auth.currentUser != null)
+    private var userSignedIn = false
     lateinit var group: ViewGroup
+
+
+    private var onDismissFunction: () -> Unit = {}
+
+    fun setOnDismissFunction(block: () -> Unit){
+        onDismissFunction = block
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        onDismissFunction()
+        super.onDismiss(dialog)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -62,6 +74,7 @@ class ProfilePopupFragment : DialogFragment() {
         super.onCreate(savedInstanceState)
 
         Log.d(TAG, "user: ${auth.currentUser}")
+        userSignedIn = (auth.currentUser != null)
     }
 
     override fun onCreateView(

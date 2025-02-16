@@ -11,7 +11,11 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
@@ -32,6 +36,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
 
     private var inSettings: Boolean = true
@@ -41,14 +46,22 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        auth = Firebase.auth
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
-        val dialog: DialogFragment = ProfilePopupFragment()
+        val profileDialog = ProfilePopupFragment()
         val count: Int = supportFragmentManager.backStackEntryCount
         val intent = Intent(this, HomeActivity::class.java)
 
         setContentView(view)
+
+
+        profileDialog.setOnDismissFunction {
+            checkUser(binding)
+        }
+
+        checkUser(binding)
 
         val adRequest = AdRequest.Builder().build()
         binding.adViewLearning.loadAd(adRequest)
@@ -86,9 +99,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 viewModel.updateRefreshCallback { select.refreshList(null, this) }
             }
 
-            if(!dialog.isAdded){
-                dialog.isCancelable = true
-                dialog.show(this.supportFragmentManager, "profile popup")
+            if(!profileDialog.isAdded){
+                profileDialog.isCancelable = true
+                profileDialog.show(this.supportFragmentManager, "profile popup")
             }
         }
 
@@ -149,6 +162,18 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
     fun setType(t: Int) {
         type = t
+    }
+
+    private fun checkUser(binding : ActivityMainBinding){
+        Log.d(TAG , "USER: ${auth.currentUser}")
+        if (auth.currentUser == null){
+            Log.d(TAG , "NULL")
+            binding.ibProfile.setImageResource(R.drawable.profile_alert)
+        }
+        else{
+            Log.d(TAG , "EXISTS")
+            binding.ibProfile.setImageResource(R.drawable.profile)
+        }
     }
 
 }

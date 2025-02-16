@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
@@ -15,7 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -26,8 +24,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-
-    private val viewModel: SignInViewModel by viewModels()
 
     private lateinit var auth: FirebaseAuth
 

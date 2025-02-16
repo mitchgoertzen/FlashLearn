@@ -1,9 +1,12 @@
 package com.learn.flashLearnTagalog.ui
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +14,10 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityHomeBinding
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.dialog_fragments.HintDialogFragment
@@ -27,17 +34,20 @@ class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
+    private lateinit var auth: FirebaseAuth
     private var launch = true
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         overrideActivityTransition(OVERRIDE_TRANSITION_OPEN ,android.R.anim.linear_interpolator, android.R.anim.linear_interpolator)
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
+        auth = Firebase.auth
         val binding: ActivityHomeBinding = ActivityHomeBinding.inflate(layoutInflater)
         val infoDialog: DialogFragment = HintDialogFragment()
-        val profileDialog: DialogFragment = ProfilePopupFragment()
+        val profileDialog = ProfilePopupFragment()
         val learning = LearningActivity()
         val infoText =
             "This app is intended for English speakers who are interested in learning words from the " +
@@ -50,7 +60,44 @@ class HomeActivity : AppCompatActivity() {
                     "2023, mitch goertzen"
         val view = binding.root
 
+
+        profileDialog.setOnDismissFunction {
+            checkUser(binding)
+        }
+
+        checkUser(binding)
         setContentView(view)
+
+
+
+
+
+
+        //You need a toolbar here. Create your own or use the Theme's one.
+      //  var toolbar : Toolbar? = findViewById(R.id.my_toolbar)
+       // setSupportActionBar(toolbar)
+
+//        val drawer = findViewById<DrawerLayout>(R.id.drawer)
+//        val navigationView = findViewById<NavigationView>(com.learn.flashLearnTagalog.R.id.navigationView)
+//
+//
+//        val toggle = ActionBarDrawerToggle(
+//            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+//        )
+//        drawer.setDrawerListener(toggle)
+//        toggle.syncState()
+
+
+//        navigationView.setNavigationItemSelectedListener { item ->
+//            if (item.itemId == R.id.nav_edit) Toast.makeText(
+//                applicationContext,
+//                "Hello",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//            //Do this for the rest of the navigation menu items.
+//            true
+//        }
+
 
         if (launch) {
 
@@ -65,7 +112,7 @@ class HomeActivity : AppCompatActivity() {
                 RequestConfiguration.MAX_AD_CONTENT_RATING_G
             )
 
-            MobileAds.setRequestConfiguration(configurationBuilder.build());
+            MobileAds.setRequestConfiguration(configurationBuilder.build())
             val adRequest = AdRequest.Builder().build()
             binding.adViewHome.loadAd(adRequest)
             launch = false
@@ -99,6 +146,8 @@ class HomeActivity : AppCompatActivity() {
             if (!profileDialog.isAdded) {
                 profileDialog.isCancelable = true
                 profileDialog.show(this.supportFragmentManager, "profile popup")
+
+
             }
         }
     }
@@ -106,6 +155,18 @@ class HomeActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java", ReplaceWith("this.finishAffinity()"))
     override fun onBackPressed() {
         this.finishAffinity()
+    }
+
+    private fun checkUser(binding : ActivityHomeBinding){
+        Log.d(TAG , "USER: ${auth.currentUser}")
+        if (auth.currentUser == null){
+            Log.d(TAG , "NULL")
+            binding.ibProfile.setImageResource(R.drawable.profile_alert)
+        }
+        else{
+            Log.d(TAG , "EXISTS")
+            binding.ibProfile.setImageResource(R.drawable.profile)
+        }
     }
 }
 
