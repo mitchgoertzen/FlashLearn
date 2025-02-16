@@ -69,15 +69,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(view)
 
 
-        if (!profileDialog.isAdded) {
-            profileDialog.isCancelable = true
-            profileDialog.show(this.supportFragmentManager, "profile popup")
-
-
-        }
-
-
-
         //You need a toolbar here. Create your own or use the Theme's one.
       //  var toolbar : Toolbar? = findViewById(R.id.my_toolbar)
        // setSupportActionBar(toolbar)

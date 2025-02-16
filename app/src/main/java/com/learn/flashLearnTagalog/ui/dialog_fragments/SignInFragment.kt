@@ -65,11 +65,20 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         "The email address is already in use by another account." to "Email already in use",
         "A network error (such as timeout, interrupted connection or unreachable host) has occurred." to "No Network Connection",
         "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain an upper case character, Password must contain a non-alphanumeric character] ]"
-                to "Password must contain upper case and non-alphanumeric characters",
+                to "Password must contain at least one upper case letter and one non-alphanumeric character",
         "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain an upper case character] ]"
-                to "Password must contain an upper case character",
+                to "Password must contain at least one upper case letter",
         "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain a non-alphanumeric character] ]"
-                to "Password must contain a non-alphanumeric character"
+                to "Password must contain at least one non-alphanumeric character",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain an upper case character, Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain an upper case character] ]"
+                to "Password must contain at least 6 characters",
+
     )
     private var email = ""
     private var password = ""
@@ -125,7 +134,8 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         val editTextGroup: LinearLayout = view.findViewById(R.id.llPasswordBox)
         val emailConfirmationCode: LinearLayout = view.findViewById(R.id.llEmailConfirmationCode)
         val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
-        val signUpText: TextView = view.findViewById(R.id.tvSignUpPrompt)
+        val signUpText: TextView = view.findViewById(R.id.tvSignUpInfo)
+        val signUpButton: TextView = view.findViewById(R.id.tvSignUpPrompt)
         val confirmButton: Button = view.findViewById(R.id.btnConfirm)
         val form: ImageView = view.findViewById(R.id.ivFormBackground)
         val passwordVisible: ImageView = view.findViewById(R.id.ivPasswordVisible)
@@ -222,13 +232,24 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         inputError.text = ""
         confirmPasswordBox.visibility = View.GONE
 
-        signUpText.setOnClickListener {
-            header.text = "Sign Up"
+        signUpPrompt.setOnClickListener {
+
             inputError.text = ""
-            form.setImageResource(R.drawable.sign_up_box)
-            signUpPrompt.visibility = View.GONE
-            confirmPasswordBox.visibility = View.VISIBLE
-            signUp = true
+            if(signUp){
+                header.text = "Sign In"
+                form.setImageResource(R.drawable.sign_in_box)
+                confirmPasswordBox.visibility = View.GONE
+                signUpText.text = "Don't have an account? "
+                signUpButton.text = "Sign Up!"
+            }else{
+                header.text = "Sign Up"
+                form.setImageResource(R.drawable.sign_up_box)
+                confirmPasswordBox.visibility = View.VISIBLE
+                signUpText.text = "Back to "
+                signUpButton.text = "Sign In"
+            }
+            signUp = !signUp
+
         }
 
         emailText.setOnFocusChangeListener { _, hasFocus ->

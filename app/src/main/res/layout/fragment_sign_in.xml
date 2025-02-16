@@ -9,17 +9,6 @@
     tools:context=".ui.dialog_fragments.SignInFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clTapBlock"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/llSignUpPrompt"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,6 +129,13 @@
                         android:text="Password:"
                         android:textColor="#0038A8"
                         android:textSize="12sp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clTapBlock"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp">
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <EditText
                         android:id="@+id/etPassword"
@@ -295,12 +291,11 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <TextView
-            android:id="@+id/tvSignUpPrompt2"
+            android:id="@+id/tvSignUpInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingEnd="5dp"
-            android:text="Don't have an account?"
+            android:text="Don't have an account? "
             android:textColor="@color/white"
             android:textSize="11sp" />
 
