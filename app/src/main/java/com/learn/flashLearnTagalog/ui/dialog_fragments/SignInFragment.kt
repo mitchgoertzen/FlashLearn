@@ -241,12 +241,14 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                 confirmPasswordBox.visibility = View.GONE
                 signUpText.text = "Don't have an account? "
                 signUpButton.text = "Sign Up!"
+                confirmButton.text = "Sign In"
             }else{
                 header.text = "Sign Up"
                 form.setImageResource(R.drawable.sign_up_box)
                 confirmPasswordBox.visibility = View.VISIBLE
                 signUpText.text = "Back to "
                 signUpButton.text = "Sign In"
+                confirmButton.text = "Sign Up"
             }
             signUp = !signUp
 
@@ -298,6 +300,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                     if (password == confirmPassword) {
 
 
+                        confirmButton.text = "Confirm"
                         //TODO: real email --> two factor?
 //                        editTextGroup.visibility = View.GONE
 //                        emailConfirmationCode.visibility = View.VISIBLE

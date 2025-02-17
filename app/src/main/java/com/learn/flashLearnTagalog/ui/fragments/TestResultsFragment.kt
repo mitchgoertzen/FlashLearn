@@ -1,8 +1,10 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,19 +85,32 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
             viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
                 val nextId = "${lesson.category}_${lesson.level + 1}"
 
+                Log.d(TAG, "next id: $nextId")
+
                 //TODO: better solution
                 val lessonJSON = "savedLessons.json"
                 val savedLessons = JsonUtility.getSavedLessons(requireActivity())
                 var nextLesson: Lesson? = null
+
+
+
+                Log.d(TAG, "saved lessons: $savedLessons")
+
 
                 var nextLessonWordList: List<Word> = mutableListOf()
 
                 for (l in savedLessons) {
                     if (l.id == nextId) {
 
+                        Log.d(TAG, "l: ${l.id},, next: $nextId")
                         nextLesson = l
                     }
                 }
+
+
+                Log.d(TAG, "next lesson: $nextLesson")
+
+
                 if (nextLesson != null) {
                     guideline.setGuidelinePercent(0.60f)
                     nextButton.visibility = View.VISIBLE
@@ -118,52 +133,54 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
                             }
                         scope.cancel()
                     }
-                    nextButton.setOnClickListener {
-                        TempListUtility.viewedWords[nextId] = nextLessonWordList
-                        TempListUtility.viewedLessons.add(nextId)
 
-                        JsonUtility.writeJSON(
-                            requireActivity(),
-                            //TODO: save as shared pref
-                            "viewedLessons.json",
-                            TempListUtility.viewedLessons,
-                            false
-                        )
-                        JsonUtility.writeJSON(
-                            requireActivity(),
-                            //TODO: save as shared pref
-                            "savedWords.json",
-                            TempListUtility.viewedWords,
-                            false
-                        )
-                        viewModel.updateLesson(nextLesson)
-                        val fragment = PracticeFragment()
-                        val transaction = fragmentManager?.beginTransaction()
-                        transaction?.replace(R.id.main_nav_container, fragment)
-                            ?.addToBackStack("test")
-                            ?.commit()
-                        (activity as LearningActivity?)?.transitionFragment()
+
+                    nextButton.setOnClickListener {
+
+                        leaveResults()
+
+
+                        Log.d(TAG, "SIZE: ${nextLessonWordList.size}")
+                        if (nextLessonWordList.isNotEmpty()) {
+                            TempListUtility.viewedWords[nextId] = nextLessonWordList
+                            TempListUtility.viewedLessons.add(nextId)
+
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                //TODO: save as shared pref
+                                "viewedLessons.json",
+                                TempListUtility.viewedLessons,
+                                false
+                            )
+                            JsonUtility.writeJSON(
+                                requireActivity(),
+                                //TODO: save as shared pref
+                                "savedWords.json",
+                                TempListUtility.viewedWords,
+                                false
+                            )
+                            viewModel.updateWordList(nextLessonWordList)
+                            viewModel.updateLesson(nextLesson)
+                            val fragment = PracticeFragment()
+                            val transaction = fragmentManager?.beginTransaction()
+                            transaction?.replace(R.id.main_nav_container, fragment)
+                                ?.addToBackStack("test")
+                                ?.commit()
+                            (activity as LearningActivity?)?.transitionFragment()
+                        }
                     }
                 }
+
             }
 
-        }
+            retryButton.setOnClickListener {
 
-        retryButton.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_RESULTS, false)
-                .apply()
+                activity?.supportFragmentManager?.popBackStack()
+                sharedPref.edit()
+                    .putBoolean(Constants.KEY_IN_RESULTS, false)
+                    .apply()
 
-//            sharedPref.edit()
-//                .putBoolean(Constants.KEY_IN_RESULTS, false)
-//                .apply()
-//            val fragment = TestFragment(wordList, lesson)
-//            val transaction = activity?.supportFragmentManager?.beginTransaction()
-//            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")
-//                ?.commit()
-//            (activity as LearningActivity?)?.transitionFragment()
-        }
+            }
 
 //        statsButton.setOnClickListener {
 //            sharedPref.edit()
@@ -176,25 +193,37 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
 //            (activity as LearningActivity?)?.transitionFragment()
 //        }
 
-        lessonSelectButton.setOnClickListener {
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_RESULTS, false)
-                .apply()
+            lessonSelectButton.setOnClickListener {
+                leaveResults()
 
-            val count: Int? = activity?.supportFragmentManager?.backStackEntryCount
-
-            for (i in 0..count!!) {
-                activity?.supportFragmentManager?.popBackStack()
+                val fragment = LessonSelectFragment()
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.main_nav_container, fragment)
+                    ?.addToBackStack("lesson select")
+                    ?.commit()
+                (activity as LearningActivity?)?.transitionFragment()
             }
-            val fragment = LessonSelectFragment()
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson select")
-                ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
+
+            scoreText.text = score.toString()
+            totalText.text = listSize.toString()
+            percentageText.text = (100 * score / listSize).toString() + "%"
         }
 
-        scoreText.text = score.toString()
-        totalText.text = listSize.toString()
-        percentageText.text = (100 * score / listSize).toString() + "%"
+    }
+
+    private fun leaveResults() {
+
+        Log.d(TAG, "leave")
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_IN_RESULTS, false)
+            .apply()
+
+        val count: Int? = activity?.supportFragmentManager?.backStackEntryCount
+
+        Log.d(TAG, "count: $count ")
+        for (i in 0 until count!!) {
+            activity?.supportFragmentManager?.popBackStack()
+        }
+
     }
 }

@@ -42,7 +42,8 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
         val rvTranslationList: RecyclerView = view.findViewById(R.id.rvWordTranslations)
         val testButton: Button = view.findViewById(R.id.btnLessonTest)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
-        val statsButton: Button = view.findViewById(R.id.btnStats)
+        val retryButton: Button = view.findViewById(R.id.btnRetryPractice)
+      //  val statsButton: Button = view.findViewById(R.id.btnStats)
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             val adapter = DictionaryAdapter(list.toMutableList())
@@ -67,6 +68,16 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson select")
                 ?.commit()
             (activity as LearningActivity?)?.transitionFragment()
+        }
+
+
+        retryButton.setOnClickListener {
+
+            activity?.supportFragmentManager?.popBackStack()
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_IN_RESULTS, false)
+                .apply()
+
         }
 
 //        statsButton.setOnClickListener {

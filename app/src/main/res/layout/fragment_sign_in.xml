@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25" />
+            app:layout_constraintGuide_percent="0.08" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline45"
@@ -72,7 +72,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/guideline44">
 
             <LinearLayout
                 android:id="@+id/llPasswordBox"
@@ -145,11 +145,11 @@
                         android:background="@drawable/edittext"
                         android:ems="10"
                         android:inputType="textPassword"
+                        android:letterSpacing="0.0000000001"
                         android:textColor="#0038A8"
-                        android:textStyle="bold"
                         android:textCursorDrawable="@null"
                         android:textSize="12sp"
-                        android:letterSpacing="0.0000000001"
+                        android:textStyle="bold"
                         android:theme="@style/EditText" />
                 </LinearLayout>
 

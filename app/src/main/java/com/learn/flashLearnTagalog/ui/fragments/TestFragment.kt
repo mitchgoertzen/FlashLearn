@@ -121,10 +121,12 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
             setWordType(wordType)
 
-            btnEnter.isEnabled = false
+           // btnEnter.isEnabled = false
 
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
+
+                goToResults()
 
                 if (skipped) {
                     answered = false
@@ -294,7 +296,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
     private fun goToResults() {
         viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
-            if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
+         //   if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.0f) {
                 val id = lesson.id
                 if (!TempListUtility.passedLessons.contains(id)) {
 
@@ -331,12 +333,12 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                 //DataUtility.passTest(currentLesson.id)
                 //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
                 // viewModel.passTest(currentLesson.id)
-            }
+         //   }
 
             sharedPref.edit()
                 .putBoolean(Constants.KEY_IN_TEST, false)
                 .apply()
-            val bundle = bundleOf("words_correct" to wordsCorrect)
+            val bundle = bundleOf("words_correct" to 20)
 
             viewModel.updateAdapter(answeredAdapter)
 

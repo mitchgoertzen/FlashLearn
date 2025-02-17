@@ -99,7 +99,6 @@
         android:showDividers="middle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline13"
         app:layout_constraintVertical_bias="0.496">
@@ -114,7 +113,7 @@
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="Retry Test"
+                android:text="Retry"
                 app:autoSizeMaxTextSize="12sp"
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeStepGranularity="1sp"
