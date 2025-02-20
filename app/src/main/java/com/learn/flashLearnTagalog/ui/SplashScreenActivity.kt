@@ -89,7 +89,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     //end splash screen and continue to home activity
     private fun goToHomeActivity() {
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, LearningActivity::class.java))
         //TODO: finish from next activity
         finish()
     }

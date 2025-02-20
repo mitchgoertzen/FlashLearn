@@ -73,13 +73,13 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
 
 
             prevButton.isEnabled = false
-
-            if (currentWordList.size == 1) {
-                nextButton.isEnabled = false
-                finishButton.visibility = View.VISIBLE
-            } else {
-                finishButton.visibility = View.GONE
-            }
+            finishButton.visibility = View.VISIBLE
+//            if (currentWordList.size == 1) {
+//                nextButton.isEnabled = false
+//                finishButton.visibility = View.VISIBLE
+//            } else {
+//                finishButton.visibility = View.GONE
+//            }
 
             finishButton.setOnClickListener {
 
@@ -99,13 +99,12 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
                     }
 
                     currentIndex = 0
-
                     //viewModel.completePractice(currentLesson.id)
                     val fragment = PracticeResultsFragment()
                     val transaction = activity?.supportFragmentManager?.beginTransaction()
                     transaction?.replace(R.id.main_nav_container, fragment)
                         ?.addToBackStack("practice results")?.commit()
-                    (activity as LearningActivity?)?.transitionFragment()
+                    (activity as LearningActivity?)?.transitionFragment(2)
                 }
 
             }

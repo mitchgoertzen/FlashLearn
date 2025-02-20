@@ -47,10 +47,15 @@ class ProfilePopupFragment : DialogFragment() {
     private var userSignedIn = false
     lateinit var group: ViewGroup
 
+    private val signInMessage: String =
+        "You Are Not Signed In. \n You may lose progress if this device's data is erased."
+    private val testSignInMessage: String =
+        "Sign In features are disabled while in a test."
+
 
     private var onDismissFunction: () -> Unit = {}
 
-    fun setOnDismissFunction(block: () -> Unit){
+    fun setOnDismissFunction(block: () -> Unit) {
         onDismissFunction = block
     }
 
@@ -91,6 +96,9 @@ class ProfilePopupFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var words = 0
+
+        val signInDialog = SignInFragment()
         val stats: Button = view.findViewById(R.id.btnStats)
         val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
         val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
@@ -107,20 +115,24 @@ class ProfilePopupFragment : DialogFragment() {
         val test: TextView = view.findViewById(R.id.tvPassed)
         val signInMsg: TextView = view.findViewById(R.id.tvSignInMsg)
 
-        val signInDialog = SignInFragment()
-
-        var words = 0
-
         confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
         group = view.findViewById(R.id.clProfileBackground)
 
+        confirmDeletePrompt.visibility = View.GONE
+
+        stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
+
+        if (sharedPref.getBoolean(Constants.KEY_IN_TEST, false)) {
+            signInButton.isEnabled = false
+            signInMsg.text = testSignInMessage
+        } else {
+            signInMsg.text = signInMessage
+        }
 
         close.setOnClickListener {
             dialog?.dismiss()
             close()
         }
-
-        confirmDeletePrompt.visibility = View.GONE
 
         for (list in TempListUtility.viewedWords) {
             words += list.value.size
@@ -131,8 +143,6 @@ class ProfilePopupFragment : DialogFragment() {
         "Lesson Tests Passed: ${TempListUtility.passedLessons.size}".also { test.text = it }
         "Words Practiced: $words".also { pracWords.text = it }
         //"Average Test Score:${TempListUtility.unlockedLessons.size}".also { testScore.text = it }
-
-        stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
 
         if (userSignedIn) {
 
@@ -181,7 +191,8 @@ class ProfilePopupFragment : DialogFragment() {
                                 authUser.delete()
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
-                                            sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false)
+                                            sharedPref.edit()
+                                                .putBoolean(Constants.KEY_USER_SIGNED_IN, false)
                                                 .apply()
                                             Log.d(TAG, "User account deleted.")
                                             reloadCallback()
@@ -204,10 +215,6 @@ class ProfilePopupFragment : DialogFragment() {
             email.visibility = View.GONE
             signInButton.text = "Sign In"
             deleteAccountText.visibility = View.GONE
-        }
-
-        if (sharedPref.getBoolean(Constants.KEY_IN_TEST, false)) {
-            signInButton.isEnabled = false
         }
 
         signInButton.setOnClickListener {
@@ -259,12 +266,12 @@ class ProfilePopupFragment : DialogFragment() {
     }
 
     private fun close() {
-        viewModel.isRefreshActive.observe(viewLifecycleOwner) { active ->
-            if (active) {
-                viewModel.currentRefreshCallback.value!!.invoke()
-                viewModel.updateRefreshActive(false)
-            }
-        }
+//        viewModel.isRefreshActive.observe(viewLifecycleOwner) { active ->
+//            if (active) {
+//                viewModel.currentRefreshCallback.value!!.invoke()
+//                viewModel.updateRefreshActive(false)
+//            }
+//        }
     }
 
     override fun onCancel(dialog: DialogInterface) {
@@ -284,7 +291,6 @@ class ProfilePopupFragment : DialogFragment() {
                 )
             }
         }
-
     }
 }
 

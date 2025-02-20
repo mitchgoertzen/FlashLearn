@@ -165,20 +165,21 @@ class LessonTypeDialogueFragment : DialogFragment() {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
             //TODO: make fragment transition universal fun?
             val fragment = TestFragment()
-            val transaction = mActivity?.supportFragmentManager?.beginTransaction()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("test")
                 ?.commit()
-            (mActivity as LearningActivity?)?.transitionFragment()
+            (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 
         practiceButton.setOnClickListener {
             //wordList.asSequence().shuffled().toMutableList(), currentLesson
+
             val fragment = PracticeFragment()
-            val transaction = mActivity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("practice")
-                ?.commit()
-            (mActivity as LearningActivity?)?.transitionFragment()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.main_nav_container, fragment)
+                ?.addToBackStack("practice")?.commit()
+            (activity as LearningActivity?)?.transitionFragment()
             dialog?.dismiss()
         }
 

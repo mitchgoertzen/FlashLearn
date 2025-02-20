@@ -2,6 +2,7 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -36,12 +37,19 @@ import com.learn.flashLearnTagalog.ui.dialog_fragments.FilterLessonDialogFragmen
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
+
 
     private lateinit var lessonAdapter: LessonAdapter
     private val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
@@ -53,8 +61,15 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+       // refreshList(null, requireActivity())
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
@@ -68,6 +83,8 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         return inflater.inflate(R.layout.fragment_lesson_select, container, false)
     }
 
@@ -119,15 +136,20 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
 
+        Log.d(TAG, "activity: $activity")
+
         if (!this::sharedPref.isInitialized) {
+            Log.d(TAG, "not Initialized")
             sharedPref = activity.getSharedPreferences(
                 Constants.SHARED_PREFERENCES_NAME,
                 AppCompatActivity.MODE_PRIVATE
             )
         }
 
+
         refreshScope.launch {
             async {
+
                 if (dbLessons.isEmpty()) {
 
                     DataUtility.updateLocalData(
@@ -136,7 +158,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
                         rewriteJSON = true
                     )
 
-                    dbLessons = JsonUtility.getSavedLessons(activity)
 
                     if (dbLessons.isEmpty()) {
                         if (networkErrorText != null)
@@ -236,6 +257,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
     override fun onStop() {
         super.onStop()
+        Log.d(TAG, "select stop")
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }

@@ -335,9 +335,6 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                 // viewModel.passTest(currentLesson.id)
          //   }
 
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_TEST, false)
-                .apply()
             val bundle = bundleOf("words_correct" to 20)
 
             viewModel.updateAdapter(answeredAdapter)
@@ -368,5 +365,12 @@ class TestFragment : Fragment(R.layout.fragment_test) {
             toDo.isCorrect = result
             answeredAdapter.addTestWord(toDo, engFirst, true)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_IN_TEST, false)
+            .apply()
     }
 }

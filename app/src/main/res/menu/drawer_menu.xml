@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <item
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="Organization Name"/>
+
+        <item
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="Password" />
+
+        <item
+            android:id="@+id/goToOrg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:title="Org" />
+    </group>
+</menu>

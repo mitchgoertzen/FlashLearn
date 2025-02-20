@@ -66,6 +66,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         val totalText: TextView = view.findViewById(R.id.tvTotal)
         val percentageText: TextView = view.findViewById(R.id.tvPercentage)
         val retryButton: Button = view.findViewById(R.id.btnRetry)
+        val practiceButton: Button = view.findViewById(R.id.btnPractice)
         val nextButton: Button = view.findViewById(R.id.btnNextLesson)
         //  val statsButton: Button = view.findViewById(R.id.btnStats)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
@@ -161,26 +162,39 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
                             )
                             viewModel.updateWordList(nextLessonWordList)
                             viewModel.updateLesson(nextLesson)
+
+                            activity?.supportFragmentManager?.popBackStack()
                             val fragment = PracticeFragment()
                             val transaction = fragmentManager?.beginTransaction()
                             transaction?.replace(R.id.main_nav_container, fragment)
                                 ?.addToBackStack("test")
                                 ?.commit()
-                            (activity as LearningActivity?)?.transitionFragment()
+                            (activity as LearningActivity?)?.transitionFragment(2)
                         }
                     }
                 }
 
             }
 
-            retryButton.setOnClickListener {
+            scoreText.text = score.toString()
+            totalText.text = listSize.toString()
+            percentageText.text = (100 * score / listSize).toString() + "%"
+        }
 
-                activity?.supportFragmentManager?.popBackStack()
-                sharedPref.edit()
-                    .putBoolean(Constants.KEY_IN_RESULTS, false)
-                    .apply()
+        retryButton.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
+        }
 
-            }
+        practiceButton.setOnClickListener {
+            leaveResults()
+            activity?.supportFragmentManager?.popBackStack()
+            val fragment = PracticeFragment()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.main_nav_container, fragment)
+                ?.addToBackStack("practice")
+                ?.commit()
+            (activity as LearningActivity?)?.transitionFragment(2)
+        }
 
 //        statsButton.setOnClickListener {
 //            sharedPref.edit()
@@ -193,37 +207,26 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
 //            (activity as LearningActivity?)?.transitionFragment()
 //        }
 
-            lessonSelectButton.setOnClickListener {
-                leaveResults()
-
-                val fragment = LessonSelectFragment()
-                val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.main_nav_container, fragment)
-                    ?.addToBackStack("lesson select")
-                    ?.commit()
-                (activity as LearningActivity?)?.transitionFragment()
-            }
-
-            scoreText.text = score.toString()
-            totalText.text = listSize.toString()
-            percentageText.text = (100 * score / listSize).toString() + "%"
+        lessonSelectButton.setOnClickListener {
+            leaveResults()
+            activity?.supportFragmentManager?.popBackStack()
+            val fragment = LessonSelectFragment()
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.main_nav_container, fragment)
+                ?.addToBackStack("lesson select")
+                ?.commit()
+            (activity as LearningActivity?)?.transitionFragment(2)
         }
-
     }
 
     private fun leaveResults() {
+        activity?.supportFragmentManager?.popBackStack()
+    }
 
-        Log.d(TAG, "leave")
+    override fun onStop() {
+        super.onStop()
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_RESULTS, false)
             .apply()
-
-        val count: Int? = activity?.supportFragmentManager?.backStackEntryCount
-
-        Log.d(TAG, "count: $count ")
-        for (i in 0 until count!!) {
-            activity?.supportFragmentManager?.popBackStack()
-        }
-
     }
 }

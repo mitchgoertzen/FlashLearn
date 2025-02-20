@@ -96,24 +96,36 @@
         android:divider="@drawable/empty_short_divider"
         android:gravity="center"
         android:orientation="vertical"
-        android:showDividers="middle"
+        android:showDividers="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline13"
-        app:layout_constraintVertical_bias="0.496">
+        app:layout_constraintTop_toTopOf="@+id/guideline13">
 
+
+        <Button
+            android:id="@+id/btnRetry"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Retry"
+            app:autoSizeMaxTextSize="12sp"
+            app:autoSizeMinTextSize="10sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:strokeColor="#FCD116"
+            app:strokeWidth="3dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/btnRetry"
-                android:layout_width="130dp"
+                android:id="@+id/btnPractice"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:text="Retry"
+                android:text="Practice"
                 app:autoSizeMaxTextSize="12sp"
                 app:autoSizeMinTextSize="10sp"
                 app:autoSizeStepGranularity="1sp"
@@ -145,10 +157,9 @@
 
             <Button
                 android:id="@+id/btnNextLesson"
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-
                 android:text="Next Lesson"
                 android:visibility="gone"
                 app:autoSizeMaxTextSize="12sp"
