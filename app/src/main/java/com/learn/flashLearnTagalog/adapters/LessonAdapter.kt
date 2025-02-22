@@ -32,7 +32,6 @@ class LessonAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
 
-
         val currentLesson = lessons[position]
         val lessonId = currentLesson.id
         val dialog = LessonTypeDialogueFragment()
@@ -85,7 +84,7 @@ class LessonAdapter @Inject constructor(
 
             holderBinding.tvCategory.text = currentLesson.category + " $level"
             holderBinding.tvDifficulty.text = difficulty
-            //  Log.d(TAG, "image: ${currentLesson.image} from:\n ${currentLesson.category}")
+
             holderBinding.ivPreview.setImageResource(
                 resources.getIdentifier(
                     currentLesson.image,
@@ -95,7 +94,6 @@ class LessonAdapter @Inject constructor(
             )
             holderBinding.ivPreview.imageTintList = null
 
-
             if (!TempListUtility.unlockedLessons.contains(lessonId)) {
                 holderBinding.ibLesson.isEnabled = false
                 holderBinding.ibLesson.alpha = .7f
@@ -104,7 +102,6 @@ class LessonAdapter @Inject constructor(
                 holderBinding.ibLesson.alpha = 1f
             }
 
-            // Log.d(TAG, "9")
 
             holderBinding.ibLesson.setOnClickListener {
                 if (mContext is LearningActivity) {
@@ -158,11 +155,11 @@ class LessonAdapter @Inject constructor(
             3 -> {
                 lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
             }
-            //Locked
-//                4 -> {
-//                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.difficulty }
-//                        .thenBy { it.category })
-//                }
+            //Unlocked
+            4 -> {
+                lessons.sortWith(compareBy<Lesson> { !TempListUtility.unlockedLessons.contains(it.id) }.thenBy { it.category }
+                    .thenBy { it.difficulty })
+            }
         }
 
 //                //TODO: only make once

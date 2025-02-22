@@ -81,6 +81,7 @@ class FilterLessonDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val apply: Button = view.findViewById(R.id.btnApplyFilters)
+        val reset: TextView = view.findViewById(R.id.btnReset)
         val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
         val difficulty2: CheckBox = view.findViewById(R.id.cbLevel2)
         val difficulty3: CheckBox = view.findViewById(R.id.cbLevel3)
@@ -99,6 +100,7 @@ class FilterLessonDialogFragment : DialogFragment() {
         sharedPref.getStringSet(Constants.KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
         }
+
         selectCategory = sharedPref.getString(Constants.KEY_LESSON_CATEGORY, "All")!!
         selectPracticeCompleted =
             sharedPref.getBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, false)
@@ -111,7 +113,7 @@ class FilterLessonDialogFragment : DialogFragment() {
         sortOptionAdapter.addOption("Lesson Level")
         sortOptionAdapter.addOption("Difficulty: Low to High")
         sortOptionAdapter.addOption("Difficulty: High to Low")
-        // sortOptionAdapter.addOption("Unlocked")
+        sortOptionAdapter.addOption("Unlocked")
 
         close.setOnClickListener {
             dialog?.dismiss()
@@ -152,9 +154,28 @@ class FilterLessonDialogFragment : DialogFragment() {
             selectUnlocked = unlocked.isChecked
         }
 
+        reset.setOnClickListener {
+
+            difficulties.clear()
+            difficulty1.isChecked = false
+            difficulty2.isChecked = false
+            difficulty3.isChecked = false
+            difficulty4.isChecked = false
+            difficulty5.isChecked = false
+            difficulty6.isChecked = false
+
+            selectPracticeCompleted = false
+            selectTestPassed = false
+            selectUnlocked = false
+            practiceCompleted.isChecked = false
+            testPassed.isChecked = false
+            unlocked.isChecked = false
+
+        }
+
+
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
-
 
             val filtersActive = difficulties.isNotEmpty() ||
                     practiceCompleted.isChecked || testPassed.isChecked || unlocked.isChecked
@@ -198,6 +219,7 @@ class FilterLessonDialogFragment : DialogFragment() {
             }
         }
     }
+
 
     private fun setDifficultyCheckBox(difficulty: String, checkBox: CheckBox) {
         //if this checkBoxes level is included in difficulties
