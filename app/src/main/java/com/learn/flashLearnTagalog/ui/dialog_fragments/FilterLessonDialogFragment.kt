@@ -1,10 +1,12 @@
 package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.DialogFragment
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_FILTERS_ACTIVE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
@@ -92,7 +95,6 @@ class FilterLessonDialogFragment : DialogFragment() {
         val scope = CoroutineScope(Job() + Dispatchers.Main)
         val spinner: Spinner = view.findViewById(R.id.spinner)
 
-
         //populate difficulties from user's saved selection of lesson difficulties to include
         sharedPref.getStringSet(Constants.KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
@@ -152,6 +154,16 @@ class FilterLessonDialogFragment : DialogFragment() {
 
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
+
+
+            val filtersActive = difficulties.isNotEmpty() ||
+                    practiceCompleted.isChecked || testPassed.isChecked || unlocked.isChecked
+
+            Log.d(TAG, "filtersActive $filtersActive")
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_FILTERS_ACTIVE, filtersActive)
+                .apply()
 
             sharedPref.edit()
                 .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())

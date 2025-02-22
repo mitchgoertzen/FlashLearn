@@ -29,6 +29,7 @@ import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_FILTERS_ACTIVE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
@@ -52,8 +53,10 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
 
     private lateinit var lessonAdapter: LessonAdapter
-    private val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
+    private val newDifficulties = mutableSetOf<String>()
     private val viewModel: LessonViewModel by activityViewModels()
+
+    private lateinit var btnFilter: ImageButton
 
     //TODO: replace with persistent data list
     private var dbLessons = mutableListOf<Lesson>()
@@ -63,7 +66,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-       // refreshList(null, requireActivity())
+        // refreshList(null, requireActivity())
 
     }
 
@@ -93,7 +96,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         super.onViewCreated(view, savedInstanceState)
 
         val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
-        val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
+        btnFilter = view.findViewById(R.id.ibFilter)
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
         val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         val decorator = ItemDecoration(25)
@@ -101,15 +104,15 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
         btnFilter.setOnClickListener {
-            Log.d(TAG, "click")
             if (!dialog.isAdded) {
                 dialog.isCancelable = true
                 dialog.show(childFragmentManager, "test")
-            } else {
-
-                Log.d(TAG, "dont add")
             }
         }
+
+
+
+
 
         rvLessonList.adapter = lessonAdapter
         rvLessonList.layoutManager = grid
@@ -136,6 +139,8 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
 
+
+
         Log.d(TAG, "activity: $activity")
 
         if (!this::sharedPref.isInitialized) {
@@ -145,6 +150,8 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
                 AppCompatActivity.MODE_PRIVATE
             )
         }
+
+
 
 
         refreshScope.launch {
@@ -195,12 +202,25 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
             lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         }
 
+        Log.d(TAG, "create")
+        if (sharedPref.getBoolean(KEY_IN_LESSONS, false) && sharedPref.getBoolean(
+                KEY_LESSON_FILTERS_ACTIVE,
+                false
+            )
+        ) {
+            Log.d(TAG, "active")
+            btnFilter.setImageResource(R.drawable.filter_active)
+        } else {
+            Log.d(TAG, "not ")
+            btnFilter.setImageResource(R.drawable.filter)
+        }
+
         lessonAdapter.deleteLessons()
         var add: Boolean
         //after database access is complete, add lessons to adapter
 
+        val difficultiesEmpty = difficulties.isEmpty()
 
-        // Log.d(TAG, "lessons: ${dbLessons.size}")
         for (lesson in dbLessons) {
             val id = lesson.id
             add = true
@@ -209,7 +229,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
                 //Log.d(TAG, "lessons level: ${lesson.level}")
                 //TODO: replace with difficulty, set names for 1-5
-                if (difficulties.contains((lesson.level).toString())) {
+                if (difficultiesEmpty || difficulties.contains((lesson.level).toString())) {
 
                     //Log.d(TAG, "CONTAINS difficulty")
                     val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")

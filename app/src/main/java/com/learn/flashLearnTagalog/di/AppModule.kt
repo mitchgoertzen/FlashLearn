@@ -12,6 +12,7 @@ import com.learn.flashLearnTagalog.other.Constants.KEY_ENG_FIRST
 import com.learn.flashLearnTagalog.other.Constants.KEY_FIRST_TIME_TOGGLE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_FILTERS_ACTIVE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
@@ -147,4 +148,10 @@ object AppModule {
     @Provides
     fun lessonFilterUnlocked(sharedPref: SharedPreferences) =
         sharedPref.getInt(KEY_LESSON_UNLOCKED, 2)
+
+    @Singleton
+    @Provides
+    fun lessonFilterActive(sharedPref: SharedPreferences) =
+        sharedPref.getBoolean(KEY_LESSON_FILTERS_ACTIVE, false)
+
 }
