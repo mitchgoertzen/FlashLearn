@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,6 +68,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_TEST, true)
             .apply()
+
 
 
     }
@@ -236,12 +236,12 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                 }
             }
 
-            etTodoTitle.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
-                    btnEnter.performClick()
-                }
-                true
-            }
+//            etTodoTitle.setOnKeyListener { _, keyCode, event ->
+//                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+//                    btnEnter.performClick()
+//                }
+//                true
+//            }
         }
 
 

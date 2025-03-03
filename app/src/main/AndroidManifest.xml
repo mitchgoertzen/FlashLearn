@@ -57,7 +57,8 @@
             android:label="LearningActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Tagalog.NoActionBar"
-            tools:ignore="LockedOrientationActivity" />
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

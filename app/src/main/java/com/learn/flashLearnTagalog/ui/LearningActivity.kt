@@ -2,16 +2,21 @@ package com.learn.flashLearnTagalog.ui
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -107,6 +112,27 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
           //  navigationView.setCheckedItem(R.id.nav_home)
         }
 
+        drawerLayout.addDrawerListener(object : DrawerListener {
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+            }
+
+            override fun onDrawerOpened(drawerView: View) {
+
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                view.hideKeyboard()
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            }
+
+            override fun onDrawerStateChanged(newState: Int) {
+            }
+        })
+
+
+
 
         val infoText =
             "This app is intended for English speakers who are interested in learning words from the " +
@@ -195,6 +221,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         setType(t)
         sharedPref.edit().putBoolean(KEY_HOME, false).apply()
         setHomeIcon(false)
+    }
+
+    private fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     @SuppressLint("MissingSuperCall")

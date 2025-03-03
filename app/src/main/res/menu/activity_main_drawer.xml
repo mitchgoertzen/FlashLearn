@@ -17,7 +17,7 @@
 
 
         <item android:id="@+id/nav_org"
-            android:icon="@drawable/world"
+            android:icon="@android:drawable/ic_lock_idle_lock"
             app:actionLayout="@layout/textbox"
             android:title="" />
 
