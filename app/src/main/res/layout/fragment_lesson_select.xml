@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nestedScrollView"
-    android:background="@color/blue"
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,8 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:text="Select Lesson"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -24,6 +21,7 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/glHorizontal1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +32,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glHorizontal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.14" />
 
     <!--    <ImageView-->
     <!--        android:id="@+id/imageView2"-->
@@ -68,12 +73,6 @@
         app:layout_constraintStart_toStartOf="@+id/glVertical3"
         app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glHorizontal2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.17" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glVertical1"

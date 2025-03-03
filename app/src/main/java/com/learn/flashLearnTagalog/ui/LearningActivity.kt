@@ -8,11 +8,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -47,6 +51,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     private var inSettings: Boolean = true
 
 
+    private lateinit var drawerLayout: DrawerLayout
+
+
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +84,30 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         val profileDialog = ProfilePopupFragment()
         val infoDialog: DialogFragment = HintDialogFragment()
 
+        setContentView(view)
+
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = null
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        //  navigationView.setNavigationItemSelectedListener(this)
+
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        toolbar.setNavigationIcon(R.drawable.ic_action_name)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_nav_container, HomeFragment()).commit()
+
+          //  navigationView.setCheckedItem(R.id.nav_home)
+        }
+
+
         val infoText =
             "This app is intended for English speakers who are interested in learning words from the " +
                     "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
@@ -87,11 +118,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
                     "2023, mitch goertzen"
 
-        setContentView(view)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_nav_container, HomeFragment()).commit()
-        }
 
         checkUser(binding)
 

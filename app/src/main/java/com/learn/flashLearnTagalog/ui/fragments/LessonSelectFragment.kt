@@ -235,7 +235,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
                     val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
                     if (!category.equals("All")) {
-
                         //  Log.d(TAG, "lessons cat: ${lesson.category}")
                         if (lesson.category != category) {
                             add = false

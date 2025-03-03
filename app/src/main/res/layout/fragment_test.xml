@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_layout"
+    android:background="@color/blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.TestFragment">
@@ -13,15 +14,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text=""
+        android:text="current"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:autoSizeMaxTextSize="72sp"
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/tvType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,9 +40,9 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTodoList"
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline11" />
+        app:layout_constraintTop_toBottomOf="@+id/tvType" />
 
 
     <EditText
@@ -131,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline14"
