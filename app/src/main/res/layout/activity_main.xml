@@ -173,6 +173,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/white"
+        ads:itemTextColor="@color/black"
+        ads:itemIconTint="@color/black"
         ads:headerLayout="@layout/nav_header"
         ads:menu="@menu/activity_main_drawer" />
 
