@@ -17,4 +17,6 @@
     <color name="seek_bar_background">#80FFFFFF</color>
     <color name="seek_bar_progress">#FFFFFF</color>
     <color name="seek_bar_secondary_progress">#BFFFFFFF</color>
+
+    <color name="none">#00000000</color>
 </resources>

@@ -104,7 +104,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        toolbar.setNavigationIcon(R.drawable.ic_action_name)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_nav_container, HomeFragment()).commit()
@@ -289,7 +288,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         when (t) {
             0 -> {
-                binding.ivBackground.setImageResource(R.drawable.flag)
+                binding.ivBackground.setImageResource(R.drawable.flag2)
             }
 
             1 -> {

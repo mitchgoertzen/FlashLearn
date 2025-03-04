@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout11"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="@color/black"
+    android:orientation="horizontal"
+    android:theme="@style/SignInMenuTheme">
+
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView11232"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:text="Organization"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:text="Passcode"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextText132313"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:inputType="text"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp"
+            android:theme="@style/MenuEditText" />
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:typeface="normal"
+            android:letterSpacing="0.001"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp"
+            android:theme="@style/MenuEditText" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="Sign In" />
+    </LinearLayout>
+
+</LinearLayout>

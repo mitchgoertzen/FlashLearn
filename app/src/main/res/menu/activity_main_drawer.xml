@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/world"
-            android:title="@string/menu_org_name" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@android:drawable/ic_lock_idle_lock"
-            android:title="@string/menu_ord_passcode" />
+    <group>
+
+        <item android:title="Organization Sign in">
+            <menu>
+                <item
+                    android:id="@+id/sign_in"
+                    android:enabled="false"
+                    android:title=""
+                    app:actionLayout="@layout/menu_sign_in"/>
+            </menu>
 
 
-        <item android:id="@+id/nav_org"
-            android:icon="@android:drawable/ic_lock_idle_lock"
-            app:actionLayout="@layout/textbox"
-            android:title="" />
 
-        <item android:title="">
+        </item>
+
+        <item android:title="Other">
             <menu>
                 <item
                     android:id="@+id/nav_slideshow"
@@ -31,4 +29,6 @@
 
         </item>
     </group>
+
+
 </menu>
