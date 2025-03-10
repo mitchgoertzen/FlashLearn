@@ -65,6 +65,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         val scoreText: TextView = view.findViewById(R.id.tvScore)
         val totalText: TextView = view.findViewById(R.id.tvTotal)
         val percentageText: TextView = view.findViewById(R.id.tvPercentage)
+        val infoText: TextView = view.findViewById(R.id.tvResultInfo)
         val retryButton: Button = view.findViewById(R.id.btnRetry)
         val practiceButton: Button = view.findViewById(R.id.btnPractice)
         val nextButton: Button = view.findViewById(R.id.btnNextLesson)
@@ -72,6 +73,8 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
         val guideline: Guideline = view.findViewById(R.id.glRight)
         val listSize = viewModel.listSize
+        val percentage = (100 * score / listSize)
+        val passingScore = 50
 
         viewModel.currentAdapter.observe(viewLifecycleOwner) { adapter ->
             rvTodoList.adapter = adapter
@@ -81,7 +84,15 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         guideline.setGuidelinePercent(1f)
         nextButton.visibility = View.GONE
 
-        if ((100 * score / listSize) >= 50) {
+        scoreText.text = score.toString()
+        totalText.text = listSize.toString()
+
+        percentageText.text = "$percentage%"
+
+        var resultText = ""
+        var resultColor = 0
+
+        if (percentage >= passingScore) {
 
             viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
                 val nextId = "${lesson.category}_${lesson.level + 1}"
@@ -176,10 +187,16 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
 
             }
 
-            scoreText.text = score.toString()
-            totalText.text = listSize.toString()
-            percentageText.text = (100 * score / listSize).toString() + "%"
+            resultColor = R.color.passingGreen
+            resultText = "You Passed!"
+        } else {
+            resultColor = R.color.red
+            resultText = "Not Quite...\na passing Score is $passingScore%"
         }
+
+        infoText.text = resultText
+        infoText.setTextColor(resources.getColor(resultColor))
+        percentageText.setTextColor(resources.getColor(resultColor))
 
         retryButton.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()

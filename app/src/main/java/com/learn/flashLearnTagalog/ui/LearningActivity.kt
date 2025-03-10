@@ -281,7 +281,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setType(t: Int) {
         type = t
 
-
         //when learning activity is started, choose background colour based on type
         //0 = home, 1 = dictionary, 2 = lessons, 3 = stats
         var bkgColor: Int = resources.getColor(R.color.white)
@@ -293,12 +292,12 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             1 -> {
                 bkgColor = resources.getColor(R.color.red)
-                binding.ivBackground.setImageDrawable(null)
+                binding.ivBackground.setImageResource(0)
             }
 
             2 -> {
                 bkgColor = resources.getColor(R.color.blue)
-                binding.ivBackground.setImageDrawable(null)
+                binding.ivBackground.setImageResource(0)
             }
 
             else -> {}

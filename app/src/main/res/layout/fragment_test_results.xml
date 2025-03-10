@@ -79,6 +79,14 @@
             android:textColor="@color/white"
             android:textSize="32sp" />
 
+        <TextView
+            android:id="@+id/tvResultInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -124,7 +132,7 @@
 
             <Button
                 android:id="@+id/btnPractice"
-                android:layout_width="140dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="Practice"
@@ -159,7 +167,7 @@
 
             <Button
                 android:id="@+id/btnNextLesson"
-                android:layout_width="140dp"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="Next Lesson"

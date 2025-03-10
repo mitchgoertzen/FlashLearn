@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TestWord
-import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.databinding.TestWordBinding
 
 class TestWordAdapter(
@@ -19,11 +19,15 @@ class TestWordAdapter(
    // lateinit var currentList: List<Word>
     private var showEngFirst: Boolean = false
     private var isAnswer: Boolean = false
+    private var correctColor = 0
+    private var wrongColor = 0
 
     class TestWordViewHolder(val binding: TestWordBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestWordViewHolder {
         val binding = TestWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        correctColor = parent.resources.getColor(R.color.passingGreen)
+        wrongColor = parent.resources.getColor(R.color.red)
         return TestWordViewHolder(binding)
     }
 
@@ -82,14 +86,14 @@ class TestWordAdapter(
             //incorrect answer
             if (!isCorrect) {
                 tvTestWord.paintFlags = tvTestWord.paintFlags or STRIKE_THRU_TEXT_FLAG
-                tvTestWord.setTextColor(Color.parseColor("#CC000000"))
+                tvTestWord.setTextColor(wrongColor)
                 tvTestWord.alpha = 0.6f
                 tvTestWord.textSize = 18f
             } else
             //correct answer
             {
                 tvTestWord.paintFlags = tvTestWord.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
-                tvTestWord.setTextColor(Color.parseColor("#72CC50"))
+                tvTestWord.setTextColor(correctColor)
                 tvTestWord.alpha = 1f
                 tvTestWord.textSize = 22f
             }

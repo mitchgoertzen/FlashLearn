@@ -335,7 +335,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                 // viewModel.passTest(currentLesson.id)
          //   }
 
-            val bundle = bundleOf("words_correct" to 20)
+            val bundle = bundleOf("words_correct" to 5)
 
             viewModel.updateAdapter(answeredAdapter)
 

@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/parent_layout"
-    android:background="@color/blue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".ui.fragments.TestFragment">
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
+        android:padding="10dp"
         android:text="current"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -21,7 +22,6 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/tvType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
         android:backgroundTint="#80FFFFFF"
         android:hint="@string/enter_translation"
         android:inputType="textCapCharacters|textNoSuggestions"
-        android:minHeight="68dp"
+        android:minHeight="60dp"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textColor="@color/white"
@@ -75,6 +75,7 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
+        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvTodoList" />
@@ -97,6 +98,7 @@
         android:id="@+id/btnEnter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
         android:maxLines="1"
         android:text="Enter"
         android:textColor="@color/blue"
@@ -104,7 +106,7 @@
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvIndex"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTodoTitle"
@@ -114,8 +116,7 @@
     <TextView
         android:id="@+id/tvIndex"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="bottom"
+        android:layout_height="25dp"
         android:text=""
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -123,8 +124,7 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEnter" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
@@ -138,6 +138,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.7" />
+        app:layout_constraintGuide_percent="0.71" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline42"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.93" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
