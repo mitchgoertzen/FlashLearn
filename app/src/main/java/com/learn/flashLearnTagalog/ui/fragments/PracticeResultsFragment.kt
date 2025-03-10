@@ -23,7 +23,7 @@ import javax.inject.Inject
 //private var wordList: MutableList<Word>
 //private var currentLesson: Lesson
 @AndroidEntryPoint
-class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
+class PracticeResultsFragment : Fragment(R.layout.fragment_lessons_practice_results) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -34,7 +34,7 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_practice_results, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_practice_results, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

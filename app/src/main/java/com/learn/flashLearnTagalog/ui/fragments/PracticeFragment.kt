@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PracticeFragment : Fragment(R.layout.fragment_practice) {
+class PracticeFragment : Fragment(R.layout.fragment_lessons_practice) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -42,7 +42,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_practice, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_practice, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

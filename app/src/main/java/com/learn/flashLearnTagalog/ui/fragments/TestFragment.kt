@@ -36,7 +36,7 @@ import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment : Fragment(R.layout.fragment_test) {
+class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
     private val viewModel: LessonViewModel by activityViewModels()
     private val correctMessage = "CORRECT!"
@@ -79,7 +79,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_test, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_test, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

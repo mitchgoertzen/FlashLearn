@@ -71,7 +71,7 @@ class LessonTypeDialogueFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return inflater.inflate(R.layout.fragment_lesson_type_dialogue, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_type_dialogue, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

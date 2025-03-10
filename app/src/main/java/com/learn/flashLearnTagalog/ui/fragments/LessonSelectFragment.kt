@@ -49,7 +49,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
+class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
 
 
     private lateinit var lessonAdapter: LessonAdapter
@@ -88,7 +88,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     ): View? {
 
 
-        return inflater.inflate(R.layout.fragment_lesson_select, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_select, container, false)
     }
 
     @OptIn(DelicateCoroutinesApi::class)

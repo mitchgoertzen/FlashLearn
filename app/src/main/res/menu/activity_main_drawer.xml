@@ -12,7 +12,7 @@
                     android:id="@+id/sign_in"
                     android:enabled="false"
                     android:title=""
-                    app:actionLayout="@layout/menu_sign_in"/>
+                    app:actionLayout="@layout/app_menu_sign_in"/>
             </menu>
 
 

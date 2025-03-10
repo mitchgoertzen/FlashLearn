@@ -48,7 +48,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
+class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -115,7 +115,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+        return inflater.inflate(R.layout.dialog_fragment_sign_in, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

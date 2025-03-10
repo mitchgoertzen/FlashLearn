@@ -61,7 +61,7 @@ class FilterLessonDialogFragment : DialogFragment() {
 
         spinnerAdapter = ArrayAdapter(
             requireContext(),
-            R.layout.spinner_item, languages
+            R.layout.component_spinner_item, languages
         )
     }
 
@@ -74,7 +74,7 @@ class FilterLessonDialogFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+        return inflater.inflate(R.layout.dialog_fragment_filter_lesson, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,7 +119,7 @@ class FilterLessonDialogFragment : DialogFragment() {
             dialog?.dismiss()
         }
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(R.layout.component_spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
         spinner.setSelection(spinnerAdapter.getPosition(selectCategory))
 

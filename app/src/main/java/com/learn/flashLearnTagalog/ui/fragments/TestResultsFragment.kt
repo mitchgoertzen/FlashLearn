@@ -35,7 +35,7 @@ import javax.inject.Inject
 //var lesson: Lesson, var adapter: TestWordAdapter
 
 @AndroidEntryPoint
-class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
+class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -54,7 +54,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_test_results) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_test_results, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_test_results, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
