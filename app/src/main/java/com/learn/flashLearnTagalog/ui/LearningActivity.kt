@@ -46,6 +46,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -72,7 +73,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        lateinit var scope: CoroutineScope
 
         auth = Firebase.auth
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
@@ -139,7 +140,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onDrawerOpened(drawerView: View) {
 
-                val scope = CoroutineScope(Job() + Dispatchers.Main)
+                scope = CoroutineScope(Job() + Dispatchers.Main)
 
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
@@ -174,6 +175,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onDrawerClosed(drawerView: View) {
                 view.hideKeyboard()
+                if (scope.isActive) {
+                    scope.cancel()
+                }
                 orgName = findViewById(R.id.etOrgName)
                 orgPasscode = findViewById(R.id.etOrgPasscode)
 
