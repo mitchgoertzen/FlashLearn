@@ -17,7 +17,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView11232"
+            android:id="@+id/tvOrgName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
@@ -25,7 +25,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/tvOrgPasscode"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
@@ -39,7 +39,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/editTextText132313"
+            android:id="@+id/etOrgName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ellipsize="end"
@@ -52,7 +52,7 @@
             android:theme="@style/MenuEditText" />
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/etOrgPasscode"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ellipsize="end"
@@ -67,7 +67,7 @@
             android:theme="@style/MenuEditText" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnOrgSignIn"
             style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="50dp"

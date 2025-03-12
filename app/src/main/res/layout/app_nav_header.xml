@@ -29,13 +29,12 @@
             app:srcCompat="@drawable/flashlearntext" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvOrgName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:textSize="14sp"
-            android:textAllCaps="false"
-            android:text="org name" />
+            android:textAllCaps="false"/>
     </LinearLayout>
 
 

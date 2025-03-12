@@ -10,26 +10,31 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_HOME
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
+import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_ID
+import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_NAME
+import com.learn.flashLearnTagalog.other.UtilityFunctions
 import com.learn.flashLearnTagalog.ui.dialog_fragments.HintDialogFragment
 import com.learn.flashLearnTagalog.ui.dialog_fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.fragments.HomeFragment
@@ -37,6 +42,11 @@ import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private var type: Int = -1
@@ -63,34 +73,38 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         auth = Firebase.auth
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         Log.d(TAG, "ads")
 
-        MobileAds.initialize(this) {}
-
-        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
-
-        configurationBuilder.setTagForChildDirectedTreatment(
-            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
-        )
-        configurationBuilder.setMaxAdContentRating(
-            RequestConfiguration.MAX_AD_CONTENT_RATING_G
-        )
-
-        MobileAds.setRequestConfiguration(configurationBuilder.build())
-        val adRequest = AdRequest.Builder().build()
-        binding.adViewLearning.loadAd(adRequest)
+//        MobileAds.initialize(this) {}
+//
+//        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
+//
+//        configurationBuilder.setTagForChildDirectedTreatment(
+//            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+//        )
+//        configurationBuilder.setMaxAdContentRating(
+//            RequestConfiguration.MAX_AD_CONTENT_RATING_G
+//        )
+//
+//        MobileAds.setRequestConfiguration(configurationBuilder.build())
+//        val adRequest = AdRequest.Builder().build()
+//        binding.adViewLearning.loadAd(adRequest)
 
 
         val view = binding.root
         val profileDialog = ProfilePopupFragment()
         val infoDialog: DialogFragment = HintDialogFragment()
 
-        setContentView(view)
+        var orgName: EditText
+        var orgPasscode: EditText
+        var orgSignIn: Button
 
+        setContentView(view)
 
         drawerLayout = findViewById(R.id.drawer_layout)
 
@@ -100,7 +114,14 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         //  navigationView.setNavigationItemSelectedListener(this)
 
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -108,7 +129,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_nav_container, HomeFragment()).commit()
 
-          //  navigationView.setCheckedItem(R.id.nav_home)
+            //  navigationView.setCheckedItem(R.id.nav_home)
         }
 
         drawerLayout.addDrawerListener(object : DrawerListener {
@@ -118,19 +139,53 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onDrawerOpened(drawerView: View) {
 
+                val scope = CoroutineScope(Job() + Dispatchers.Main)
+
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+
+                orgName = findViewById(R.id.etOrgName)
+                orgPasscode = findViewById(R.id.etOrgPasscode)
+                orgSignIn = findViewById(R.id.btnOrgSignIn)
+
+                val orgTitle: TextView = findViewById(R.id.tvOrgName)
+                orgTitle.text = sharedPref.getString(KEY_ORGANIZATION_NAME, "")
+
+                orgSignIn.setOnClickListener {
+                    if (orgName.text.toString().isNotEmpty()) {
+                        scope.launch {
+                            val shaName = UtilityFunctions.sha256(orgName.text.toString())
+                            val org = DataUtility.getOrganization(shaName)
+                            if (org != null) {
+                                val shaPass = UtilityFunctions.sha256(orgPasscode.text.toString())
+                                if (shaPass == org.passcode) {
+                                    scope.cancel()
+                                    Log.d(TAG, "LOGGED IN")
+                                    drawerLayout.closeDrawer(GravityCompat.START)
+                                    orgTitle.text = org.name
+                                    orgSignIn(shaName, org.name)
+                                }
+                            } else {
+                                Log.d(TAG, "no org with that name")
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onDrawerClosed(drawerView: View) {
                 view.hideKeyboard()
+                orgName = findViewById(R.id.etOrgName)
+                orgPasscode = findViewById(R.id.etOrgPasscode)
+
+                orgName.setText("")
+                orgPasscode.setText("")
+
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             }
 
             override fun onDrawerStateChanged(newState: Int) {
             }
         })
-
-
 
 
         val infoText =
@@ -312,6 +367,13 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         } else {
             binding.ibProfile.setImageResource(R.drawable.profile)
         }
+    }
+
+    private fun orgSignIn(id: String, name: String) {
+
+        Log.d(TAG, "ORG THINGS")
+        sharedPref.edit().putString(KEY_ORGANIZATION_NAME, name).apply()
+        sharedPref.edit().putString(KEY_ORGANIZATION_ID, id).apply()
     }
 
 }

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.data.Word
-import com.learn.flashLearnTagalog.databinding.DictionaryWordBinding
+import com.learn.flashLearnTagalog.databinding.ComponentDictionaryWordBinding
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,12 +15,12 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
     //TODO: init check
     private lateinit var currentList: List<Word>
 
-    class DictionaryViewHolder(val binding: DictionaryWordBinding) :
+    class DictionaryViewHolder(val binding: ComponentDictionaryWordBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DictionaryViewHolder {
         val binding =
-            DictionaryWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ComponentDictionaryWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return DictionaryViewHolder(binding)
 
     }

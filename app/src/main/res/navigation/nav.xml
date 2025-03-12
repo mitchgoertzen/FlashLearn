@@ -35,7 +35,7 @@
         android:id="@+id/lessonTypeDialogueFragment"
         android:name="com.learn.flashLearnTagalog.ui.dialog_fragments.LessonTypeDialogueFragment"
         android:label="fragment_lesson_type_dialogue"
-        tools:layout="@layout/fragment_lessons_type_dialogue" >
+        tools:layout="@layout/dialog_fragment_lessons_type" >
         <action
             android:id="@+id/action_lessonTypeDialogueFragment_to_testFragment"
             app:destination="@id/testFragment" />

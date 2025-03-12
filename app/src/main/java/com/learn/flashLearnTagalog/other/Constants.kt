@@ -6,6 +6,8 @@ object Constants {
     const val SHARED_PREFERENCES_NAME = "sharedPref"
     const val KEY_FIRST_TIME_TOGGLE = "KEY_FIRST_TIME_TOGGLE"
     const val KEY_USER_SIGNED_IN = "KEY_USER_SIGNED_IN"
+    const val KEY_ORGANIZATION_NAME = "KEY_ORGANIZATION_NAME"
+    const val KEY_ORGANIZATION_ID = "KEY_ORGANIZATION_ID"
     //    const val KEY_WORD_UPDATE = "KEY_WORD_UPDATE"
     //    const val KEY_LESSON_UPDATE = "KEY_LESSON_UPDATE"
     const val KEY_HOME = "KEY_HOME"

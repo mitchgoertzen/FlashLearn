@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
-import com.learn.flashLearnTagalog.databinding.LessonBinding
+import com.learn.flashLearnTagalog.databinding.ComponentLessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.dialog_fragments.LessonTypeDialogueFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
@@ -23,10 +23,10 @@ class LessonAdapter @Inject constructor(
 ) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
-    class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
+    class LessonViewHolder(val binding: ComponentLessonBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-        val binding = LessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ComponentLessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LessonViewHolder(binding)
     }
 
