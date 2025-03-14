@@ -6,7 +6,7 @@
 
     <group>
 
-        <item android:title="Organization Sign in">
+        <item android:title="Organization">
             <menu>
                 <item
                     android:id="@+id/sign_in"

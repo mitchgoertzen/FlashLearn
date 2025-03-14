@@ -12,13 +12,13 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
@@ -101,9 +101,13 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         val profileDialog = ProfilePopupFragment()
         val infoDialog: DialogFragment = HintDialogFragment()
 
+        var signInSection: LinearLayout
         var orgName: EditText
         var orgPasscode: EditText
         var orgSignIn: Button
+
+        var signOutSection: LinearLayout
+        var orgSignOut: Button
 
         setContentView(view)
 
@@ -144,32 +148,59 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
+                signInSection = findViewById(R.id.llSignIn)
+                signOutSection = findViewById(R.id.llSignOut)
+
                 orgName = findViewById(R.id.etOrgName)
                 orgPasscode = findViewById(R.id.etOrgPasscode)
                 orgSignIn = findViewById(R.id.btnOrgSignIn)
+                orgSignOut = findViewById(R.id.btnOrgSignOut)
 
                 val orgTitle: TextView = findViewById(R.id.tvOrgName)
                 orgTitle.text = sharedPref.getString(KEY_ORGANIZATION_NAME, "")
 
                 orgSignIn.setOnClickListener {
+
+                    Log.d(TAG, "sign out")
                     if (orgName.text.toString().isNotEmpty()) {
                         scope.launch {
                             val shaName = UtilityFunctions.sha256(orgName.text.toString())
                             val org = DataUtility.getOrganization(shaName)
                             if (org != null) {
-                                val shaPass = UtilityFunctions.sha256(orgPasscode.text.toString())
+                                val shaPass =
+                                    UtilityFunctions.sha256(orgPasscode.text.toString())
                                 if (shaPass == org.passcode) {
-                                    scope.cancel()
                                     Log.d(TAG, "LOGGED IN")
-                                    drawerLayout.closeDrawer(GravityCompat.START)
+                                    view.hideKeyboard()
+                                    orgName.text.clear()
+                                    orgPasscode.text.clear()
                                     orgTitle.text = org.name
                                     orgSignIn(shaName, org.name)
+                                    signInSection.visibility = View.GONE
+                                    signOutSection.visibility = View.VISIBLE
                                 }
                             } else {
                                 Log.d(TAG, "no org with that name")
                             }
                         }
                     }
+                }
+
+                orgSignOut.setOnClickListener {
+                    Log.d(TAG, "sign out")
+                    orgTitle.text = ""
+                    sharedPref.edit().putString(KEY_ORGANIZATION_NAME, "").apply()
+                    sharedPref.edit().putString(KEY_ORGANIZATION_ID, "").apply()
+                    signInSection.visibility = View.VISIBLE
+                    signOutSection.visibility = View.GONE
+                }
+
+                if (orgTitle.text == "") {
+                    signInSection.visibility = View.VISIBLE
+                    signOutSection.visibility = View.GONE
+                } else {
+                    signInSection.visibility = View.GONE
+                    signOutSection.visibility = View.VISIBLE
                 }
             }
 
@@ -342,27 +373,22 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         //when learning activity is started, choose background colour based on type
         //0 = home, 1 = dictionary, 2 = lessons, 3 = stats
-        var bkgColor: Int = resources.getColor(R.color.white)
 
         when (t) {
             0 -> {
-                binding.ivBackground.setImageResource(R.drawable.flag2)
+                drawerLayout.setBackgroundResource(R.drawable.flag2)
             }
 
             1 -> {
-                bkgColor = resources.getColor(R.color.red)
-                binding.ivBackground.setImageResource(0)
+                drawerLayout.setBackgroundResource(R.color.red)
             }
 
             2 -> {
-                bkgColor = resources.getColor(R.color.blue)
-                binding.ivBackground.setImageResource(0)
+                drawerLayout.setBackgroundResource(R.color.blue)
             }
 
             else -> {}
         }
-
-        binding.ivBackground.setBackgroundColor(bkgColor)
     }
 
     private fun checkUser(binding: ActivityMainBinding) {

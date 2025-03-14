@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.LearningActivity"
-    tools:openDrawer="end">
+    tools:openDrawer="start">
 
 
     <LinearLayout
@@ -51,19 +51,9 @@
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clMainBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/ivBackground"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#0038A8"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
                 android:id="@+id/main_nav_container"
@@ -80,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:background="#00000000"
-                app:layout_constraintBottom_toBottomOf="@+id/ivBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/clMainBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent">
@@ -139,15 +129,6 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.85" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.9" />
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
