@@ -86,13 +86,13 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
         super.onViewCreated(view, savedInstanceState)
 
         listSize = viewModel.listSize
-
+        i = 1
         val rvTodoList: RecyclerView = view.findViewById(R.id.rvTodoList)
         val tvCurrentWord: TextView = view.findViewById(R.id.tvCurrentWord)
         val etTodoTitle: EditText = view.findViewById(R.id.etTodoTitle)
         val btnEnter: Button = view.findViewById(R.id.btnEnter)
         val btnSkip: Button = view.findViewById(R.id.btnSkip)
-        i = 1
+        val indexText = "${i++}/$listSize"
         rvTodoList.adapter = testWordAdapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
@@ -110,7 +110,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             val index: TextView = view.findViewById(R.id.tvIndex)
 
             //TODO: list size in adapter
-            index.text = "${i++}/$listSize"
+            index.text = indexText
 
             etTodoTitle.doOnTextChanged { _, _, _, _ ->
                 val toDoTitle = etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
@@ -126,8 +126,6 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
 
-                goToResults()
-
                 if (skipped) {
                     answered = false
                     skipped = false
@@ -137,9 +135,10 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                     } else
                     //go to next word
                     {
-                        index.text = "${i++}/$listSize"
+
+                        index.text = indexText
                         testWordAdapter.deleteTestWords()
-                        btnEnter.text = "Enter"
+                        btnEnter.text = getString(R.string.enter)
                         btnEnter.isEnabled = false
                         btnSkip.isEnabled = true
                         btnSkip.alpha = 1f
@@ -152,11 +151,11 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                     }
                 } else {
                     val toDoTitle =
-                        etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
+                        etTodoTitle.text.toString().replace(getString(R.string.space).toRegex(), "").uppercase()
                     if (toDoTitle.isNotBlank()) {
                         val toDo = TestWord(toDoTitle)
                         val answer =
-                            getCurrentWord(!engFirst).uppercase().replace(" ".toRegex(), "")
+                            getCurrentWord(!engFirst).uppercase().replace(getString(R.string.space).toRegex(), "")
                         correctAnswer = (toDoTitle == answer)
                         toDo.isCorrect = correctAnswer
                         testWordAdapter.addTestWord(toDo, engFirst, false)
@@ -172,7 +171,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                             } else {
                                 answered = false
                                 testWordAdapter.deleteTestWords()
-                                btnEnter.text = "Enter"
+                                btnEnter.text = getString(R.string.enter)
                                 btnEnter.isEnabled = false
                                 btnSkip.isEnabled = true
                                 btnSkip.alpha = 1f
@@ -181,7 +180,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                                 correctAnswer = false
                                 currentWord = currentWordList.random()
                                 tvCurrentWord.text = getCurrentWord(engFirst)
-                                index.text = "${i++}/$listSize"
+                                index.text = indexText
                             }
                         } else {
                             answerWord(true)
@@ -192,9 +191,9 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                             btnSkip.alpha = .2f
                             currentWordList.remove(currentWord)
                             if (currentWordList.isEmpty()) {
-                                btnEnter.text = "Finish"
+                                btnEnter.text = getString(R.string.finish)
                             } else {
-                                btnEnter.text = "Next Word"
+                                btnEnter.text = getString(R.string.next_word)
                             }
                             etTodoTitle.hint = correctMessage
                             etTodoTitle.isEnabled = false
@@ -224,24 +223,17 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
                     //show finish button
                     if (currentWordList.isEmpty()) {
-                        btnEnter.text = "Finish"
+                        btnEnter.text = getString(R.string.finish)
                     } else
                     //show next word button
                     {
-                        btnEnter.text = "Next Word"
+                        btnEnter.text = getString(R.string.next_word)
                     }
 
                     btnEnter.isEnabled = true
                     btnSkip.isEnabled = false
                 }
             }
-
-//            etTodoTitle.setOnKeyListener { _, keyCode, event ->
-//                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
-//                    btnEnter.performClick()
-//                }
-//                true
-//            }
         }
 
 

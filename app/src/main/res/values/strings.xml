@@ -138,4 +138,8 @@
     <string name="menu_org_name">Organization</string>
     <string name="menu_ord_passcode">Passcode</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="enter">Enter</string>
+    <string name="space">" "</string>
+    <string name="finish">Finish</string>
+    <string name="next_word">Next Word</string>
 </resources>
