@@ -89,8 +89,8 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
 
         percentageText.text = "$percentage%"
 
-        var resultText = ""
-        var resultColor = 0
+        val resultText: String
+        val resultColor: Int
 
         if (percentage >= passingScore) {
 

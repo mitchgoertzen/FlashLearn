@@ -92,7 +92,6 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
         val etTodoTitle: EditText = view.findViewById(R.id.etTodoTitle)
         val btnEnter: Button = view.findViewById(R.id.btnEnter)
         val btnSkip: Button = view.findViewById(R.id.btnSkip)
-        val indexText = "${i++}/$listSize"
         rvTodoList.adapter = testWordAdapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
@@ -110,7 +109,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             val index: TextView = view.findViewById(R.id.tvIndex)
 
             //TODO: list size in adapter
-            index.text = indexText
+            index.text = "${i++}/$listSize"
 
             etTodoTitle.doOnTextChanged { _, _, _, _ ->
                 val toDoTitle = etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
@@ -136,7 +135,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                     //go to next word
                     {
 
-                        index.text = indexText
+                        index.text = "${i++}/$listSize"
                         testWordAdapter.deleteTestWords()
                         btnEnter.text = getString(R.string.enter)
                         btnEnter.isEnabled = false
@@ -180,7 +179,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                                 correctAnswer = false
                                 currentWord = currentWordList.random()
                                 tvCurrentWord.text = getCurrentWord(engFirst)
-                                index.text = indexText
+                                index.text = "${i++}/$listSize"
                             }
                         } else {
                             answerWord(true)
@@ -288,7 +287,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
     private fun goToResults() {
         viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
-         //   if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.0f) {
+           if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.0f) {
                 val id = lesson.id
                 if (!TempListUtility.passedLessons.contains(id)) {
 
@@ -321,13 +320,9 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                         true
                     )
                 }
+            }
 
-                //DataUtility.passTest(currentLesson.id)
-                //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
-                // viewModel.passTest(currentLesson.id)
-         //   }
-
-            val bundle = bundleOf("words_correct" to 5)
+            val bundle = bundleOf("words_correct" to wordsCorrect)
 
             viewModel.updateAdapter(answeredAdapter)
 

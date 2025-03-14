@@ -73,13 +73,13 @@ class PracticeFragment : Fragment(R.layout.fragment_lessons_practice) {
 
 
             prevButton.isEnabled = false
-            finishButton.visibility = View.VISIBLE
-//            if (currentWordList.size == 1) {
-//                nextButton.isEnabled = false
-//                finishButton.visibility = View.VISIBLE
-//            } else {
-//                finishButton.visibility = View.GONE
-//            }
+
+            if (currentWordList.size == 1) {
+                nextButton.isEnabled = false
+                finishButton.visibility = View.VISIBLE
+            } else {
+                finishButton.visibility = View.GONE
+            }
 
             finishButton.setOnClickListener {
 
