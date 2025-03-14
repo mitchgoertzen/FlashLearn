@@ -21,6 +21,7 @@ import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -77,6 +78,7 @@ class FilterLessonDialogFragment : DialogFragment() {
         return inflater.inflate(R.layout.dialog_fragment_filter_lesson, container, false)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -164,6 +166,7 @@ class FilterLessonDialogFragment : DialogFragment() {
             difficulty5.isChecked = false
             difficulty6.isChecked = false
 
+            selectCategory = "All"
             selectPracticeCompleted = false
             selectTestPassed = false
             selectUnlocked = false
@@ -171,12 +174,18 @@ class FilterLessonDialogFragment : DialogFragment() {
             testPassed.isChecked = false
             unlocked.isChecked = false
 
+            spinner.setSelection(0)
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_FILTERS_ACTIVE, false)
+                .apply()
+            applyFilters(scope)
+
         }
 
 
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
-
             val filtersActive = difficulties.isNotEmpty() ||
                     practiceCompleted.isChecked || testPassed.isChecked || unlocked.isChecked
 
@@ -185,38 +194,45 @@ class FilterLessonDialogFragment : DialogFragment() {
             sharedPref.edit()
                 .putBoolean(KEY_LESSON_FILTERS_ACTIVE, filtersActive)
                 .apply()
-
-            sharedPref.edit()
-                .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
-                .apply()
-
-            sharedPref.edit()
-                .putStringSet(Constants.KEY_LESSON_DIFFICULTY, difficulties)
-                .apply()
-
-            sharedPref.edit()
-                .putString(Constants.KEY_LESSON_CATEGORY, selectCategory)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_TEST_PASSED, selectTestPassed)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_UNLOCKED, selectUnlocked)
-                .apply()
-
+            applyFilters(scope)
             dialog?.dismiss()
 
-            scope.launch {
-                //TODO: flicker on filter comes from having to delete words then recreate the list
-                //find way to replace words in list rather than delete and refill
-                (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
-            }
+        }
+    }
+
+
+    private fun applyFilters(s: CoroutineScope) {
+
+
+        sharedPref.edit()
+            .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
+            .apply()
+
+        sharedPref.edit()
+            .putStringSet(Constants.KEY_LESSON_DIFFICULTY, difficulties)
+            .apply()
+
+        sharedPref.edit()
+            .putString(Constants.KEY_LESSON_CATEGORY, selectCategory)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_TEST_PASSED, selectTestPassed)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_UNLOCKED, selectUnlocked)
+            .apply()
+
+
+        s.launch {
+            //TODO: flicker on filter comes from having to delete words then recreate the list
+            //find way to replace words in list rather than delete and refill
+            (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
         }
     }
 
