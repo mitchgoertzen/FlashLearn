@@ -101,6 +101,14 @@
         <item name="android:background">@color/black</item>
     </style>
 
+    <style name="CustomTabTextAppearance" parent="TextAppearance.MaterialComponents.Button">
+        <item name="fontFamily">@font/futura_pt_bold</item>
+        <item name="android:fontFamily">@font/futura_pt_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:color">@color/blue</item>
+
+    </style>
 
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:backgroundTint">@color/white</item>

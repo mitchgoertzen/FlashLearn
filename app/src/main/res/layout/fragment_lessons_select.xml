@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.LessonSelectFragment">
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout10"
@@ -32,6 +35,63 @@
             app:autoSizeMinTextSize="5sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform" />
+
+
+
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="true"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:typeface="monospace"
+                android:fontFamily="@font/futura_pt_bold"
+                android:textOff="Flash Learn"
+                android:textOn="Organization"
+                android:thumb="@drawable/lesson_tab_selector"
+                app:showText="false"
+                app:switchMinWidth="200dp"
+                android:textAppearance="@style/SplashTheme"
+                app:track="@drawable/lesson_track_selector"/>
+
+
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingStart="15dp"
+                android:text="Flash Learn"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                android:visibility="visible"  />
+
+
+            <TextView
+                android:id="@+id/tv_text_taken"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/futura_pt_bold"
+                android:gravity="center|right"
+                android:paddingEnd="15dp"
+                android:text="Organization"
+                android:textColor="@color/blue"
+                android:textSize="10sp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,11 +161,9 @@
                 android:scaleType="fitCenter" />
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
+<!--        <include layout="@layout/app_lesson_switch"/>-->
+
+
 
         <TextView
             android:id="@+id/tvNetworkError"

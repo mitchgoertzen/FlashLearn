@@ -103,6 +103,8 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
+
+
         btnFilter.setOnClickListener {
             if (!dialog.isAdded) {
                 dialog.isCancelable = true
