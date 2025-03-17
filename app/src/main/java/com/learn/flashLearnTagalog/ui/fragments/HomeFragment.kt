@@ -1,14 +1,19 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.content.ContentValues
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import javax.inject.Inject
@@ -43,6 +48,52 @@ class HomeFragment : Fragment() {
 
         val lessonButton: Button = view.findViewById(R.id.btnLesson)
         val dictionaryButton: Button = view.findViewById(R.id.btnDictionary)
+        val words: Button = view.findViewById(R.id.btnAddWords)
+        val lessons: Button = view.findViewById(R.id.btnAddLessons)
+
+        val dataProcessor = DataProcessor(resources)
+
+        words.setOnClickListener {
+
+            val words = dataProcessor.getWords()
+
+            val lessonWords = mutableMapOf<String, Word>()
+
+            Log.d(ContentValues.TAG, "COUNT: ${words.size}")
+
+            for (i in 0 until words.size) {
+
+                val w = words[i]
+                lessonWords[w.id] = w
+
+            }
+
+            DataUtility.insertAllWords(lessonWords)
+
+            Log.d(ContentValues.TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+        }
+
+        lessons.setOnClickListener {
+
+//            val scope = CoroutineScope(Job() + Dispatchers.Main)
+//            scope.launch {
+//                async { lessonCreator.createLessons(resources) }.await()
+//
+//                val lessonList = lessonCreator.getLessons()
+//
+//                val lessonMap = mutableMapOf<String, Lesson>()
+//
+//                for (l in lessonList) {
+//                    lessonMap[l.id] = l
+//                }
+//
+//                DataUtility.insertAllLessons(lessonMap)
+//                scope.cancel()
+//            }
+
+
+        }
+
 
         sharedPref.edit().putBoolean(Constants.KEY_HOME, true).apply()
         (activity as LearningActivity?)?.goHome()

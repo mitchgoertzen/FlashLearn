@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -50,6 +51,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
+
+    private var lessonSource = false
 
 
     private lateinit var lessonAdapter: LessonAdapter
@@ -103,7 +106,13 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
+        val lessonSwitch: SwitchCompat = view.findViewById(R.id.swLessonSource)
 
+        lessonSwitch.setOnClickListener {
+            lessonSource = !lessonSource
+            Log.d(TAG, "source: $lessonSource")
+            refreshList(networkErrorText, requireActivity())
+        }
 
         btnFilter.setOnClickListener {
             if (!dialog.isAdded) {
@@ -111,10 +120,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
                 dialog.show(childFragmentManager, "test")
             }
         }
-
-
-
-
 
         rvLessonList.adapter = lessonAdapter
         rvLessonList.layoutManager = grid
@@ -141,8 +146,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
     fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
 
-
-
         Log.d(TAG, "activity: $activity")
 
         if (!this::sharedPref.isInitialized) {
@@ -153,13 +156,19 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
             )
         }
 
-
-
-
         refreshScope.launch {
             async {
 
+                if (!lessonSource) {
+                    dbLessons = JsonUtility.getSavedLessons(requireActivity())
+                } else {
+                    dbLessons = mutableListOf()
+                }
+
                 if (dbLessons.isEmpty()) {
+
+                    if (networkErrorText != null)
+                        networkErrorText.visibility = View.VISIBLE
 
                     DataUtility.updateLocalData(
                         activity,
@@ -167,31 +176,30 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
                         rewriteJSON = true
                     )
 
-
-                    if (dbLessons.isEmpty()) {
-                        if (networkErrorText != null)
-                            networkErrorText.visibility = View.VISIBLE
-                    } else {
-                        if (networkErrorText != null)
-                            networkErrorText.visibility = View.GONE
-                        createLessonList(
-                            sharedPref.getStringSet(
-                                KEY_LESSON_DIFFICULTY,
-                                newDifficulties
-                            )!!
-                        )
-                    }
+//                    if (dbLessons.isEmpty()) {
+//
+//                    } else {
+//                        if (networkErrorText != null)
+//                            networkErrorText.visibility = View.GONE
+//                        createLessonList(
+//                            sharedPref.getStringSet(
+//                                KEY_LESSON_DIFFICULTY,
+//                                newDifficulties
+//                            )!!
+//                        )
+//                    }
                 } else {
-
                     if (networkErrorText != null)
                         networkErrorText.visibility = View.GONE
-                    createLessonList(
-                        sharedPref.getStringSet(
-                            KEY_LESSON_DIFFICULTY,
-                            newDifficulties
-                        )!!
-                    )
+
                 }
+
+                createLessonList(
+                    sharedPref.getStringSet(
+                        KEY_LESSON_DIFFICULTY,
+                        newDifficulties
+                    )!!
+                )
             }.await()
             refreshScope.cancel()
         }

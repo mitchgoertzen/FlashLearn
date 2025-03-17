@@ -28,6 +28,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.db.DataUtility
@@ -57,6 +58,8 @@ private var type: Int = -1
 @AndroidEntryPoint
 class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
+
+
     private val viewModel: SignInViewModel by viewModels()
     private val dialogViewModel: DialogViewModel by viewModels()
     private val select = LessonSelectFragment()
@@ -82,6 +85,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         Log.d(TAG, "ads")
+
+
+
 
 //        MobileAds.initialize(this) {}
 //
@@ -285,6 +291,10 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 profileDialog.show(this.supportFragmentManager, "profile popup")
             }
         }
+
+
+
+
 
         //show appropriate fragment, based on type set
 //        when (type) {
