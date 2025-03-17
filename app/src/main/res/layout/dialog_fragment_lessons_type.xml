@@ -128,7 +128,7 @@
         android:paddingTop="10dp"
         android:text="Couldn't load lesson. Check network connection"
         android:textAlignment="center"
-        android:textColor="?attr/colorOnSecondary"
+        android:textColor="?attr/colorOnError"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

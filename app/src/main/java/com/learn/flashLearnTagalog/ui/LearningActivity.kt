@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -380,11 +382,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             1 -> {
-                drawerLayout.setBackgroundResource(R.color.red)
+                drawerLayout.setBackgroundColor(MaterialColors.getColor(this, R.attr.colorOnSecondary, Color.GRAY))
             }
 
             2 -> {
-                drawerLayout.setBackgroundResource(R.color.blue)
+                drawerLayout.setBackgroundColor(MaterialColors.getColor(this, R.attr.colorOnPrimary, Color.GRAY))
             }
 
             else -> {}

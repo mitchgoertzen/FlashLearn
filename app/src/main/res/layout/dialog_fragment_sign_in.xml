@@ -237,7 +237,7 @@
             android:maxLines="2"
             android:padding="5dp"
             android:text="Passwords do not match"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorOnError"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="@+id/clEditTextGroup"
             app:layout_constraintTop_toBottomOf="@+id/clEditTextGroup" />

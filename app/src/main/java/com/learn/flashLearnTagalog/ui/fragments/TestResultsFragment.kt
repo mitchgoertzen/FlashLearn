@@ -3,6 +3,7 @@ package com.learn.flashLearnTagalog.ui.fragments
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
@@ -31,6 +33,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 //var lesson: Lesson, var adapter: TestWordAdapter
 
@@ -187,16 +190,16 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
 
             }
 
-            resultColor = R.color.passingGreen
+            resultColor = MaterialColors.getColor(requireContext(), R.attr.colorOnTertiary, Color.GRAY)
             resultText = "You Passed!"
         } else {
-            resultColor = R.color.red
+            resultColor = MaterialColors.getColor(requireContext(), R.attr.colorOnSecondary, Color.GRAY)
             resultText = "Not Quite...\na passing Score is $passingScore%"
         }
 
         infoText.text = resultText
-        infoText.setTextColor(resources.getColor(resultColor))
-        percentageText.setTextColor(resources.getColor(resultColor))
+        infoText.setTextColor(resultColor)
+        percentageText.setTextColor(resultColor)
 
         retryButton.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()

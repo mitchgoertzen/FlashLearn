@@ -15,6 +15,8 @@
         <item name="colorSecondaryVariant">@color/yellow</item>
 
         <item name="colorAccent">@color/yellow</item>
+        <item name="colorOnError">@color/red</item>
+        <item name="colorOnTertiary">@color/passingGreen</item>
 
 
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>

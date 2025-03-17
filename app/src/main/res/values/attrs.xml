@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorOnSecondary" />
+    <attr name="colorOnTertiary" />
+    <attr name="colorOnPrimary" />
+</resources>

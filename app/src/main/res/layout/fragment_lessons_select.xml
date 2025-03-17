@@ -62,7 +62,7 @@
                 android:thumb="@drawable/lesson_tab_selector"
                 app:showText="false"
                 app:switchMinWidth="200dp"
-                android:textAppearance="@style/SplashTheme"
+                android:textAppearance="@style/Tagalog"
                 app:track="@drawable/lesson_track_selector"/>
 
 
@@ -173,7 +173,7 @@
             android:paddingVertical="30dp"
             android:text="Couldn't load lessons. Check network connection"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnSecondary"
+            android:textColor="?attr/colorOnError"
             android:textSize="11sp" />
 
     </LinearLayout>

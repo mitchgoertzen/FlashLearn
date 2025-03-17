@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TestWord
 import com.learn.flashLearnTagalog.databinding.ComponentTestWordBinding
@@ -26,8 +27,8 @@ class TestWordAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestWordViewHolder {
         val binding = ComponentTestWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        correctColor = parent.resources.getColor(R.color.passingGreen)
-        wrongColor = parent.resources.getColor(R.color.red)
+        correctColor = MaterialColors.getColor(parent.context, R.attr.colorOnTertiary, Color.GRAY)
+        wrongColor = MaterialColors.getColor(parent.context, R.attr.colorOnSecondary, Color.GRAY)
         return TestWordViewHolder(binding)
     }
 
