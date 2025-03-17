@@ -2,6 +2,7 @@ package com.learn.flashLearnTagalog.ui.fragments
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,6 +30,7 @@ import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_CATEGORY
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_DIFFICULTY
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_FILTERS_ACTIVE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_PRACTICE_COMPLETED
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_TEST_PASSED
@@ -36,16 +39,27 @@ import com.learn.flashLearnTagalog.ui.dialog_fragments.FilterLessonDialogFragmen
 import com.learn.flashLearnTagalog.ui.misc.ItemDecoration
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
+class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
+
+    private var lessonSource = false
+
 
     private lateinit var lessonAdapter: LessonAdapter
-    private val newDifficulties = mutableSetOf("1", "2", "3", "4", "5", "6")
+    private val newDifficulties = mutableSetOf<String>()
     private val viewModel: LessonViewModel by activityViewModels()
+
+    private lateinit var btnFilter: ImageButton
 
     //TODO: replace with persistent data list
     private var dbLessons = mutableListOf<Lesson>()
@@ -53,8 +67,15 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        // refreshList(null, requireActivity())
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         sharedPref.edit()
             .putStringSet(KEY_LESSON_DIFFICULTY, newDifficulties)
@@ -68,7 +89,9 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_lesson_select, container, false)
+
+
+        return inflater.inflate(R.layout.fragment_lessons_select, container, false)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -76,21 +99,25 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
         super.onViewCreated(view, savedInstanceState)
 
         val networkErrorText: TextView = view.findViewById(R.id.tvNetworkError)
-        val btnFilter: ImageButton = view.findViewById(R.id.ibFilter)
+        btnFilter = view.findViewById(R.id.ibFilter)
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
         val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
         val decorator = ItemDecoration(25)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
+        val lessonSwitch: SwitchCompat = view.findViewById(R.id.swLessonSource)
+
+        lessonSwitch.setOnClickListener {
+            lessonSource = !lessonSource
+            Log.d(TAG, "source: $lessonSource")
+            refreshList(networkErrorText, requireActivity())
+        }
+
         btnFilter.setOnClickListener {
-            Log.d(TAG, "click")
             if (!dialog.isAdded) {
                 dialog.isCancelable = true
                 dialog.show(childFragmentManager, "test")
-            } else {
-
-                Log.d(TAG, "dont add")
             }
         }
 
@@ -119,7 +146,10 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
     fun refreshList(networkErrorText: TextView?, activity: Activity) {
         val refreshScope = CoroutineScope(Job() + Dispatchers.Main)
 
+        Log.d(TAG, "activity: $activity")
+
         if (!this::sharedPref.isInitialized) {
+            Log.d(TAG, "not Initialized")
             sharedPref = activity.getSharedPreferences(
                 Constants.SHARED_PREFERENCES_NAME,
                 AppCompatActivity.MODE_PRIVATE
@@ -128,7 +158,17 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
         refreshScope.launch {
             async {
+
+                if (!lessonSource) {
+                    dbLessons = JsonUtility.getSavedLessons(requireActivity())
+                } else {
+                    dbLessons = mutableListOf()
+                }
+
                 if (dbLessons.isEmpty()) {
+
+                    if (networkErrorText != null)
+                        networkErrorText.visibility = View.VISIBLE
 
                     DataUtility.updateLocalData(
                         activity,
@@ -136,32 +176,30 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
                         rewriteJSON = true
                     )
 
-                    dbLessons = JsonUtility.getSavedLessons(activity)
-
-                    if (dbLessons.isEmpty()) {
-                        if (networkErrorText != null)
-                            networkErrorText.visibility = View.VISIBLE
-                    } else {
-                        if (networkErrorText != null)
-                            networkErrorText.visibility = View.GONE
-                        createLessonList(
-                            sharedPref.getStringSet(
-                                KEY_LESSON_DIFFICULTY,
-                                newDifficulties
-                            )!!
-                        )
-                    }
+//                    if (dbLessons.isEmpty()) {
+//
+//                    } else {
+//                        if (networkErrorText != null)
+//                            networkErrorText.visibility = View.GONE
+//                        createLessonList(
+//                            sharedPref.getStringSet(
+//                                KEY_LESSON_DIFFICULTY,
+//                                newDifficulties
+//                            )!!
+//                        )
+//                    }
                 } else {
-
                     if (networkErrorText != null)
                         networkErrorText.visibility = View.GONE
-                    createLessonList(
-                        sharedPref.getStringSet(
-                            KEY_LESSON_DIFFICULTY,
-                            newDifficulties
-                        )!!
-                    )
+
                 }
+
+                createLessonList(
+                    sharedPref.getStringSet(
+                        KEY_LESSON_DIFFICULTY,
+                        newDifficulties
+                    )!!
+                )
             }.await()
             refreshScope.cancel()
         }
@@ -174,12 +212,25 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
             lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         }
 
+        Log.d(TAG, "create")
+        if (sharedPref.getBoolean(KEY_IN_LESSONS, false) && sharedPref.getBoolean(
+                KEY_LESSON_FILTERS_ACTIVE,
+                false
+            )
+        ) {
+            Log.d(TAG, "active")
+            btnFilter.setImageResource(R.drawable.filter_active)
+        } else {
+            Log.d(TAG, "not ")
+            btnFilter.setImageResource(R.drawable.filter)
+        }
+
         lessonAdapter.deleteLessons()
         var add: Boolean
         //after database access is complete, add lessons to adapter
 
+        val difficultiesEmpty = difficulties.isEmpty()
 
-        // Log.d(TAG, "lessons: ${dbLessons.size}")
         for (lesson in dbLessons) {
             val id = lesson.id
             add = true
@@ -188,13 +239,12 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
                 //Log.d(TAG, "lessons level: ${lesson.level}")
                 //TODO: replace with difficulty, set names for 1-5
-                if (difficulties.contains((lesson.level).toString())) {
+                if (difficultiesEmpty || difficulties.contains((lesson.level).toString())) {
 
                     //Log.d(TAG, "CONTAINS difficulty")
                     val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
                     if (!category.equals("All")) {
-
                         //  Log.d(TAG, "lessons cat: ${lesson.category}")
                         if (lesson.category != category) {
                             add = false
@@ -236,6 +286,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lesson_select) {
 
     override fun onStop() {
         super.onStop()
+        Log.d(TAG, "select stop")
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }

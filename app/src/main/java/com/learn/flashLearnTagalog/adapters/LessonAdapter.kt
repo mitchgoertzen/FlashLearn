@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
-import com.learn.flashLearnTagalog.databinding.LessonBinding
+import com.learn.flashLearnTagalog.databinding.ComponentLessonBinding
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.dialog_fragments.LessonTypeDialogueFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
@@ -23,15 +23,14 @@ class LessonAdapter @Inject constructor(
 ) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
-    class LessonViewHolder(val binding: LessonBinding) : RecyclerView.ViewHolder(binding.root)
+    class LessonViewHolder(val binding: ComponentLessonBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonViewHolder {
-        val binding = LessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ComponentLessonBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return LessonViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
-
 
         val currentLesson = lessons[position]
         val lessonId = currentLesson.id
@@ -85,7 +84,7 @@ class LessonAdapter @Inject constructor(
 
             holderBinding.tvCategory.text = currentLesson.category + " $level"
             holderBinding.tvDifficulty.text = difficulty
-            //  Log.d(TAG, "image: ${currentLesson.image} from:\n ${currentLesson.category}")
+
             holderBinding.ivPreview.setImageResource(
                 resources.getIdentifier(
                     currentLesson.image,
@@ -95,7 +94,6 @@ class LessonAdapter @Inject constructor(
             )
             holderBinding.ivPreview.imageTintList = null
 
-
             if (!TempListUtility.unlockedLessons.contains(lessonId)) {
                 holderBinding.ibLesson.isEnabled = false
                 holderBinding.ibLesson.alpha = .7f
@@ -104,7 +102,6 @@ class LessonAdapter @Inject constructor(
                 holderBinding.ibLesson.alpha = 1f
             }
 
-            // Log.d(TAG, "9")
 
             holderBinding.ibLesson.setOnClickListener {
                 if (mContext is LearningActivity) {
@@ -158,11 +155,11 @@ class LessonAdapter @Inject constructor(
             3 -> {
                 lessons.sortWith(compareByDescending<Lesson> { it.difficulty }.thenBy { it.category })
             }
-            //Locked
-//                4 -> {
-//                    lessons.sortWith(compareBy<Lesson> { it.locked }.thenBy { it.difficulty }
-//                        .thenBy { it.category })
-//                }
+            //Unlocked
+            4 -> {
+                lessons.sortWith(compareBy<Lesson> { !TempListUtility.unlockedLessons.contains(it.id) }.thenBy { it.category }
+                    .thenBy { it.difficulty })
+            }
         }
 
 //                //TODO: only make once

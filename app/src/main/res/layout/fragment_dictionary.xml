@@ -12,8 +12,6 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:gravity="bottom"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
         android:text="Dictionary"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -21,6 +19,7 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +30,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginVertical="5dp"
-        android:background="#1A000000"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +46,7 @@
         android:text="Practice Lessons to see more words!"
         android:textSize="10sp"
         android:textColor="@color/white"
+        android:padding="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -57,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline25"

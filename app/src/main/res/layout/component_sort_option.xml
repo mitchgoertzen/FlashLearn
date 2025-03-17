@@ -13,7 +13,7 @@
         android:paddingStart="25dp"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:textColor="@color/blue"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

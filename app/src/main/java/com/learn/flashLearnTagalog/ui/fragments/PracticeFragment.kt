@@ -22,14 +22,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PracticeFragment : Fragment(R.layout.fragment_practice) {
+class PracticeFragment : Fragment(R.layout.fragment_lessons_practice) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
     private lateinit var currentWord: Word
 
     private var currentWordList: MutableList<Word> = mutableListOf()
-    private var i = 0
+    private var currentIndex = 0
 
     private val viewModel: LessonViewModel by activityViewModels()
 
@@ -42,7 +42,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_practice, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_practice, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,6 +53,8 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
         val nextButton: Button = view.findViewById(R.id.btNextWord)
         val params: ViewGroup.LayoutParams = nextButton.layoutParams
         val finishButton: Button = view.findViewById(R.id.btFinish)
+        val index: TextView = view.findViewById(R.id.tvIndex)
+
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             currentWordList = list.toMutableList()
@@ -61,7 +63,7 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
             FirebaseCrashlytics.getInstance().log("${list.size}")
             FirebaseCrashlytics.getInstance().log("${currentWordList.size}")
 
-            val index: TextView = view.findViewById(R.id.tvIndex)
+
             // val id = currentLesson.id
 
             changeCard(index)
@@ -95,25 +97,27 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
                             true
                         )
                     }
+
+                    currentIndex = 0
                     //viewModel.completePractice(currentLesson.id)
                     val fragment = PracticeResultsFragment()
                     val transaction = activity?.supportFragmentManager?.beginTransaction()
                     transaction?.replace(R.id.main_nav_container, fragment)
                         ?.addToBackStack("practice results")?.commit()
-                    (activity as LearningActivity?)?.transitionFragment()
+                    (activity as LearningActivity?)?.transitionFragment(2)
                 }
 
             }
 
             prevButton.setOnClickListener {
 
-                if (i == 0) {
+                if (currentIndex == 0) {
                     if (finishButton.visibility == View.VISIBLE) {
-                        i = currentWordList.size - 1
+                        currentIndex = currentWordList.size - 1
                     }
                 } else {
-                    --i
-                    if (i == 0 && finishButton.visibility == View.GONE) {
+                    --currentIndex
+                    if (currentIndex == 0 && finishButton.visibility == View.GONE) {
                         prevButton.isEnabled = false
                     }
                 }
@@ -124,12 +128,12 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
                 if (!prevButton.isEnabled) {
                     prevButton.isEnabled = true
                 }
-                if (i == currentWordList.size - 1) {
-                    i = 0
+                if (currentIndex == currentWordList.size - 1) {
+                    currentIndex = 0
 
                 } else {
-                    ++i
-                    if (i == currentWordList.size - 1) {
+                    ++currentIndex
+                    if (currentIndex == currentWordList.size - 1) {
                         if (finishButton.visibility == View.GONE) {
                             finishButton.visibility = View.VISIBLE
                         }
@@ -141,8 +145,8 @@ class PracticeFragment : Fragment(R.layout.fragment_practice) {
     }
 
     private fun changeCard(index: TextView) {
-        index.text = (i + 1).toString() + "/" + currentWordList.size.toString()
-        currentWord = currentWordList[i]
+        index.text = (currentIndex + 1).toString() + "/" + currentWordList.size.toString()
+        currentWord = currentWordList[currentIndex]
         //TODO - Stats: DataUtility.updatePractice(currentWord.id, true)
         viewModel.updateWord(currentWord)
         val fragment = Card()

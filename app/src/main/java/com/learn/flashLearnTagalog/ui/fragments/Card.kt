@@ -33,7 +33,7 @@ class Card : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_card, container, false)
+        return inflater.inflate(R.layout.component_card, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

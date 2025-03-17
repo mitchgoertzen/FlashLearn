@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
@@ -43,12 +46,15 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
+class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
     private lateinit var auth: FirebaseAuth
+
+    var intent: Intent? = activity?.intent
 
     private val roomViewModel: MainViewModel by activityViewModels()
     private val viewModel: SignInViewModel by activityViewModels()
@@ -57,9 +63,23 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         "The supplied auth credential is incorrect, malformed or has expired." to "No account with this Email/password",
         "The given password is invalid. [ Password should be at least 6 characters ]" to "Password must be at least 6 characters",
         "The email address is already in use by another account." to "Email already in use",
-        "A network error (such as timeout, interrupted connection or unreachable host) has occurred." to "No Network Connection"
-    )
+        "A network error (such as timeout, interrupted connection or unreachable host) has occurred." to "No Network Connection",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain an upper case character, Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least one upper case letter and one non-alphanumeric character",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain an upper case character] ]"
+                to "Password must contain at least one upper case letter",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least one non-alphanumeric character",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain an upper case character, Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain a non-alphanumeric character] ]"
+                to "Password must contain at least 6 characters",
+        "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain an upper case character] ]"
+                to "Password must contain at least 6 characters",
 
+    )
     private var email = ""
     private var password = ""
     private var confirmPassword = ""
@@ -95,7 +115,7 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return inflater.inflate(R.layout.fragment_sign_in, container, false)
+        return inflater.inflate(R.layout.dialog_fragment_sign_in, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,11 +131,39 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         val emailText: EditText = view.findViewById(R.id.etEmail)
         val passwordText: EditText = view.findViewById(R.id.etPassword)
         val confirmPasswordText: EditText = view.findViewById(R.id.etConfirmPassword)
+        val editTextGroup: LinearLayout = view.findViewById(R.id.llPasswordBox)
+        val emailConfirmationCode: LinearLayout = view.findViewById(R.id.llEmailConfirmationCode)
         val signUpPrompt: LinearLayout = view.findViewById(R.id.llSignUpPrompt)
-        val signUpText: TextView = view.findViewById(R.id.tvSignUpPrompt)
+        val signUpText: TextView = view.findViewById(R.id.tvSignUpInfo)
+        val signUpButton: TextView = view.findViewById(R.id.tvSignUpPrompt)
         val confirmButton: Button = view.findViewById(R.id.btnConfirm)
         val form: ImageView = view.findViewById(R.id.ivFormBackground)
+        val passwordVisible: ImageView = view.findViewById(R.id.ivPasswordVisible)
         val noAccount: TextView = view.findViewById(R.id.tvContinue)
+
+        val typeface: Typeface = passwordText.typeface
+
+
+        passwordText.inputType =
+            (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+
+        confirmPasswordText.inputType = passwordText.inputType
+
+        passwordText.typeface = typeface
+        confirmPasswordText.typeface = typeface
+
+
+//        val actionCodeSettings = actionCodeSettings {
+//            url = "https://flash-learn-6fbc4.firebaseapp.com/"
+//
+//            handleCodeInApp = true
+//            setAndroidPackageName(
+//                "com.learn.flashLearnTagalog",
+//                true, // installIfNotAvailable
+//                "12", // minimumVersion
+//            )
+//        }
+
 
         if (!inProfile) {
             if (auth.currentUser == null) {
@@ -184,19 +232,48 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
         inputError.text = ""
         confirmPasswordBox.visibility = View.GONE
 
-        signUpText.setOnClickListener {
-            header.text = "Sign Up"
+        signUpPrompt.setOnClickListener {
+
             inputError.text = ""
-            form.setImageResource(R.drawable.sign_up_box)
-            signUpPrompt.visibility = View.GONE
-            confirmPasswordBox.visibility = View.VISIBLE
-            signUp = true
+            if(signUp){
+                header.text = "Sign In"
+                form.setImageResource(R.drawable.sign_in_box)
+                confirmPasswordBox.visibility = View.GONE
+                signUpText.text = "Don't have an account? "
+                signUpButton.text = "Sign Up!"
+                confirmButton.text = "Sign In"
+            }else{
+                header.text = "Sign Up"
+                form.setImageResource(R.drawable.sign_up_box)
+                confirmPasswordBox.visibility = View.VISIBLE
+                signUpText.text = "Back to "
+                signUpButton.text = "Sign In"
+                confirmButton.text = "Sign Up"
+            }
+            signUp = !signUp
+
         }
 
         emailText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 checkValidEmail(emailText.text.toString(), inputError)
             }
+        }
+
+        passwordVisible.setOnClickListener {
+            if (passwordText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                passwordText.inputType =
+                    (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                passwordVisible.setImageResource(R.drawable.not_visible)
+            } else {
+                passwordText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                passwordVisible.setImageResource(R.drawable.visible)
+            }
+
+            confirmPasswordText.inputType = passwordText.inputType
+
+            passwordText.typeface = typeface
+            confirmPasswordText.typeface = typeface
         }
 
         if (inProfile) {
@@ -221,7 +298,52 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
             if (email != "" && password != "") {
                 if (signUp) {
                     if (password == confirmPassword) {
+
+
+                        confirmButton.text = "Confirm"
                         //TODO: real email --> two factor?
+//                        editTextGroup.visibility = View.GONE
+//                        emailConfirmationCode.visibility = View.VISIBLE
+//
+//                        auth.signInWithEmailLink(email, actionCodeSettings)
+//                            .addOnCompleteListener { task ->
+//                                Log.d(TAG, "task: $task")
+//                                if (task.isSuccessful) {
+//                                    Log.d(TAG, "Email sent.")
+//                                }
+//                                else {
+//                                    val exception = task.exception
+//                                    Log.e("FirebaseAuth", "Error sending email:", exception)
+//                                    // Handle the error appropriately - show the user a user-friendly message.
+//
+//                                    // Example error handling (adapt based on the types of exceptions you anticipate)
+//                                    when (exception) {
+//                                        is FirebaseAuthWeakPasswordException -> {
+//                                            // Handle weak password
+//                                        }
+//                                        is FirebaseAuthInvalidCredentialsException -> {
+//                                            // Handle invalid credentials
+//                                        }
+//                                        is FirebaseAuthUserCollisionException -> {
+//                                            // Handle user collision
+//                                        }
+//                                        is FirebaseAuthException -> {
+//                                            // Handle any other Firebase Auth exception
+//                                            // Display the exception message to the user or in the log.
+//                                            Log.d(TAG, "Error sending email: ${exception.message}")
+//                                        }
+//                                        else -> {
+//                                            // Handle unexpected errors
+//                                            Log.d(TAG, "An unexpected error occurred. Please try again.")
+//                                            if (exception != null) {
+//                                                Log.d(TAG, " ${exception.message}")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+
+
                         auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
@@ -254,13 +376,11 @@ class SignInFragment : DialogFragment(R.layout.fragment_sign_in) {
                                     }
 
                                 } else {
+                                    val exception: Exception = task.exception as FirebaseException
 
-                                    val code: FirebaseException =
-                                        task.exception as FirebaseException
+                                    Log.d(TAG, "message: ${exception.message}")
 
-                                    Log.d(TAG, "ERROR: ${code.message.toString()}")
-
-                                    inputError.text = errors[code.message]
+                                    inputError.text = errors[exception.message]
                                 }
                             }
                     } else {

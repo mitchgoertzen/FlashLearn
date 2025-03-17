@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,7 @@ import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TestFragment : Fragment(R.layout.fragment_test) {
+class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
     private val viewModel: LessonViewModel by activityViewModels()
     private val correctMessage = "CORRECT!"
@@ -71,6 +70,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
             .apply()
 
 
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,20 +79,19 @@ class TestFragment : Fragment(R.layout.fragment_test) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_test, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_test, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         listSize = viewModel.listSize
-
+        i = 1
         val rvTodoList: RecyclerView = view.findViewById(R.id.rvTodoList)
         val tvCurrentWord: TextView = view.findViewById(R.id.tvCurrentWord)
         val etTodoTitle: EditText = view.findViewById(R.id.etTodoTitle)
         val btnEnter: Button = view.findViewById(R.id.btnEnter)
         val btnSkip: Button = view.findViewById(R.id.btnSkip)
-        i = 1
         rvTodoList.adapter = testWordAdapter
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
@@ -121,7 +120,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
             setWordType(wordType)
 
-            btnEnter.isEnabled = false
+           // btnEnter.isEnabled = false
 
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
@@ -135,9 +134,10 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                     } else
                     //go to next word
                     {
+
                         index.text = "${i++}/$listSize"
                         testWordAdapter.deleteTestWords()
-                        btnEnter.text = "Enter"
+                        btnEnter.text = getString(R.string.enter)
                         btnEnter.isEnabled = false
                         btnSkip.isEnabled = true
                         btnSkip.alpha = 1f
@@ -150,11 +150,11 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                     }
                 } else {
                     val toDoTitle =
-                        etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
+                        etTodoTitle.text.toString().replace(getString(R.string.space).toRegex(), "").uppercase()
                     if (toDoTitle.isNotBlank()) {
                         val toDo = TestWord(toDoTitle)
                         val answer =
-                            getCurrentWord(!engFirst).uppercase().replace(" ".toRegex(), "")
+                            getCurrentWord(!engFirst).uppercase().replace(getString(R.string.space).toRegex(), "")
                         correctAnswer = (toDoTitle == answer)
                         toDo.isCorrect = correctAnswer
                         testWordAdapter.addTestWord(toDo, engFirst, false)
@@ -170,7 +170,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                             } else {
                                 answered = false
                                 testWordAdapter.deleteTestWords()
-                                btnEnter.text = "Enter"
+                                btnEnter.text = getString(R.string.enter)
                                 btnEnter.isEnabled = false
                                 btnSkip.isEnabled = true
                                 btnSkip.alpha = 1f
@@ -190,9 +190,9 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                             btnSkip.alpha = .2f
                             currentWordList.remove(currentWord)
                             if (currentWordList.isEmpty()) {
-                                btnEnter.text = "Finish"
+                                btnEnter.text = getString(R.string.finish)
                             } else {
-                                btnEnter.text = "Next Word"
+                                btnEnter.text = getString(R.string.next_word)
                             }
                             etTodoTitle.hint = correctMessage
                             etTodoTitle.isEnabled = false
@@ -222,23 +222,16 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
                     //show finish button
                     if (currentWordList.isEmpty()) {
-                        btnEnter.text = "Finish"
+                        btnEnter.text = getString(R.string.finish)
                     } else
                     //show next word button
                     {
-                        btnEnter.text = "Next Word"
+                        btnEnter.text = getString(R.string.next_word)
                     }
 
                     btnEnter.isEnabled = true
                     btnSkip.isEnabled = false
                 }
-            }
-
-            etTodoTitle.setOnKeyListener { _, keyCode, event ->
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
-                    btnEnter.performClick()
-                }
-                true
             }
         }
 
@@ -294,7 +287,7 @@ class TestFragment : Fragment(R.layout.fragment_test) {
 
     private fun goToResults() {
         viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
-            if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.5f) {
+           if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.0f) {
                 val id = lesson.id
                 if (!TempListUtility.passedLessons.contains(id)) {
 
@@ -327,15 +320,8 @@ class TestFragment : Fragment(R.layout.fragment_test) {
                         true
                     )
                 }
-
-                //DataUtility.passTest(currentLesson.id)
-                //viewModel.unlockNextLesson(currentLesson.category, currentLesson.level)
-                // viewModel.passTest(currentLesson.id)
             }
 
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_IN_TEST, false)
-                .apply()
             val bundle = bundleOf("words_correct" to wordsCorrect)
 
             viewModel.updateAdapter(answeredAdapter)
@@ -366,5 +352,12 @@ class TestFragment : Fragment(R.layout.fragment_test) {
             toDo.isCorrect = result
             answeredAdapter.addTestWord(toDo, engFirst, true)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_IN_TEST, false)
+            .apply()
     }
 }

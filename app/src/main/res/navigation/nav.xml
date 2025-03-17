@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_lessonSelectFragment"
+            app:destination="@id/lessonSelectFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dictionaryFragment"
+            app:destination="@id/dictionaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lessonSelectFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment"
+        android:label="fragment_lesson_select"
+        tools:layout="@layout/fragment_lessons_select" >
+        <action
+            android:id="@+id/action_lessonSelectFragment_to_lessonTypeDialogueFragment"
+            app:destination="@id/lessonTypeDialogueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.DictionaryFragment"
+        android:label="fragment_dictionary"
+        tools:layout="@layout/fragment_dictionary" />
+    <dialog
+        android:id="@+id/lessonTypeDialogueFragment"
+        android:name="com.learn.flashLearnTagalog.ui.dialog_fragments.LessonTypeDialogueFragment"
+        android:label="fragment_lesson_type_dialogue"
+        tools:layout="@layout/dialog_fragment_lessons_type" >
+        <action
+            android:id="@+id/action_lessonTypeDialogueFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_lessonTypeDialogueFragment_to_practiceFragment"
+            app:destination="@id/practiceFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.TestFragment"
+        android:label="fragment_test"
+        tools:layout="@layout/fragment_lessons_test" >
+        <action
+            android:id="@+id/action_testFragment_to_testResultsFragment"
+            app:destination="@id/testResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/practiceFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.PracticeFragment"
+        android:label="fragment_practice"
+        tools:layout="@layout/fragment_lessons_practice" >
+        <action
+            android:id="@+id/action_practiceFragment_to_practiceResultsFragment"
+            app:destination="@id/practiceResultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/practiceResultsFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.PracticeResultsFragment"
+        android:label="fragment_practice_results"
+        tools:layout="@layout/fragment_lessons_practice_results" >
+        <action
+            android:id="@+id/action_practiceResultsFragment_to_testFragment"
+            app:destination="@id/testFragment" />
+        <action
+            android:id="@+id/action_practiceResultsFragment_to_lessonSelectFragment"
+            app:destination="@id/lessonSelectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testResultsFragment"
+        android:name="com.learn.flashLearnTagalog.ui.fragments.TestResultsFragment"
+        android:label="fragment_test_results"
+        tools:layout="@layout/fragment_lessons_test_results" >
+        <action
+            android:id="@+id/action_testResultsFragment_to_practiceFragment"
+            app:destination="@id/practiceFragment" />
+        <action
+            android:id="@+id/action_testResultsFragment_to_lessonSelectFragment"
+            app:destination="@id/lessonSelectFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.LessonSelectFragment">
+
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Select Lesson"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            app:autoSizeMaxTextSize="86sp"
+            app:autoSizeMinTextSize="5sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform" />
+
+
+
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+
+
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swLessonSource"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:checked="false"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:typeface="monospace"
+                android:fontFamily="@font/futura_pt_bold"
+                android:textOff="Flash Learn"
+                android:textOn="Organization"
+                android:thumb="@drawable/lesson_tab_selector"
+                app:showText="false"
+                app:switchMinWidth="200dp"
+                android:textAppearance="@style/Tagalog"
+                app:track="@drawable/lesson_track_selector"/>
+
+
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingStart="15dp"
+                android:text="Flash Learn"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="10sp"
+                android:visibility="visible"  />
+
+
+            <TextView
+                android:id="@+id/tv_text_taken"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/futura_pt_bold"
+                android:gravity="center|right"
+                android:paddingEnd="15dp"
+                android:text="Organization"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="10sp"
+                android:visibility="visible" />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="15dp"
+            android:weightSum="10"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:gravity="center_vertical"
+                android:layout_weight="7"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/practice_completed_icon" />
+
+                <TextView
+                    android:id="@+id/tvPracCompleted"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="Practice Completed"
+                    android:textColor="#C0C0C0"
+                    app:autoSizeMaxTextSize="32sp"
+                    app:autoSizeMinTextSize="5sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="5dp"
+                    android:src="@drawable/test_passed_icon" />
+
+                <TextView
+                    android:id="@+id/tvtestPassed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="Test Passed"
+                    android:textColor="#C0C0C0"
+                    app:autoSizeMaxTextSize="32sp"
+                    app:autoSizeMinTextSize="5sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ibFilter"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_weight="3"
+                android:background="#00000000"
+                android:scaleType="fitCenter"
+                android:paddingBottom="5dp"/>
+        </LinearLayout>
+
+<!--        <include layout="@layout/app_lesson_switch"/>-->
+
+
+
+        <TextView
+            android:id="@+id/tvNetworkError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="30dp"
+            android:text="Couldn't load lessons. Check network connection"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnError"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView2"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:src="@android:drawable/ic_search_category_default"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/glHorizontal2"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/glVertical4"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/spSortDropdown"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/glHorizontal1" />-->
+
+
+    <!--    <androidx.constraintlayout.widget.Guideline-->
+    <!--        android:id="@+id/glVertical2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        app:layout_constraintGuide_percent="0.15"  />-->
+
+    <!--    android:layout_marginStart="12dp"-->
+<!--    android:layout_marginEnd="5dp"-->
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLessons"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/a"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

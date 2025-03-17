@@ -1,7 +1,9 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +23,7 @@ import javax.inject.Inject
 //private var wordList: MutableList<Word>
 //private var currentLesson: Lesson
 @AndroidEntryPoint
-class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
+class PracticeResultsFragment : Fragment(R.layout.fragment_lessons_practice_results) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -32,7 +34,7 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_practice_results, container, false)
+        return inflater.inflate(R.layout.fragment_lessons_practice_results, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,7 +44,8 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
         val rvTranslationList: RecyclerView = view.findViewById(R.id.rvWordTranslations)
         val testButton: Button = view.findViewById(R.id.btnLessonTest)
         val lessonSelectButton: Button = view.findViewById(R.id.btnLessonSelect)
-        val statsButton: Button = view.findViewById(R.id.btnStats)
+        val retryButton: Button = view.findViewById(R.id.btnRetryPractice)
+        //  val statsButton: Button = view.findViewById(R.id.btnStats)
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
             val adapter = DictionaryAdapter(list.toMutableList())
@@ -50,6 +53,9 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
             rvTranslationList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
         }
 
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_IN_RESULTS, true)
+            .apply()
 
         testButton.setOnClickListener {
             leaveResults()
@@ -57,16 +63,33 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson test")
                 ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
+            (activity as LearningActivity?)?.transitionFragment(2)
+
         }
 
         lessonSelectButton.setOnClickListener {
             leaveResults()
+
+            val count = activity?.supportFragmentManager?.backStackEntryCount
+
+            Log.d(TAG, "count: $count")
+
+
             val fragment = LessonSelectFragment()
             val transaction = activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.main_nav_container, fragment)?.addToBackStack("lesson select")
                 ?.commit()
-            (activity as LearningActivity?)?.transitionFragment()
+            (activity as LearningActivity?)?.transitionFragment(2)
+        }
+
+
+        retryButton.setOnClickListener {
+
+            activity?.supportFragmentManager?.popBackStack()
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_IN_RESULTS, false)
+                .apply()
+
         }
 
 //        statsButton.setOnClickListener {
@@ -80,22 +103,19 @@ class PracticeResultsFragment : Fragment(R.layout.fragment_practice_results) {
 //            (activity as LearningActivity?)?.transitionFragment()
 //        }
 
-        sharedPref.edit()
-            .putBoolean(Constants.KEY_IN_RESULTS, true)
-            .apply()
-
     }
 
     private fun leaveResults() {
+        //pop practice
+        activity?.supportFragmentManager?.popBackStack()
+        //pop card
+        activity?.supportFragmentManager?.popBackStack()
+    }
+
+    override fun onStop() {
+        super.onStop()
         sharedPref.edit()
             .putBoolean(Constants.KEY_IN_RESULTS, false)
             .apply()
-
-        val count: Int? = activity?.supportFragmentManager?.backStackEntryCount
-
-        for (i in 0..count!!) {
-            activity?.supportFragmentManager?.popBackStack()
-        }
-
     }
 }

@@ -16,45 +16,49 @@
         android:roundIcon="@drawable/tagalog_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Tagalog">
-
         <activity
             android:name=".ui.SplashScreenActivity"
-            android:theme="@style/SplashTheme"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-<!--
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="flash-learn-6fbc4.firebaseapp.com"
+                    android:pathPrefix="/__/auth/links"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <!--
         real
         android:value="ca-app-pub-7133464705699933~1975727734"
 
         test
         android:value="	ca-app-pub-3940256099942544~6300978111"
--->
-
+        -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-7133464705699933~1975727734"
-        />
+            android:value="ca-app-pub-7133464705699933~1975727734" />
 
         <activity
             android:name=".ui.LearningActivity"
+            android:configChanges="screenSize|orientation"
             android:exported="false"
             android:label="LearningActivity"
-            android:theme="@style/Tagalog.NoActionBar"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ui.HomeActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity">
-        </activity>
+            android:theme="@style/Tagalog"
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

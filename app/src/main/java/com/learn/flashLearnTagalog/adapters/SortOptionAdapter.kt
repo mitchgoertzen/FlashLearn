@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
-import com.learn.flashLearnTagalog.databinding.SortOptionBinding
+import com.learn.flashLearnTagalog.databinding.ComponentSortOptionBinding
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,11 +23,11 @@ class SortOptionAdapter @Inject constructor(
     //TODO: init check
     lateinit var currentSelect: TextView
 
-    class SortOptionViewHolder(val binding: SortOptionBinding) :
+    class SortOptionViewHolder(val binding: ComponentSortOptionBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SortOptionViewHolder {
-        val binding = SortOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ComponentSortOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SortOptionViewHolder(binding)
 
     }

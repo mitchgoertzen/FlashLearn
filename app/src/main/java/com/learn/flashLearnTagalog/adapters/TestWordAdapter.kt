@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
+import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.TestWord
-import com.learn.flashLearnTagalog.data.Word
-import com.learn.flashLearnTagalog.databinding.TestWordBinding
+import com.learn.flashLearnTagalog.databinding.ComponentTestWordBinding
 
 class TestWordAdapter(
 
@@ -19,11 +20,15 @@ class TestWordAdapter(
    // lateinit var currentList: List<Word>
     private var showEngFirst: Boolean = false
     private var isAnswer: Boolean = false
+    private var correctColor = 0
+    private var wrongColor = 0
 
-    class TestWordViewHolder(val binding: TestWordBinding) : RecyclerView.ViewHolder(binding.root)
+    class TestWordViewHolder(val binding: ComponentTestWordBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestWordViewHolder {
-        val binding = TestWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ComponentTestWordBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        correctColor = MaterialColors.getColor(parent.context, R.attr.colorOnTertiary, Color.GRAY)
+        wrongColor = MaterialColors.getColor(parent.context, R.attr.colorOnSecondary, Color.GRAY)
         return TestWordViewHolder(binding)
     }
 
@@ -82,14 +87,14 @@ class TestWordAdapter(
             //incorrect answer
             if (!isCorrect) {
                 tvTestWord.paintFlags = tvTestWord.paintFlags or STRIKE_THRU_TEXT_FLAG
-                tvTestWord.setTextColor(Color.parseColor("#CC000000"))
+                tvTestWord.setTextColor(wrongColor)
                 tvTestWord.alpha = 0.6f
                 tvTestWord.textSize = 18f
             } else
             //correct answer
             {
                 tvTestWord.paintFlags = tvTestWord.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
-                tvTestWord.setTextColor(Color.parseColor("#72CC50"))
+                tvTestWord.setTextColor(correctColor)
                 tvTestWord.alpha = 1f
                 tvTestWord.textSize = 22f
             }

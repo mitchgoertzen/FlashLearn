@@ -8802,7 +8802,6 @@ n$hila$pulling
 n$hilab$swell
 n$hilabo$free-for-all
 n$hilaga$north#geography
-n$hilaga$north#geography
 n$Hilagang-Amerika$north america#countries
 adj$hilagang-kanluran$northwest#geography
 adj$hilagang-silangan$northeast#geography

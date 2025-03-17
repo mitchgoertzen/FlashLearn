@@ -1,10 +1,12 @@
 package com.learn.flashLearnTagalog.ui.dialog_fragments
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.DialogFragment
@@ -13,11 +15,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.adapters.SortOptionAdapter
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_FILTERS_ACTIVE
 import com.learn.flashLearnTagalog.other.Constants.KEY_LESSON_SORTING
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -58,7 +62,7 @@ class FilterLessonDialogFragment : DialogFragment() {
 
         spinnerAdapter = ArrayAdapter(
             requireContext(),
-            R.layout.spinner_item, languages
+            R.layout.component_spinner_item, languages
         )
     }
 
@@ -71,13 +75,15 @@ class FilterLessonDialogFragment : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        return inflater.inflate(R.layout.fragment_filter_lesson, container, false)
+        return inflater.inflate(R.layout.dialog_fragment_filter_lesson, container, false)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val apply: Button = view.findViewById(R.id.btnApplyFilters)
+        val reset: TextView = view.findViewById(R.id.btnReset)
         val difficulty1: CheckBox = view.findViewById(R.id.cbLevel1)
         val difficulty2: CheckBox = view.findViewById(R.id.cbLevel2)
         val difficulty3: CheckBox = view.findViewById(R.id.cbLevel3)
@@ -92,11 +98,11 @@ class FilterLessonDialogFragment : DialogFragment() {
         val scope = CoroutineScope(Job() + Dispatchers.Main)
         val spinner: Spinner = view.findViewById(R.id.spinner)
 
-
         //populate difficulties from user's saved selection of lesson difficulties to include
         sharedPref.getStringSet(Constants.KEY_LESSON_DIFFICULTY, mutableSetOf())!!.forEach {
             difficulties.add(it)
         }
+
         selectCategory = sharedPref.getString(Constants.KEY_LESSON_CATEGORY, "All")!!
         selectPracticeCompleted =
             sharedPref.getBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, false)
@@ -109,13 +115,13 @@ class FilterLessonDialogFragment : DialogFragment() {
         sortOptionAdapter.addOption("Lesson Level")
         sortOptionAdapter.addOption("Difficulty: Low to High")
         sortOptionAdapter.addOption("Difficulty: High to Low")
-        // sortOptionAdapter.addOption("Unlocked")
+        sortOptionAdapter.addOption("Unlocked")
 
         close.setOnClickListener {
             dialog?.dismiss()
         }
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        spinnerAdapter.setDropDownViewResource(R.layout.component_spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
         spinner.setSelection(spinnerAdapter.getPosition(selectCategory))
 
@@ -150,42 +156,86 @@ class FilterLessonDialogFragment : DialogFragment() {
             selectUnlocked = unlocked.isChecked
         }
 
+        reset.setOnClickListener {
+
+            difficulties.clear()
+            difficulty1.isChecked = false
+            difficulty2.isChecked = false
+            difficulty3.isChecked = false
+            difficulty4.isChecked = false
+            difficulty5.isChecked = false
+            difficulty6.isChecked = false
+
+            selectCategory = "All"
+            selectPracticeCompleted = false
+            selectTestPassed = false
+            selectUnlocked = false
+            practiceCompleted.isChecked = false
+            testPassed.isChecked = false
+            unlocked.isChecked = false
+
+            spinner.setSelection(0)
+
+            sharedPref.edit()
+                .putBoolean(KEY_LESSON_FILTERS_ACTIVE, false)
+                .apply()
+            applyFilters(scope)
+
+        }
+
+
         //apply settings for lesson sort and filtering
         apply.setOnClickListener {
+            val filtersActive = difficulties.isNotEmpty() ||
+                    practiceCompleted.isChecked || testPassed.isChecked || unlocked.isChecked
+
+            Log.d(TAG, "filtersActive $filtersActive")
 
             sharedPref.edit()
-                .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
+                .putBoolean(KEY_LESSON_FILTERS_ACTIVE, filtersActive)
                 .apply()
-
-            sharedPref.edit()
-                .putStringSet(Constants.KEY_LESSON_DIFFICULTY, difficulties)
-                .apply()
-
-            sharedPref.edit()
-                .putString(Constants.KEY_LESSON_CATEGORY, selectCategory)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_TEST_PASSED, selectTestPassed)
-                .apply()
-
-            sharedPref.edit()
-                .putBoolean(Constants.KEY_LESSON_UNLOCKED, selectUnlocked)
-                .apply()
-
+            applyFilters(scope)
             dialog?.dismiss()
 
-            scope.launch {
-                //TODO: flicker on filter comes from having to delete words then recreate the list
-                //find way to replace words in list rather than delete and refill
-                (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
-            }
         }
     }
+
+
+    private fun applyFilters(s: CoroutineScope) {
+
+
+        sharedPref.edit()
+            .putInt(KEY_LESSON_SORTING, sortOptionAdapter.getSelected())
+            .apply()
+
+        sharedPref.edit()
+            .putStringSet(Constants.KEY_LESSON_DIFFICULTY, difficulties)
+            .apply()
+
+        sharedPref.edit()
+            .putString(Constants.KEY_LESSON_CATEGORY, selectCategory)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_PRACTICE_COMPLETED, selectPracticeCompleted)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_TEST_PASSED, selectTestPassed)
+            .apply()
+
+        sharedPref.edit()
+            .putBoolean(Constants.KEY_LESSON_UNLOCKED, selectUnlocked)
+            .apply()
+
+
+        s.launch {
+            //TODO: flicker on filter comes from having to delete words then recreate the list
+            //find way to replace words in list rather than delete and refill
+            (parentFragment as (LessonSelectFragment)).createLessonList(difficulties)
+        }
+    }
+
 
     private fun setDifficultyCheckBox(difficulty: String, checkBox: CheckBox) {
         //if this checkBoxes level is included in difficulties
