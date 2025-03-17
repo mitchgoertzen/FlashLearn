@@ -110,7 +110,7 @@
 ////            val tagalog = ""
 ////            incorrectAdapter.addWordStat(
 ////                WordStat(
-////                    word.tagalog,
+////                    word.translation,
 ////                    word.timesAnswered - word.timesCorrect,
 ////                    0.0
 ////                ), false
@@ -127,7 +127,7 @@
 ////                    1
 ////                else
 ////                    word.timesAnswered
-////                bestAdapter.addToDo(WordStat(word.tagalog, 0, 100*(word.timesCorrect/div).toDouble()), true)
+////                bestAdapter.addToDo(WordStat(word.translation, 0, 100*(word.timesCorrect/div).toDouble()), true)
 ////            }
 ////        }
 ////
@@ -138,7 +138,7 @@
 ////                    1
 ////                else
 ////                    word.timesAnswered
-////                worstAdapter.addToDo(WordStat(word.tagalog,0, 100*(word.timesCorrect/div).toDouble()), true)
+////                worstAdapter.addToDo(WordStat(word.translation,0, 100*(word.timesCorrect/div).toDouble()), true)
 ////            }
 ////        }
 //

@@ -50,7 +50,7 @@ class Card : Fragment() {
             val words = if (engFirst)
                 word.english
             else
-                word.tagalog
+                word.translation
 
             val numberOfEnglishWords = words.split("\\s+".toRegex()).size
 
@@ -106,7 +106,7 @@ class Card : Fragment() {
                 else
                     tvCurrWord.maxLines = 1
             } else {
-                shownWord = word.tagalog
+                shownWord = word.translation
                 tvCurrWord.maxLines = 1
             }
 
@@ -121,7 +121,7 @@ class Card : Fragment() {
                 //display translation of word that is currently shown
                 //adjust max lines of text as done previously
                 if (shownWord == word.english) {
-                    shownWord = word.tagalog
+                    shownWord = word.translation
                     tvCurrWord.maxLines = 1
                 } else {
                     shownWord = word.english

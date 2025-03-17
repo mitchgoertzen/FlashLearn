@@ -201,7 +201,7 @@ class DataUtility {
 //            Log.d(TAG, "reads used: ${list.size}")
 //            val lessonWords = mutableListOf<Word>()
 //            for (w in list) {
-//                val length = w.tagalog.length
+//                val length = w.translation.length
 //                if (length in (min + 1)..max)
 //                    lessonWords.add(w)
 //
@@ -447,7 +447,7 @@ class DataUtility {
             var count = 0
 
             for (w in list) {
-                val length = w.tagalog.length
+                val length = w.translation.length
 
                 if (length <= max) {
                     count++

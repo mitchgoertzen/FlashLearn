@@ -2,7 +2,7 @@ package com.learn.flashLearnTagalog.data
 
 data class Word (
     val english : String = "",
-    val tagalog : String = "",
+    val translation : String = "",
     val type : String = "",
     val category : String = "",
     val image : String? = "",
@@ -10,5 +10,5 @@ data class Word (
     val uncommon : Boolean? = null
     ){
     val id : String = hashCode().toString()
-    val length : Int = tagalog.length
+    val length : Int = translation.length
 }
