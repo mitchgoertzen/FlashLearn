@@ -46,7 +46,7 @@
         android:padding="15dp"
         android:shadowColor="#FCD116"
         android:text="Dictionary"
-        android:textColor="@color/red"
+        android:textColor="?attr/colorOnSecondary"
         app:autoSizeMaxTextSize="13sp"
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"

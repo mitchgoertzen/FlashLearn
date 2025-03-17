@@ -13,7 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:cardBackgroundColor="#7a87a4"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/yellow"
+        app:strokeColor="?attr/colorAccent"
         app:cardCornerRadius="10dp">
 
         <com.google.android.material.tabs.TabLayout

@@ -7,7 +7,7 @@
                 android:left="3dp"
                 android:right="3dp"
                 android:top="3dp" />
-            <solid android:color="@color/yellow" />
+            <solid android:color="?attr/colorAccent" />
             <corners android:radius="16dp"/>
         </shape>
     </item>
@@ -32,7 +32,7 @@
             <solid android:color="#F2FFFFFF"/>
             <stroke
                 android:width="3dp"
-                android:color="@color/yellow"/>
+                android:color="?attr/colorAccent"/>
         </shape>
     </item>
 </layer-list>

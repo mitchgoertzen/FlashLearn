@@ -100,7 +100,7 @@
         android:layout_marginVertical="15dp"
         android:maxLines="1"
         android:text="Enter"
-        android:textColor="@color/blue"
+        android:textColor="?attr/colorOnPrimary"
         app:autoSizeMaxTextSize="13sp"
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="1sp"

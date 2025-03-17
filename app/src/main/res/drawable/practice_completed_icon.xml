@@ -7,7 +7,7 @@
             android:height="@dimen/_2sdp"
             android:width="@dimen/_30sdp"
             />
-            <solid android:color="@color/yellow" />
+            <solid android:color="?attr/colorAccent" />
         </shape>
     </item>
 

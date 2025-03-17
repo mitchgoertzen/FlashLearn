@@ -9,5 +9,5 @@
     android:singleLine="true"
     android:spinnerMode="dropdown"
     android:textAlignment="center"
-    android:textColor="@color/blue"
+    android:textColor="?attr/colorOnPrimary"
     android:textSize="15sp" />

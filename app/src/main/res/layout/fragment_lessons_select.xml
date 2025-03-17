@@ -49,9 +49,10 @@
 
 
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swLessonSource"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:checked="true"
+                android:checked="false"
                 android:gravity="center"
                 android:textAllCaps="false"
                 android:typeface="monospace"
@@ -72,7 +73,7 @@
                 android:gravity="center|left"
                 android:paddingStart="15dp"
                 android:text="Flash Learn"
-                android:textColor="@color/blue"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="10sp"
                 android:visibility="visible"  />
 
@@ -85,7 +86,7 @@
                 android:gravity="center|right"
                 android:paddingEnd="15dp"
                 android:text="Organization"
-                android:textColor="@color/blue"
+                android:textColor="?attr/colorOnPrimary"
                 android:textSize="10sp"
                 android:visibility="visible" />
 
@@ -104,7 +105,7 @@
                 android:id="@+id/linearLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="5dp"
+                android:layout_marginStart="5dp"
                 android:gravity="center_vertical"
                 android:layout_weight="7"
                 android:orientation="horizontal">
@@ -155,10 +156,10 @@
                 android:id="@+id/ibFilter"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-
                 android:layout_weight="3"
                 android:background="#00000000"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:paddingBottom="5dp"/>
         </LinearLayout>
 
 <!--        <include layout="@layout/app_lesson_switch"/>-->
@@ -169,10 +170,10 @@
             android:id="@+id/tvNetworkError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:text="Couldn't load lesson. Check network connection"
+            android:paddingVertical="30dp"
+            android:text="Couldn't load lessons. Check network connection"
             android:textAlignment="center"
-            android:textColor="@color/red"
+            android:textColor="?attr/colorOnSecondary"
             android:textSize="11sp" />
 
     </LinearLayout>
@@ -215,6 +216,7 @@
             android:layout_gravity="center"
             android:contentDescription="@string/a"
             android:gravity="center"
+            android:paddingTop="10dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
 

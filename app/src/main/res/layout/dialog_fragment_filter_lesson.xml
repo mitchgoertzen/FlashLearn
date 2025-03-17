@@ -49,7 +49,7 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:paddingStart="25dp"-->
         <!--            android:text="Category"-->
-        <!--            android:textColor="@color/blue"-->
+        <!--            android:textColor="?attr/colorOnPrimary"-->
         <!--            android:textSize="14sp"-->
         <!--            />-->
 
@@ -59,7 +59,7 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:paddingStart="25dp"-->
         <!--            android:text="Subcategory"-->
-        <!--            android:textColor="@color/blue"-->
+        <!--            android:textColor="?attr/colorOnPrimary"-->
         <!--            android:textSize="14sp" />-->
 
         <!--        <TextView-->
@@ -68,7 +68,7 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:paddingStart="25dp"-->
         <!--            android:text="Difficulty: Low to High"-->
-        <!--            android:textColor="@color/blue"-->
+        <!--            android:textColor="?attr/colorOnPrimary"-->
         <!--            android:textSize="14sp"-->
         <!--            android:background="@drawable/selected_text_background"/>-->
 
@@ -78,7 +78,7 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:paddingStart="25dp"-->
         <!--            android:text="Difficulty: High to Low"-->
-        <!--            android:textColor="@color/blue"-->
+        <!--            android:textColor="?attr/colorOnPrimary"-->
         <!--            android:textSize="14sp"/>-->
 
         <!--        <TextView-->
@@ -87,7 +87,7 @@
         <!--            android:layout_height="wrap_content"-->
         <!--            android:paddingStart="25dp"-->
         <!--            android:text="Unlocked"-->
-        <!--            android:textColor="@color/blue"-->
+        <!--            android:textColor="?attr/colorOnPrimary"-->
         <!--            android:textSize="14sp"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
@@ -148,7 +148,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 1"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <CheckBox
                     android:id="@+id/cbLevel3"
@@ -156,7 +156,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 3"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <CheckBox
                     android:id="@+id/cbLevel5"
@@ -164,7 +164,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 5"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
             </LinearLayout>
 
             <LinearLayout
@@ -178,7 +178,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 2"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <CheckBox
                     android:id="@+id/cbLevel4"
@@ -186,7 +186,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 4"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
 
                 <CheckBox
                     android:id="@+id/cbLevel6"
@@ -194,7 +194,7 @@
                     android:layout_height="22dp"
                     android:buttonTint="@color/faded_blue"
                     android:text="Level 6"
-                    android:textColor="@color/blue" />
+                    android:textColor="?attr/colorOnPrimary" />
 
             </LinearLayout>
 
@@ -225,7 +225,7 @@
                 android:layout_gravity="center"
                 android:buttonTint="@color/faded_blue"
                 android:text="Practice Completed"
-                android:textColor="@color/blue" />
+                android:textColor="?attr/colorOnPrimary" />
 
             <CheckBox
                 android:id="@+id/cbTest"
@@ -234,7 +234,7 @@
                 android:layout_gravity="center"
                 android:buttonTint="@color/faded_blue"
                 android:text="Test Passed"
-                android:textColor="@color/blue" />
+                android:textColor="?attr/colorOnPrimary" />
 
             <CheckBox
                 android:id="@+id/cbUnlock"
@@ -243,7 +243,7 @@
                 android:layout_gravity="center"
                 android:buttonTint="@color/faded_blue"
                 android:text="Unlocked"
-                android:textColor="@color/blue" />
+                android:textColor="?attr/colorOnPrimary" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
