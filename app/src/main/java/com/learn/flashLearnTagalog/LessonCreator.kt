@@ -194,7 +194,7 @@ class LessonCreator {
     //            var sum = 0
     //
     //            for(word in lessonWords){
-    //                sum += word.tagalog.length
+    //                sum += word.translation.length
     //            }
     //
     //            when (sum / lessonWords.size) {

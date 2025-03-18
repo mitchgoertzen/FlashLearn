@@ -141,8 +141,11 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
                                 TempListUtility.viewedWords[nextId]!!
                             } else {
                                 DataUtility.getAllWordsForLesson(
+                                    //TODO: replace with sharedpref,
+                                    "tagalog",
                                     nextLesson.category.lowercase(),
                                     nextLesson.minLength,
+                                    nextLesson.maxLength,
                                     nextLesson.wordCount.toLong()
                                 ).toMutableList()
                             }

@@ -1,6 +1,5 @@
 package com.learn.flashLearnTagalog.db
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
@@ -134,12 +133,13 @@ class FirestoreUtility {
 
     suspend fun getSelectSubDocuments(
         collectionId: String,
-        documentId: String, subCollectionId: String,
+        documentId: String,
+        subCollectionId: String,
         filter: Filter? = null,
-        order: String = "",
+        order: String = "id",
         direction: Query.Direction = Query.Direction.DESCENDING,
         offset: Int = 0,
-        limit: Long = Long.MAX_VALUE
+        limit: Long = 10000
     ): QuerySnapshot {
         lateinit var query: QuerySnapshot
 
@@ -150,7 +150,6 @@ class FirestoreUtility {
 
         query = filteredRef.orderBy(order, direction).startAt(offset)
             .limit(limit).get().await()
-
 
         return query
     }
@@ -167,8 +166,6 @@ class FirestoreUtility {
     }
 
 
-
-
 //    suspend fun getSelectDocumentCount(){
 //
 //    }
@@ -177,11 +174,11 @@ class FirestoreUtility {
     /****************************************_ADD_*************************************************/
     fun addDocument(collection: String, newId: String, data: Any) {
         db.collection(collection).document(newId).set(data)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: `$newId`")
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
             }
             .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
+                Log.w(TAG, "Error adding document", e)
             }
     }
 
@@ -194,17 +191,30 @@ class FirestoreUtility {
             .collection(subCollectionId)
             .document(newId)
             .set(data)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: `$newId`")
+            .addOnSuccessListener {
+                Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
             }
             .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
+                Log.w(TAG, "Error adding document", e)
             }
     }
 
 
-    fun batchAdd(collectionId: String, newDocuments: Map<String, Any>) {
-        val collectionRef = db.collection(collectionId)
+    fun batchAdd(
+        collectionId: String,
+        documentId: String,
+        subCollectionId: String,
+        newDocuments: Map<String, Any>
+    ) {
+
+        val collectionRef = if (documentId.isNotEmpty()) {
+            db.collection(collectionId).document(documentId).collection(subCollectionId)
+        } else {
+            db.collection(collectionId)
+        }
+
+        Log.d(TAG, "ref: ${collectionRef.id}")
+
 
 //        db.runBatch { batch ->
 //            for (doc in newDocuments) {
@@ -334,8 +344,6 @@ class FirestoreUtility {
             }
         }
     }
-
-
 
 
 }

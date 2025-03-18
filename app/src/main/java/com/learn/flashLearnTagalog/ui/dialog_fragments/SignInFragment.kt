@@ -79,7 +79,7 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
         "An internal error has occurred. [ PASSWORD_DOES_NOT_MEET_REQUIREMENTS:Missing password requirements: [Password must contain at least 6 characters, Password must contain an upper case character] ]"
                 to "Password must contain at least 6 characters",
 
-    )
+        )
     private var email = ""
     private var password = ""
     private var confirmPassword = ""
@@ -235,14 +235,14 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
         signUpPrompt.setOnClickListener {
 
             inputError.text = ""
-            if(signUp){
+            if (signUp) {
                 header.text = "Sign In"
                 form.setImageResource(R.drawable.sign_in_box)
                 confirmPasswordBox.visibility = View.GONE
                 signUpText.text = "Don't have an account? "
                 signUpButton.text = "Sign Up!"
                 confirmButton.text = "Sign In"
-            }else{
+            } else {
                 header.text = "Sign Up"
                 form.setImageResource(R.drawable.sign_up_box)
                 confirmPasswordBox.visibility = View.VISIBLE
@@ -293,13 +293,11 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
             email = emailText.text.toString()
             password = passwordText.text.toString()
             confirmPassword = confirmPasswordText.text.toString()
-
+            Log.d(TAG, "$password")
             inputError.text = ""
             if (email != "" && password != "") {
                 if (signUp) {
                     if (password == confirmPassword) {
-
-
                         confirmButton.text = "Confirm"
                         //TODO: real email --> two factor?
 //                        editTextGroup.visibility = View.GONE
@@ -343,8 +341,7 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
 //                                }
 //                            }
 
-
-                        auth.createUserWithEmailAndPassword(email, password)
+                        auth.createUserWithEmailAndPassword(email, confirmPassword)
                             .addOnCompleteListener(requireActivity()) { task ->
                                 if (task.isSuccessful) {
                                     if (!inProfile) {
@@ -377,9 +374,6 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
 
                                 } else {
                                     val exception: Exception = task.exception as FirebaseException
-
-                                    Log.d(TAG, "message: ${exception.message}")
-
                                     inputError.text = errors[exception.message]
                                 }
                             }
@@ -408,9 +402,6 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
                                 if (!inProfile) {
                                     close()
                                 }
-
-
-                                Log.d(TAG, "signInWithEmail:success")
                             } else {
                                 val code: FirebaseException = task.exception as FirebaseException
 

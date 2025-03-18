@@ -1,6 +1,5 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -16,6 +15,7 @@ import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.Word
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import kotlinx.coroutines.CoroutineScope
@@ -59,8 +59,10 @@ class HomeFragment : Fragment() {
         val words: Button = view.findViewById(R.id.btnAddWords)
         val lessons: Button = view.findViewById(R.id.btnAddLessons)
 
-        val dataProcessor = DataProcessor(resources)
+        val language = "tagalog"
+        val dataProcessor = DataProcessor(resources, language)
         val lessonCreator = LessonCreator()
+
 
         words.setOnClickListener {
 
@@ -86,9 +88,9 @@ class HomeFragment : Fragment() {
 
             Log.d(TAG, "words: ${lessonWords.size}")
 
-       //     DataUtility.insertAllWords(lessonWords)
+            DataUtility.insertAllWords(lessonWords, language)
 
-            Log.d(ContentValues.TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+            Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
         }
 
         lessons.setOnClickListener {
@@ -115,7 +117,7 @@ class HomeFragment : Fragment() {
                 }
 
                 Log.d(TAG, "lessons: ${lessonMap.size}")
-               // DataUtility.insertAllLessons(lessonMap)
+                DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
                 scope.cancel()
             }
 
