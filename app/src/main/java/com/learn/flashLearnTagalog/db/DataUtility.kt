@@ -18,6 +18,7 @@ import com.learn.flashLearnTagalog.data.User
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.data.WordStats
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.other.Constants.KEY_VERSION
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -122,11 +123,11 @@ class DataUtility {
         /*************************************_WORDS_**********************************************/
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
         fun insertWord(word: Word) {
-            firestore.addDocument(WORD_COLLECTION, (word.id).toString(), word)
+            firestore.addDocument(WORD_COLLECTION, (word.id), word)
         }
 
-        fun insertAllWords(words: Map<String, Word>) {
-            firestore.batchAdd(WORD_COLLECTION, words)
+        fun insertAllWords(words: Map<String, Word>, language: String) {
+            firestore.batchAdd(WORD_COLLECTION, "languages", language, words)
         }
 
         fun updateWordInfo(updatedWord: Word) {
@@ -174,21 +175,29 @@ class DataUtility {
         }
 
         suspend fun getAllWordsForLesson(
+            language: String,
             category: String,
             min: Int,
+            max: Int,
             limit: Long = 100
         ): List<Word> {
 
-            val words = firestore.getSelectDocuments(
+            val f1 = Filter.equalTo("category", category.lowercase())
+            val f2 = Filter.greaterThan("length", min)
+            val f3 = Filter.lessThanOrEqualTo("length", max)
+
+            val words = firestore.getSelectSubDocuments(
                 WORD_COLLECTION,
-                Filter.equalTo("category", category),
+                "languages",
+                language,
+                Filter.and(f1, f2, f3),
                 "length",
                 Query.Direction.ASCENDING,
                 min + 1,
                 limit
             )
 
-            //Log.d(TAG, "reads: ${words.size()}")
+            Log.d(TAG, "reads: ${words.size()}")
 
             return words.toObjects()
         }
@@ -416,12 +425,14 @@ class DataUtility {
 
         /*************************************_LESSONS_********************************************/
 
-        suspend fun getAllLessons(): List<Lesson> {
-            val lessons = firestore.getSelectDocuments(
-                LESSON_COLLECTION,
+        suspend fun getAllLessons(lessonSource: String, language: String): List<Lesson> {
+
+            val lessons = firestore.getSelectSubDocuments(
+                LESSON_COLLECTION, lessonSource, language,
                 order = "level",
                 direction = Query.Direction.ASCENDING
             )
+
             return lessons.toObjects()
         }
 
@@ -433,40 +444,41 @@ class DataUtility {
 
         //TODO: this
         suspend fun getLessonWordCount(lessonCategory: String, min: Int, max: Int): Int {
-            val list = getAllWordsForLesson(lessonCategory, min).toMutableList()
+            val list = getAllWordsForLesson(
+                //TODO: replace with sharedpref,
+                "tagalog", lessonCategory, min, max
+            ).toMutableList()
 
-//            val list = firestore.getSelectDocuments(
-//                WORD_COLLECTION,
-//                Filter.equalTo("category", lessonCategory)
-//            ).toObjects<Word>()
-//            Log.d(TAG, "Category: $lessonCategory")
-//            Log.d(TAG, "size: ${list.size}")
+            //  var count = list.size
+
+//            for (w in list) {
+//                val length = w.translation.length
 //
-//            Log.d(TAG, "min: $min")
-//            Log.d(TAG, "max: $max")
-            var count = 0
-
-            for (w in list) {
-                val length = w.translation.length
-
-                if (length <= max) {
-                    count++
-                } else {
-                    break
-                }
-//
-//                Log.d(TAG, "length: $length")
-//                if (length in (min + 1)..max) {
+//                if (length <= max) {
 //                    count++
+//                } else {
+//                    break
 //                }
-            }
-            return count
+//            }
+
+
+            return list.size
         }
 
 
-        suspend fun getLessonIDsByLevel(level: Int): List<Lesson> {
-            return firestore.getSelectDocuments(
+        suspend fun getLessonIDsByLevel(
+            level: Int,
+            lessonSource: String,
+            language: String
+        ): List<Lesson> {
+
+
+            Log.d(TAG, "$lessonSource")
+            Log.d(TAG, "$language")
+            return firestore.getSelectSubDocuments(
                 LESSON_COLLECTION,
+                lessonSource,
+                language,
                 Filter.equalTo("level", level),
                 direction = Query.Direction.ASCENDING
             ).toObjects()
@@ -489,13 +501,18 @@ class DataUtility {
         }
 
         //   @Query("SELECT * FROM lesson_table WHERE id = :id")
-        suspend fun getLessonByID(lessonId: String) {
-            firestore.getDocument(LESSON_COLLECTION, lessonId)
+        suspend fun getLessonByID(
+            lessonId: String,
+            lessonSource: String,
+            language: String
+        ): Lesson {
+            return firestore.getSubDocument(LESSON_COLLECTION, lessonSource, language, lessonId)
+                .toObject<Lesson>()!!
         }
 
         //  @Insert
-        fun insertAllLessons(lessons: Map<String, Lesson>) {
-            firestore.batchAdd(LESSON_COLLECTION, lessons)
+        fun insertAllLessons(lessons: Map<String, Lesson>, lessonSource: String, language: String) {
+            firestore.batchAdd(LESSON_COLLECTION, lessonSource, language, lessons)
 
         }
 
@@ -551,7 +568,6 @@ class DataUtility {
 
         }
 
-
         fun updateLessonInfo(
             id: String,
             newImageID: Int,
@@ -573,7 +589,6 @@ class DataUtility {
             )
 
         }
-
 
         fun deleteLesson(lessonId: String) {
             firestore.deleteDocument(LESSON_COLLECTION, lessonId)
@@ -693,9 +708,9 @@ class DataUtility {
 
             Log.d(TAG, "UPDATING LOCAL DATA")
 
+            val appVersion = getAppVersion().toInt()
             var updateLessons = true
             var lessonsEmpty = false
-
             val unlockedJSON = "unlockedLessons.json"
             val practicedJSON = "practicedLessons.json"
             val passedJSON = "passedLessons.json"
@@ -704,7 +719,14 @@ class DataUtility {
                 updateLessons = false
                 activity.getPreferences(Context.MODE_PRIVATE).edit()
                     .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
-                val lessons = getAllLessons()
+
+                Log.d(TAG, "1")
+                val lessons = getAllLessons(
+                    //TODO: replace with shared pref
+                    "flash_learn", "tagalog"
+                )
+
+                Log.d(TAG, "$lessons")
 
                 lessonsEmpty = lessons.isEmpty()
 
@@ -721,11 +743,17 @@ class DataUtility {
 
                 val unlocked =
                     JsonUtility.getUserDataList(activity, unlockedJSON)
+
                 if (unlocked.isNotEmpty()) {
                     TempListUtility.unlockedLessons = unlocked
-                } else {
+                }
+                else {
                     val lessons =
-                        getLessonIDsByLevel(1)
+                        getLessonIDsByLevel(
+                            1, //TODO: replace with shared pref
+                            "flash_learn", "tagalog"
+                        )
+
                     val unlock = mutableListOf<String>()
 
                     for (l in lessons) {
@@ -752,7 +780,6 @@ class DataUtility {
                     TempListUtility.viewedLessons = JsonUtility.getViewedLessons(activity)
                 }
 
-
                 //if user is signed in, local data will be from user
                 //otherwise, local data will be from shared folder
                 var currentUnlocked = TempListUtility.unlockedLessons
@@ -760,11 +787,10 @@ class DataUtility {
                 var currentPassed = TempListUtility.passedLessons
 
                 val user = getCurrentUser()
-                if (user != null) {
 
+                if (user != null) {
                     Log.d(TAG, "THERE IS A USER")
                     if (!signUp) {
-
                         Log.d(TAG, "THEY ARE SIGNED IN")
                         val unlocked = currentUnlocked.toSet() + user.unlockedLessons.toSet()
                         var practiced = currentPracticed.toSet() + user.practicedLessons.toSet()
@@ -781,9 +807,6 @@ class DataUtility {
                     user.practicedLessons = currentPracticed
                     user.passedLessons = currentPassed
 
-                    Log.d(TAG, "version: ${user.currentVersion}")
-
-                    val appVersion = getAppVersion().toInt()
                     Log.d(TAG, "appVersion: $appVersion")
                     if (user.currentVersion < appVersion) {
                         TempListUtility.viewedWords.clear()
@@ -792,7 +815,10 @@ class DataUtility {
                         if (updateLessons) {
                             val userScope = CoroutineScope(Job() + Dispatchers.Main)
                             userScope.launch {
-                                val lessons = getAllLessons().toMutableList()
+                                val lessons = getAllLessons(
+                                    //TODO: replace with shrared pref
+                                    "flash_learn", "tagalog"
+                                ).toMutableList()
                                 JsonUtility.writeJSON(activity, "savedLessons.json", lessons, true)
                                 Log.d(TAG, "GET ONE")
                                 userScope.cancel()
@@ -802,9 +828,42 @@ class DataUtility {
                     updateUserData(user)
                 } else {
                     Log.d(TAG, "THERE IS NOT A USER")
+                    //reset viewed words
+                    if (activity.getPreferences(Context.MODE_PRIVATE)
+                            .getInt(KEY_VERSION, 0) < appVersion
+                    ) {
+                        Log.d(TAG, "reset")
+                        TempListUtility.viewedWords.clear()
+                        activity.getPreferences(Context.MODE_PRIVATE).edit()
+                            .putInt(KEY_VERSION, appVersion).apply()
+
+                        //TODO: sharedpref
+                        val language = "tagalog"
+                        if (TempListUtility.viewedLessons.isNotEmpty()) {
+                            for (l in TempListUtility.viewedLessons) {
+
+                                Log.d(TAG, "l: $l")
+                                val lesson = getLessonByID(
+                                    l,
+                                    "flash_learn", language
+                                )
+                                Log.d(TAG, "category: ${lesson.category}")
+                                val list = getAllWordsForLesson(
+                                    language,
+                                    lesson.category,
+                                    lesson.minLength,
+                                    lesson.maxLength
+                                )
+
+                                if (list.isNotEmpty()) {
+                                    TempListUtility.viewedWords[l] = list
+                                }
+                            }
+                        }
+                    }
                 }
 
-                if (currentUnlocked.isNotEmpty()) {
+                if (currentUnlocked.isNotEmpty() && currentUnlocked != unlocked) {
                     populateInternalStorageList(
                         activity,
                         "unlocked",
@@ -833,11 +892,8 @@ class DataUtility {
                         rewriteJSON
                     )
                 }
-
             }
-
         }
-
 
         private fun populateInternalStorageList(
             activity: Activity,
@@ -846,11 +902,8 @@ class DataUtility {
             jsonFile: String,
             rewriteJSON: Boolean
         ) {
-
             Log.d(TAG, "POPULATING TEMP")
-
             TempListUtility.setList(listType, list)
-
             if (rewriteJSON) {
                 Log.d(TAG, " AND (RE)POPULATING JSON")
                 JsonUtility.writeJSON(
@@ -860,9 +913,6 @@ class DataUtility {
                     true
                 )
             }
-
         }
-
-
     }
 }

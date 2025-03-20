@@ -123,8 +123,11 @@ class LessonTypeDialogueFragment : DialogFragment() {
                     enableButton(practiceButton, wordList)
                 } else {
                     wordList = DataUtility.getAllWordsForLesson(
+                        //TODO: replace with sharedpref,
+                        "tagalog",
                         currentLesson.category.lowercase(),
                         currentLesson.minLength,
+                        currentLesson.maxLength,
                         currentLesson.wordCount.toLong()
                     ).toMutableList()
 

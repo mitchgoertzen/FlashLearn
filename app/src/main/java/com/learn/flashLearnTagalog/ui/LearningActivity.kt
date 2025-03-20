@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -23,7 +22,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -276,12 +274,9 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             if (sharedPref.getBoolean(KEY_IN_LESSONS, false)) {
                 viewModel.updateRefreshActive(sharedPref.getBoolean(KEY_IN_LESSONS, false))
                 viewModel.updateRefreshCallback {
-
                     val fragment = LessonSelectFragment()
                     val transaction = this.supportFragmentManager.beginTransaction()
                     transaction.add(R.id.main_nav_container, fragment).commit()
-
-                    // select.refreshList(null, this)
                 }
             }
 
@@ -290,30 +285,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 profileDialog.show(this.supportFragmentManager, "profile popup")
             }
         }
-
-
-
-
-
-        //show appropriate fragment, based on type set
-//        when (type) {
-//            1 -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_nav_container, DictionaryFragment())
-//                    .addToBackStack("dictionary").commit()
-//            }
-//
-//            2 -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.main_nav_container, select)
-//                    .addToBackStack("lesson select").commit()
-//            }
-////            3 -> {
-////                supportFragmentManager.beginTransaction()
-////                    .replace(R.id.main_nav_container, StatsFragment()).addToBackStack("stats")
-////                    .commit()
-////            }
-//        }
     }
 
     fun transitionFragment(t: Int = type) {
@@ -391,11 +362,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             1 -> {
-                drawerLayout.setBackgroundColor(MaterialColors.getColor(this, R.attr.colorOnSecondary, Color.GRAY))
+                drawerLayout.setBackgroundResource(R.color.red)
             }
 
             2 -> {
-                drawerLayout.setBackgroundColor(MaterialColors.getColor(this, R.attr.colorOnPrimary, Color.GRAY))
+                drawerLayout.setBackgroundResource(R.color.blue)
             }
 
             else -> {}

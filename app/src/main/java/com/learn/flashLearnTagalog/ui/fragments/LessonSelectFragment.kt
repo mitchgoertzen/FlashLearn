@@ -177,7 +177,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
                     )
 
 //                    if (dbLessons.isEmpty()) {
-//
 //                    } else {
 //                        if (networkErrorText != null)
 //                            networkErrorText.visibility = View.GONE
@@ -188,10 +187,10 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
 //                            )!!
 //                        )
 //                    }
+
                 } else {
                     if (networkErrorText != null)
                         networkErrorText.visibility = View.GONE
-
                 }
 
                 createLessonList(
@@ -228,7 +227,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
         lessonAdapter.deleteLessons()
         var add: Boolean
         //after database access is complete, add lessons to adapter
-
         val difficultiesEmpty = difficulties.isEmpty()
 
         for (lesson in dbLessons) {
@@ -236,11 +234,9 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
             add = true
             //only add lessons that fit within the selected filter requirements
             if (lesson.level > 0) {
-
                 //Log.d(TAG, "lessons level: ${lesson.level}")
                 //TODO: replace with difficulty, set names for 1-5
                 if (difficultiesEmpty || difficulties.contains((lesson.level).toString())) {
-
                     //Log.d(TAG, "CONTAINS difficulty")
                     val category = sharedPref.getString(KEY_LESSON_CATEGORY, "All")
 
