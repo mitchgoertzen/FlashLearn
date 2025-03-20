@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,13 +14,15 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -56,7 +57,6 @@ private var type: Int = -1
 class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
 
-
     private val viewModel: SignInViewModel by viewModels()
     private val dialogViewModel: DialogViewModel by viewModels()
     private val select = LessonSelectFragment()
@@ -71,8 +71,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var drawerLayout: DrawerLayout
 
-
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lateinit var scope: CoroutineScope
@@ -83,23 +81,20 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         Log.d(TAG, "ads")
 
+        MobileAds.initialize(this) {}
 
+        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
 
+        configurationBuilder.setTagForChildDirectedTreatment(
+            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+        )
+        configurationBuilder.setMaxAdContentRating(
+            RequestConfiguration.MAX_AD_CONTENT_RATING_G
+        )
 
-//        MobileAds.initialize(this) {}
-//
-//        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
-//
-//        configurationBuilder.setTagForChildDirectedTreatment(
-//            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
-//        )
-//        configurationBuilder.setMaxAdContentRating(
-//            RequestConfiguration.MAX_AD_CONTENT_RATING_G
-//        )
-//
-//        MobileAds.setRequestConfiguration(configurationBuilder.build())
-//        val adRequest = AdRequest.Builder().build()
-//        binding.adViewLearning.loadAd(adRequest)
+        MobileAds.setRequestConfiguration(configurationBuilder.build())
+        val adRequest = AdRequest.Builder().build()
+        binding.adViewLearning.loadAd(adRequest)
 
 
         val view = binding.root
@@ -236,7 +231,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
                     "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
                     "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
-                    "2023, mitch goertzen"
+                    "2025, mitch goertzen"
 
 
         checkUser(binding)

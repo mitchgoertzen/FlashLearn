@@ -19,15 +19,15 @@
 
         </item>
 
-        <item android:title="Other">
-            <menu>
-                <item
-                    android:id="@+id/nav_slideshow"
-                    android:icon="@drawable/custom"
-                    android:title="@string/action_settings" />
-            </menu>
+<!--        <item android:title="Other">-->
+<!--            <menu>-->
+<!--                <item-->
+<!--                    android:id="@+id/nav_slideshow"-->
+<!--                    android:icon="@drawable/custom"-->
+<!--                    android:title="@string/action_settings" />-->
+<!--            </menu>-->
 
-        </item>
+<!--        </item>-->
     </group>
 
 
