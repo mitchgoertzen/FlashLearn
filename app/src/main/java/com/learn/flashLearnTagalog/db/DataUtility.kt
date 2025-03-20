@@ -712,18 +712,29 @@ class DataUtility {
             val appVersion = getAppVersion().toInt()
             var updateSavedLessons = true
             var dbLessonsEmpty = false
-           // var lessonsEmpty = false
+            // var lessonsEmpty = false
             val unlockedJSON = "unlockedLessons.json"
             val practicedJSON = "practicedLessons.json"
             val passedJSON = "passedLessons.json"
 
-            if (JsonUtility.getSavedLessons(activity).isEmpty()) {
+            val savedLessons = JsonUtility.getSavedLessons(activity)
+
+
+            val update = activity.getPreferences(Context.MODE_PRIVATE)
+                .getInt(KEY_VERSION, 0) < appVersion
+
+
+            if (update || savedLessons.isEmpty() || savedLessons[0].category == "") {
                 Log.d(TAG, "SAVED LESSONS DO NOT EXIST")
+
+                if (savedLessons.isNotEmpty()) {
+                    Log.d(TAG, "SAVED LESSONS ARE FROM PREVIOUS VERSIONS")
+                }
+
                 updateSavedLessons = false
                 activity.getPreferences(Context.MODE_PRIVATE).edit()
                     .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
 
-                Log.d(TAG, "1")
                 val lessons = getAllLessons(
                     //TODO: replace with shared pref
                     "flash_learn", "tagalog"
@@ -752,8 +763,7 @@ class DataUtility {
                     Log.d(TAG, "UNLOCKED LESSONS ARE NOT EMPTY")
                     Log.d(TAG, "$unlocked")
                     TempListUtility.unlockedLessons = unlocked
-                }
-                else {
+                } else {
                     Log.d(TAG, "UNLOCKED LESSONS EMPTY")
                     val lessons =
                         getLessonIDsByLevel(
@@ -836,9 +846,7 @@ class DataUtility {
                 } else {
                     Log.d(TAG, "THERE IS NOT A USER")
                     //reset viewed words
-                    if (activity.getPreferences(Context.MODE_PRIVATE)
-                            .getInt(KEY_VERSION, 0) < appVersion
-                    ) {
+                    if (update) {
                         Log.d(TAG, "reset")
                         TempListUtility.viewedWords.clear()
                         activity.getPreferences(Context.MODE_PRIVATE).edit()
@@ -899,7 +907,7 @@ class DataUtility {
                         rewriteJSON
                     )
                 }
-            }else{
+            } else {
                 Log.d(TAG, "DB LESSONS ARE EMPTY, NOTHING TO SAVE")
             }
         }
