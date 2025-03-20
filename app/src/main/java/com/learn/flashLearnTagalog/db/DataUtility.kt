@@ -449,18 +449,20 @@ class DataUtility {
                 "tagalog", lessonCategory, min, max
             ).toMutableList()
 
-            var count = 0
+            //  var count = list.size
 
-            for (w in list) {
-                val length = w.translation.length
+//            for (w in list) {
+//                val length = w.translation.length
+//
+//                if (length <= max) {
+//                    count++
+//                } else {
+//                    break
+//                }
+//            }
 
-                if (length <= max) {
-                    count++
-                } else {
-                    break
-                }
-            }
-            return count
+
+            return list.size
         }
 
 
@@ -566,7 +568,6 @@ class DataUtility {
 
         }
 
-
         fun updateLessonInfo(
             id: String,
             newImageID: Int,
@@ -588,7 +589,6 @@ class DataUtility {
             )
 
         }
-
 
         fun deleteLesson(lessonId: String) {
             firestore.deleteDocument(LESSON_COLLECTION, lessonId)
@@ -709,10 +709,8 @@ class DataUtility {
             Log.d(TAG, "UPDATING LOCAL DATA")
 
             val appVersion = getAppVersion().toInt()
-
             var updateLessons = true
             var lessonsEmpty = false
-
             val unlockedJSON = "unlockedLessons.json"
             val practicedJSON = "practicedLessons.json"
             val passedJSON = "passedLessons.json"
@@ -723,7 +721,8 @@ class DataUtility {
                     .putBoolean(Constants.KEY_GATHERING_LESSONS, false).apply()
 
                 Log.d(TAG, "1")
-                val lessons = getAllLessons(  //TODO: replace with shared pref
+                val lessons = getAllLessons(
+                    //TODO: replace with shared pref
                     "flash_learn", "tagalog"
                 )
 
@@ -744,14 +743,17 @@ class DataUtility {
 
                 val unlocked =
                     JsonUtility.getUserDataList(activity, unlockedJSON)
+
                 if (unlocked.isNotEmpty()) {
                     TempListUtility.unlockedLessons = unlocked
-                } else {
+                }
+                else {
                     val lessons =
                         getLessonIDsByLevel(
                             1, //TODO: replace with shared pref
                             "flash_learn", "tagalog"
                         )
+
                     val unlock = mutableListOf<String>()
 
                     for (l in lessons) {
@@ -778,7 +780,6 @@ class DataUtility {
                     TempListUtility.viewedLessons = JsonUtility.getViewedLessons(activity)
                 }
 
-
                 //if user is signed in, local data will be from user
                 //otherwise, local data will be from shared folder
                 var currentUnlocked = TempListUtility.unlockedLessons
@@ -786,11 +787,10 @@ class DataUtility {
                 var currentPassed = TempListUtility.passedLessons
 
                 val user = getCurrentUser()
-                if (user != null) {
 
+                if (user != null) {
                     Log.d(TAG, "THERE IS A USER")
                     if (!signUp) {
-
                         Log.d(TAG, "THEY ARE SIGNED IN")
                         val unlocked = currentUnlocked.toSet() + user.unlockedLessons.toSet()
                         var practiced = currentPracticed.toSet() + user.practicedLessons.toSet()
@@ -806,7 +806,6 @@ class DataUtility {
                     user.unlockedLessons = currentUnlocked
                     user.practicedLessons = currentPracticed
                     user.passedLessons = currentPassed
-
 
                     Log.d(TAG, "appVersion: $appVersion")
                     if (user.currentVersion < appVersion) {
@@ -829,11 +828,11 @@ class DataUtility {
                     updateUserData(user)
                 } else {
                     Log.d(TAG, "THERE IS NOT A USER")
-
                     //reset viewed words
                     if (activity.getPreferences(Context.MODE_PRIVATE)
                             .getInt(KEY_VERSION, 0) < appVersion
                     ) {
+                        Log.d(TAG, "reset")
                         TempListUtility.viewedWords.clear()
                         activity.getPreferences(Context.MODE_PRIVATE).edit()
                             .putInt(KEY_VERSION, appVersion).apply()
@@ -864,7 +863,7 @@ class DataUtility {
                     }
                 }
 
-                if (currentUnlocked.isNotEmpty()) {
+                if (currentUnlocked.isNotEmpty() && currentUnlocked != unlocked) {
                     populateInternalStorageList(
                         activity,
                         "unlocked",
@@ -893,11 +892,8 @@ class DataUtility {
                         rewriteJSON
                     )
                 }
-
             }
-
         }
-
 
         private fun populateInternalStorageList(
             activity: Activity,
@@ -906,11 +902,8 @@ class DataUtility {
             jsonFile: String,
             rewriteJSON: Boolean
         ) {
-
             Log.d(TAG, "POPULATING TEMP")
-
             TempListUtility.setList(listType, list)
-
             if (rewriteJSON) {
                 Log.d(TAG, " AND (RE)POPULATING JSON")
                 JsonUtility.writeJSON(
@@ -920,9 +913,6 @@ class DataUtility {
                     true
                 )
             }
-
         }
-
-
     }
 }

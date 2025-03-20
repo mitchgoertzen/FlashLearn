@@ -52,7 +52,6 @@ class JsonUtility {
             }
         }
 
-
         fun getUserDataList(activity: Activity, file: String): MutableList<String> {
             val json = readJSON(activity, file, true)
             return if (json != "") gson.fromJson(json, Array<String>::class.java)
