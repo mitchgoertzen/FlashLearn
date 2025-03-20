@@ -115,4 +115,20 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66" />
 
+    <Button
+        android:id="@+id/btnAddWords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Words"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnAddLessons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lessons"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnAddWords" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
