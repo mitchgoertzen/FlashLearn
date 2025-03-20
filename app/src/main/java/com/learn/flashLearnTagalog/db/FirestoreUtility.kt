@@ -143,6 +143,8 @@ class FirestoreUtility {
     ): QuerySnapshot {
         lateinit var query: QuerySnapshot
 
+        Log.d(TAG, "getting select sub doc")
+
         val collectionRef =
             db.collection(collectionId).document(documentId).collection(subCollectionId)
 
