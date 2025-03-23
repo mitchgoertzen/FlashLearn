@@ -130,6 +130,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_nav_container, HomeFragment()).commit()
 
+
             //  navigationView.setCheckedItem(R.id.nav_home)
         }
 
@@ -218,6 +219,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
         })
 
+        checkUser(binding)
 
         val infoText =
             "This app is intended for English speakers who are interested in learning words from the " +
@@ -229,8 +231,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
                     "2025, mitch goertzen"
 
-
-        checkUser(binding)
 
         //start home activity on home button press
         binding.ibHome.setOnClickListener {
@@ -277,6 +277,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
     }
+
 
     fun transitionFragment(t: Int = type) {
         inSettings = !inSettings
@@ -365,15 +366,47 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun checkUser(binding: ActivityMainBinding) {
-        if (auth.currentUser == null) {
+        val user = auth.currentUser
+        val fragment =
+            supportFragmentManager.findFragmentById(R.id.main_nav_container)
+
+
+
+        Log.d(TAG, "fragment: $fragment")
+        if (user == null) {
             binding.ibProfile.setImageResource(R.drawable.profile_alert)
+
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_USER_ADMIN, false)
+                .apply()
+
+
+
+            Log.d(TAG, "admin false")
         } else {
+
+
+            Log.d(TAG, "admin true")
             binding.ibProfile.setImageResource(R.drawable.profile)
+
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_USER_ADMIN, user.email == "mitchgoertzen@gmail.com")
+                .apply()
+
+
+
+            Log.d(TAG, "admin: ${user.email == "mitchgoertzen@gmail.com"}")
+        }
+
+        if (fragment != null) {
+            val home = fragment as HomeFragment
+
+            Log.d(TAG, "home: $home")
+            home.reloadAdmin()
         }
     }
 
     private fun orgSignIn(id: String, name: String) {
-
         Log.d(TAG, "ORG THINGS")
         sharedPref.edit().putString(KEY_ORGANIZATION_NAME, name).apply()
         sharedPref.edit().putString(KEY_ORGANIZATION_ID, id).apply()

@@ -109,7 +109,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
 
 
 
-                Log.d(TAG, "saved lessons: $savedLessons")
+               // Log.d(TAG, "saved lessons: $savedLessons")
 
 
                 var nextLessonWordList: List<Word> = mutableListOf()

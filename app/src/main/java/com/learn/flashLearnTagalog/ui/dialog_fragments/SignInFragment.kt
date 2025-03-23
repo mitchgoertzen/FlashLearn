@@ -293,7 +293,6 @@ class SignInFragment : DialogFragment(R.layout.dialog_fragment_sign_in) {
             email = emailText.text.toString()
             password = passwordText.text.toString()
             confirmPassword = confirmPasswordText.text.toString()
-            Log.d(TAG, "$password")
             inputError.text = ""
             if (email != "" && password != "") {
                 if (signUp) {

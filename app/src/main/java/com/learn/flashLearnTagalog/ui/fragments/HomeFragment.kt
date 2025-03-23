@@ -1,5 +1,6 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -32,6 +33,9 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
+    private lateinit var words: Button
+    private lateinit var lessons: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPref = requireActivity().getSharedPreferences(
@@ -53,72 +57,13 @@ class HomeFragment : Fragment() {
 
         val lessonButton: Button = view.findViewById(R.id.btnLesson)
         val dictionaryButton: Button = view.findViewById(R.id.btnDictionary)
-        val words: Button = view.findViewById(R.id.btnAddWords)
-        val lessons: Button = view.findViewById(R.id.btnAddLessons)
 
-        val language = "tagalog"
-        val dataProcessor = DataProcessor(resources, language)
-        val lessonCreator = LessonCreator()
+        words = view.findViewById(R.id.btnAddWords)
+        lessons = view.findViewById(R.id.btnAddLessons)
 
-
-        words.setOnClickListener {
-
-            val words = dataProcessor.getWords()
-
-            val lessonWords = mutableMapOf<String, Word>()
-
-            Log.d(TAG, "COUNT: ${words.size}")
-
-            for (i in 0 until words.size) {
-
-                val w = words[i]
-
-                if(lessonWords[w.id] != null){
-                    Log.d(TAG, "entry ${lessonWords[w.id]}")
-                    Log.d(TAG, "id ${w.id}")
-                    Log.d(TAG, "new word $w")
-                }
-                lessonWords[w.id] = w
-
-
-            }
-
-            Log.d(TAG, "words: ${lessonWords.size}")
-
-            DataUtility.insertAllWords(lessonWords, language)
-
-            Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
-        }
-
-        lessons.setOnClickListener {
-
-            val scope = CoroutineScope(Job() + Dispatchers.Main)
-            scope.launch {
-                async { lessonCreator.createLessons(resources, "", "") }.await()
-
-                val lessonList = lessonCreator.getLessons()
-
-                val lessonMap = mutableMapOf<String, Lesson>()
-
-
-
-                for (l in lessonList) {
-
-                    if(lessonMap[l.id] != null){
-                        Log.d(TAG, "entry ${lessonMap[l.id]}")
-                        Log.d(TAG, "id ${l.id}")
-                        Log.d(TAG, "new word $l")
-                    }
-
-                    lessonMap[l.id] = l
-                }
-
-                Log.d(TAG, "lessons: ${lessonMap.size}")
-                DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
-                scope.cancel()
-            }
-
-
+        if (sharedPref.getBoolean(Constants.KEY_USER_ADMIN, false)) {
+            words.visibility = View.VISIBLE
+            lessons.visibility = View.VISIBLE
         }
 
 
@@ -142,5 +87,87 @@ class HomeFragment : Fragment() {
                 ?.addToBackStack("dictionary")?.commit()
             (activity as LearningActivity?)?.transitionFragment(1)
         }
+    }
+
+    fun reloadAdmin() {
+        Log.d(TAG, "reload admin")
+        if (sharedPref.getBoolean(Constants.KEY_USER_ADMIN, false)) {
+
+            Log.d(TAG, "true")
+
+            val language = "tagalog"
+            val dataProcessor = DataProcessor(resources, language)
+            val lessonCreator = LessonCreator()
+
+
+            words.visibility = View.VISIBLE
+            lessons.visibility = View.VISIBLE
+
+            words.setOnClickListener {
+
+                val words = dataProcessor.getWords()
+
+                val lessonWords = mutableMapOf<String, Word>()
+
+                Log.d(ContentValues.TAG, "COUNT: ${words.size}")
+
+                for (i in 0 until words.size) {
+
+                    val w = words[i]
+
+                    if (lessonWords[w.id] != null) {
+                        Log.d(ContentValues.TAG, "entry ${lessonWords[w.id]}")
+                        Log.d(ContentValues.TAG, "id ${w.id}")
+                        Log.d(ContentValues.TAG, "new word $w")
+                    }
+                    lessonWords[w.id] = w
+
+
+                }
+
+                Log.d(ContentValues.TAG, "words: ${lessonWords.size}")
+
+                DataUtility.insertAllWords(lessonWords, language)
+
+                Log.d(ContentValues.TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+            }
+
+            lessons.setOnClickListener {
+
+                val scope = CoroutineScope(Job() + Dispatchers.Main)
+                scope.launch {
+                    async { lessonCreator.createLessons(resources, "", "") }.await()
+
+                    val lessonList = lessonCreator.getLessons()
+
+                    val lessonMap = mutableMapOf<String, Lesson>()
+
+
+
+                    for (l in lessonList) {
+
+                        if (lessonMap[l.id] != null) {
+                            Log.d(ContentValues.TAG, "entry ${lessonMap[l.id]}")
+                            Log.d(ContentValues.TAG, "id ${l.id}")
+                            Log.d(ContentValues.TAG, "new word $l")
+                        }
+
+                        lessonMap[l.id] = l
+                    }
+
+                    Log.d(ContentValues.TAG, "lessons: ${lessonMap.size}")
+                    DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
+                    scope.cancel()
+                }
+
+
+            }
+        } else {
+            words.visibility = View.GONE
+            lessons.visibility = View.GONE
+            Log.d(TAG, "false")
+
+        }
+
     }
 }

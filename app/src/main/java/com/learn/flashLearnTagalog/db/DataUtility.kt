@@ -751,7 +751,7 @@ class DataUtility {
 
             } else {
                 Log.d(TAG, "SAVED LESSONS EXIST")
-                Log.d(TAG, "SAVED LESSONS: ${JsonUtility.getSavedLessons(activity)}")
+             //   Log.d(TAG, "SAVED LESSONS: ${JsonUtility.getSavedLessons(activity)}")
             }
 
             if (!dbLessonsEmpty) {
