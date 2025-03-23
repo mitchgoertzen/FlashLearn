@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
         }
 
 
-        sharedPref.edit().putBoolean(Constants.KEY_HOME, true).apply()
+        sharedPref.edit().putBoolean(Constants.KEY_IN_HOME, true).apply()
         (activity as LearningActivity?)?.goHome()
 
         lessonButton.setOnClickListener {

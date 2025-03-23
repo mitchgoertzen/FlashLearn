@@ -28,7 +28,7 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.other.Constants.KEY_HOME
+import com.learn.flashLearnTagalog.other.Constants.KEY_IN_HOME
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_ID
 import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_NAME
@@ -235,7 +235,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         //start home activity on home button press
         binding.ibHome.setOnClickListener {
 
-            if (sharedPref.getBoolean(KEY_HOME, true)) {
+            if (sharedPref.getBoolean(KEY_IN_HOME, true)) {
                 if (!infoDialog.isAdded) {
                     dialogViewModel.updateText(infoText)
                     infoDialog.isCancelable = true
@@ -282,7 +282,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     fun transitionFragment(t: Int = type) {
         inSettings = !inSettings
         setType(t)
-        sharedPref.edit().putBoolean(KEY_HOME, false).apply()
+        sharedPref.edit().putBoolean(KEY_IN_HOME, false).apply()
         setHomeIcon(false)
     }
 
@@ -398,9 +398,8 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             Log.d(TAG, "admin: ${user.email == "mitchgoertzen@gmail.com"}")
         }
 
-        if (fragment != null) {
+        if (fragment != null && sharedPref.getBoolean(KEY_IN_HOME, false)) {
             val home = fragment as HomeFragment
-
             Log.d(TAG, "home: $home")
             home.reloadAdmin()
         }

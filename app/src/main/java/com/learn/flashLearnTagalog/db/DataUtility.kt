@@ -761,7 +761,7 @@ class DataUtility {
 
                 if (unlocked.isNotEmpty()) {
                     Log.d(TAG, "UNLOCKED LESSONS ARE NOT EMPTY")
-                    Log.d(TAG, "$unlocked")
+                    //Log.d(TAG, "$unlocked")
                     TempListUtility.unlockedLessons = unlocked
                 } else {
                     Log.d(TAG, "UNLOCKED LESSONS EMPTY")

@@ -210,16 +210,15 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
             lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         }
 
-        Log.d(TAG, "create")
         if (sharedPref.getBoolean(KEY_IN_LESSONS, false) && sharedPref.getBoolean(
                 KEY_LESSON_FILTERS_ACTIVE,
                 false
             )
         ) {
-            Log.d(TAG, "active")
+            Log.d(TAG, "filters active")
             btnFilter.setImageResource(R.drawable.filter_active)
         } else {
-            Log.d(TAG, "not ")
+            Log.d(TAG, "filters not active")
             btnFilter.setImageResource(R.drawable.filter)
         }
 
@@ -281,7 +280,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "select stop")
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }
