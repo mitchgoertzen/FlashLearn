@@ -45,7 +45,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btPreviousWord"
+                android:id="@+id/btnPreviousWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
@@ -53,11 +53,11 @@
                 android:layout_weight="1"
                 android:text="Previous"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btNextWord"
+                app:layout_constraintEnd_toStartOf="@+id/btnNextWord"
                 app:layout_constraintTop_toBottomOf="@+id/fcCard" />
 
             <Button
-                android:id="@+id/btNextWord"
+                android:id="@+id/btnNextWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -70,7 +70,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btFinish"
+            android:id="@+id/btnFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Finish" />

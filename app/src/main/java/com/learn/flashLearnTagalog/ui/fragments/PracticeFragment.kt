@@ -15,6 +15,7 @@ import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
+import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.other.Constants.KEY_USER_SIGNED_IN
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
@@ -48,12 +49,32 @@ class PracticeFragment : Fragment(R.layout.fragment_lessons_practice) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val prevButton: Button = view.findViewById(R.id.btPreviousWord)
+        val prevButton: Button = view.findViewById(R.id.btnPreviousWord)
         val prevWidth = prevButton.layoutParams.width
-        val nextButton: Button = view.findViewById(R.id.btNextWord)
+        val nextButton: Button = view.findViewById(R.id.btnNextWord)
         val params: ViewGroup.LayoutParams = nextButton.layoutParams
-        val finishButton: Button = view.findViewById(R.id.btFinish)
+        val finishButton: Button = view.findViewById(R.id.btnFinish)
         val index: TextView = view.findViewById(R.id.tvIndex)
+
+
+        val endButton: Button = view.findViewById(R.id.btnEndPractice)
+
+
+        if (sharedPref.getBoolean(Constants.KEY_USER_ADMIN, false)) {
+
+            endButton.visibility = View.VISIBLE
+
+            endButton.setOnClickListener {
+                currentIndex = 0
+                val fragment = PracticeResultsFragment()
+                val transaction = activity?.supportFragmentManager?.beginTransaction()
+                transaction?.replace(R.id.main_nav_container, fragment)
+                    ?.addToBackStack("practice results")?.commit()
+                (activity as LearningActivity?)?.transitionFragment(2)
+            }
+        } else {
+            endButton.visibility = View.GONE
+        }
 
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
