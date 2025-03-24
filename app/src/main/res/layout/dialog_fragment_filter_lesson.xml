@@ -113,7 +113,7 @@
             android:layout_width="176dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:backgroundTint="@color/faded_blue"
+            android:backgroundTint="@color/faded_primary"
             android:dropDownWidth="176dp"
             android:popupBackground="@color/white" />
 
@@ -146,7 +146,7 @@
                     android:id="@+id/cbLevel1"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 1"
                     android:textColor="?attr/colorOnPrimary" />
 
@@ -154,7 +154,7 @@
                     android:id="@+id/cbLevel3"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 3"
                     android:textColor="?attr/colorOnPrimary" />
 
@@ -162,7 +162,7 @@
                     android:id="@+id/cbLevel5"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 5"
                     android:textColor="?attr/colorOnPrimary" />
             </LinearLayout>
@@ -176,7 +176,7 @@
                     android:id="@+id/cbLevel2"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 2"
                     android:textColor="?attr/colorOnPrimary" />
 
@@ -184,7 +184,7 @@
                     android:id="@+id/cbLevel4"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 4"
                     android:textColor="?attr/colorOnPrimary" />
 
@@ -192,7 +192,7 @@
                     android:id="@+id/cbLevel6"
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
-                    android:buttonTint="@color/faded_blue"
+                    android:buttonTint="@color/faded_primary"
                     android:text="Level 6"
                     android:textColor="?attr/colorOnPrimary" />
 
@@ -223,7 +223,7 @@
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"
-                android:buttonTint="@color/faded_blue"
+                android:buttonTint="@color/faded_primary"
                 android:text="Practice Completed"
                 android:textColor="?attr/colorOnPrimary" />
 
@@ -232,7 +232,7 @@
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"
-                android:buttonTint="@color/faded_blue"
+                android:buttonTint="@color/faded_primary"
                 android:text="Test Passed"
                 android:textColor="?attr/colorOnPrimary" />
 
@@ -241,7 +241,7 @@
                 android:layout_width="176dp"
                 android:layout_height="22dp"
                 android:layout_gravity="center"
-                android:buttonTint="@color/faded_blue"
+                android:buttonTint="@color/faded_primary"
                 android:text="Unlocked"
                 android:textColor="?attr/colorOnPrimary" />
         </LinearLayout>
@@ -269,9 +269,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline60"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="1dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline59"

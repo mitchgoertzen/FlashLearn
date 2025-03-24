@@ -354,11 +354,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             1 -> {
-                drawerLayout.setBackgroundResource(R.color.red)
+                drawerLayout.setBackgroundResource(R.color.secondary)
             }
 
             2 -> {
-                drawerLayout.setBackgroundResource(R.color.blue)
+                drawerLayout.setBackgroundResource(R.color.primary)
             }
 
             else -> {}

@@ -61,37 +61,21 @@
                 android:id="@+id/btnRetryPractice"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="Retry"
-                app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/glRight"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="281dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnLessonTest"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="start test"
-                app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/glLeft"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintTop_toTopOf="parent"/>
 
 <!--            <Button-->
 <!--                android:id="@+id/btnStats"-->
@@ -134,13 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="lesson select"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            android:text="lesson select" />
 
 
     </LinearLayout>
