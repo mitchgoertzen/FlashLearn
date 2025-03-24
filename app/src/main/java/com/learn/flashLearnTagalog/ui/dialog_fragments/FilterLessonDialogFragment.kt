@@ -175,6 +175,7 @@ class FilterLessonDialogFragment : DialogFragment() {
             unlocked.isChecked = false
 
             spinner.setSelection(0)
+            sortOptionAdapter.setSelection(1)
 
             sharedPref.edit()
                 .putBoolean(KEY_LESSON_FILTERS_ACTIVE, false)

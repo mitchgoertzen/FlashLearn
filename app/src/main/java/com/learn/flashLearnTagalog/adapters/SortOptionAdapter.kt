@@ -15,37 +15,47 @@ class SortOptionAdapter @Inject constructor(
     savedSortPosition: Int
 ) : RecyclerView.Adapter<SortOptionAdapter.SortOptionViewHolder>() {
 
-    //TODO: init check
-    lateinit var optionsList: ArrayList<String>
-
-    var currentSelection: Int = savedSortPosition
+    private lateinit var viewHolder: SortOptionViewHolder
 
     //TODO: init check
-    lateinit var currentSelect: TextView
+    private lateinit var optionsList: ArrayList<String>
+
+
+    private var textViewOptions: ArrayList<TextView> = arrayListOf()
+
+
+    private var currentSelection: Int = savedSortPosition
+
+    //TODO: init check
+    private lateinit var currentSelect: TextView
 
     class SortOptionViewHolder(val binding: ComponentSortOptionBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SortOptionViewHolder {
-        val binding = ComponentSortOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ComponentSortOptionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SortOptionViewHolder(binding)
 
     }
 
     override fun onBindViewHolder(holder: SortOptionViewHolder, position: Int) {
+        viewHolder = holder
         val currentOption = options[position]
         if (position == currentSelection)
-            select(holder.binding.textView5)
+            select(holder.binding.tvSortOptionText)
         holder.itemView.apply {
-            val option = holder.binding.textView5
+            val option = holder.binding.tvSortOptionText
             option.text = currentOption
             option.setOnClickListener {
-                currentSelection = position
+                currentSelection = holder.bindingAdapterPosition
                 currentSelect.setBackgroundResource(R.color.white)
                 select(option)
             }
+            textViewOptions.add(option)
         }
     }
+
 
     fun addOption(option: String) {
         options.add(option)
@@ -62,7 +72,13 @@ class SortOptionAdapter @Inject constructor(
         notifyItemRangeRemoved(0, size)
     }
 
-    fun select(option: TextView) {
+    fun setSelection(index: Int) {
+        currentSelection = index
+        currentSelect.setBackgroundResource(R.color.white)
+        select(textViewOptions[index])
+    }
+
+    private fun select(option: TextView) {
         currentSelect = option
         option.setBackgroundResource(R.drawable.selected_text_background)
     }

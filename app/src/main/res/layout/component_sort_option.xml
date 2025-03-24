@@ -6,7 +6,7 @@
     android:layout_gravity="center">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvSortOptionText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
