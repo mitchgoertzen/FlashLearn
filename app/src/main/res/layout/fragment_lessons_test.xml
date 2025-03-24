@@ -62,6 +62,7 @@
         android:id="@+id/etTodoTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:backgroundTint="#80FFFFFF"
         android:hint="@string/enter_translation"
         android:inputType="textCapCharacters|textNoSuggestions"
@@ -74,7 +75,6 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
-        android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvTodoList" />
@@ -98,19 +98,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
+        android:enabled="false"
         android:maxLines="1"
         android:text="Enter"
         android:textColor="?attr/colorOnPrimary"
-        app:autoSizeMaxTextSize="13sp"
-        app:autoSizeMinTextSize="10sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/tvIndex"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTodoTitle"
-        app:strokeColor="#FCD116"
-        app:strokeWidth="3dp" />
+        app:layout_constraintTop_toBottomOf="@+id/etTodoTitle" />
 
     <TextView
         android:id="@+id/tvIndex"
@@ -145,6 +140,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.93" />
+
+    <Button
+        android:id="@+id/btnPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pass"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnFail" />
+
+    <Button
+        android:id="@+id/btnFail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

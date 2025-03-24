@@ -27,6 +27,7 @@ import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.other.Constants.KEY_USER_ADMIN
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,7 +71,6 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             .apply()
 
 
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -93,6 +93,30 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
         val btnEnter: Button = view.findViewById(R.id.btnEnter)
         val btnSkip: Button = view.findViewById(R.id.btnSkip)
         rvTodoList.adapter = testWordAdapter
+
+        val pass: Button = view.findViewById(R.id.btnPass)
+        val fail: Button = view.findViewById(R.id.btnFail)
+
+
+        if (sharedPref.getBoolean(KEY_USER_ADMIN, false)) {
+
+            pass.visibility = View.VISIBLE
+            fail.visibility = View.VISIBLE
+
+            pass.setOnClickListener {
+                wordsCorrect = listSize
+                goToResults()
+            }
+
+            fail.setOnClickListener {
+                wordsCorrect = 0
+                goToResults()
+            }
+        } else {
+            pass.visibility = View.GONE
+            fail.visibility = View.GONE
+        }
+
         rvTodoList.layoutManager = LinearLayoutManager((activity as LearningActivity?))
 
         viewModel.currentWordList.observe(viewLifecycleOwner) { list ->
@@ -120,7 +144,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
             setWordType(wordType)
 
-           // btnEnter.isEnabled = false
+            // btnEnter.isEnabled = false
 
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
@@ -150,11 +174,13 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                     }
                 } else {
                     val toDoTitle =
-                        etTodoTitle.text.toString().replace(getString(R.string.space).toRegex(), "").uppercase()
+                        etTodoTitle.text.toString().replace(getString(R.string.space).toRegex(), "")
+                            .uppercase()
                     if (toDoTitle.isNotBlank()) {
                         val toDo = TestWord(toDoTitle)
                         val answer =
-                            getCurrentWord(!engFirst).uppercase().replace(getString(R.string.space).toRegex(), "")
+                            getCurrentWord(!engFirst).uppercase()
+                                .replace(getString(R.string.space).toRegex(), "")
                         correctAnswer = (toDoTitle == answer)
                         toDo.isCorrect = correctAnswer
                         testWordAdapter.addTestWord(toDo, engFirst, false)
@@ -287,7 +313,9 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
 
     private fun goToResults() {
         viewModel.currentLesson.observe(viewLifecycleOwner) { lesson ->
-           if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize().toFloat() >= 0.0f) {
+            if (wordsCorrect.toFloat() / answeredAdapter.getTestWordsSize()
+                    .toFloat() >= Constants.KEY_PASSING_SCORE
+            ) {
                 val id = lesson.id
                 if (!TempListUtility.passedLessons.contains(id)) {
 

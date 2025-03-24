@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -27,11 +26,17 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        overrideActivityTransition(OVERRIDE_TRANSITION_OPEN ,android.R.anim.fade_in, android.R.anim.linear_interpolator)
+        if (Build.VERSION.SDK_INT >= 34) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_OPEN,
+                android.R.anim.fade_in,
+                android.R.anim.linear_interpolator
+            )
+        }
+        
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         auth = Firebase.auth
 
@@ -47,11 +52,15 @@ class SplashScreenActivity : AppCompatActivity() {
                 )
                 userScope.cancel()
             }
-        }else{
+        } else {
             sharedPref.edit().putBoolean(Constants.KEY_USER_SIGNED_IN, false).apply()
             val listScope = CoroutineScope(Job() + Dispatchers.Main)
             listScope.launch {
-                DataUtility.updateLocalData(this@SplashScreenActivity, signUp = false, rewriteJSON = false)
+                DataUtility.updateLocalData(
+                    this@SplashScreenActivity,
+                    signUp = false,
+                    rewriteJSON = false
+                )
                 listScope.cancel()
             }
         }

@@ -4,19 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nestedScrollView"
-    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     tools:context=".ui.fragments.LessonSelectFragment">
-
 
 
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,77 +36,71 @@
             app:autoSizeTextType="uniform" />
 
 
+<!--        <RelativeLayout-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <androidx.appcompat.widget.SwitchCompat-->
+<!--                android:id="@+id/swLessonSource"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:checked="false"-->
+<!--                android:fontFamily="@font/futura_pt_bold"-->
+<!--                android:gravity="center"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textAppearance="@style/Tagalog"-->
+<!--                android:textOff="Flash Learn"-->
+<!--                android:textOn="Organization"-->
+<!--                android:thumb="@drawable/lesson_tab_selector"-->
+<!--                android:typeface="monospace"-->
+<!--                app:showText="false"-->
+<!--                app:switchMinWidth="200dp"-->
+<!--                app:track="@drawable/lesson_track_selector" />-->
 
 
-        <RelativeLayout
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+<!--            <TextView-->
+<!--                android:id="@+id/tv_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:gravity="center|left"-->
+<!--                android:paddingStart="15dp"-->
+<!--                android:text="Flash Learn"-->
+<!--                android:textColor="?attr/colorOnPrimary"-->
+<!--                android:textSize="10sp"-->
+<!--                android:visibility="visible" />-->
 
 
+<!--            <TextView-->
+<!--                android:id="@+id/tv_text_taken"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:fontFamily="@font/futura_pt_bold"-->
+<!--                android:gravity="center|right"-->
+<!--                android:paddingEnd="15dp"-->
+<!--                android:text="Organization"-->
+<!--                android:textColor="?attr/colorOnPrimary"-->
+<!--                android:textSize="10sp"-->
+<!--                android:visibility="visible" />-->
 
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/swLessonSource"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:checked="false"
-                android:gravity="center"
-                android:textAllCaps="false"
-                android:typeface="monospace"
-                android:fontFamily="@font/futura_pt_bold"
-                android:textOff="Flash Learn"
-                android:textOn="Organization"
-                android:thumb="@drawable/lesson_tab_selector"
-                app:showText="false"
-                app:switchMinWidth="200dp"
-                android:textAppearance="@style/Tagalog"
-                app:track="@drawable/lesson_track_selector"/>
-
-
-            <TextView
-                android:id="@+id/tv_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:paddingStart="15dp"
-                android:text="Flash Learn"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="10sp"
-                android:visibility="visible"  />
-
-
-            <TextView
-                android:id="@+id/tv_text_taken"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/futura_pt_bold"
-                android:gravity="center|right"
-                android:paddingEnd="15dp"
-                android:text="Organization"
-                android:textColor="?attr/colorOnPrimary"
-                android:textSize="10sp"
-                android:visibility="visible" />
-
-        </RelativeLayout>
-
+<!--        </RelativeLayout>-->
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="15dp"
-            android:weightSum="10"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:gravity="center_vertical"
                 android:layout_weight="7"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -158,12 +151,11 @@
                 android:layout_height="30dp"
                 android:layout_weight="3"
                 android:background="#00000000"
-                android:scaleType="fitCenter"
-                android:paddingBottom="5dp"/>
+                android:paddingBottom="5dp"
+                android:scaleType="fitCenter" />
         </LinearLayout>
 
-<!--        <include layout="@layout/app_lesson_switch"/>-->
-
+        <!--        <include layout="@layout/app_lesson_switch"/>-->
 
 
         <TextView
@@ -197,7 +189,7 @@
     <!--        app:layout_constraintGuide_percent="0.15"  />-->
 
     <!--    android:layout_marginStart="12dp"-->
-<!--    android:layout_marginEnd="5dp"-->
+    <!--    android:layout_marginEnd="5dp"-->
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

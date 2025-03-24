@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    <!--theme-->
+    <color name="primary">#0038A8</color>
+    <color name="secondary">#CE1126</color>
+    <color name="accent">#FCD116</color>
+    <color name="passingGreen">#1EFA27</color>
+    <color name="none">#00000000</color>
+    <color name="faded_primary">#374C75</color>
+    <color name="seek_bar_background">#80FFFFFF</color>
+    <color name="seek_bar_progress">#FFFFFF</color>
+    <color name="seek_bar_secondary_progress">#BFFFFFFF</color>
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,17 +21,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FCD116</color>
-    <color name="blue">#0038A8</color>
     <color name="light_grey">#808080</color>
     <color name="grey">#454545</color>
     <color name="dark_grey">#353535</color>
-    <color name="faded_blue">#374C75</color>
-    <color name="red">#CE1126</color>
-    <color name="passingGreen">#1EFA27</color>
-    <color name="seek_bar_background">#80FFFFFF</color>
-    <color name="seek_bar_progress">#FFFFFF</color>
-    <color name="seek_bar_secondary_progress">#BFFFFFFF</color>
-
-    <color name="none">#00000000</color>
 </resources>

@@ -13,7 +13,7 @@ class DataProcessor(val resources: Resources, val language : String) {
 
 
     init {
-         val file : Int = when(language){
+        val file : Int = when(language){
             "tagalog" -> R.raw.tag_dollar
             else -> {-1}
         }

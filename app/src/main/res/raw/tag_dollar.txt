@@ -1366,7 +1366,7 @@ n$asbesto$asbestos
 n$asbok$sudden gust of smoke, dust or thick vapour
 v$asegurahin$insure
 n$aselerador$accelerator
-n$asendero$person who owns and runs a hacienda 
+n$asendero$person who owns and runs a hacienda
 n$Asensiyon$Ascension
 n$asenso$promotion
 n$asensor$elevator
@@ -9237,7 +9237,7 @@ v$hugisin$shape
 adj$hugnayan$complex]
 n$hugong$buzz
 n$hugos$letting down a rope, cable or the like
-n$hugot$drawing out 
+n$hugot$drawing out
 n$hugpong$juncture
 v$hugpungan$join another length to a previous one
 v$hugusan$let down a rope or cable (to a person/place)
@@ -12061,7 +12061,7 @@ n$kabanata$chapter (of a book)
 n$kabanayaran$moderation
 n$kabandayan$stupidity
 n$kabandiduhan$banditry
-adj$kabang$multi-coloured (US: multi-colored) 
+adj$kabang$multi-coloured (US: multi-colored)
 n$kabang$species of fish
 n$kabangga$the other party in a collision
 v$kabanggain$oppose someone in a competition, argument
@@ -18734,7 +18734,7 @@ v$mabutihin$prefer
 comp$mabuting asal$good conduct or behaviour (US: behavior)
 comp$mabuting magsalita$fluent
 comp$mabuting pangalan$character
-adj$mabuting-loob$kind-hearted 
+adj$mabuting-loob$kind-hearted
 adj$mabutingting$detailed
 adj$mabuto$bony
 v$mabuwag$be overturned or demolished
@@ -20306,7 +20306,7 @@ v$magkalupkop$put a coating over the surface of
 v$magkaluray-luray$be crushed or smashed to pieces
 v$magkama$dovetail
 adj$magkamag-anak$kindred
-v$magkamal$hold a handful 
+v$magkamal$hold a handful
 v$magkamalay$come to
 v$magkamalay-tao$recover consciousness
 v$magkamali$err
@@ -30186,7 +30186,7 @@ n$pagkabulok$decay
 n$pagkabulusok$swishing sound
 n$pagkabunggo$collision
 n$pagkabuo$integrity
-n$pagkaburara$carelessness in appearance, dress, conduct 
+n$pagkaburara$carelessness in appearance, dress, conduct
 n$pagkaburol$lying in state
 n$pagkabusabos$abject slavery
 n$pagkabusilak$immaculateness
@@ -36848,7 +36848,7 @@ n$poeta$poet
 n$pohas$sheet (of paper, glass, metal)
 n$poinsetya$poinsettia (Christmas flower)
 n$poker$poker (card game)
-n$pokus$focus (point of attention) 
+n$pokus$focus (point of attention)
 n$polaynas$leggings
 n$polbera$powder box
 n$polbo$face powder
@@ -44818,7 +44818,7 @@ adj$walang-hinayang$unsparing
 adj$walang-hinga$without breathing
 adj$walang-hinto$continual
 adj$walang-hiya$shameless
-comp$walang-hiyang tao$reprobate 
+comp$walang-hiyang tao$reprobate
 adj$walang-hubog$shapeless
 adj$walang-humpay$unceasing
 adj$walang-iba$no other

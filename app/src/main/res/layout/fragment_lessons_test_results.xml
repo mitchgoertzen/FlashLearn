@@ -116,14 +116,7 @@
             android:id="@+id/btnRetry"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="Retry"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            android:text="Retry" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -133,18 +126,11 @@
                 android:id="@+id/btnPractice"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="Practice"
-                app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/glRight"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnStats"
@@ -153,16 +139,10 @@
                 android:maxLines="1"
                 android:text="View Stats"
                 android:visibility="gone"
-                app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/glLeft"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnNextLesson"
@@ -171,16 +151,10 @@
                 android:maxLines="1"
                 android:text="Next Lesson"
                 android:visibility="gone"
-                app:autoSizeMaxTextSize="12sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/glLeft"
-                app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/glRight"
@@ -205,13 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:text="lesson select"
-            app:autoSizeMaxTextSize="12sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            android:text="lesson select" />
 
     </LinearLayout>
 

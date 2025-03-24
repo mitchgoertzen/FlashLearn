@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -106,13 +105,13 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
-        val lessonSwitch: SwitchCompat = view.findViewById(R.id.swLessonSource)
-
-        lessonSwitch.setOnClickListener {
-            lessonSource = !lessonSource
-            Log.d(TAG, "source: $lessonSource")
-            refreshList(networkErrorText, requireActivity())
-        }
+//        val lessonSwitch: SwitchCompat = view.findViewById(R.id.swLessonSource)
+//
+//        lessonSwitch.setOnClickListener {
+//            lessonSource = !lessonSource
+//            Log.d(TAG, "source: $lessonSource")
+//            refreshList(networkErrorText, requireActivity())
+//        }
 
         btnFilter.setOnClickListener {
             if (!dialog.isAdded) {
@@ -211,16 +210,15 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
             lessonAdapter = LessonAdapter(viewModel, mutableListOf())
         }
 
-        Log.d(TAG, "create")
         if (sharedPref.getBoolean(KEY_IN_LESSONS, false) && sharedPref.getBoolean(
                 KEY_LESSON_FILTERS_ACTIVE,
                 false
             )
         ) {
-            Log.d(TAG, "active")
+            Log.d(TAG, "filters active")
             btnFilter.setImageResource(R.drawable.filter_active)
         } else {
-            Log.d(TAG, "not ")
+            Log.d(TAG, "filters not active")
             btnFilter.setImageResource(R.drawable.filter)
         }
 
@@ -282,7 +280,6 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "select stop")
         sharedPref.edit().putBoolean(KEY_IN_LESSONS, false).apply()
     }
 }

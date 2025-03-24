@@ -24,6 +24,7 @@ import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
+import com.learn.flashLearnTagalog.other.Constants.KEY_PASSING_SCORE
 import com.learn.flashLearnTagalog.ui.LearningActivity
 import com.learn.flashLearnTagalog.ui.viewmodels.LessonViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -77,7 +78,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
         val guideline: Guideline = view.findViewById(R.id.glRight)
         val listSize = viewModel.listSize
         val percentage = (100 * score / listSize)
-        val passingScore = 50
+        val passingScore = KEY_PASSING_SCORE * 100
 
         viewModel.currentAdapter.observe(viewLifecycleOwner) { adapter ->
             rvTodoList.adapter = adapter
@@ -90,7 +91,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
         scoreText.text = score.toString()
         totalText.text = listSize.toString()
 
-        percentageText.text = "$percentage%"
+        percentageText.text = percentage.toString().plus("%")
 
         val resultText: String
         val resultColor: Int
@@ -108,8 +109,7 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
                 var nextLesson: Lesson? = null
 
 
-
-                Log.d(TAG, "saved lessons: $savedLessons")
+                // Log.d(TAG, "saved lessons: $savedLessons")
 
 
                 var nextLessonWordList: List<Word> = mutableListOf()
@@ -193,11 +193,14 @@ class TestResultsFragment : Fragment(R.layout.fragment_lessons_test_results) {
 
             }
 
-            resultColor = MaterialColors.getColor(requireContext(), R.attr.colorOnTertiary, Color.GRAY)
+            resultColor =
+                MaterialColors.getColor(requireContext(), R.attr.colorOnTertiary, Color.GRAY)
             resultText = "You Passed!"
         } else {
-            resultColor = MaterialColors.getColor(requireContext(), R.attr.colorOnSecondary, Color.GRAY)
-            resultText = "Not Quite...\na passing Score is $passingScore%"
+            resultColor =
+                MaterialColors.getColor(requireContext(), R.attr.colorOnSecondary, Color.GRAY)
+            resultText =
+                "Not Quite...\na passing Score is " + "$passingScore".substringBefore(".").plus("%")
         }
 
         infoText.text = resultText

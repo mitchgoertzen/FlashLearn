@@ -7,14 +7,14 @@
             android:height="@dimen/_2sdp"
             android:width="@dimen/_30sdp"
             />
-            <solid android:color="@color/yellow" />
+            <solid android:color="@color/accent" />
         </shape>
     </item>
 
 
     <item android:top="2dp">
         <shape>
-            <solid android:color="@color/blue" />
+            <solid android:color="@color/primary" />
         </shape>
     </item>
 
@@ -24,7 +24,7 @@
                 android:height="2dp"
                 android:width="@dimen/_30sdp"
                 />
-            <solid android:color="@color/yellow" />
+            <solid android:color="@color/accent" />
         </shape>
     </item>
 

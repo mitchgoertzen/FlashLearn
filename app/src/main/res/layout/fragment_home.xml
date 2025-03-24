@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/flag2"
@@ -24,19 +25,11 @@
         android:id="@+id/btnLesson"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="1"
         android:padding="15dp"
         android:text="Lessons"
-        android:textAlignment="center"
-        app:autoSizeMaxTextSize="13sp"
-        app:autoSizeMinTextSize="10sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline35"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:strokeColor="#FCD116"
-        app:strokeWidth="3dp" />
+        app:layout_constraintTop_toTopOf="@+id/guideline36" />
 
     <Button
         android:id="@+id/btnDictionary"
@@ -44,18 +37,11 @@
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:padding="15dp"
-        android:shadowColor="#FCD116"
         android:text="Dictionary"
         android:textColor="?attr/colorOnSecondary"
-        app:autoSizeMaxTextSize="13sp"
-        app:autoSizeMinTextSize="10sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
-        app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:strokeColor="#FCD116"
-        app:strokeWidth="3dp" />
+        app:layout_constraintTop_toTopOf="@+id/guideline36" />
 
 
 
@@ -120,6 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Words"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -128,6 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lessons"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnAddWords" />
 

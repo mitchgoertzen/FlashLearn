@@ -45,56 +45,35 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btPreviousWord"
+                android:id="@+id/btnPreviousWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:maxLines="1"
                 android:text="Previous"
-                app:autoSizeMaxTextSize="13sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btNextWord"
-                app:layout_constraintTop_toBottomOf="@+id/fcCard"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintEnd_toStartOf="@+id/btnNextWord"
+                app:layout_constraintTop_toBottomOf="@+id/fcCard" />
 
             <Button
-                android:id="@+id/btNextWord"
+                android:id="@+id/btnNextWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="50dp"
                 android:layout_weight="1"
                 android:text="Next"
-                android:maxLines="1"
-                app:autoSizeMaxTextSize="13sp"
-                app:autoSizeMinTextSize="10sp"
-                app:autoSizeStepGranularity="1sp"
-                app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fcCard"
-                app:strokeColor="#FCD116"
-                app:strokeWidth="3dp" />
+                app:layout_constraintTop_toBottomOf="@+id/fcCard"/>
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/btFinish"
+            android:id="@+id/btnFinish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="10sp"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            app:strokeColor="#FCD116"
-            app:strokeWidth="3dp" />
+            android:text="Finish" />
 
 
     </LinearLayout>
@@ -127,7 +106,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
 
-<!--    <androidx.constraintlayout.widget.Guideline-->
+    <Button
+        android:id="@+id/btnEndPractice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!--    <androidx.constraintlayout.widget.Guideline-->
 <!--        android:id="@+id/guideline36"-->
 <!--        android:layout_width="wrap_content"-->
 <!--        android:layout_height="wrap_content"-->

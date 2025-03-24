@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,7 +14,6 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -30,7 +28,7 @@ import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.databinding.ActivityMainBinding
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
-import com.learn.flashLearnTagalog.other.Constants.KEY_HOME
+import com.learn.flashLearnTagalog.other.Constants.KEY_IN_HOME
 import com.learn.flashLearnTagalog.other.Constants.KEY_IN_LESSONS
 import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_ID
 import com.learn.flashLearnTagalog.other.Constants.KEY_ORGANIZATION_NAME
@@ -56,7 +54,6 @@ private var type: Int = -1
 class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
 
-
     private val viewModel: SignInViewModel by viewModels()
     private val dialogViewModel: DialogViewModel by viewModels()
     private val select = LessonSelectFragment()
@@ -71,8 +68,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var drawerLayout: DrawerLayout
 
-
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lateinit var scope: CoroutineScope
@@ -80,10 +75,6 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         auth = Firebase.auth
         sharedPref = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE)
         binding = ActivityMainBinding.inflate(layoutInflater)
-
-        Log.d(TAG, "ads")
-
-
 
 
 //        MobileAds.initialize(this) {}
@@ -138,6 +129,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_nav_container, HomeFragment()).commit()
+
 
             //  navigationView.setCheckedItem(R.id.nav_home)
         }
@@ -227,6 +219,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
         })
 
+        checkUser(binding)
 
         val infoText =
             "This app is intended for English speakers who are interested in learning words from the " +
@@ -236,15 +229,13 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
                     "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
                     "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
-                    "2023, mitch goertzen"
+                    "2025, mitch goertzen"
 
-
-        checkUser(binding)
 
         //start home activity on home button press
         binding.ibHome.setOnClickListener {
 
-            if (sharedPref.getBoolean(KEY_HOME, true)) {
+            if (sharedPref.getBoolean(KEY_IN_HOME, true)) {
                 if (!infoDialog.isAdded) {
                     dialogViewModel.updateText(infoText)
                     infoDialog.isCancelable = true
@@ -287,10 +278,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
+
     fun transitionFragment(t: Int = type) {
         inSettings = !inSettings
         setType(t)
-        sharedPref.edit().putBoolean(KEY_HOME, false).apply()
+        sharedPref.edit().putBoolean(KEY_IN_HOME, false).apply()
         setHomeIcon(false)
     }
 
@@ -362,11 +354,11 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
             }
 
             1 -> {
-                drawerLayout.setBackgroundResource(R.color.red)
+                drawerLayout.setBackgroundResource(R.color.secondary)
             }
 
             2 -> {
-                drawerLayout.setBackgroundResource(R.color.blue)
+                drawerLayout.setBackgroundResource(R.color.primary)
             }
 
             else -> {}
@@ -374,15 +366,46 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun checkUser(binding: ActivityMainBinding) {
-        if (auth.currentUser == null) {
+        val user = auth.currentUser
+        val fragment =
+            supportFragmentManager.findFragmentById(R.id.main_nav_container)
+
+
+
+        Log.d(TAG, "fragment: $fragment")
+        if (user == null) {
             binding.ibProfile.setImageResource(R.drawable.profile_alert)
+
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_USER_ADMIN, false)
+                .apply()
+
+
+
+            Log.d(TAG, "admin false")
         } else {
+
+
+            Log.d(TAG, "admin true")
             binding.ibProfile.setImageResource(R.drawable.profile)
+
+            sharedPref.edit()
+                .putBoolean(Constants.KEY_USER_ADMIN, user.email == "mitchgoertzen@gmail.com")
+                .apply()
+
+
+
+            Log.d(TAG, "admin: ${user.email == "mitchgoertzen@gmail.com"}")
+        }
+
+        if (fragment != null && sharedPref.getBoolean(KEY_IN_HOME, false)) {
+            val home = fragment as HomeFragment
+            Log.d(TAG, "home: $home")
+            home.reloadAdmin()
         }
     }
 
     private fun orgSignIn(id: String, name: String) {
-
         Log.d(TAG, "ORG THINGS")
         sharedPref.edit().putString(KEY_ORGANIZATION_NAME, name).apply()
         sharedPref.edit().putString(KEY_ORGANIZATION_ID, id).apply()
