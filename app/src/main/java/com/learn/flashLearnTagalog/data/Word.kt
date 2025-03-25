@@ -5,6 +5,7 @@ data class Word(
     val translations: List<String> = listOf(),
     val type: String = "",
     val category: String = "",
+    val context: String? = "",
     val image: String? = "",
     val correctIndex: Int = 0,
     val incorrectTranslation: Boolean? = null

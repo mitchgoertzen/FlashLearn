@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
             Log.d(TAG, "true")
 
             val language = "tagalog"
-            val dataProcessor = DataProcessor(resources, language, R.raw.tag_dollar)
+            val dataProcessor = DataProcessor(resources, language)
             val lessonCreator = LessonCreator()
 
 
@@ -106,7 +106,10 @@ class HomeFragment : Fragment() {
 
             words.setOnClickListener {
                 Log.d(TAG, "here")
-                dataProcessor.getWords()
+
+
+                dataProcessor.makeList(0,R.raw.tag_to_eng_dict, ',')
+               // dataProcessor.makeList(1,R.raw.tag_dollar, '$')
 
 //                val lessonWords = mutableMapOf<String, Word>()
 //
