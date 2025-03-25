@@ -45224,7 +45224,7 @@ v$yelohan$make cold by adding ice
 n$yelohan$ice plant
 comp$yelong kaskas$chipped ice
 n$yeluhan$ice plant
-n$yema$yolk of an egg,Food
+n$yema$yolk of an egg#food & drinks
 n$yena$hyena
 n$yero$galvanized iron sheet for roofing
 n$yeso$chalk

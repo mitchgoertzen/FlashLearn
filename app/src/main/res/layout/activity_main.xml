@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="125px"
             android:elevation="6dp"
-            android:theme="@style/ActionBarTheme"
+            android:theme="@style/DrawerTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

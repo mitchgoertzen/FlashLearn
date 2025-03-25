@@ -308,7 +308,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
         return if (eng)
             currentWord.english
         else
-            currentWord.translation
+            currentWord.translations[currentWord.correctIndex]
     }
 
     private fun goToResults() {

@@ -1,6 +1,5 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -15,7 +14,6 @@ import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.data.Lesson
-import com.learn.flashLearnTagalog.data.Word
 import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.LearningActivity
@@ -55,6 +53,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         val lessonButton: Button = view.findViewById(R.id.btnLesson)
         val dictionaryButton: Button = view.findViewById(R.id.btnDictionary)
 
@@ -66,6 +66,7 @@ class HomeFragment : Fragment() {
             lessons.visibility = View.VISIBLE
         }
 
+        reloadAdmin()
 
         sharedPref.edit().putBoolean(Constants.KEY_IN_HOME, true).apply()
         (activity as LearningActivity?)?.goHome()
@@ -96,7 +97,7 @@ class HomeFragment : Fragment() {
             Log.d(TAG, "true")
 
             val language = "tagalog"
-            val dataProcessor = DataProcessor(resources, language)
+            val dataProcessor = DataProcessor(resources, language, R.raw.tag_dollar)
             val lessonCreator = LessonCreator()
 
 
@@ -104,32 +105,32 @@ class HomeFragment : Fragment() {
             lessons.visibility = View.VISIBLE
 
             words.setOnClickListener {
+                Log.d(TAG, "here")
+                dataProcessor.getWords()
 
-                val words = dataProcessor.getWords()
-
-                val lessonWords = mutableMapOf<String, Word>()
-
-                Log.d(ContentValues.TAG, "COUNT: ${words.size}")
-
-                for (i in 0 until words.size) {
-
-                    val w = words[i]
-
-                    if (lessonWords[w.id] != null) {
-                        Log.d(ContentValues.TAG, "entry ${lessonWords[w.id]}")
-                        Log.d(ContentValues.TAG, "id ${w.id}")
-                        Log.d(ContentValues.TAG, "new word $w")
-                    }
-                    lessonWords[w.id] = w
-
-
-                }
-
-                Log.d(ContentValues.TAG, "words: ${lessonWords.size}")
-
-                DataUtility.insertAllWords(lessonWords, language)
-
-                Log.d(ContentValues.TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+//                val lessonWords = mutableMapOf<String, Word>()
+//
+//                Log.d(TAG, "COUNT: ${words.size}")
+//
+//                for (i in 0 until words.size) {
+//
+//                    val w = words[i]
+//
+//                    if (lessonWords[w.id] != null) {
+//                        Log.d(TAG, "entry ${lessonWords[w.id]}")
+//                        Log.d(TAG, "id ${w.id}")
+//                        Log.d(TAG, "new word $w")
+//                    }
+//                    lessonWords[w.id] = w
+//
+//
+//                }
+//
+//                Log.d(TAG, "words: ${lessonWords.size}")
+//
+//                DataUtility.insertAllWords(lessonWords, language)
+//
+//                Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
             }
 
             lessons.setOnClickListener {
@@ -142,20 +143,16 @@ class HomeFragment : Fragment() {
 
                     val lessonMap = mutableMapOf<String, Lesson>()
 
-
-
                     for (l in lessonList) {
-
                         if (lessonMap[l.id] != null) {
-                            Log.d(ContentValues.TAG, "entry ${lessonMap[l.id]}")
-                            Log.d(ContentValues.TAG, "id ${l.id}")
-                            Log.d(ContentValues.TAG, "new word $l")
+                            Log.d(TAG, "entry ${lessonMap[l.id]}")
+                            Log.d(TAG, "id ${l.id}")
+                            Log.d(TAG, "new word $l")
                         }
-
                         lessonMap[l.id] = l
                     }
 
-                    Log.d(ContentValues.TAG, "lessons: ${lessonMap.size}")
+                    Log.d(TAG, "lessons: ${lessonMap.size}")
                     DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
                     scope.cancel()
                 }

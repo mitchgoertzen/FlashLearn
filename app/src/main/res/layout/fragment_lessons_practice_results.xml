@@ -59,8 +59,8 @@
 
             <Button
                 android:id="@+id/btnRetryPractice"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_default_width"
+                android:layout_height="@dimen/button_default_height"
                 android:text="Retry"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/glRight"
@@ -69,8 +69,8 @@
 
             <Button
                 android:id="@+id/btnLessonTest"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/button_default_width"
+                android:layout_height="@dimen/button_default_height"
                 android:text="start test"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,8 +114,8 @@
 
         <Button
             android:id="@+id/btnLessonSelect"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/button_max_width"
+            android:layout_height="@dimen/button_default_height"
             android:layout_weight="1"
             android:maxLines="1"
             android:text="lesson select" />

@@ -23,9 +23,8 @@
 
     <Button
         android:id="@+id/btnLesson"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:layout_width="@dimen/button_default_width"
+        android:layout_height="@dimen/button_default_height"
         android:text="Lessons"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline35"
@@ -33,10 +32,9 @@
 
     <Button
         android:id="@+id/btnDictionary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/button_default_width"
+        android:layout_height="@dimen/button_default_height"
         android:maxLines="1"
-        android:padding="15dp"
         android:text="Dictionary"
         android:textColor="?attr/colorOnSecondary"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"

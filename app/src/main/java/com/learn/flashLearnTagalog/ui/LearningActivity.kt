@@ -12,11 +12,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TableLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
@@ -37,6 +39,7 @@ import com.learn.flashLearnTagalog.ui.dialog_fragments.HintDialogFragment
 import com.learn.flashLearnTagalog.ui.dialog_fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.fragments.HomeFragment
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
+import com.learn.flashLearnTagalog.ui.fragments.OrganizationHomeFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,7 +105,8 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         var orgPasscode: EditText
         var orgSignIn: Button
 
-        var signOutSection: LinearLayout
+        var orgSection: TableLayout
+        var orgManage: Button
         var orgSignOut: Button
 
         setContentView(view)
@@ -146,12 +150,13 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
 
                 signInSection = findViewById(R.id.llSignIn)
-                signOutSection = findViewById(R.id.llSignOut)
+                orgSection = findViewById(R.id.tlOrgSelected)
 
-                orgName = findViewById(R.id.etOrgName)
+                orgName = findViewById(R.id.etOrgSignInName)
                 orgPasscode = findViewById(R.id.etOrgPasscode)
                 orgSignIn = findViewById(R.id.btnOrgSignIn)
                 orgSignOut = findViewById(R.id.btnOrgSignOut)
+                orgManage = findViewById(R.id.btnOrgManage)
 
                 val orgTitle: TextView = findViewById(R.id.tvOrgName)
                 orgTitle.text = sharedPref.getString(KEY_ORGANIZATION_NAME, "")
@@ -174,7 +179,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                                     orgTitle.text = org.name
                                     orgSignIn(shaName, org.name)
                                     signInSection.visibility = View.GONE
-                                    signOutSection.visibility = View.VISIBLE
+                                    orgSection.visibility = View.VISIBLE
                                 }
                             } else {
                                 Log.d(TAG, "no org with that name")
@@ -183,21 +188,30 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     }
                 }
 
+                orgManage.setOnClickListener {
+                    val fragment = OrganizationHomeFragment()
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_nav_container, fragment)
+                        .addToBackStack("org home").commit()
+                    transitionFragment(3)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                }
+
                 orgSignOut.setOnClickListener {
                     Log.d(TAG, "sign out")
                     orgTitle.text = ""
                     sharedPref.edit().putString(KEY_ORGANIZATION_NAME, "").apply()
                     sharedPref.edit().putString(KEY_ORGANIZATION_ID, "").apply()
                     signInSection.visibility = View.VISIBLE
-                    signOutSection.visibility = View.GONE
+                    orgSection.visibility = View.GONE
                 }
 
                 if (orgTitle.text == "") {
                     signInSection.visibility = View.VISIBLE
-                    signOutSection.visibility = View.GONE
+                    orgSection.visibility = View.GONE
                 } else {
                     signInSection.visibility = View.GONE
-                    signOutSection.visibility = View.VISIBLE
+                    orgSection.visibility = View.VISIBLE
                 }
             }
 
@@ -206,7 +220,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                 if (scope.isActive) {
                     scope.cancel()
                 }
-                orgName = findViewById(R.id.etOrgName)
+                orgName = findViewById(R.id.etOrgSignInName)
                 orgPasscode = findViewById(R.id.etOrgPasscode)
 
                 orgName.setText("")
@@ -226,7 +240,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
                     "Filipino dialect Tagalog. Grammar lessons have not yet been implemented, but may be in the future\n\n" +
                     "I created this project as a way to practice mobile development in Android Studio, so expect many " +
                     "unpolished features and UI elements\n\n" +
-                    "The dictionary database was gathered from: https://tagalog.pinoydictionary.com " +
+                    "The dictionary database was gathered from: https://www.pinoydictionary.com/" +
                     "and scraped using an altered method as found on:\nhttps://github.com/raymelon/tagalog-dictionary-scraper\n\n" +
                     "To report any incorrect or insensitive words, please email mitchgoertzen@gmail.com\n\n" +
                     "2025, mitch goertzen"
@@ -359,6 +373,10 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
             2 -> {
                 drawerLayout.setBackgroundResource(R.color.primary)
+            }
+
+            3 -> {
+                drawerLayout.setBackgroundResource(R.color.black)
             }
 
             else -> {}

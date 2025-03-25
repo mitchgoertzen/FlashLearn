@@ -29,7 +29,7 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
         val currWord = words[position]
         holder.itemView.apply {
             holder.binding.tvEng.text = currWord.english
-            holder.binding.tvTag.text = currWord.translation
+            holder.binding.tvTag.text = currWord.translations[currWord.correctIndex]
         }
     }
 
@@ -61,6 +61,6 @@ class DictionaryAdapter @Inject constructor(private val words: MutableList<Word>
     }
 
     fun sort(){
-        words.sortWith(compareBy<Word> { it.english }.thenBy { it.translation })
+        words.sortWith(compareBy<Word> { it.english }.thenBy { it.translations[it.correctIndex] })
     }
 }

@@ -5,10 +5,9 @@
     android:id="@+id/linearLayout11"
     android:layout_width="300dp"
     android:layout_height="match_parent"
-    android:layout_margin="0dp"
-    android:background="@color/black"
+    android:paddingEnd="50dp"
     android:orientation="horizontal"
-    android:theme="@style/SignInMenuTheme">
+    android:theme="@style/DrawerTheme">
 
 
     <LinearLayout
@@ -45,7 +44,7 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/etOrgName"
+                android:id="@+id/etOrgSignInName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:ellipsize="end"
@@ -82,19 +81,39 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llSignOut"
+    <TableLayout
+        android:id="@+id/tlOrgSelected"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:showDividers="middle"
+        android:divider="@drawable/empty_tall_divider">
 
-        <Button
-            android:id="@+id/btnOrgSignOut"
-            style="@style/DrawerButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:text="Sign Out" />
-    </LinearLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnOrgManage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Manage" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btnOrgSignOut"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:text="Sign Out" />
+
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

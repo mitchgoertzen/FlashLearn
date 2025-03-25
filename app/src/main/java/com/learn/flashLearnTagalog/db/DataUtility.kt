@@ -122,8 +122,17 @@ class DataUtility {
 
         /*************************************_WORDS_**********************************************/
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
-        fun insertWord(word: Word) {
-            firestore.addDocument(WORD_COLLECTION, (word.id), word)
+        suspend fun insertWord(word: Word, language: String) {
+
+            Log.d(TAG, "id: ${word.id}...${word.type},${word.english}")
+            val ref = firestore.getSubDocument(WORD_COLLECTION, "languages", language, word.id)
+            if (ref.exists()) {
+                Log.d(TAG, "exists, add ${word.translations[0]} to translations")
+            } else {
+                Log.d(TAG, "does not exist, add word")
+                firestore.addSubDocument(WORD_COLLECTION, "languages", language, word.id, word)
+            }
+
         }
 
         fun insertAllWords(words: Map<String, Word>, language: String) {
@@ -136,9 +145,8 @@ class DataUtility {
                 mapOf(
                     "category" to updatedWord.category,
                     "type" to updatedWord.type,
-                    "correctTranslation" to updatedWord.correctTranslation!!,
+                    "incorrectTranslation" to updatedWord.incorrectTranslation!!,
                     "image" to updatedWord.image!!,
-                    "uncommon" to updatedWord.uncommon!!
                 )
 
             )
@@ -196,9 +204,9 @@ class DataUtility {
                 min + 1,
                 limit
             )
-
             Log.d(TAG, "reads: ${words.size()}")
-
+            Log.d(TAG, "words: $words")
+            Log.d(TAG, "word objects: ${words.toObjects<Word>()}")
             return words.toObjects()
         }
 
@@ -244,20 +252,20 @@ class DataUtility {
             ).toObjects()
         }
 
-        fun setCorrect(id: String) {
-            firestore.updateDocument(WORD_COLLECTION, id, mapOf("correctTranslation" to true))
+        fun setInCorrect(id: String) {
+            firestore.updateDocument(WORD_COLLECTION, id, mapOf("incorrectTranslation" to true))
         }
 
         suspend fun getIncorrectWords() {
             firestore.getSelectDocuments(
                 WORD_COLLECTION,
-                Filter.equalTo("correctTranslation", false)
+                Filter.equalTo("incorrectTranslation", true)
             )
 
         }
 
         fun deleteIncorrectWords() {
-            firestore.deleteDocumentsEqualTo(WORD_COLLECTION, "correctTranslation", false)
+            firestore.deleteDocumentsEqualTo(WORD_COLLECTION, "incorrectTranslation", true)
         }
 
         fun deleteWord(wordId: String) {
@@ -450,19 +458,6 @@ class DataUtility {
                 "tagalog", lessonCategory, min, max
             ).toMutableList()
 
-            //  var count = list.size
-
-//            for (w in list) {
-//                val length = w.translation.length
-//
-//                if (length <= max) {
-//                    count++
-//                } else {
-//                    break
-//                }
-//            }
-
-
             return list.size
         }
 
@@ -473,9 +468,6 @@ class DataUtility {
             language: String
         ): List<Lesson> {
 
-
-            Log.d(TAG, "$lessonSource")
-            Log.d(TAG, "$language")
             return firestore.getSelectSubDocuments(
                 LESSON_COLLECTION,
                 lessonSource,
@@ -751,7 +743,7 @@ class DataUtility {
 
             } else {
                 Log.d(TAG, "SAVED LESSONS EXIST")
-             //   Log.d(TAG, "SAVED LESSONS: ${JsonUtility.getSavedLessons(activity)}")
+                //   Log.d(TAG, "SAVED LESSONS: ${JsonUtility.getSavedLessons(activity)}")
             }
 
             if (!dbLessonsEmpty) {
