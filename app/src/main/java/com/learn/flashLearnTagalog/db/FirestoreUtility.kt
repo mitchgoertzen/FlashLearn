@@ -204,8 +204,8 @@ class FirestoreUtility {
 
     fun batchAdd(
         collectionId: String,
-        documentId: String,
-        subCollectionId: String,
+        documentId: String? = "",
+        subCollectionId: String? = "",
         newDocuments: Map<String, Any>
     ) {
 
@@ -300,10 +300,25 @@ class FirestoreUtility {
 //            .document(subDocumentId).update(field, value)
 //    }
 
-    fun batchUpdate() {
-        db.runBatch { batch ->
-            // Set the value of 'NYC'
-            //   batch.set(nycRef, City())
+    fun batchUpdateSubDocuments(
+        collectionId: String,
+        documentId: String,
+        subCollectionId: String,
+        newDocuments: Map<String, Any>) {
+
+        val batch = db.batch()
+        val collectionRef = if (documentId.isNotEmpty()) {
+            db.collection(collectionId).document(documentId).collection(subCollectionId)
+        } else {
+            db.collection(collectionId)
+        }
+        
+        for (doc in newDocuments) {
+            batch.set(collectionRef.document(doc.key), doc.value)
+        }
+
+        batch.commit().addOnSuccessListener {
+            Log.d(TAG, "woohoo")
         }
     }
 
