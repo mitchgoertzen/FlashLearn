@@ -157,6 +157,9 @@ class HomeFragment : Fragment() {
 
                     Log.d(ContentValues.TAG, "lessons: ${lessonMap.size}")
                     DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
+
+                   // DataUtility.updateAllLessons(lessonMap, "flash_learn", "tagalog", "wordCount")
+                    
                     scope.cancel()
                 }
 
