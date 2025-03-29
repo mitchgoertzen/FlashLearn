@@ -517,51 +517,31 @@ class DataUtility {
 
         //TODO: choose what will be updated
         //  @Query("UPDATE lesson_table SET id = :newID WHERE category = :category AND level == :level")
-        fun updateLesson(
-            previousLesson: Lesson,
-            newCategory: String,
-            newLevel: Int?,
-            min: Int?,
-            max: Int?,
-            lines: Int?
+        fun batchUpdateLessons( 
+            source: String, 
+            language: String:,
+            lessons: MutableMap<Lesson>,
+            categoriesToUpdate: MutableList<String>
         ) {
 
-            val userId = ""
-            firestore.deleteDocument(LESSON_COLLECTION, previousLesson.id)
-
-            val newLesson = Lesson(
-                newCategory,
-                newLevel ?: previousLesson.level,
-                min ?: previousLesson.minLength,
-                max ?: previousLesson.maxLength,
-                previousLesson.wordCount,
-                lines ?: previousLesson.maxLines,
-                previousLesson.image
-            )
-
-
-            firestore.addDocument(LESSON_COLLECTION, newLesson.id, newLesson)
-
-
-            scope.launch {
-                // New coroutine that can call suspend functions
-                val stats = firestore.getSubDocument(
-                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, previousLesson.id
-                )
-                    .toObject<LessonStats>()
-
-                firestore.deleteSubDocument(
-                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, previousLesson.id
-                )
-
-                firestore.addSubDocument(
-                    USER_COLLECTION, userId, LESSONSTAT_COLLECTION, newLesson.id, stats!!
-                )
+            val lessonCollectionRef = firestore.getSubCollection(LESSON_COLLECTION, source, lanuage)
+            var lessonRef: DocumentReference
+            
+            db.runBatch { batch ->
+                for(entry in lessons){
+                    Lod.(TAG, "$entry")
+                    lessonRef = lessonCollectionRef.document(entry.id)
+                    for(e in categoriesToUpdate){
+                        Lod.(TAG, "updating: ${e.key} to ${e.value}")
+                        batch.update(lessonRef, e.key, e.value)
+                    }
+                }
+            }.addOnCompleteListener {
+                Lod.(TAG, "bath update finished")
             }
-
         }
 
-        fun updateLessonInfo(
+        fun updateLesson(
             id: String,
             newImageID: Int,
             newMin: Int,
