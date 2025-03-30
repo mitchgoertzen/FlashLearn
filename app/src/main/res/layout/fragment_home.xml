@@ -26,9 +26,12 @@
         android:layout_width="@dimen/button_default_width"
         android:layout_height="@dimen/button_default_height"
         android:text="Lessons"
+        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintBottom_toTopOf="@+id/clAdmin"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline35"
-        app:layout_constraintTop_toTopOf="@+id/guideline36" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/btnDictionary"
@@ -37,11 +40,11 @@
         android:maxLines="1"
         android:text="Dictionary"
         android:textColor="?attr/colorOnSecondary"
+        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintBottom_toTopOf="@+id/clAdmin"
         app:layout_constraintEnd_toStartOf="@+id/guideline30"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
-        app:layout_constraintTop_toTopOf="@+id/guideline36" />
-
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline32"
@@ -99,22 +102,88 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.66" />
 
-    <Button
-        android:id="@+id/btnAddWords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Words"
-        android:visibility="gone"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/btnAddLessons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lessons"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnAddWords" />
+        <Button
+            android:id="@+id/btnAddWords"
+            android:layout_width="@dimen/button_default_width"
+            android:layout_height="@dimen/button_default_height"
+            android:text="Add Words"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnAddLessons"
+            android:layout_width="@dimen/button_default_width"
+            android:layout_height="@dimen/button_default_height"
+            android:text="Lessons"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddWords"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btnUpdateWords"
+            android:layout_width="@dimen/button_default_width"
+            android:layout_height="@dimen/button_default_height"
+            android:maxLines="1"
+            android:text="Update Words"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnAddWords" />
+
+        <EditText
+            android:id="@+id/etStartIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            android:ems="10"
+            android:hint="start"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/etEndIndex"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/etEndIndex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:ems="10"
+            android:hint="end"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey"
+            app:layout_constraintBottom_toTopOf="@+id/btnAddLessons"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/etStartIndex"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cbUpdateLessons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/btnUpdateWords"
+            app:layout_constraintEnd_toEndOf="@+id/btnUpdateWords"
+            app:layout_constraintStart_toEndOf="@+id/btnAddLessons" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

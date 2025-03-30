@@ -8,6 +8,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.toObjects
 import com.learn.flashLearnTagalog.data.Lesson
@@ -124,12 +125,29 @@ class DataUtility {
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
         suspend fun insertWord(word: Word, language: String) {
 
-            Log.d(TAG, "id: ${word.id}...${word.type},${word.english}")
+            //Log.d(TAG, "id: ${word.id}...${word.type},${word.english}")
             val ref = firestore.getSubDocument(WORD_COLLECTION, "languages", language, word.id)
             if (ref.exists()) {
-                Log.d(TAG, "exists, add ${word.translations[0]} to translations")
+                val newTranslation = word.translations[0]
+                //  Log.d(TAG, "exists, add $newTranslation to translations")
+                val existingWord = ref.toObject<Word>()
+                if (existingWord?.translations?.contains(newTranslation) == false) {
+
+                    // Log.d(TAG, "$newTranslation has not been added yet")
+                    firestore.addItemToSubArray(
+                        WORD_COLLECTION,
+                        "languages",
+                        language,
+                        word.id,
+                        "translations",
+                        newTranslation
+                    )
+                } else {
+                    // Log.d(TAG, "$newTranslation has already been added")
+                }
+
             } else {
-                Log.d(TAG, "does not exist, add word")
+                //Log.d(TAG, "does not exist, add word")
                 firestore.addSubDocument(WORD_COLLECTION, "languages", language, word.id, word)
             }
 
@@ -270,6 +288,19 @@ class DataUtility {
 
         fun deleteWord(wordId: String) {
             firestore.deleteDocument(WORD_COLLECTION, wordId)
+        }
+
+        suspend fun updateWordCategory(language: String, wordID: String, category: String) {
+            val documentRef =
+                firestore.getSubDocumentRef(WORD_COLLECTION, "languages", language, wordID)
+
+            documentRef.update("category", category)
+                .addOnSuccessListener {
+                    Log.d(TAG, "$wordID category updated to $category")
+                }
+                .addOnFailureListener { e ->
+                    Log.d(TAG, "could not update $wordID category, code: $e")
+                }
         }
 
 
@@ -517,27 +548,63 @@ class DataUtility {
 
         //TODO: choose what will be updated
         //  @Query("UPDATE lesson_table SET id = :newID WHERE category = :category AND level == :level")
-        fun batchUpdateLessons( 
-            source: String, 
-            language: String:,
-            lessons: MutableMap<Lesson>,
-            categoriesToUpdate: MutableList<String>
+        suspend fun batchUpdateLessons(
+            source: String,
+            language: String,
+            lessons: MutableList<Lesson>,
+            categoriesToUpdate: List<Int>
         ) {
 
-            val lessonCollectionRef = firestore.getSubCollection(LESSON_COLLECTION, source, lanuage)
-            var lessonRef: DocumentReference
-            
-            db.runBatch { batch ->
-                for(entry in lessons){
-                    Lod.(TAG, "$entry")
-                    lessonRef = lessonCollectionRef.document(entry.id)
-                    for(e in categoriesToUpdate){
-                        Lod.(TAG, "updating: ${e.key} to ${e.value}")
-                        batch.update(lessonRef, e.key, e.value)
-                    }
+            val collectionRef = firestore.getSubCollection(LESSON_COLLECTION, source, language)
+
+            val db = Firebase.firestore
+            val batch = db.batch()
+
+            for (l in lessons) {
+
+                when {
+                    //0 = categories
+                    categoriesToUpdate.contains(0) -> batch.update(
+                        collectionRef.document(l.id),
+                        "category",
+                        l.category
+                    )
+                    //1 = image
+                    categoriesToUpdate.contains(1) -> batch.update(
+                        collectionRef.document(l.id),
+                        "image",
+                        l.image
+                    )
+                    //2 = maxLength
+                    categoriesToUpdate.contains(2) -> batch.update(
+                        collectionRef.document(l.id),
+                        "maxLength",
+                        l.maxLength
+                    )
+                    //3 = maxLines
+                    categoriesToUpdate.contains(3) -> batch.update(
+                        collectionRef.document(l.id),
+                        "maxLines",
+                        l.maxLines
+                    )
+                    //4 = minLength
+                    categoriesToUpdate.contains(4) -> batch.update(
+                        collectionRef.document(l.id),
+                        "minLength",
+                        l.minLength
+                    )
+                    //5 = wordCount
+                    categoriesToUpdate.contains(5) -> batch.update(
+                        collectionRef.document(l.id),
+                        "wordCount",
+                        l.wordCount
+                    )
                 }
-            }.addOnCompleteListener {
-                Lod.(TAG, "bath update finished")
+
+            }
+
+            batch.commit().addOnSuccessListener {
+                Log.d(TAG, "woohoo")
             }
         }
 

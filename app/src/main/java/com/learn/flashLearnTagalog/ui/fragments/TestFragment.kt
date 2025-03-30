@@ -20,6 +20,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.Util
 import com.learn.flashLearnTagalog.adapters.TestWordAdapter
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.TestWord
@@ -135,16 +136,15 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             //TODO: list size in adapter
             index.text = "${i++}/$listSize"
 
+
             etTodoTitle.doOnTextChanged { _, _, _, _ ->
                 val toDoTitle = etTodoTitle.text.toString().replace(" ".toRegex(), "").uppercase()
-                btnEnter.isEnabled = toDoTitle.isNotBlank()
+                Util.handleButtonEnable(btnEnter,toDoTitle.isNotBlank())
             }
 
             val wordType: TextView = view.findViewById(R.id.tvType)
 
             setWordType(wordType)
-
-            // btnEnter.isEnabled = false
 
             //TODO:MAKE NEXT WORD FUNCTION
             btnEnter.setOnClickListener {
@@ -162,8 +162,8 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                         index.text = "${i++}/$listSize"
                         testWordAdapter.deleteTestWords()
                         btnEnter.text = getString(R.string.enter)
-                        btnEnter.isEnabled = false
-                        btnSkip.isEnabled = true
+                        Util.handleButtonEnable(btnEnter,false)
+                        Util.handleButtonEnable(btnSkip,true)
                         btnSkip.alpha = 1f
                         etTodoTitle.isEnabled = true
                         etTodoTitle.hint = hintMessage
@@ -197,8 +197,8 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                                 answered = false
                                 testWordAdapter.deleteTestWords()
                                 btnEnter.text = getString(R.string.enter)
-                                btnEnter.isEnabled = false
-                                btnSkip.isEnabled = true
+                                Util.handleButtonEnable(btnEnter,false)
+                                Util.handleButtonEnable(btnSkip,true)
                                 btnSkip.alpha = 1f
                                 etTodoTitle.isEnabled = true
                                 etTodoTitle.hint = hintMessage
@@ -211,8 +211,8 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                             answerWord(true)
                             wordsCorrect++
                             answered = true
-                            btnEnter.isEnabled = true
-                            btnSkip.isEnabled = false
+                            Util.handleButtonEnable(btnEnter,true)
+                            Util.handleButtonEnable(btnSkip,false)
                             btnSkip.alpha = .2f
                             currentWordList.remove(currentWord)
                             if (currentWordList.isEmpty()) {
@@ -231,6 +231,7 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
             btnSkip.setOnClickListener {
                 etTodoTitle.text.clear()
                 btnEnter.isEnabled = false
+                Util.handleButtonEnable(btnEnter,false)
                 if (!skipped) {
                     currentWord.id.let {
                         //TODO - stats: DataUtility.skipWord(it)
@@ -254,9 +255,8 @@ class TestFragment : Fragment(R.layout.fragment_lessons_test) {
                     {
                         btnEnter.text = getString(R.string.next_word)
                     }
-
-                    btnEnter.isEnabled = true
-                    btnSkip.isEnabled = false
+                    Util.handleButtonEnable(btnEnter,true)
+                    Util.handleButtonEnable(btnSkip,false)
                 }
             }
         }

@@ -6,18 +6,20 @@
     android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primary"
     tools:context=".ui.fragments.TestFragment">
 
     <TextView
         android:id="@+id/tvCurrentWord"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:minHeight="100dp"
+        android:padding="1dp"
         android:gravity="center_horizontal"
-        android:padding="10dp"
         android:text="current"
         android:textAlignment="center"
         android:textColor="@color/white"
-        app:autoSizeMaxTextSize="72sp"
+        app:autoSizeMaxTextSize="60sp"
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
@@ -60,12 +62,12 @@
 
     <EditText
         android:id="@+id/etTodoTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:backgroundTint="#80FFFFFF"
         android:hint="@string/enter_translation"
         android:inputType="textCapCharacters|textNoSuggestions"
+        android:maxLength="30"
         android:minHeight="60dp"
         android:textAlignment="center"
         android:textAllCaps="true"
@@ -75,23 +77,26 @@
         app:autoSizeMinTextSize="5sp"
         app:autoSizeStepGranularity="1sp"
         app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvTodoList" />
 
+
     <Button
         android:id="@+id/btnSkip"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="#00FFFFFF"
         android:nextFocusDown="@id/etTodoTitle"
-        android:scaleType="centerCrop"
+        android:padding="10dp"
+        android:layout_marginHorizontal="5dp"
         android:text="Skip"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/etTodoTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/etTodoTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/rvTodoList" />
 
     <Button
         android:id="@+id/btnEnter"
@@ -99,19 +104,20 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
         android:enabled="false"
+        android:alpha="0.5"
         android:maxLines="1"
         android:text="Enter"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@+id/tvIndex"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTodoTitle" />
+        app:layout_constraintTop_toTopOf="@+id/guideline42" />
 
     <TextView
         android:id="@+id/tvIndex"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:text=""
+        android:layout_height="wrap_content"
+        android:minHeight="20dp"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:autoSizeMaxTextSize="20sp"
@@ -139,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.93" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <Button
         android:id="@+id/btnPass"

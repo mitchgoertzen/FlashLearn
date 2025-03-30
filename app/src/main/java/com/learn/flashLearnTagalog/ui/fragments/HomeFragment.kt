@@ -8,7 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.learn.flashLearnTagalog.DataProcessor
 import com.learn.flashLearnTagalog.LessonCreator
@@ -31,8 +35,15 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var sharedPref: SharedPreferences
 
+    private lateinit var adminBox: ConstraintLayout
     private lateinit var words: Button
     private lateinit var lessons: Button
+    private lateinit var wordsUpdate: Button
+    private lateinit var start: EditText
+    private lateinit var end: EditText
+    private lateinit var log: TextView
+    private lateinit var updateLessons: CheckBox
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,16 +65,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         val lessonButton: Button = view.findViewById(R.id.btnLesson)
         val dictionaryButton: Button = view.findViewById(R.id.btnDictionary)
 
+        adminBox = view.findViewById(R.id.clAdmin)
+
         words = view.findViewById(R.id.btnAddWords)
         lessons = view.findViewById(R.id.btnAddLessons)
+        wordsUpdate = view.findViewById(R.id.btnUpdateWords)
+        start = view.findViewById(R.id.etStartIndex)
+        end = view.findViewById(R.id.etEndIndex)
+        log = view.findViewById(R.id.tvLog)
+        updateLessons = view.findViewById(R.id.cbUpdateLessons)
 
         if (sharedPref.getBoolean(Constants.KEY_USER_ADMIN, false)) {
-            words.visibility = View.VISIBLE
-            lessons.visibility = View.VISIBLE
+            adminBox.visibility = View.VISIBLE
         }
 
         reloadAdmin()
@@ -101,39 +117,26 @@ class HomeFragment : Fragment() {
             val lessonCreator = LessonCreator()
 
 
-            words.visibility = View.VISIBLE
-            lessons.visibility = View.VISIBLE
+            adminBox.visibility = View.VISIBLE
 
             words.setOnClickListener {
-                Log.d(TAG, "here")
+                dataProcessor.makeList(
+                    0,
+                    R.raw.tag_to_eng_dict,
+                    ',',
+                    start.text.toString().toInt(),
+                    end.text.toString().toInt(),
+                    log
+                )
+            }
 
-
-                dataProcessor.makeList(0,R.raw.tag_to_eng_dict, ',')
-               // dataProcessor.makeList(1,R.raw.tag_dollar, '$')
-
-//                val lessonWords = mutableMapOf<String, Word>()
-//
-//                Log.d(TAG, "COUNT: ${words.size}")
-//
-//                for (i in 0 until words.size) {
-//
-//                    val w = words[i]
-//
-//                    if (lessonWords[w.id] != null) {
-//                        Log.d(TAG, "entry ${lessonWords[w.id]}")
-//                        Log.d(TAG, "id ${w.id}")
-//                        Log.d(TAG, "new word $w")
-//                    }
-//                    lessonWords[w.id] = w
-//
-//
-//                }
-//
-//                Log.d(TAG, "words: ${lessonWords.size}")
-//
-//                DataUtility.insertAllWords(lessonWords, language)
-//
-//                Log.d(TAG, "LESSON WORD COUNT: ${lessonWords.size}")
+            wordsUpdate.setOnClickListener {
+                dataProcessor.makeList(
+                    1, R.raw.tag_dollar, '$',
+                    start.text.toString().toInt(),
+                    end.text.toString().toInt(),
+                    log
+                )
             }
 
             lessons.setOnClickListener {
@@ -144,30 +147,47 @@ class HomeFragment : Fragment() {
 
                     val lessonList = lessonCreator.getLessons()
 
-                    val lessonMap = mutableMapOf<String, Lesson>()
+                    Log.d(TAG, "lessons: $lessonList")
 
-                    for (l in lessonList) {
-                        if (lessonMap[l.id] != null) {
-                            Log.d(TAG, "entry ${lessonMap[l.id]}")
-                            Log.d(TAG, "id ${l.id}")
-                            Log.d(TAG, "new word $l")
+                    if (updateLessons.isChecked) {
+
+                        DataUtility.batchUpdateLessons(
+                            "flash_learn",
+                            "tagalog",
+                            lessonList,
+                            //0 = categories
+                            //1 = image
+                            //2 = maxLength
+                            //3 = maxLines
+                            //4 = minLength
+                            //5 = wordCount
+                            listOf(5)
+                        )
+                    } else {
+                        val lessonMap = mutableMapOf<String, Lesson>()
+
+                        for (l in lessonList) {
+                            if (lessonMap[l.id] != null) {
+                                Log.d(TAG, "entry ${lessonMap[l.id]}")
+                                Log.d(TAG, "id ${l.id}")
+                                Log.d(TAG, "new word $l")
+                            }
+                            lessonMap[l.id] = l
                         }
-                        lessonMap[l.id] = l
+
+                        Log.d(TAG, "lesson map: ${lessonMap.size}")
+
+
+                        DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
                     }
 
-                    Log.d(TAG, "lessons: ${lessonMap.size}")
-                    DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")
-
-                   // DataUtility.updateAllLessons(lessonMap, "flash_learn", "tagalog", "wordCount")
-                    
                     scope.cancel()
                 }
 
 
             }
         } else {
-            words.visibility = View.GONE
-            lessons.visibility = View.GONE
+            adminBox.visibility = View.GONE
             Log.d(TAG, "false")
 
         }

@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.Util
 import com.learn.flashLearnTagalog.data.Lesson
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.data.Word
@@ -92,8 +93,8 @@ class LessonTypeDialogueFragment : DialogFragment() {
 
         networkErrorText.visibility = View.GONE
 
-        disableButton(testButton)
-        disableButton(practiceButton)
+        Util.handleButtonEnable(testButton, false)
+        Util.handleButtonEnable(practiceButton, false)
 
         scope.launch {
             val wordList: List<Word>
@@ -197,16 +198,12 @@ class LessonTypeDialogueFragment : DialogFragment() {
         }
     }
 
-    private fun disableButton(btn: Button) {
-        btn.isEnabled = false
-        btn.alpha = .5f
-    }
+
 
     private fun enableButton(btn: Button, wordList: List<Word>) {
         if (wordList.isNotEmpty()) {
             viewModel.updateWordList(wordList)
-            btn.isEnabled = true
-            btn.alpha = 1f
+            Util.handleButtonEnable(btn, true)
         }
     }
 }

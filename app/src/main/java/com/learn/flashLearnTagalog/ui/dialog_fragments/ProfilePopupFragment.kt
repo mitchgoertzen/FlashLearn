@@ -26,6 +26,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
+import com.learn.flashLearnTagalog.Util
 import com.learn.flashLearnTagalog.data.TempListUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
@@ -99,7 +100,7 @@ class ProfilePopupFragment : DialogFragment() {
         var words = 0
 
         val signInDialog = SignInFragment()
-        val stats: Button = view.findViewById(R.id.btnStats)
+        val statsButton: Button = view.findViewById(R.id.btnStats)
         val signInButton: Button = view.findViewById(R.id.btnSignInOrOut)
         val passwordText: EditText = view.findViewById(R.id.etDeleteAccountPassword)
         val close: ImageButton = view.findViewById(R.id.ibClose)
@@ -120,12 +121,13 @@ class ProfilePopupFragment : DialogFragment() {
 
         confirmDeletePrompt.visibility = View.GONE
 
-        stats.isEnabled = !sharedPref.getBoolean(Constants.KEY_IN_TEST, false)
+        Util.handleButtonEnable(statsButton,!sharedPref.getBoolean(Constants.KEY_IN_TEST, false))
 
         if (sharedPref.getBoolean(Constants.KEY_IN_TEST, false)) {
-            signInButton.isEnabled = false
+            Util.handleButtonEnable(signInButton,false)
             signInMsg.text = testSignInMessage
         } else {
+            Util.handleButtonEnable(signInButton,true)
             signInMsg.text = signInMessage
         }
 

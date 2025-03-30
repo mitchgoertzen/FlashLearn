@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.AggregateSource
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
@@ -42,6 +43,14 @@ class FirestoreUtility {
         return db.collection(collectionId).document(documentId)
             .collection(subCollectionId).document(subDocumentId)
             .get().await()
+    }
+
+    suspend fun getSubDocumentRef(
+        collectionId: String, documentId: String,
+        subCollectionId: String, subDocumentId: String
+    ): DocumentReference {
+        return db.collection(collectionId).document(documentId)
+            .collection(subCollectionId).document(subDocumentId)
     }
 
     suspend fun getAllDocuments(collectionId: String): QuerySnapshot? {
@@ -177,7 +186,7 @@ class FirestoreUtility {
     fun addDocument(collection: String, newId: String, data: Any) {
         db.collection(collection).document(newId).set(data)
             .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
+                //     Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
@@ -194,7 +203,7 @@ class FirestoreUtility {
             .document(newId)
             .set(data)
             .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
+                //  Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
@@ -209,14 +218,13 @@ class FirestoreUtility {
         newDocuments: Map<String, Any>
     ) {
 
-        val collectionRef = if (documentId.isNotEmpty()) {
-            db.collection(collectionId).document(documentId).collection(subCollectionId)
+        val collectionRef = if (documentId?.isNotEmpty() == true) {
+            db.collection(collectionId).document(documentId).collection(subCollectionId!!)
         } else {
             db.collection(collectionId)
         }
 
-        Log.d(TAG, "ref: ${collectionRef.id}")
-
+        //   Log.d(TAG, "ref: ${collectionRef.id}")
 
 //        db.runBatch { batch ->
 //            for (doc in newDocuments) {
@@ -258,7 +266,19 @@ class FirestoreUtility {
     fun addItemToArray(collectionId: String, documentId: String, field: String, value: String) {
         db.collection(collectionId).document(documentId)
             .update(field, FieldValue.arrayUnion(value)).addOnSuccessListener {
-                Log.d(TAG, "ITEM ADDED TO ARRAY")
+                //Log.d(TAG, "ITEM ADDED TO ARRAY")
+            }
+
+    }
+
+    fun addItemToSubArray(
+        collectionId: String, documentId: String, subCollectionId: String,
+        subDocumentId: String, field: String, value: String
+    ) {
+        db.collection(collectionId).document(documentId).collection(subCollectionId)
+            .document(subDocumentId)
+            .update(field, FieldValue.arrayUnion(value)).addOnSuccessListener {
+                //Log.d(TAG, "ITEM ADDED TO SUB ARRAY")
             }
 
     }
@@ -304,22 +324,23 @@ class FirestoreUtility {
         collectionId: String,
         documentId: String,
         subCollectionId: String,
-        newDocuments: Map<String, Any>) {
+        newDocuments: Map<String, Any>
+    ) {
 
-        val batch = db.batch()
-        val collectionRef = if (documentId.isNotEmpty()) {
-            db.collection(collectionId).document(documentId).collection(subCollectionId)
-        } else {
-            db.collection(collectionId)
-        }
-        
-        for (doc in newDocuments) {
-            batch.set(collectionRef.document(doc.key), doc.value)
-        }
-
-        batch.commit().addOnSuccessListener {
-            Log.d(TAG, "woohoo")
-        }
+//        val batch = db.batch()
+//        val collectionRef = if (documentId.isNotEmpty()) {
+//            db.collection(collectionId).document(documentId).collection(subCollectionId)
+//        } else {
+//            db.collection(collectionId)
+//        }
+//
+//        for (doc in newDocuments) {
+//            batch.set(collectionRef.document(doc.key), doc.value)
+//        }
+//
+//        batch.commit().addOnSuccessListener {
+//            Log.d(TAG, "woohoo")
+//        }
     }
 
     /***************************************_DELETE_***********************************************/
