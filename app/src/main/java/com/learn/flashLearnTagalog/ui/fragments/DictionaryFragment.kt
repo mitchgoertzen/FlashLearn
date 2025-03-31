@@ -56,6 +56,9 @@ class DictionaryFragment : Fragment() {
         for (wordList in TempListUtility.viewedWords) {
             wordCount += wordList.value.size
             masterWordList.addAll(wordList.value)
+
+            //TODO: move sorting to templistutiltity function
+            masterWordList.sortWith(compareBy<Word> { it.english }.thenBy { it.translations[it.correctIndex] })
         }
 
         if (wordCount == 0) {
@@ -158,12 +161,12 @@ class DictionaryFragment : Fragment() {
         if (masterWordList.isNotEmpty()) {
             val start = (currentPage - 1) * wordsPerPage
 
-            for (i in start..(start + wordsPerPage)) {
+            for (i in start until(start + wordsPerPage)) {
                 if (i < wordCount) {
                     dictionaryAdapter.addDictionaryWord(masterWordList[i])
                 }
             }
-            dictionaryAdapter.sort()
+           // dictionaryAdapter.sort()
         }
     }
 }

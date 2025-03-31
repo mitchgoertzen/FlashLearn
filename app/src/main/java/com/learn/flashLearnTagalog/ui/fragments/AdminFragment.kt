@@ -194,8 +194,9 @@ class AdminFragment : Fragment() {
                             )
                             Log.d(TAG, "adding $word")
                             Log.d(TAG, "id ${word.id}")
-                          //  DataUtility.insertWord(word, language)
+                            DataUtility.insertWord(word, language)
                         }
+
 
                         1 -> {
                             val word = Word(

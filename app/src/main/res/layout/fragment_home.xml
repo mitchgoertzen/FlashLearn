@@ -13,6 +13,7 @@
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingHorizontal="20dp"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/guideline33"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
