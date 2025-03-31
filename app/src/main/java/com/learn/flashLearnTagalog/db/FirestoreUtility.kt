@@ -252,6 +252,14 @@ class FirestoreUtility {
             )
     }
 
+    fun updateDocumentField(collectionId: String, documentId: String, field: String, data: Any) {
+        db.collection(collectionId).document(documentId)
+            .update(
+                field,
+                data
+            )
+    }
+
     fun updateSubDocument(
         collectionId: String, documentId: String, subCollectionId: String,
         subDocumentId: String, data: Map<String, Any>
@@ -348,7 +356,6 @@ class FirestoreUtility {
         db.collection(collectionId).document(documentId).delete().addOnSuccessListener {
             Log.d(TAG, "deleted $documentId")
         }.addOnFailureListener {
-
             Log.d(TAG, "could not delete $documentId")
         }
     }

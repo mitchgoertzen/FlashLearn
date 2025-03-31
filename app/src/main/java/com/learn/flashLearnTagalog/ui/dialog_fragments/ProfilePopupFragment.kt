@@ -5,8 +5,10 @@ import android.content.ContentValues.TAG
 import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +30,7 @@ import com.google.firebase.auth.auth
 import com.learn.flashLearnTagalog.R
 import com.learn.flashLearnTagalog.Util
 import com.learn.flashLearnTagalog.data.TempListUtility
+import com.learn.flashLearnTagalog.db.DataUtility
 import com.learn.flashLearnTagalog.db.JsonUtility
 import com.learn.flashLearnTagalog.other.Constants
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
@@ -116,18 +119,26 @@ class ProfilePopupFragment : DialogFragment() {
         val test: TextView = view.findViewById(R.id.tvPassed)
         val signInMsg: TextView = view.findViewById(R.id.tvSignInMsg)
 
+
+        val passwordVisible: ImageView = view.findViewById(R.id.ivPasswordVisible_Profile)
+
+
+        val typeface: Typeface = passwordText.typeface
+
+        passwordText.typeface = typeface
+
         confirmDeletePrompt = view.findViewById(R.id.clAccountDeletePrompt)
         group = view.findViewById(R.id.clProfileBackground)
 
         confirmDeletePrompt.visibility = View.GONE
 
-        Util.handleButtonEnable(statsButton,!sharedPref.getBoolean(Constants.KEY_IN_TEST, false))
+        Util.handleButtonEnable(statsButton, !sharedPref.getBoolean(Constants.KEY_IN_TEST, false))
 
         if (sharedPref.getBoolean(Constants.KEY_IN_TEST, false)) {
-            Util.handleButtonEnable(signInButton,false)
+            Util.handleButtonEnable(signInButton, false)
             signInMsg.text = testSignInMessage
         } else {
-            Util.handleButtonEnable(signInButton,true)
+            Util.handleButtonEnable(signInButton, true)
             signInMsg.text = signInMessage
         }
 
@@ -172,6 +183,19 @@ class ProfilePopupFragment : DialogFragment() {
                 }
             }
 
+            passwordVisible.setOnClickListener {
+                if (passwordText.inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    passwordText.inputType =
+                        (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                    passwordVisible.setImageResource(R.drawable.not_visible)
+                } else {
+                    passwordText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                    passwordVisible.setImageResource(R.drawable.visible)
+                }
+
+                passwordText.typeface = typeface
+            }
+
             confirmDeleteButton.setOnClickListener {
 
                 inputError.visibility = View.GONE
@@ -189,6 +213,7 @@ class ProfilePopupFragment : DialogFragment() {
                     authUser.reauthenticate(credential)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
+                                DataUtility.deleteUser(authUser.uid)
                                 Log.d(TAG, "User re-authenticated.")
                                 authUser.delete()
                                     .addOnCompleteListener { task ->
@@ -197,6 +222,7 @@ class ProfilePopupFragment : DialogFragment() {
                                                 .putBoolean(Constants.KEY_USER_SIGNED_IN, false)
                                                 .apply()
                                             Log.d(TAG, "User account deleted.")
+                                            passwordText.text.clear()
                                             reloadCallback()
                                         }
                                     }

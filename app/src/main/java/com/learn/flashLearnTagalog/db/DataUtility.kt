@@ -121,8 +121,9 @@ class DataUtility {
             //TODO: firestore.getDocument(USER_COLLECTION, userId) neeeedd????
         }
 
-        fun deleteUser() {
-
+        fun deleteUser(id: String) {
+            Log.d(TAG, "delete $id")
+            firestore.deleteDocument(USER_COLLECTION, id)
         }
 
 

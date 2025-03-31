@@ -173,6 +173,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tvSignInMsg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:maxWidth="200dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="5sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivAttention"
+        app:layout_constraintTop_toTopOf="@+id/tvAccountEmail" />
+
+    <ImageView
+        android:id="@+id/ivAttention"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:padding="5dp"
+        android:src="@drawable/attention"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnSignInOrOut"
+        app:layout_constraintTop_toTopOf="@+id/btnSignInOrOut" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clAccountDeletePrompt"
         android:layout_width="match_parent"
@@ -271,7 +300,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="50dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/gl2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -296,12 +325,16 @@
                         android:id="@+id/etDeleteAccountPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="-5dp"
+                        android:layout_margin="2dip"
+                        android:background="@drawable/edittext"
                         android:ems="10"
                         android:inputType="textPassword"
+                        android:letterSpacing="0.0000000001"
                         android:textColor="#0038A8"
                         android:textCursorDrawable="@null"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:theme="@style/EditText" />
                 </LinearLayout>
 
                 <!--                <LinearLayout-->
@@ -345,6 +378,17 @@
                 app:layout_constraintStart_toStartOf="@+id/llPasswordBox"
                 app:layout_constraintTop_toBottomOf="@+id/llPasswordBox" />
 
+            <ImageView
+                android:id="@+id/ivPasswordVisible_Profile"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/not_visible"
+                app:layout_constraintBottom_toTopOf="@+id/gl2"
+                app:layout_constraintStart_toEndOf="@+id/llPasswordBox"
+                app:layout_constraintTop_toTopOf="@+id/guideline44" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
@@ -368,35 +412,6 @@
             app:strokeWidth="3dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tvSignInMsg"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxWidth="200dp"
-        android:layout_marginBottom="2dp"
-        android:textAlignment="center"
-        android:textSize="12sp"
-        app:autoSizeMaxTextSize="12sp"
-        app:autoSizeMinTextSize="5sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivAttention"
-        app:layout_constraintTop_toTopOf="@+id/tvAccountEmail" />
-
-    <ImageView
-        android:id="@+id/ivAttention"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/attention"
-        android:layout_marginLeft="20dp"
-        android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnSignInOrOut"
-        app:layout_constraintTop_toTopOf="@+id/btnSignInOrOut" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
