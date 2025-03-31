@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".ui.fragments.AdminFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnIncreaseAppVersion_Admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="increase version" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingVertical="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WORDS FROM LIST"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/tvLog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="TextView"
+                        android:textColor="@color/white" />
+
+                    <EditText
+                        android:id="@+id/etStartIndex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="start"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                    <EditText
+                        android:id="@+id/etEndIndex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:ems="10"
+                        android:hint="end"
+                        android:inputType="number"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/grey" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnAddWords"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:text="Add Words" />
+
+                        <Button
+                            android:id="@+id/btnUpdateWords"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:maxLines="1"
+                            android:text="Update Words" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingVertical="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="lessons"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnAddLessons"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:text="Lessons" />
+
+                        <CheckBox
+                            android:id="@+id/cbUpdateLessons"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Update Fields" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:divider="@drawable/empty_short_divider"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:showDividers="middle">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="single words"
+                        android:textColor="@color/white"
+                        android:textSize="25sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordType_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="Type"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordType_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordEnglish_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="English"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordEnglish_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordTranslations_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="Translations"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordTranslations_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordIndex_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="correct index"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordIndex_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordCategory_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="category"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordCategory_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvWordContext_Admin"
+                            android:layout_width="110dp"
+                            android:layout_height="wrap_content"
+                            android:text="context"
+                            android:textColor="@color/white" />
+
+                        <EditText
+                            android:id="@+id/etWordContext_Admin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:ems="10"
+                            android:inputType="text"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/grey" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btnAddWord_Admin"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:text="Add" />
+
+                        <Button
+                            android:id="@+id/btnDeleteWord_Admin"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:text="Delete" />
+
+                        <Button
+                            android:id="@+id/btnUpdateWord_Admin"
+                            android:layout_width="@dimen/button_default_width"
+                            android:layout_height="@dimen/button_default_height"
+                            android:text="update" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+
+</FrameLayout>

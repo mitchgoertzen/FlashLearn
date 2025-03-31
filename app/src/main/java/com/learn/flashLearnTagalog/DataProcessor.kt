@@ -19,7 +19,14 @@ import java.io.InputStreamReader
 
 class DataProcessor(val resources: Resources, val language: String) {
 
-    fun makeList(function: Int, file: Int, delimiter: Char, start: Int, end: Int, logText : TextView): MutableList<Word> {
+    fun makeList(
+        function: Int,
+        file: Int,
+        delimiter: Char,
+        start: Int,
+        end: Int,
+        logText: TextView
+    ): MutableList<Word> {
         var words: MutableList<Word> = mutableListOf()
 
         var index = 0
@@ -101,10 +108,9 @@ class DataProcessor(val resources: Resources, val language: String) {
                         con = con.lowercase().replace("_".toRegex(), ", ")
 
                         val word = Word(eng, listOf(tra), type, cat, con)
-                      //  logText.text = "$index"
+                        //  logText.text = "$index"
                         when (function) {
-                            0 ->Log.d(TAG, "$tra")
-                               // async {DataUtility.insertWord(word, language) }.await()
+                            0 -> async { DataUtility.insertWord(word, language) }.await()
 
                             1 -> async {
                                 if (cat != "") {

@@ -203,7 +203,7 @@ class FirestoreUtility {
             .document(newId)
             .set(data)
             .addOnSuccessListener {
-                //  Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
+                Log.d(TAG, "DocumentSnapshot added with ID: `$newId`")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
@@ -345,7 +345,12 @@ class FirestoreUtility {
 
     /***************************************_DELETE_***********************************************/
     fun deleteDocument(collectionId: String, documentId: String) {
-        db.collection(collectionId).document(documentId).delete()
+        db.collection(collectionId).document(documentId).delete().addOnSuccessListener {
+            Log.d(TAG, "deleted $documentId")
+        }.addOnFailureListener {
+
+            Log.d(TAG, "could not delete $documentId")
+        }
     }
 
     fun deleteSubDocument(
@@ -355,7 +360,12 @@ class FirestoreUtility {
         subDocumentId: String
     ) {
         db.collection(collectionId).document(documentId).collection(subCollectionId)
-            .document(subDocumentId).delete()
+            .document(subDocumentId).delete().addOnSuccessListener {
+                Log.d(TAG, "deleted $subDocumentId")
+            }.addOnFailureListener {
+
+                Log.d(TAG, "could not delete $subDocumentId")
+            }
     }
 
     fun deleteDocumentsEqualTo(collectionId: String, field: String, value: Any) {

@@ -56,6 +56,11 @@ class DataUtility {
             return firestore.getDocument(ADMIN_COLLECTION, "appInfo")?.get("version") as Long
         }
 
+
+        fun incrementAppVersion() {
+            return firestore.incrementDocumentField(ADMIN_COLLECTION, "appInfo", "version", 1)
+        }
+
         /*************************************_USERS_**********************************************/
         fun addUser(user: User) {
             if (auth.currentUser != null) {
@@ -128,23 +133,26 @@ class DataUtility {
             //Log.d(TAG, "id: ${word.id}...${word.type},${word.english}")
             val ref = firestore.getSubDocument(WORD_COLLECTION, "languages", language, word.id)
             if (ref.exists()) {
-                val newTranslation = word.translations[0]
-                //  Log.d(TAG, "exists, add $newTranslation to translations")
-                val existingWord = ref.toObject<Word>()
-                if (existingWord?.translations?.contains(newTranslation) == false) {
+                Log.d(TAG, "$word has already been added")
 
-                    // Log.d(TAG, "$newTranslation has not been added yet")
-                    firestore.addItemToSubArray(
-                        WORD_COLLECTION,
-                        "languages",
-                        language,
-                        word.id,
-                        "translations",
-                        newTranslation
-                    )
-                } else {
-                    // Log.d(TAG, "$newTranslation has already been added")
-                }
+
+//                val newTranslation = word.translations[0]
+//                //  Log.d(TAG, "exists, add $newTranslation to translations")
+//                val existingWord = ref.toObject<Word>()
+//                if (existingWord?.translations?.contains(newTranslation) == false) {
+//
+//                    // Log.d(TAG, "$newTranslation has not been added yet")
+//                    firestore.addItemToSubArray(
+//                        WORD_COLLECTION,
+//                        "languages",
+//                        language,
+//                        word.id,
+//                        "translations",
+//                        newTranslation
+//                    )
+//                } else {
+//                    // Log.d(TAG, "$newTranslation has already been added")
+//                }
 
             } else {
                 //Log.d(TAG, "does not exist, add word")
@@ -157,14 +165,41 @@ class DataUtility {
             firestore.batchAdd(WORD_COLLECTION, "languages", language, words)
         }
 
-        fun updateWordInfo(updatedWord: Word) {
-            firestore.updateDocument(
-                "words", updatedWord.id.toString(),
+        suspend fun updateWordInfo(
+            id: String,
+            language: String,
+            category: String?,
+            context: String?,
+            correctIndex: Int?,
+            image: String?,
+            incorrectTranslation: Boolean?,
+            translations: List<String>?
+        ) {
+
+            val currentWord =
+                firestore.getSubDocument(WORD_COLLECTION, "languages", language, id)
+                    .toObject<Word>()
+
+            Log.d(TAG, "current: $currentWord")
+
+
+            Log.d(TAG, "category: $category")
+            Log.d(TAG, "context: $context")
+            Log.d(TAG, "correctIndex: $correctIndex")
+            Log.d(TAG, "image: $image")
+            Log.d(TAG, "incorrectTranslation: $incorrectTranslation")
+            Log.d(TAG, "translations: $translations")
+
+            firestore.updateSubDocument(
+                WORD_COLLECTION, "languages", language, id,
                 mapOf(
-                    "category" to updatedWord.category,
-                    "type" to updatedWord.type,
-                    "incorrectTranslation" to updatedWord.incorrectTranslation!!,
-                    "image" to updatedWord.image!!,
+                    "category" to (category ?: currentWord!!.category),
+                    "context" to (context ?: currentWord!!.context!!),
+                    "correctIndex" to (correctIndex ?: currentWord!!.correctIndex),
+                    "incorrectTranslation" to (incorrectTranslation
+                        ?: currentWord!!.incorrectTranslation!!),
+                    "image" to (image ?: currentWord!!.image!!),
+                    "translations" to (translations ?: currentWord!!.translations),
                 )
 
             )
@@ -286,8 +321,8 @@ class DataUtility {
             firestore.deleteDocumentsEqualTo(WORD_COLLECTION, "incorrectTranslation", true)
         }
 
-        fun deleteWord(wordId: String) {
-            firestore.deleteDocument(WORD_COLLECTION, wordId)
+        fun deleteWord(wordId: String, language: String) {
+            firestore.deleteSubDocument(WORD_COLLECTION, "languages", language, wordId)
         }
 
         suspend fun updateWordCategory(language: String, wordID: String, category: String) {
