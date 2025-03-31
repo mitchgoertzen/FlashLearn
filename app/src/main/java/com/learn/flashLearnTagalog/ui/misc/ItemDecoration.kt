@@ -1,15 +1,19 @@
 package com.learn.flashLearnTagalog.ui.misc
 
+import android.content.ContentValues.TAG
+import android.content.res.Resources
 import android.graphics.Rect
 import android.os.Build
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.recyclerview.widget.RecyclerView
 
 
 class ItemDecoration(
-    private val windowManager: WindowManager
+    private val windowManager: WindowManager,
+    private val res: Resources
 ) :
     RecyclerView.ItemDecoration() {
 
@@ -25,16 +29,18 @@ class ItemDecoration(
         val width: Int
 
 
-        var dpi = 0f
+        val dpi = res.displayMetrics.density
+
+        Log.d(TAG, "dpi: $dpi")
+
+        val displayMetrics = DisplayMetrics()
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val bounds = windowManager.currentWindowMetrics.bounds
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                dpi = windowManager.currentWindowMetrics.density
-            }
-
             width = bounds.width()
+
         } else {
-            val displayMetrics = DisplayMetrics()
             windowManager.getDefaultDisplay().getMetrics(displayMetrics)
             width = displayMetrics.widthPixels
         }

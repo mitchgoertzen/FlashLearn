@@ -101,7 +101,7 @@ class LessonSelectFragment : Fragment(R.layout.fragment_lessons_select) {
         btnFilter = view.findViewById(R.id.ibFilter)
         val rvLessonList: RecyclerView = view.findViewById(R.id.rvLessons)
         val grid = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
-        val decorator = ItemDecoration( requireActivity().windowManager)
+        val decorator = ItemDecoration( requireActivity().windowManager, resources)
         val swipeRefreshLayout: SwipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         val dialog: DialogFragment = FilterLessonDialogFragment()
 
