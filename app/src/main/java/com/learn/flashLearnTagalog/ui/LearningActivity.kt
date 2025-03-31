@@ -22,6 +22,9 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout.DrawerListener
 import androidx.fragment.app.DialogFragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -80,20 +83,20 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
 
-//        MobileAds.initialize(this) {}
-//
-//        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
-//
-//        configurationBuilder.setTagForChildDirectedTreatment(
-//            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
-//        )
-//        configurationBuilder.setMaxAdContentRating(
-//            RequestConfiguration.MAX_AD_CONTENT_RATING_G
-//        )
-//
-//        MobileAds.setRequestConfiguration(configurationBuilder.build())
-//        val adRequest = AdRequest.Builder().build()
-//        binding.adViewLearning.loadAd(adRequest)
+        MobileAds.initialize(this) {}
+
+        val configurationBuilder = MobileAds.getRequestConfiguration().toBuilder()
+
+        configurationBuilder.setTagForChildDirectedTreatment(
+            RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE
+        )
+        configurationBuilder.setMaxAdContentRating(
+            RequestConfiguration.MAX_AD_CONTENT_RATING_G
+        )
+
+        MobileAds.setRequestConfiguration(configurationBuilder.build())
+        val adRequest = AdRequest.Builder().build()
+        binding.adViewLearning.loadAd(adRequest)
 
 
         val view = binding.root

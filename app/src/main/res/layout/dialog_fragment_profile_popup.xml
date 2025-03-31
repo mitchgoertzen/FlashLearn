@@ -162,16 +162,15 @@
 
     <ImageButton
         android:id="@+id/ibClose"
-        android:layout_width="0dp"
+        android:layout_width="45dp"
         android:layout_height="0dp"
         android:background="#00FFFFFF"
         android:foregroundGravity="top"
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/cross"
-        app:layout_constraintBottom_toTopOf="@+id/guideline51"
+        app:layout_constraintBottom_toTopOf="@+id/tvProfile"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline54"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -372,13 +371,19 @@
 
     <TextView
         android:id="@+id/tvSignInMsg"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="12sp"
+        android:maxWidth="200dp"
         android:layout_marginBottom="2dp"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:autoSizeMaxTextSize="12sp"
+        app:autoSizeMinTextSize="5sp"
+        app:autoSizeStepGranularity="1sp"
+        app:autoSizeTextType="uniform"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivAttention"
         app:layout_constraintTop_toTopOf="@+id/tvAccountEmail" />
 

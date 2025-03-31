@@ -1,10 +1,17 @@
 package com.learn.flashLearnTagalog.ui.misc
 
 import android.graphics.Rect
+import android.os.Build
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
+
+class ItemDecoration(
+    private val windowManager: WindowManager
+) :
+    RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
         outRect: Rect,
@@ -12,19 +19,44 @@ class ItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        outRect.top = spacing / 2
+
+        var verticalSpacing: Int
+        var horizontalSpacing: Int
+        val width: Int
+
+
+        var dpi = 0f
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val bounds = windowManager.currentWindowMetrics.bounds
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                dpi = windowManager.currentWindowMetrics.density
+            }
+
+            width = bounds.width()
+        } else {
+            val displayMetrics = DisplayMetrics()
+            windowManager.getDefaultDisplay().getMetrics(displayMetrics)
+            width = displayMetrics.widthPixels
+        }
+
+        val lessonSize = 169 * dpi
+
+        horizontalSpacing = ((width - (lessonSize * 2)) / 3).toInt()
+        verticalSpacing = (lessonSize / 20).toInt()
+
+        outRect.top = verticalSpacing
+        outRect.bottom = verticalSpacing / 2
 
         //left side
         if (parent.getChildAdapterPosition(view) % 2 == 0) {
-            outRect.left = spacing * 2
-            outRect.right = spacing / 4
+            outRect.left = horizontalSpacing
+            outRect.right = horizontalSpacing / 2
         }
         //right side
         else {
-            outRect.left = spacing / 4
-            outRect.right = spacing * 2
+            outRect.left = horizontalSpacing / 2
+            outRect.right = horizontalSpacing
         }
-        outRect.bottom = spacing / 2
 
 
     }
