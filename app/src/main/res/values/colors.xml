@@ -10,6 +10,7 @@
     <color name="none">#00000000</color>
     <color name="faded_primary">#374C75</color>
     <color name="disable">#33FFFFFF</color>
+    <color name="error">#EF3B3B</color>
     <color name="seek_bar_background">#80FFFFFF</color>
     <color name="seek_bar_progress">#FFFFFF</color>
     <color name="seek_bar_secondary_progress">#BFFFFFFF</color>

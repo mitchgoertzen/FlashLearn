@@ -4,144 +4,234 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingHorizontal="5dp"
     android:theme="@style/DrawerTheme"
     tools:context=".ui.fragments.SubmitNewLessonFragment">
 
-<!--        <EditText-->
-<!--            android:id="@+id/etOrgName"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:ems="10"-->
-<!--            android:inputType="text"-->
-<!--            android:hint="Org Name" />-->
+    <!--        <EditText-->
+    <!--            android:id="@+id/etOrgName"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:ems="10"-->
+    <!--            android:inputType="text"-->
+    <!--            android:hint="Org Name" />-->
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"></LinearLayout>-->
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="New Lesson"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Lesson"
-            android:textSize="30sp"/>
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="start"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="Name" />
-
-                    <EditText
-                        android:id="@+id/etLessonName_Org"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="5"
-                        android:hint="Animals"
-                        android:inputType="text" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="Level" />
-
-                    <EditText
-                        android:id="@+id/etLessonLevel_Org"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ems="5"
-                        android:hint="1"
-                        android:inputType="number" />
-                </LinearLayout>
-
-            </TableRow>
-
-            <TableRow
+            <TextView
+                android:id="@+id/textView13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="@dimen/row_height"
+                android:gravity="center"
+                android:text="Name"
+                android:textAlignment="center" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:text="Language" />
-
-                    <EditText
-                        android:id="@+id/etLessonLanguage_Org"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="5"
-                        android:hint="Tagalog"
-                        android:inputType="text" />
-                </LinearLayout>
-
-            </TableRow>
-
-            <TableRow
+            <TextView
+                android:id="@+id/textView19"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="@dimen/row_height"
+                android:gravity="center"
+                android:text="Language"
+                android:textAlignment="center" />
 
-                <LinearLayout
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center"
+                android:text="Word List"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etLessonName_Org"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:backgroundTint="@color/white"
+                android:ems="5"
+                android:hint="Animals"
+                android:inputType="text"
+                android:textColorHint="@color/disable" />
+
+            <EditText
+                android:id="@+id/etLessonLanguage_Org"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:backgroundTint="@color/white"
+                android:ems="5"
+                android:hint="Tagalog"
+                android:inputType="text"
+                android:textColorHint="@color/disable" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height">
+
+                <TextView
+                    android:id="@+id/tvFileName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="25dp"
+                    android:ellipsize="end"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:maxLines="2"
+                    android:scrollHorizontally="true"
+                    android:text="no file"
+                    android:textSize="10sp"
+                    app:autoSizeMaxTextSize="12sp"
+                    app:autoSizeMinTextSize="5sp"
+                    app:autoSizeStepGranularity="1sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:text="Word List" />
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="end"
+                    android:alpha="0.5"
+                    android:padding="3dp"
+                    android:src="@drawable/paper_clip"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <Button
-                        android:id="@+id/btnUploadFile"
-                        android:layout_width="@dimen/button_default_width"
-                        android:layout_height="@dimen/button_default_height"
-                        android:text="Choose File" />
-                </LinearLayout>
+            <TextView
+                android:id="@+id/tvFileError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:text="file error"
+                android:textAlignment="center"
+                android:textColor="@color/error"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:autoSizeMaxTextSize="12sp"
+                app:autoSizeMinTextSize="5sp"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform" />
 
-            </TableRow>
-        </TableLayout>
+            <FrameLayout
+                android:layout_width="110dp"
+                android:layout_height="@dimen/row_height"
+                android:layout_gravity="center">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/btnChooseFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Choose File" />
+            </FrameLayout>
 
-            <Button
-                android:id="@+id/btnSubmitNewLesson"
-                android:layout_width="@dimen/button_default_width"
-                android:layout_height="@dimen/button_default_height"
-                android:layout_gravity="bottom"
-                android:text="Submit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:gravity="center"
+                android:text="Level"
+                android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/etLessonLevel_Org"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/row_height"
+                android:backgroundTint="@color/white"
+                android:ems="2"
+                android:hint="1"
+                android:inputType="number"
+                android:textColorHint="@color/disable" />
+        </LinearLayout>
 
     </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvAttributeError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Name, level, or language cannot be blank"
+            android:textAlignment="center"
+            android:textColor="@color/error"
+            android:textSize="10sp"
+            android:visibility="gone"
+            app:autoSizeMaxTextSize="10sp"
+            app:autoSizeMinTextSize="5sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btnSubmitNewLesson"
+            android:layout_width="@dimen/button_default_width"
+            android:layout_height="@dimen/button_default_height"
+            android:layout_gravity="bottom"
+            android:text="Submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAttributeError" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
