@@ -1,8 +1,5 @@
 package com.learn.flashLearnTagalog.data
 
-import android.util.Log
-import com.learn.flashLearnTagalog.R
-
 data class Lesson(
     val category: String = "",
     val level: Int = -1,
@@ -12,8 +9,8 @@ data class Lesson(
     //will not need, fix ui
     val maxLines: Int = -1,
     val image: String = "",
-
-    ) {
+    val words: MutableList<String> = mutableListOf()
+) {
     val id: String = category + "_" + level
     val difficulty: Int = when ((minLength + maxLength) / 2) {
         in 0..5 -> 1

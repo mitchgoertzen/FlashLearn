@@ -210,11 +210,12 @@ class DataUtility {
             //get wordStats of previousId
             //add to id of updated word
             firestore.deleteDocument(WORD_COLLECTION, previousId)
-            firestore.addDocument(WORD_COLLECTION, updatedWord.id.toString(), updatedWord)
+            firestore.addDocument(WORD_COLLECTION, updatedWord.id, updatedWord)
         }
 
-        suspend fun getWord(wordId: String): Word? {
-            return firestore.getDocument(WORD_COLLECTION, wordId)!!.toObject<Word>()
+        private suspend fun getWord(source: String, language: String, wordId: String): Word? {
+            return firestore.getSubDocument(WORD_COLLECTION, source, language, wordId)
+                .toObject<Word>()
         }
 
         suspend fun getWordCount(): Int {
@@ -668,6 +669,32 @@ class DataUtility {
 
         fun deleteLesson(lessonId: String) {
             firestore.deleteDocument(LESSON_COLLECTION, lessonId)
+        }
+
+        suspend fun addOrgLesson(
+            orgID: String,
+            lessonID: String,
+            language: String,
+            lesson: Lesson
+        ) {
+
+            firestore.addSubDocument(
+                LESSON_COLLECTION,
+                "pending_review",
+                orgID,
+                lessonID,
+                lesson
+            )
+            Log.d(TAG, "language: $language")
+            for (w in lesson.words) {
+                val word = getWord("languages", language, w)
+                if (word == null) {
+                    Log.d(TAG, "add to review")
+                    Log.d(TAG, "word: $w")
+                } else {
+                    Log.d(TAG, "existing word")
+                }
+            }
         }
 
         /*************************************_LESSONSTATS_****************************************/

@@ -31,8 +31,6 @@ class LessonCreator {
 
     //lessons created here
     init {
-
-
         //        myLessons.add(createLesson(1,"Speech", R.drawable.hand_wave, 0,4))
         //        myLessons.add(createLesson(2,"Speech", R.drawable.hand_wave,4,100))
     }

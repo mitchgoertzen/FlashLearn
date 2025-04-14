@@ -1,6 +1,5 @@
 package com.learn.flashLearnTagalog.ui.fragments
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
@@ -43,11 +42,6 @@ class AdminFragment : Fragment() {
     private lateinit var cat: String
     private var ind = -1
     private var allTra = mutableListOf<String>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -122,7 +116,7 @@ class AdminFragment : Fragment() {
 
                 val lessonList = lessonCreator.getLessons()
 
-                Log.d(ContentValues.TAG, "lessons: $lessonList")
+                Log.d(TAG, "lessons: $lessonList")
 
                 if (updateLessons.isChecked) {
 
@@ -143,14 +137,14 @@ class AdminFragment : Fragment() {
 
                     for (l in lessonList) {
                         if (lessonMap[l.id] != null) {
-                            Log.d(ContentValues.TAG, "entry ${lessonMap[l.id]}")
-                            Log.d(ContentValues.TAG, "id ${l.id}")
-                            Log.d(ContentValues.TAG, "new word $l")
+                            Log.d(TAG, "entry ${lessonMap[l.id]}")
+                            Log.d(TAG, "id ${l.id}")
+                            Log.d(TAG, "new word $l")
                         }
                         lessonMap[l.id] = l
                     }
 
-                    Log.d(ContentValues.TAG, "lesson map: ${lessonMap.size}")
+                    Log.d(TAG, "lesson map: ${lessonMap.size}")
 
 
                     DataUtility.insertAllLessons(lessonMap, "flash_learn", "tagalog")

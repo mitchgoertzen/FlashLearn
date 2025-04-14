@@ -43,7 +43,6 @@ import com.learn.flashLearnTagalog.ui.dialog_fragments.ProfilePopupFragment
 import com.learn.flashLearnTagalog.ui.fragments.HomeFragment
 import com.learn.flashLearnTagalog.ui.fragments.LessonSelectFragment
 import com.learn.flashLearnTagalog.ui.fragments.OrganizationHomeFragment
-import com.learn.flashLearnTagalog.ui.fragments.SubmitNewLessonFragment
 import com.learn.flashLearnTagalog.ui.viewmodels.DialogViewModel
 import com.learn.flashLearnTagalog.ui.viewmodels.SignInViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -136,7 +135,7 @@ class LearningActivity : AppCompatActivity(R.layout.activity_main) {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main_nav_container, SubmitNewLessonFragment()).commit()
+                .replace(R.id.main_nav_container, HomeFragment()).commit()
 
 
             //  navigationView.setCheckedItem(R.id.nav_home)

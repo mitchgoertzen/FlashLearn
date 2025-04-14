@@ -91,7 +91,13 @@
         <item name="drawerArrowStyle">@style/Widget.AppCompat.DrawerArrowToggle</item>
         <item name="android:listPreferredItemHeightSmall">@dimen/button_default_height</item>
         <item name="materialButtonStyle">@style/DrawerButtonStyle</item>
+        <item name="textBackground">@color/none</item>
+
+        <item name="android:colorBackground">@color/none</item>
+
     </style>
+
+
 
     <style name="CustomTabTextAppearance" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/futura_pt_bold</item>

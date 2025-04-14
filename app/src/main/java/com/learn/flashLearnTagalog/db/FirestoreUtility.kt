@@ -40,9 +40,11 @@ class FirestoreUtility {
         collectionId: String, documentId: String,
         subCollectionId: String, subDocumentId: String
     ): DocumentSnapshot {
+
         return db.collection(collectionId).document(documentId)
             .collection(subCollectionId).document(subDocumentId)
-            .get().await()
+            .get().addOnFailureListener { e -> Log.d(TAG, "failed: $e") }.await()
+
     }
 
     suspend fun getSubDocumentRef(
